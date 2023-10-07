@@ -17,7 +17,7 @@ const medicineSchema = new mongoose.Schema({
     required: [true, 'Please provide the ingredients of the medicine.'],
   },
   price: {   
-      type: Decimal128,
+      type: Number,
       required: [true, 'Please provide the price tag.'],
   },
   sales: {   
@@ -35,6 +35,6 @@ quantity: {
 //   foreignField: 'patient',
 //   localField: '_id',
 // });
-const Medicine = mongoose.model('Medicine', medicineSchemaSchema);
+const Medicine = mongoose.model('Medicine', medicineSchema);
 
 module.exports = Medicine;

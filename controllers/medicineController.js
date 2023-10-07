@@ -25,10 +25,10 @@ exports.getAllMedicines = catchAsync(async (req, res, next) => {
 //   });
 // });
 
-const createMedicine = async (req, res) => {
+exports.createMedicine = async (req, res) => {
   //add a new Medicine to the database 
   const newMedicine = req.body;
-  const addMedicine = new medicineModel({
+  const addMedicine = new Medicine({
       name: newMedicine.name,
       activeIngredients: newMedicine.activeIngredients, 
       price: newMedicine.price,
@@ -83,5 +83,3 @@ const createMedicine = async (req, res) => {
     });
   });
 
-const Medicine = mongoose.model('Medicine', medicineSchema); 
- module.exports = Medicine;
