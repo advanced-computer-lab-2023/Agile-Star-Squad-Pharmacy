@@ -11,5 +11,6 @@ router
 router
   .route('/:id')
   .patch(medicineController.updateMedicine)
+  .get(medicineController.getMedicine)
 
 module.exports = router;
