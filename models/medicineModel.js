@@ -22,7 +22,11 @@ const medicineSchema = new mongoose.Schema({
   },
   sales: {   
     type: Number,
-    required: [true, 'Please provide the sales.'],
+    //required: [true, 'Please provide the sales.'],
+},
+quantity: {   
+  type: Number,
+   required: [true, 'Please provide the quantity.'],
 },
   
 });
