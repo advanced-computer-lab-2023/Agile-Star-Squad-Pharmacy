@@ -48,20 +48,12 @@ const patientSchema = new mongoose.Schema({
       type: Number,
       required: [true, 'Please provide an emergency phone number.'],
     },
+    relation: {
+        type: String,
+        required: [true, 'Please provide the relation between both of you.'],
+      }
   },
-  doctor: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Doctor',
-      required: [true, 'A patient must belong to a doctor'],
-    },
-  ],
-  familyMembers: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Family',
-    },
-  ],
+  
 });
 // tourSchema.virtual('familyMembers', {
 //   ref: 'Family',
