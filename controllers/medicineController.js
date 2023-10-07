@@ -38,18 +38,17 @@ exports.createMedicine = async (req, res) => {
   const p = await addMedicine.save();
   res.send(p);
 }
-exports.getMedicine = catchAsync(async (req, res, next) => {
-  const selectFields = 'quantity sales'; // Define the attributes you want to select
 
-  const medicine = await Medicine.findById(req.params.id);
+exports.getMedicine = catchAsync(async (req, res, next) => {
+
+  const medicine = await Medicine.findOne(req.params.id);
   const sales = medicine.sales;
   const quantity = medicine.quantity;
 
   res.status(200).json({
     status: 'success',
     data: {
-      sales,
-      quantity,
+        medicine,
     },
   });
 });

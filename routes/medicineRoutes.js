@@ -1,5 +1,5 @@
 const express = require('express');
-const medicineController = require('../controllers/medicineController');
+const medicineController = require('../Controllers/medicineController');
 
 const router = express.Router();
 
@@ -11,5 +11,6 @@ router
 router
   .route('/:id')
   .patch(medicineController.updateMedicine)
+  .get(medicineController.getMedicine)
 
 module.exports = router;
