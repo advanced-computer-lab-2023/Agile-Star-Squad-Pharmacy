@@ -11,7 +11,7 @@ app.use(express.json());
 
 // app.use('/admins', adminRouter);
 // app.use('/pharmacist', pharmacistRouter);
-app.use('/pharmacy/patients', patientRouter);
+app.use('/patients', patientRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`));
