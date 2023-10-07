@@ -1,6 +1,5 @@
 const Patient = require('../models/patientModel');
 const catchAsync = require('../utils/catchAsync');
-const Family = require('../models/familyModel');
 
 exports.getAllPatients = catchAsync(async (req, res, next) => {
   const patients = await Patient.find();
@@ -64,4 +63,4 @@ exports.getPatient = catchAsync(async (req, res, next) => {
   });
 });
 
-Modules.exports = {createPatient}
+//Modules.exports = {createPatient}

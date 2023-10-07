@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
-const Doctor = require('./doctorModel');
-const Family = require('../models/familyModel');
 
 const patientSchema = new mongoose.Schema({
   username: {
