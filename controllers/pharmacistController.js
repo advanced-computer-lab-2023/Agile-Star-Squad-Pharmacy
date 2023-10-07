@@ -3,7 +3,7 @@ const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 
 exports.getAllPharmacist = catchAsync(async (req, res, next) => {
-  const Pharmacists = await Pharmacist.find().populate('patients');
+  const Pharmacists = await Pharmacist.find();
 
   res.status(200).json({
     status: 'success',
@@ -78,9 +78,6 @@ exports.PharmacistSignup = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getMyPatients = async (req, res) => {
-  const Pharmacist = await Pharmacist.findById(req.params.id).populate('patients')
-};
 
 exports.getPharmacist = catchAsync(async (req, res, next) => {
   const Pharmacist = await Pharmacist.findById(req.params.id);

@@ -53,6 +53,6 @@ const pharmacistSchema = new mongoose.Schema(
   }
 );
 
-const Pharmacist = mongoose.model('Pharmacist', pharmacySchema);
+const Pharmacist = mongoose.model('Pharmacist', pharmacistSchema);
 
 module.exports = Pharmacist;
