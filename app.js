@@ -6,12 +6,13 @@ const AppError = require('./utils/appError')
 const adminRouter = require('./routes/adminRoutes');
 const patientRouter = require('./routes/patientRoutes');
 const medicineRouter = require('./routes/medicineRoutes');
+const pharmacistRouter = require('./routes/pharmacistRoutes');
 const app = express();
 
 app.use(express.json());
 
-// app.use('/admins', adminRouter);
-// app.use('/pharmacist', pharmacistRouter);
+app.use('/admins', adminRouter);
+app.use('/pharmacist', pharmacistRouter);
 app.use('/patients', patientRouter);
 app.use('/medicine', medicineRouter);
 
