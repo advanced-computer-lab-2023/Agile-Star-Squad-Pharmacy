@@ -65,7 +65,14 @@ exports.getMedicine = catchAsync(async (req, res, next) => {
 //     },
 //   });
 // });
-
+const filterObj = (obj, ...allowedFields) => {
+  console.log(allowedFields);
+  const newObj = {};
+  Object.keys(obj).forEach((el) => {
+    if (allowedFields.includes(el)) newObj[el] = obj[el];
+  });
+  return newObj;
+};
   exports.updateMedicine = catchAsync(async (req, res, next) => {
     // if (req.body.password) {
     //   return next(new AppError('Cannot update password in this route!',400));

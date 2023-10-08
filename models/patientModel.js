@@ -37,19 +37,9 @@ const patientSchema = new mongoose.Schema({
     type: Number,
     required: [true, 'Please provide a phone number.'],
   },
-  emergencyContact: {
-    fullName: {
-      type: String,
-      required: [true, 'Please provide a full name.'],
-    },
-    phoneNumber: {
+  emergencyNumber: {     
       type: Number,
       required: [true, 'Please provide an emergency phone number.'],
-    },
-    relation: {
-        type: String,
-        required: [true, 'Please provide the relation between both of you.'],
-      }
   },
   
 });
