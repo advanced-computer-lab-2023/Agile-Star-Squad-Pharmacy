@@ -41,14 +41,15 @@ exports.createMedicine = async (req, res) => {
 
 exports.getMedicine = catchAsync(async (req, res, next) => {
 
-  const medicine = await Medicine.findOne(req.params.id);
+  const medicine = await Medicine.findById(req.params.id);
   const sales = medicine.sales;
   const quantity = medicine.quantity;
 
   res.status(200).json({
     status: 'success',
     data: {
-        medicine,
+        sales,
+        quantity,
     },
   });
 });
