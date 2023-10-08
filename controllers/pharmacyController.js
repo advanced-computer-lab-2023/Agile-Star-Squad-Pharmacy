@@ -3,7 +3,7 @@ const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 
 const getAllMedicines = catchAsync(async (req, res, next) => {
-  let Medicine = await Medicines.find().select("image price description");
+  let Medicine = await Medicines.find();
   res.status(200).json({
     status: "success",
     data: {
@@ -17,11 +17,11 @@ const searchByName = catchAsync(async (req, res, next) => {
 
   const { name } = req.body;
 
-  const searchResult = Medicine.filter((m) => m.name.includes(name));
-
-  if (searchResult.length === 0) {
-    return next(new AppError("fail, Medicine not found", 404));
+  if (!name && name !== "") {
+    return next(new AppError("fail, expecting medicine name in req.body", 404));
   }
+
+  const searchResult = Medicine.filter((m) => m.name.includes(name));
 
   res.status(200).json({
     status: "success",
@@ -35,6 +35,22 @@ const filterByMedicinalUse = catchAsync(async (req, res, next) => {
   const Medicine = await Medicines.find();
 
   const { medicinalUse } = req.body;
+
+  if (!medicinalUse) {
+    return next(
+      new AppError("fail, expecting medicine medicinalUse in req.body", 404)
+    );
+  }
+
+  if (medicinalUse.length === 0) {
+    return res.status(200).json({
+      status: "success",
+      data: {
+        partialMatch: [],
+        exactMatch: Medicine,
+      },
+    });
+  }
 
   const match = Medicine.filter((dbMedicine) =>
     dbMedicine.medicinalUse.find((dbUse) =>
@@ -55,10 +71,6 @@ const filterByMedicinalUse = catchAsync(async (req, res, next) => {
   });
 
   const partialMatch = match.filter((p) => !exactMatch.includes(p));
-
-  if (partialMatch.length === 0 && exactMatch.length === 0) {
-    return next(new AppError("fail, Medicine not found", 404));
-  }
 
   res.status(200).json({
     status: "success",
