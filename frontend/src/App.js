@@ -1,7 +1,8 @@
-import React from 'react';
+import React from "react";
+import PharmacyHome from "./pharmacy/pages/pharmacyHome";
 
 function App() {
-  return <h1>Let's start!</h1>;
+  return <PharmacyHome />;
 }
 
 export default App;
