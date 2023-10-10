@@ -35,13 +35,11 @@ const medicineSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please provide the medicine description."],
   },
-  medicinalUse: [
-    {
-      type: String,
-      required: [true, "Please provide a list for the medicinal use."],
-      minLength: 1,
-    },
-  ],
+  medicinalUse: {
+    type: String,
+    required: [true, "Please provide a list for the medicinal use."],
+    minLength: 1,
+  },
 });
 // tourSchema.virtual('familyMembers', {
 //   ref: 'Family',
