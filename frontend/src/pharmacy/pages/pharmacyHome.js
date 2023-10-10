@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import medicinalUseEnum from "../../shared/util/medicinalUseEnum";
 
 const PharmacyHome = () => {
   const [medicineList, setMedicineList] = useState([]);
@@ -20,9 +21,19 @@ const PharmacyHome = () => {
           throw new Error("Network response was not ok");
         }
 
-        const data = await response.json();
-        setMedicineList(data.data.Medicine);
-        setFilteredList(data.data.Medicine);
+        const result = await response.json();
+
+        const Medicine = result.data.Medicine;
+        setMedicineList(Medicine);
+        setFilteredList(
+          Medicine.map((m) => {
+            return {
+              image: m.image,
+              description: m.description,
+              price: m.price,
+            };
+          })
+        );
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -32,12 +43,8 @@ const PharmacyHome = () => {
   }, []);
 
   const medicinalUseOptions = []; // fill options based on medicinalUse enum
-  for (let i = 0; i < 10; i++) {
-    medicinalUseOptions.push(
-      <option key={i} value={`option${i + 1}`}>
-        Option {i + 1}
-      </option>
-    );
+  for (const use of medicinalUseEnum) {
+    medicinalUseOptions.push(<option value={use}>{use}</option>);
   }
 
   const searchByNameHandler = (event) => {
@@ -52,11 +59,25 @@ const PharmacyHome = () => {
     event.preventDefault();
 
     setFilteredList(
-      medicineList.filter(
-        (m) =>
-          m.name.includes(nameField) && m.medicinalUse.includes(medicinalUse)
-      )
+      medicineList
+        .filter(
+          (m) =>
+            m.name.includes(nameField) && m.medicinalUse.includes(medicinalUse)
+        )
+        .map((m) => {
+          return {
+            image: m.image,
+            description: m.description,
+            price: m.price,
+          };
+        })
     );
+  };
+
+  const borderStyle = {
+    border: "1px solid #ccc",
+    padding: "10px",
+    margin: "10px",
   };
 
   return (
@@ -73,13 +94,21 @@ const PharmacyHome = () => {
         <select value={medicinalUse} onChange={dropDownHandler}>
           <option value="">any</option>
           {medicinalUseOptions}
-          <option value="a">a</option>
-          <option value="b">b</option>
         </select>
         <button type="submit">SUBMIT</button>
         <hr />
       </form>
-      {JSON.stringify(filteredList)}
+      {filteredList.map((item, index) => (
+        <div key={index} style={borderStyle}>
+          <img
+            src={item.image}
+            alt={item.description}
+            style={{ width: "500px", height: "auto" }}
+          />
+          <p>Description: {item.description}</p>
+          <p>Price: {item.price}</p>
+        </div>
+      ))}
     </React.Fragment>
   );
 };
