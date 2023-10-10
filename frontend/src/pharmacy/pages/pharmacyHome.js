@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 
 const PharmacyHome = () => {
   const [medicineList, setMedicineList] = useState([]);
+  const [filteredList, setFilteredList] = useState([]);
 
-  let unfilteredList = [];
+  const [nameField, setNameField] = useState("");
+
+  const [medicinalUse, setMedicinalUse] = useState("");
 
   useEffect(() => {
     async function fetchData() {
@@ -19,6 +22,7 @@ const PharmacyHome = () => {
 
         const data = await response.json();
         setMedicineList(data.data.Medicine);
+        setFilteredList(data.data.Medicine);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -27,44 +31,55 @@ const PharmacyHome = () => {
     fetchData();
   }, []);
 
+  const medicinalUseOptions = []; // fill options based on medicinalUse enum
+  for (let i = 0; i < 10; i++) {
+    medicinalUseOptions.push(
+      <option key={i} value={`option${i + 1}`}>
+        Option {i + 1}
+      </option>
+    );
+  }
+
+  const searchByNameHandler = (event) => {
+    setNameField(event.target.value);
+  };
+
+  const dropDownHandler = (event) => {
+    setMedicinalUse(event.target.value);
+  };
+
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    //   (name, medicinalUse) => {
 
-    const name = "ah";
-    const medicinalUse = ["c"];
-
-    let listToBeFiltered = medicineList.filter((m) => m.name.includes(name));
-
-    const match = listToBeFiltered.filter((dbMedicine) =>
-      dbMedicine.medicinalUse.find((dbUse) =>
-        medicinalUse.find((use) => use === dbUse)
+    setFilteredList(
+      medicineList.filter(
+        (m) =>
+          m.name.includes(nameField) && m.medicinalUse.includes(medicinalUse)
       )
     );
-
-    const exactMatch = match.filter((dbMedicine) => {
-      let isMatch = true;
-      for (const use of medicinalUse) {
-        if (!dbMedicine.medicinalUse.includes(use)) {
-          isMatch = false;
-          break;
-        }
-      }
-
-      return isMatch;
-    });
-
-    const partialMatch = match.filter((p) => !exactMatch.includes(p));
-
-    setMedicineList(partialMatch);
   };
 
   return (
     <React.Fragment>
       <form onSubmit={onSubmitHandler}>
+        <input
+          type="text"
+          id="textInput"
+          name="userInput"
+          placeholder="search by name"
+          // value={nameField} // Set the input field value to the state
+          onChange={searchByNameHandler}
+        />
+        <select value={medicinalUse} onChange={dropDownHandler}>
+          <option value="">any</option>
+          {medicinalUseOptions}
+          <option value="a">a</option>
+          <option value="b">b</option>
+        </select>
         <button type="submit">SUBMIT</button>
+        <hr />
       </form>
-      {JSON.stringify(medicineList)}
+      {JSON.stringify(filteredList)}
     </React.Fragment>
   );
 };
