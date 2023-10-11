@@ -34,12 +34,22 @@ const patientSchema = new mongoose.Schema({
     default: 'male',
   },
   mobileNumber: {
-    type: Number,
+    type: String,
     required: [true, 'Please provide a phone number.'],
   },
-  emergencyNumber: {     
-      type: Number,
-      required: [true, 'Please provide an emergency phone number.'],
+  emergencyContact: {
+    contactName:{
+    type: String,
+      required: [true, 'Please provide the name of your contact.'],
+    },
+    contactNumber:{
+      type: String,
+        required: [true, 'Please provide the phone number of your contact.'],
+      },
+      contactRelation:{
+        type: String,
+          required: [true, 'Please provide the relation between you and your contact.']
+        }
   },
   
 });
