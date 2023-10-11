@@ -9,6 +9,9 @@ const PharmacyHome = () => {
 
   const [medicinalUse, setMedicinalUse] = useState("");
 
+  const [newPrice, setNewPrice] = useState("");
+  const [newDescription, setNewDescription] = useState("");
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -77,6 +80,30 @@ const PharmacyHome = () => {
         })
     );
   };
+  const editHandler = (event)=>{
+    event.preventDefault();
+    const requestOptions={
+      method:"PATCH",
+      headers: { "Content-type": "application/json; charset=UTF-8", },
+      body: JSON.stringify({newPrice,newDescription})
+  };
+  fetch('http://localhost:4000/medicine/id', requestOptions)
+}
+
+
+const newPriceTextFieldHandler = event => {
+  setNewPrice(    
+     event.target.value
+  )
+}
+const newDescriptionTextFieldHandler = event => {
+  setNewDescription(
+       event.target.value
+  )
+}
+  
+
+
 
   const borderStyle = {
     border: "1px solid #ccc",
@@ -114,6 +141,18 @@ const PharmacyHome = () => {
           {/* if(pharmacist){ */}
           <p>Sales: {item.sales}</p>
           <p>Quantity: {item.quantity}</p>
+          
+          
+          <hr />
+          <form onSubmit={editHandler}>
+          <label>New Price</label>
+            <input type='text'  onChange={newPriceTextFieldHandler} />  
+            
+          <label>New Description</label>
+            <input type='text'  onChange={newDescriptionTextFieldHandler} />  
+          <hr />
+          <button type="submit" >Edit</button>   
+          </form>
           {/* } */}
         </div>
       ))}
