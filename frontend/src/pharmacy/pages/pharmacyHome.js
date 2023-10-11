@@ -31,6 +31,8 @@ const PharmacyHome = () => {
               image: m.image,
               description: m.description,
               price: m.price,
+              sales: m.sales,
+              quantity: m.quantity,
             };
           })
         );
@@ -69,6 +71,8 @@ const PharmacyHome = () => {
             image: m.image,
             description: m.description,
             price: m.price,
+            sales: m.sales,
+            quantity: m.quantity,
           };
         })
     );
@@ -98,21 +102,21 @@ const PharmacyHome = () => {
         <button type="submit">SUBMIT</button>
         <hr />
       </form>
-      {filteredList.length === 0 ? (
-        <h2>No results!</h2>
-      ) : (
-        filteredList.map((item, index) => (
-          <div key={item.id} style={borderStyle}>
-            <img
-              src={item.image}
-              alt={item.description}
-              style={{ width: "500px", height: "auto" }}
-            />
-            <p>Description: {item.description}</p>
-            <p>Price: {item.price}</p>
-          </div>
-        ))
-      )}
+      {filteredList.map((item, index) => (
+        <div key={index} style={borderStyle}>
+          <img
+            src={item.image}
+            alt={item.description}
+            style={{ width: "500px", height: "auto" }}
+          />
+          <p>Description: {item.description}</p>
+          <p>Price: {item.price}</p>
+          {/* if(pharmacist){ */}
+          <p>Sales: {item.sales}</p>
+          <p>Quantity: {item.quantity}</p>
+          {/* } */}
+        </div>
+      ))}
     </React.Fragment>
   );
 };
