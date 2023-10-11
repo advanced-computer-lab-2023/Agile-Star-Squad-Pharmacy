@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-class pharmacistRequestForm extends Component {
+class PharmacistRequestForm extends Component {
 
     constructor(props) {
         super(props)
@@ -121,4 +121,4 @@ class pharmacistRequestForm extends Component {
     }
 }
 
-export default pharmacistRequestForm
+export default PharmacistRequestForm
