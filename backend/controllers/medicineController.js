@@ -1,13 +1,13 @@
-const Medicine = require('../models/medicineModel');
-const catchAsync = require('../utils/catchAsync');
+const Medicine = require("../models/medicineModel");
+const catchAsync = require("../utils/catchAsync");
 
 exports.getAllMedicines = catchAsync(async (req, res, next) => {
   const medicines = await Medicine.find();
 
   res.status(200).json({
-    status: 'success',
+    status: "success",
     data: {
-        medicines,
+      medicines,
     },
   });
 });
@@ -26,30 +26,32 @@ exports.getAllMedicines = catchAsync(async (req, res, next) => {
 // });
 
 exports.createMedicine = async (req, res) => {
-  //add a new Medicine to the database 
+  //add a new Medicine to the database
+  console.log | "henaa";
   const newMedicine = req.body;
   const addMedicine = new Medicine({
-      name: newMedicine.name,
-      activeIngredients: newMedicine.activeIngredients, 
-      price: newMedicine.price,
-      sales: newMedicine.sales,
-      quantity: newMedicine.quantity,
-    });
+    name: newMedicine.name,
+    activeIngredients: newMedicine.activeIngredients,
+    price: newMedicine.price,
+    sales: newMedicine.sales,
+    quantity: newMedicine.quantity,
+    medicinalUse: newMedicine.medicinalUse,
+    image: newMedicine.image,
+  });
   const p = await addMedicine.save();
   res.send(p);
-}
+};
 
 exports.getMedicine = catchAsync(async (req, res, next) => {
-
   const medicine = await Medicine.findById(req.params.id);
   const sales = medicine.sales;
   const quantity = medicine.quantity;
 
   res.status(200).json({
-    status: 'success',
+    status: "success",
     data: {
-        sales,
-        quantity,
+      sales,
+      quantity,
     },
   });
 });
@@ -73,34 +75,29 @@ const filterObj = (obj, ...allowedFields) => {
   });
   return newObj;
 };
-  exports.updateMedicine = catchAsync(async (req, res, next) => {
-    // if (req.body.password) {
-    //   return next(new AppError('Cannot update password in this route!',400));
-    // }
-  
-    const filteredBody = filterObj(
-      req.body,
-      'activeIngredients',
-      'price',
-    );
-    console.log(filteredBody);
-    const updatedMedicine = await Medicine.findByIdAndUpdate(
-      req.params.id,
-      filteredBody,
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
-  
-    // if (!updatedDoctor) {
-    //   return next(new AppError('Cannot update this field', 400));
-    // }
-    res.status(200).json({
-      status: 'success',
-      data: {
-        medicine: updatedMedicine,
-      },
-    });
-  });
+exports.updateMedicine = catchAsync(async (req, res, next) => {
+  // if (req.body.password) {
+  //   return next(new AppError('Cannot update password in this route!',400));
+  // }
 
+  const filteredBody = filterObj(req.body, "activeIngredients", "price");
+  console.log(filteredBody);
+  const updatedMedicine = await Medicine.findByIdAndUpdate(
+    req.params.id,
+    filteredBody,
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  // if (!updatedDoctor) {
+  //   return next(new AppError('Cannot update this field', 400));
+  // }
+  res.status(200).json({
+    status: "success",
+    data: {
+      medicine: updatedMedicine,
+    },
+  });
+});

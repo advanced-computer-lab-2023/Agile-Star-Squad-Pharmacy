@@ -31,10 +31,6 @@ const medicineSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please provide the medicine image."],
   },
-  description: {
-    type: String,
-    required: [true, "Please provide the medicine description."],
-  },
   medicinalUse: {
     type: String,
     required: [true, "Please provide a list for the medicinal use."],

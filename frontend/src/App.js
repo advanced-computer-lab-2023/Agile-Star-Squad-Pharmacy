@@ -1,10 +1,10 @@
 import React from "react";
-import addMedicineForm from "./medicine/addMedicineForm";
-import PharmacyHome from "./pharmacy/pages/pharmacyHome";
+import AddMedicineForm from "./shared/components/FormElements/addMedicineForm";
+// import PharmacyHome from "./pharmacy/pages/pharmacyHome";
 
 function App() {
   // return <PharmacyHome />;
-  return <addMedicineForm/>;
+  return <AddMedicineForm />;
 }
 
 export default App;
