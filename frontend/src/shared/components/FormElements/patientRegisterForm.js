@@ -90,7 +90,7 @@ class patientRegisterForm extends Component {
 
 
     render() {
-        const { username, name, email, password, dateOfBirth, gender, mobileNumber, emergencyContact} = this.state
+        const { username, name, email, password, dateOfBirth, gender, mobileNumber, contactName, contactNumber, contactRelation} = this.state
         return (
             <form onSubmit={this.handleSubmit}>
                 <div>
