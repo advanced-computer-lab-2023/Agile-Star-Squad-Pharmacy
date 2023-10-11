@@ -7,7 +7,7 @@ class AddMedicineForm extends Component {
 
     this.state = {
       name: "",
-      activeIngredients: "",
+      description: "",
       price: "",
       sales: "",
       quantity: "",
@@ -22,9 +22,9 @@ class AddMedicineForm extends Component {
     });
   };
 
-  handleActiveIngredientsChange = (event) => {
+  handleDescriptionChange = (event) => {
     this.setState({
-      activeIngredients: event.target.value,
+      description: event.target.value,
     });
   };
 
@@ -72,15 +72,8 @@ class AddMedicineForm extends Component {
     for (const use of medicinalUseEnum) {
       medicinalUseOptions.push(<option value={use}>{use}</option>);
     }
-    const {
-      name,
-      activeIngredients,
-      price,
-      sales,
-      quantity,
-      image,
-      medicinalUse,
-    } = this.state;
+    const { name, description, price, sales, quantity, image, medicinalUse } =
+      this.state;
     return (
       <form onSubmit={this.handleSubmit}>
         <div>
@@ -88,11 +81,11 @@ class AddMedicineForm extends Component {
           <input type="text" value={name} onChange={this.handleNameChange} />
         </div>
         <div>
-          <label>Active Ingredients</label>
+          <label>Description</label>
           <input
             type="text"
-            value={activeIngredients}
-            onChange={this.handleActiveIngredientsChange}
+            value={description}
+            onChange={this.handleDescriptionChange}
           />
         </div>
         <div>

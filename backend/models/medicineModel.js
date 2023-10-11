@@ -10,7 +10,7 @@ const medicineSchema = new mongoose.Schema({
     validate: [validator.isAlpha, "Name must only contain letters"],
   },
 
-  activeIngredients: {
+  description: {
     type: String,
     required: [true, "Please provide the ingredients of the medicine."],
   },

@@ -31,7 +31,7 @@ exports.createMedicine = async (req, res) => {
   const newMedicine = req.body;
   const addMedicine = new Medicine({
     name: newMedicine.name,
-    activeIngredients: newMedicine.activeIngredients,
+    description: newMedicine.description,
     price: newMedicine.price,
     sales: newMedicine.sales,
     quantity: newMedicine.quantity,
@@ -80,7 +80,7 @@ exports.updateMedicine = catchAsync(async (req, res, next) => {
   //   return next(new AppError('Cannot update password in this route!',400));
   // }
 
-  const filteredBody = filterObj(req.body, "activeIngredients", "price");
+  const filteredBody = filterObj(req.body, "description", "price");
   console.log(filteredBody);
   const updatedMedicine = await Medicine.findByIdAndUpdate(
     req.params.id,
