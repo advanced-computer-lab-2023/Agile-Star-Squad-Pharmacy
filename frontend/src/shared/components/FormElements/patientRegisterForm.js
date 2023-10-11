@@ -11,11 +11,13 @@ class patientRegisterForm extends Component {
             email: '',
             password: '',
             dateOfBirth: '',
-            gender: '',
+            gender: 'male',
             mobileNumber: '',
-            contactName: '',
-            contactNumber: '',
-            contactRelation: ''
+            emergencyContact: {
+                fullName: "",
+                phoneNumber: "",
+                relation:""
+              },
         }
     }
 
@@ -61,36 +63,47 @@ class patientRegisterForm extends Component {
         })
     }
 
-    handleContactNameChange = event => {
+    handleEmergencyFullNameChange = (event) => {
         this.setState({
-            contactName: event.target.value
-        })
-    }
-    handleContactNumberChange = event => {
+          emergencyContact: {
+            ...this.state.emergencyContact,
+            fullName: event.target.value,
+          },
+        });
+      };
+    
+      handleEmergencyNumberChange = (event) => {
         this.setState({
-            contactNumber: event.target.value
-        })
-    }
-    handleContactRelationChange = event => {
+          emergencyContact: {
+            ...this.state.emergencyContact,
+            phoneNumber: event.target.value,
+          },
+        });
+      };
+
+      handleEmergencyRelationChange = (event) => {
         this.setState({
-            contactRelation: event.target.value
-        })
-    }
+          emergencyContact: {
+            ...this.state.emergencyContact,
+            relation: event.target.value,
+          },
+        });
+      };
 
     handleSubmit = event =>{
-        
+        event.preventDefault()
         const requestOptions = {
             method: 'POST',
             headers: { "Content-type": "application/json; charset=UTF-8", },
             body: JSON.stringify(this.state)
         };
-        fetch('/patients', requestOptions)
+        fetch('http://localhost:4000/patients', requestOptions)
     }
 
 
 
     render() {
-        const { username, name, email, password, dateOfBirth, gender, mobileNumber, contactName, contactNumber, contactRelation} = this.state
+        const { username, name, email, password, dateOfBirth, gender, mobileNumber, emergencyContact}  = this.state
         return (
             <form onSubmit={this.handleSubmit}>
                 <div>
@@ -125,18 +138,18 @@ class patientRegisterForm extends Component {
                     <input type='text' value={mobileNumber} onChange={this.handleMoibleNumberChange} />
                 </div>
                 <div>
-                    <label>Emergency Contact</label>
+                    <label>Emergency Contact:</label>
                     <div>
                         <label>Full Name</label>
-                        <input type='text' value={contactName} onChange={this.handleContactNameChange} />
+                        <input type='text' value={emergencyContact.fullName} onChange={this.handleEmergencyFullNameChange} />
                     </div>
                     <div>
                         <label>Moible Number</label>
-                        <input type='text' value={contactNumber} onChange={this.handleContactNumberChange} />
+                        <input type='text' value={emergencyContact.phoneNumber} onChange={this.handleEmergencyNumberChange} />
                     </div>
                     <div>
                         <label>Relation</label>
-                        <input type='text' value={contactRelation} onChange={this.handleContactRelationChange} />
+                        <input type='text' value={emergencyContact.relation} onChange={this.handleEmergencyRelationChange} />
                     </div>
                 </div>
                 <button type= "submit">Register</button>

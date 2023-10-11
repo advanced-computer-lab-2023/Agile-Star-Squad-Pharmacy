@@ -74,17 +74,8 @@ class pharmacistRequestForm extends Component {
             headers: { "Content-type": "application/json; charset=UTF-8", },
             body: JSON.stringify(this.state)
         };
-        fetch('http://localhost:3000/pharmacist', requestOptions)
-        // PharmacistSignup(`${this.state.username}
-        // ${this.state.name}
-        // ${this.state.email}
-        // ${this.state.password}
-        // ${this.state.dateOfBirth}
-        // ${this.state.hourlyRate}
-        // ${this.state.affiliation}
-        // ${this.state.educationalBackground}`)
-        // event.preventDefault()
-    }
+        fetch('http://localhost:4000/pharmacist', requestOptions)
+   }
 
 
 
