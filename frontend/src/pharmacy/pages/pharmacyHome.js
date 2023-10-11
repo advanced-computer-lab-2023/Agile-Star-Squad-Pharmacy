@@ -98,17 +98,21 @@ const PharmacyHome = () => {
         <button type="submit">SUBMIT</button>
         <hr />
       </form>
-      {filteredList.map((item, index) => (
-        <div key={index} style={borderStyle}>
-          <img
-            src={item.image}
-            alt={item.description}
-            style={{ width: "500px", height: "auto" }}
-          />
-          <p>Description: {item.description}</p>
-          <p>Price: {item.price}</p>
-        </div>
-      ))}
+      {filteredList.length === 0 ? (
+        <h2>No results!</h2>
+      ) : (
+        filteredList.map((item, index) => (
+          <div key={item.id} style={borderStyle}>
+            <img
+              src={item.image}
+              alt={item.description}
+              style={{ width: "500px", height: "auto" }}
+            />
+            <p>Description: {item.description}</p>
+            <p>Price: {item.price}</p>
+          </div>
+        ))
+      )}
     </React.Fragment>
   );
 };
