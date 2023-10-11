@@ -31,6 +31,8 @@ const PharmacyHome = () => {
               image: m.image,
               description: m.description,
               price: m.price,
+              sales: m.sales,
+              quantity: m.quantity,
             };
           })
         );
@@ -69,6 +71,8 @@ const PharmacyHome = () => {
             image: m.image,
             description: m.description,
             price: m.price,
+            sales: m.sales,
+            quantity: m.quantity,
           };
         })
     );
@@ -107,6 +111,10 @@ const PharmacyHome = () => {
           />
           <p>Description: {item.description}</p>
           <p>Price: {item.price}</p>
+          {/* if(pharmacist){ */}
+          <p>Sales: {item.sales}</p>
+          <p>Quantity: {item.quantity}</p>
+          {/* } */}
         </div>
       ))}
     </React.Fragment>
