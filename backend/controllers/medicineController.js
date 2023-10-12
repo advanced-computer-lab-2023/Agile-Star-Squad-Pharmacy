@@ -80,7 +80,7 @@ exports.updateMedicine = catchAsync(async (req, res, next) => {
   //   return next(new AppError('Cannot update password in this route!',400));
   // }
 
-  const filteredBody = filterObj(req.body, "newDescription", "newPrice");
+  const filteredBody = filterObj(req.body, "price", "description");
   console.log(filteredBody);
   const updatedMedicine = await Medicine.findByIdAndUpdate(
     req.params.id,
