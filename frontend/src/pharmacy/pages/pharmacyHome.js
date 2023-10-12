@@ -82,6 +82,7 @@ const PharmacyHome = () => {
   };
   const editHandler = (event)=>{
     event.preventDefault();
+    console.log("savong")
     const requestOptions={
       method:"PATCH",
       headers: { "Content-type": "application/json; charset=UTF-8", },
