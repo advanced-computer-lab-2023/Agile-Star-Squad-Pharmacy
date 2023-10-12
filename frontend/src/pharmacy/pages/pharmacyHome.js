@@ -27,10 +27,16 @@ const PharmacyHome = () => {
         const result = await response.json();
 
         const Medicine = result.data.Medicine;
-        setMedicineList(Medicine);
+        setMedicineList(Medicine.map((m) => {
+          return {
+            id: m._id,
+            ...m
+          }
+        }));
         setFilteredList(
           Medicine.map((m) => {
             return {
+              id: m._id,
               image: m.image,
               description: m.description,
               price: m.price,
@@ -80,29 +86,53 @@ const PharmacyHome = () => {
         })
     );
   };
-  const editHandler = (event)=>{
+  const editHandler = async (event, id) => {
     event.preventDefault();
-    console.log("savong")
-    const requestOptions={
-      method:"PATCH",
+    const requestOptions = {
+      method: "PATCH",
       headers: { "Content-type": "application/json; charset=UTF-8", },
-      body: JSON.stringify({newPrice,newDescription})
-  };
-  fetch('http://localhost:4000/medicine/id', requestOptions)
-}
+      body: JSON.stringify({ price: newPrice, description: newDescription })
+    };
+    const updatedMedicine = await fetch(`http://localhost:4000/medicine/${id}`, requestOptions);
+    const medicineJson = await updatedMedicine.json();
+
+    const newMedicine = await medicineJson.data.medicine;
+    const allMedicines = [];
+    const filteredMedicines = [];
+
+    for (const medicine of filteredList) {
+      if (medicine.id === id) {
+        allMedicines.push(newMedicine);
+      } else {
+        allMedicines.push(medicine);
+      }
+    }
+    
+    for (const medicine of filteredList) {
+      if (medicine.id === id) {
+        filteredMedicines.push(newMedicine);
+      } else {
+        filteredMedicines.push(medicine);
+      }
+    }
+
+    setMedicineList(allMedicines)
+    setFilteredList(filteredMedicines)
+
+  }
 
 
-const newPriceTextFieldHandler = event => {
-  setNewPrice(    
-     event.target.value
-  )
-}
-const newDescriptionTextFieldHandler = event => {
-  setNewDescription(
-       event.target.value
-  )
-}
-  
+  const newPriceTextFieldHandler = event => {
+    setNewPrice(
+      event.target.value
+    )
+  }
+  const newDescriptionTextFieldHandler = event => {
+    setNewDescription(
+      event.target.value
+    )
+  }
+
 
 
 
@@ -142,17 +172,17 @@ const newDescriptionTextFieldHandler = event => {
           {/* if(pharmacist){ */}
           <p>Sales: {item.sales}</p>
           <p>Quantity: {item.quantity}</p>
-          
-          
+
+
           <hr />
-          <form onSubmit={editHandler}>
-          <label>New Price</label>
-            <input type='text'  onChange={newPriceTextFieldHandler} />  
-            
-          <label>New Description</label>
-            <input type='text'  onChange={newDescriptionTextFieldHandler} />  
-          <hr />
-          <button type="submit" >Edit</button>   
+          <form onSubmit={(event) => editHandler(event, item.id)}>
+            <label>New Price</label>
+            <input type='text' onChange={newPriceTextFieldHandler} />
+
+            <label>New Description</label>
+            <input type='text' onChange={newDescriptionTextFieldHandler} />
+            <hr />
+            <button type="submit" >Edit</button>
           </form>
           {/* } */}
         </div>
