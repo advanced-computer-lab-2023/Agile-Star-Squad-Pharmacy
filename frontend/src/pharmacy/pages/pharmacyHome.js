@@ -1,38 +1,40 @@
-import React, { useState, useEffect } from "react";
-import medicinalUseEnum from "../../shared/util/medicinalUseEnum";
+import React, { useState, useEffect } from 'react';
+import medicinalUseEnum from '../../shared/util/medicinalUseEnum';
 
 const PharmacyHomePharmacist = () => {
   const [medicineList, setMedicineList] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
 
-  const [nameField, setNameField] = useState("");
+  const [nameField, setNameField] = useState('');
 
-  const [medicinalUse, setMedicinalUse] = useState("");
+  const [medicinalUse, setMedicinalUse] = useState('');
 
-  const [newPrice, setNewPrice] = useState("");
-  const [newDescription, setNewDescription] = useState("");
+  const [newPrice, setNewPrice] = useState('');
+  const [newDescription, setNewDescription] = useState('');
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("http://localhost:4000/pharmacy", {
-          method: "GET",
-          headers: { "Content-type": "application/json" },
+        const response = await fetch('http://localhost:4000/pharmacy', {
+          method: 'GET',
+          headers: { 'Content-type': 'application/json' },
         });
 
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error('Network response was not ok');
         }
 
         const result = await response.json();
 
         const Medicine = result.data.Medicine;
-        setMedicineList(Medicine.map((m) => {
-          return {
-            id: m._id,
-            ...m
-          }
-        }));
+        setMedicineList(
+          Medicine.map((m) => {
+            return {
+              id: m._id,
+              ...m,
+            };
+          })
+        );
         setFilteredList(
           Medicine.map((m) => {
             return {
@@ -46,7 +48,7 @@ const PharmacyHomePharmacist = () => {
           })
         );
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error('Error fetching data:', error);
       }
     }
 
@@ -89,11 +91,14 @@ const PharmacyHomePharmacist = () => {
   const editHandler = async (event, id) => {
     event.preventDefault();
     const requestOptions = {
-      method: "PATCH",
-      headers: { "Content-type": "application/json; charset=UTF-8", },
-      body: JSON.stringify({ price: newPrice, description: newDescription })
+      method: 'PATCH',
+      headers: { 'Content-type': 'application/json; charset=UTF-8' },
+      body: JSON.stringify({ price: newPrice, description: newDescription }),
     };
-    const updatedMedicine = await fetch(`http://localhost:4000/medicine/${id}`, requestOptions);
+    const updatedMedicine = await fetch(
+      `http://localhost:4000/medicine/${id}`,
+      requestOptions
+    );
     const medicineJson = await updatedMedicine.json();
 
     const newMedicine = await medicineJson.data.medicine;
@@ -107,7 +112,7 @@ const PharmacyHomePharmacist = () => {
         allMedicines.push(medicine);
       }
     }
-    
+
     for (const medicine of filteredList) {
       if (medicine.id === id) {
         filteredMedicines.push(newMedicine);
@@ -116,30 +121,21 @@ const PharmacyHomePharmacist = () => {
       }
     }
 
-    setMedicineList(allMedicines)
-    setFilteredList(filteredMedicines)
+    setMedicineList(allMedicines);
+    setFilteredList(filteredMedicines);
+  };
 
-  }
-
-
-  const newPriceTextFieldHandler = event => {
-    setNewPrice(
-      event.target.value
-    )
-  }
-  const newDescriptionTextFieldHandler = event => {
-    setNewDescription(
-      event.target.value
-    )
-  }
-
-
-
+  const newPriceTextFieldHandler = (event) => {
+    setNewPrice(event.target.value);
+  };
+  const newDescriptionTextFieldHandler = (event) => {
+    setNewDescription(event.target.value);
+  };
 
   const borderStyle = {
-    border: "1px solid #ccc",
-    padding: "10px",
-    margin: "10px",
+    border: '1px solid #ccc',
+    padding: '10px',
+    margin: '10px',
   };
 
   return (
@@ -165,26 +161,26 @@ const PharmacyHomePharmacist = () => {
           <img
             src={item.image}
             alt={item.description}
-            style={{ width: "500px", height: "auto" }}
+            style={{ width: '500px', height: 'auto' }}
           />
           <p>Description: {item.description}</p>
           <p>Price: {item.price}</p>
-          {/* if(pharmacist){ */}
-          <p>Sales: {item.sales}</p>
-          <p>Quantity: {item.quantity}</p>
+          {true ? ( //DUMMY_USER.role == 'pharmacist' ? (
+            <React.Fragment>
+              <p>Sales: {item.sales}</p>
+              <p>Quantity: {item.quantity}</p>
+              <hr />
+              <form onSubmit={(event) => editHandler(event, item.id)}>
+                <label>New Price</label>
+                <input type="text" onChange={newPriceTextFieldHandler} />
 
-
-          <hr />
-          <form onSubmit={(event) => editHandler(event, item.id)}>
-            <label>New Price</label>
-            <input type='text' onChange={newPriceTextFieldHandler} />
-
-            <label>New Description</label>
-            <input type='text' onChange={newDescriptionTextFieldHandler} />
-            <hr />
-            <button type="submit" >Edit</button>
-          </form>
-          {/* } */}
+                <label>New Description</label>
+                <input type="text" onChange={newDescriptionTextFieldHandler} />
+                <hr />
+                <button type="submit">Edit</button>
+              </form>
+            </React.Fragment>
+          ) : null}
         </div>
       ))}
     </React.Fragment>
