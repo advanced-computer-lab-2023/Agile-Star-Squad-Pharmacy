@@ -64,7 +64,14 @@ class AddMedicineForm extends Component {
       headers: { "Content-type": "application/json; charset=UTF-8" },
       body: JSON.stringify(this.state),
     };
-    fetch("http://localhost:4000/medicine", requestOptions);
+    fetch("http://localhost:4000/medicine", requestOptions)
+    .then((response) => {
+      if (response.status === 200) {
+        alert("Medicine added successfully!");
+      } else {
+        alert("Error adding medicine. Please try again.");
+      }
+    });
   };
 
   render() {
@@ -122,7 +129,8 @@ class AddMedicineForm extends Component {
             {medicinalUseOptions}
           </select>
         </div>
-        <button type="submit">Add Medicine</button>
+        <button type="submit" id="addMedicineButton">Add Medicine</button>
+
       </form>
     );
   }

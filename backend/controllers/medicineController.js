@@ -68,7 +68,6 @@ exports.getMedicine = catchAsync(async (req, res, next) => {
 //   });
 // });
 const filterObj = (obj, ...allowedFields) => {
-  console.log(allowedFields);
   const newObj = {};
   Object.keys(obj).forEach((el) => {
     if (allowedFields.includes(el)) newObj[el] = obj[el];
@@ -76,11 +75,7 @@ const filterObj = (obj, ...allowedFields) => {
   return newObj;
 };
 exports.updateMedicine = catchAsync(async (req, res, next) => {
-  // if (req.body.password) {
-  //   return next(new AppError('Cannot update password in this route!',400));
-  // }
-
-  const filteredBody = filterObj(req.body, "description", "price");
+  const filteredBody = filterObj(req.body, "price", "description");
   console.log(filteredBody);
   const updatedMedicine = await Medicine.findByIdAndUpdate(
     req.params.id,
@@ -90,10 +85,8 @@ exports.updateMedicine = catchAsync(async (req, res, next) => {
       runValidators: true,
     }
   );
+  console.log(updatedMedicine)
 
-  // if (!updatedDoctor) {
-  //   return next(new AppError('Cannot update this field', 400));
-  // }
   res.status(200).json({
     status: "success",
     data: {
