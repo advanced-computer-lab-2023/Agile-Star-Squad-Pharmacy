@@ -76,10 +76,20 @@ const filterObj = (obj, ...allowedFields) => {
 };
 exports.updateMedicine = catchAsync(async (req, res, next) => {
   const filteredBody = filterObj(req.body, "price", "description");
-  console.log(filteredBody);
+  let filteredBodyFinal;
+  if(filteredBody.price == ""){
+      filteredBodyFinal = filterObj(req.body, "description");
+    }
+  else   if(filteredBody.description == ""){
+     filteredBodyFinal = filterObj(req.body, "price");
+      }
+  else{
+     filteredBodyFinal = filterObj(req.body, "price", "description");
+      }
+      
   const updatedMedicine = await Medicine.findByIdAndUpdate(
     req.params.id,
-    filteredBody,
+    filteredBodyFinal,
     {
       new: true,
       runValidators: true,
