@@ -9,6 +9,10 @@ router
   .post(adminController.createAdmin);
 
 router
+  .route('/requests')
+  .get(adminController.viewAllRequests);
+
+router
   .route('/:id')
   .get(adminController.getAdmin)
   .delete(adminController.removeAdmin);

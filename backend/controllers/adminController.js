@@ -1,6 +1,7 @@
 const Admin = require('../models/adminModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
+const Request = require('../models/requestModel');
 
 exports.createAdmin = catchAsync(async (req, res, next) => {
   const newAdmin = await Admin.create(req.body);
@@ -43,6 +44,17 @@ exports.getAdmin = catchAsync(async (req, res, next) => {
     status: 'success',
     data: {
       admin,
+    },
+  });
+});
+
+exports.viewAllRequests = catchAsync(async (req, res, next) => {
+  const requests = await Request.find();
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      requests,
     },
   });
 });
