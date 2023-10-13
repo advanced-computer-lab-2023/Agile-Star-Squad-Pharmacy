@@ -1,18 +1,18 @@
-import React, { Component } from "react";
-import medicinalUseEnum from "../../util/medicinalUseEnum";
+import React, { Component } from 'react';
+import medicinalUseEnum from '../../shared/util/medicinalUseEnum';
 
 class AddMedicineForm extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      name: "",
-      description: "",
-      price: "",
-      sales: "",
-      quantity: "",
-      image: "",
-      medicinalUse: "cold",
+      name: '',
+      description: '',
+      price: '',
+      sales: '',
+      quantity: '',
+      image: '',
+      medicinalUse: 'cold',
     };
   }
 
@@ -60,16 +60,15 @@ class AddMedicineForm extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const requestOptions = {
-      method: "POST",
-      headers: { "Content-type": "application/json; charset=UTF-8" },
+      method: 'POST',
+      headers: { 'Content-type': 'application/json; charset=UTF-8' },
       body: JSON.stringify(this.state),
     };
-    fetch("http://localhost:4000/medicine", requestOptions)
-    .then((response) => {
+    fetch('http://localhost:4000/medicine', requestOptions).then((response) => {
       if (response.status === 200) {
-        alert("Medicine added successfully!");
+        alert('Medicine added successfully!');
       } else {
-        alert("Error adding medicine. Please try again.");
+        alert('Error adding medicine. Please try again.');
       }
     });
   };
@@ -129,8 +128,9 @@ class AddMedicineForm extends Component {
             {medicinalUseOptions}
           </select>
         </div>
-        <button type="submit" id="addMedicineButton">Add Medicine</button>
-
+        <button type="submit" id="addMedicineButton">
+          Add Medicine
+        </button>
       </form>
     );
   }

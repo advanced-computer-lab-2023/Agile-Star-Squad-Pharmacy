@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
 import LandingPage from './shared/pages/landingPage';
 import PharmacyHome from './pharmacy/pages/pharmacyHome';
-import AddMedicineForm from './shared/components/FormElements/addMedicineForm';
+import AddMedicineForm from './pharmacist/pages/addMedicine';
 
 function App() {
   return (
