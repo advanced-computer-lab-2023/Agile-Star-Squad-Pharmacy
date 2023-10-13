@@ -196,5 +196,5 @@ const PharmacyHomePharmacist = () => {
     </React.Fragment>
   );
 };
-
+// dihehdjkdsnfdfueh
 export default PharmacyHomePharmacist;
