@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import medicinalUseEnum from '../../shared/util/medicinalUseEnum';
+import { useNavigate } from 'react-router-dom';
 
 const PharmacyHomePharmacist = () => {
   const [medicineList, setMedicineList] = useState([]);
@@ -138,6 +139,12 @@ const PharmacyHomePharmacist = () => {
     margin: '10px',
   };
 
+  const navigate = useNavigate();
+
+  const addNewMedicineHandler = () => {
+    navigate('/addNewMedicine');
+  };
+
   return (
     <React.Fragment>
       <form onSubmit={onSubmitHandler}>
@@ -155,6 +162,9 @@ const PharmacyHomePharmacist = () => {
         </select>
         <button type="submit">SUBMIT</button>
         <hr />
+        {true ? ( //DUMMY_USER.role == 'pharmacist' ?
+          <button onClick={addNewMedicineHandler}>ADD MEDICINE</button>
+        ) : null}
       </form>
       {filteredList.map((item, index) => (
         <div key={index} style={borderStyle}>
