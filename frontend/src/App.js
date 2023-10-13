@@ -11,8 +11,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage />} exact />
-          <Route path="/pharmacyHome" element={<PharmacyHome />} exact />
-          <Route path="/addNewMedicine" element={<AddMedicineForm />} exact />
+          <Route path="/pharmacy/home" element={<PharmacyHome />} exact />
+          <Route path="/medicine/add" element={<AddMedicineForm />} exact />
           {/*redirect to landing page if wrong url*/}
           <Route path="*" element={<Navigate to="/" />} />{' '}
         </Routes>

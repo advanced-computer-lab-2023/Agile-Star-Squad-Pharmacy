@@ -19,7 +19,7 @@ class LandingPage extends Component {
 
     return (
       <React.Fragment>
-        <Link to="pharmacyHome">
+        <Link to="pharmacy/home">
           <button type="button">Go to Pharmacy Home</button>
         </Link>
         {/* // <Link to='patientRegisterForm'>

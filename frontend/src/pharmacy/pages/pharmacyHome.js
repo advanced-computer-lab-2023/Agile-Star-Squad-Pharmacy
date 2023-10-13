@@ -142,7 +142,7 @@ const PharmacyHomePharmacist = () => {
   const navigate = useNavigate();
 
   const addNewMedicineHandler = () => {
-    navigate('/addNewMedicine');
+    navigate('/medicine/add');
   };
 
   return (
