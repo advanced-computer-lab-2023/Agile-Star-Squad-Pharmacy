@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
-import LandingPage from './shared/pages/landingPage';
-import PharmacyHome from './pharmacy/pages/pharmacyHome';
-import AddMedicineForm from './pharmacist/pages/addMedicine';
+import LandingPage from './shared/pages/LandingPage';
+import PharmacyHome from './pharmacy/pages/PharmacyHome';
+import AddMedicineForm from './pharmacist/pages/AddMedicine';
 
 function App() {
   return (

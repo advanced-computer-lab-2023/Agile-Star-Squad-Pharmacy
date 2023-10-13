@@ -38,7 +38,7 @@ const filterObj = (obj, ...allowedFields) => {
 
 exports.updatePharmacist = catchAsync(async (req, res, next) => {
   if (req.body.password) {
-    return next(new AppError('Cannot update password in this route!',400));
+    return next(new AppError('Cannot update password in this route!', 400));
   }
 
   const filteredBody = filterObj(
@@ -68,17 +68,16 @@ exports.updatePharmacist = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.PharmacistSignup = catchAsync(async (req, res, next) => {
+exports.pharmacistSignup = catchAsync(async (req, res, next) => {
   const newRequest = await Request.create(req.body);
-  const newPharmacist = await Pharmacist.create(req.body);
+  // const newPharmacist = await Pharmacist.create(req.body);
   res.status(200).json({
     status: 'success',
     data: {
-      Pharmacist: newPharmacist,
+      Request: newRequest,
     },
   });
 });
-
 
 exports.getPharmacist = catchAsync(async (req, res, next) => {
   const Pharmacist = await Pharmacist.findById(req.params.id);

@@ -8,7 +8,7 @@ const router = express.Router({
 router
   .route('/')
   .get(pharmacistController.getAllPharmacist)
-  .post(pharmacistController.PharmacistSignup);
+  .post(pharmacistController.pharmacistSignup);
 
 router
   .route('/:id')
