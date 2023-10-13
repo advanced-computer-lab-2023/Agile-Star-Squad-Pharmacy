@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import medicinalUseEnum from "../../shared/util/medicinalUseEnum";
 
-const PharmacyHome = () => {
+const PharmacyHomePatient = () => {
   const [medicineList, setMedicineList] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
 
@@ -9,8 +9,8 @@ const PharmacyHome = () => {
 
   const [medicinalUse, setMedicinalUse] = useState("");
 
-  const [newPrice, setNewPrice] = useState("");
-  const [newDescription, setNewDescription] = useState("");
+//   const [newPrice, setNewPrice] = useState("");
+//   const [newDescription, setNewDescription] = useState("");
 
   useEffect(() => {
     async function fetchData() {
@@ -36,6 +36,7 @@ const PharmacyHome = () => {
         setFilteredList(
           Medicine.map((m) => {
             return {
+              name: m.name,
               id: m._id,
               image: m.image,
               description: m.description,
@@ -77,6 +78,7 @@ const PharmacyHome = () => {
         )
         .map((m) => {
           return {
+            name: m.name,
             image: m.image,
             description: m.description,
             price: m.price,
@@ -86,54 +88,6 @@ const PharmacyHome = () => {
         })
     );
   };
-  const editHandler = async (event, id) => {
-    event.preventDefault();
-    const requestOptions = {
-      method: "PATCH",
-      headers: { "Content-type": "application/json; charset=UTF-8", },
-      body: JSON.stringify({ price: newPrice, description: newDescription })
-    };
-    const updatedMedicine = await fetch(`http://localhost:4000/medicine/${id}`, requestOptions);
-    const medicineJson = await updatedMedicine.json();
-
-    const newMedicine = await medicineJson.data.medicine;
-    const allMedicines = [];
-    const filteredMedicines = [];
-
-    for (const medicine of filteredList) {
-      if (medicine.id === id) {
-        allMedicines.push(newMedicine);
-      } else {
-        allMedicines.push(medicine);
-      }
-    }
-    
-    for (const medicine of filteredList) {
-      if (medicine.id === id) {
-        filteredMedicines.push(newMedicine);
-      } else {
-        filteredMedicines.push(medicine);
-      }
-    }
-
-    setMedicineList(allMedicines)
-    setFilteredList(filteredMedicines)
-
-  }
-
-
-  const newPriceTextFieldHandler = event => {
-    setNewPrice(
-      event.target.value
-    )
-  }
-  const newDescriptionTextFieldHandler = event => {
-    setNewDescription(
-      event.target.value
-    )
-  }
-
-
 
 
   const borderStyle = {
@@ -150,7 +104,6 @@ const PharmacyHome = () => {
           id="textInput"
           name="userInput"
           placeholder="search by name"
-          // value={nameField} // Set the input field value to the state
           onChange={searchByNameHandler}
         />
         <select value={medicinalUse} onChange={dropDownHandler}>
@@ -167,28 +120,13 @@ const PharmacyHome = () => {
             alt={item.description}
             style={{ width: "500px", height: "auto" }}
           />
+          <p>Name: {item.name}</p>
           <p>Description: {item.description}</p>
           <p>Price: {item.price}</p>
-          {/* if(pharmacist){ */}
-          <p>Sales: {item.sales}</p>
-          <p>Quantity: {item.quantity}</p>
-
-
-          <hr />
-          <form onSubmit={(event) => editHandler(event, item.id)}>
-            <label>New Price</label>
-            <input type='text' onChange={newPriceTextFieldHandler} />
-
-            <label>New Description</label>
-            <input type='text' onChange={newDescriptionTextFieldHandler} />
-            <hr />
-            <button type="submit" >Edit</button>
-          </form>
-          {/* } */}
         </div>
       ))}
     </React.Fragment>
   );
 };
 
-export default PharmacyHome;
+export default PharmacyHomePatient;
