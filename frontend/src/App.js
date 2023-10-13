@@ -4,6 +4,8 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import LandingPage from './shared/pages/LandingPage';
 import PharmacyHome from './pharmacy/pages/PharmacyHome';
 import AddMedicineForm from './pharmacist/pages/AddMedicine';
+import PatientRegisterForm from './patient/pages/PatientRegister';
+import PharmacistRequest from './pharmacist/pages/PharmacistRequest';
 
 function App() {
   return (
@@ -12,6 +14,16 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} exact />
           <Route path="/pharmacy/home" element={<PharmacyHome />} exact />
+          <Route
+            path="/pharmacist/register"
+            element={<PharmacistRequest />}
+            exact
+          />
+          <Route
+            path="/patient/register"
+            element={<PatientRegisterForm />}
+            exact
+          />
           <Route path="/medicine/add" element={<AddMedicineForm />} exact />
           {/*redirect to landing page if wrong url*/}
           <Route path="*" element={<Navigate to="/" />} />{' '}

@@ -22,6 +22,15 @@ class LandingPage extends Component {
         <Link to="pharmacy/home">
           <button type="button">Go to Pharmacy Home</button>
         </Link>
+        <hr />
+        <Link to="patient/register">
+          <button type="button">Register as a Patient</button>
+        </Link>
+        <hr />
+        <Link to="pharmacist/register">
+          <button type="button">Register as a Pharmacist</button>
+        </Link>
+        <hr />
         {/* // <Link to='patientRegisterForm'>
             //     <button type="button" onClick={routeChangeRegister}>Register as Doctor</button>
             // </Link>
