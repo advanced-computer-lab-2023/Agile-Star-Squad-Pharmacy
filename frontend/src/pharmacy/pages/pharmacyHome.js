@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import medicinalUseEnum from '../../shared/util/medicinalUseEnum';
+import medicinalUseEnum from '../../shared/util/MedicinalUseEnum';
 import { useNavigate } from 'react-router-dom';
 
 const PharmacyHomePharmacist = () => {

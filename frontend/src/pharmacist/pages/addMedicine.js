@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import medicinalUseEnum from '../../shared/util/medicinalUseEnum';
+import medicinalUseEnum from '../../shared/util/MedicinalUseEnum';
 
 class AddMedicineForm extends Component {
   constructor(props) {
