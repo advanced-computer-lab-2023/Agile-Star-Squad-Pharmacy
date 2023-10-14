@@ -8,7 +8,6 @@ const PharmacyHomePharmacist = () => {
   const [filteredList, setFilteredList] = useState([]);
 
   const [nameField, setNameField] = useState('');
-
   const [medicinalUse, setMedicinalUse] = useState('');
 
   const [newPrice, setNewPrice] = useState('');
@@ -163,7 +162,7 @@ const PharmacyHomePharmacist = () => {
         </select>
         <button type="submit">SUBMIT</button>
         <hr />
-        {true ? ( //DUMMY_USER.role == 'pharmacist' ?
+        {DUMMY_USER.role == 'pharmacist' ? (
           <button onClick={addNewMedicineHandler}>ADD MEDICINE</button>
         ) : null}
       </form>
