@@ -14,6 +14,7 @@ class LandingPage extends Component {
 
     return (
       <React.Fragment>
+        <hr />
         <Link to="admin/home">
           <button
             type="button"
