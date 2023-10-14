@@ -6,6 +6,8 @@ import PharmacyHome from './pharmacy/pages/PharmacyHome';
 import AddMedicineForm from './pharmacist/pages/AddMedicine';
 import PatientRegisterForm from './patient/pages/PatientRegister';
 import PharmacistRequest from './pharmacist/pages/PharmacistRequest';
+import AdminHome from './admin/Home/AdminHome';
+import ManageUsersPage from './admin/ManageUsers/ManageUsersPage';
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
             exact
           />
           <Route path="/medicine/add" element={<AddMedicineForm />} exact />
+          <Route path="/admin/home" element={<AdminHome/>} exact/>
+          <Route path="/admin/manage" element={<ManageUsersPage/>} exact/>
           {/*redirect to landing page if wrong url*/}
           <Route path="*" element={<Navigate to="/" />} />{' '}
         </Routes>
