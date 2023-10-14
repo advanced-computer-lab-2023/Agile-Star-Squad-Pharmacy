@@ -8,6 +8,9 @@ const AdminHome = (props) => {
       <Link to="/admin/manage">
         <button>Manage Users</button>
       </Link>
+      <Link to="/pharmacy/home">
+        <button>Go to Pharmacy</button>
+      </Link>
     </div>
   );
 };
