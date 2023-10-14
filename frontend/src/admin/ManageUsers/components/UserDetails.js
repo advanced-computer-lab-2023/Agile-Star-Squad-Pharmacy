@@ -16,8 +16,8 @@ const UserDetails = (props) => {
             return getPatientBody();
         } else if (role === 'Admin') {
             return getAdminBody();
-        } else if (role === 'Doctor') {
-            return getDoctorBody();
+        } else if (role === 'Pharmacist') {
+            return getPharmacistBody();
         }
     }
 
@@ -63,7 +63,7 @@ const UserDetails = (props) => {
         </div>);
     }
 
-    const getDoctorBody = () => {
+    const getPharmacistBody = () => {
         return <React.Fragment>
             <div>
                 <span><h4>Username</h4></span>
@@ -72,6 +72,10 @@ const UserDetails = (props) => {
             <div>
                 <span><h4>Name</h4></span>
                 <span>{props.data['name']}</span>
+            </div>
+            <div>
+                <span><h4>Name</h4></span>
+                <span>{props.data['email']}</span>
             </div>
             <div>
                 <span><h4>Date of Birth</h4></span>
@@ -89,10 +93,7 @@ const UserDetails = (props) => {
                 <span><h4>Educational Background</h4></span>
                 <span>{props.data['educationalBackground']}</span>
             </div>
-            <div>
-                <span><h4>Specialty</h4></span>
-                <span>{props.data['specialty']}</span>
-            </div>
+          
         </React.Fragment>
     }
 
