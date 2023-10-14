@@ -58,7 +58,7 @@ const PharmacyHomePharmacist = () => {
 
   const medicinalUseOptions = []; // fill options based on medicinalUse enum
   for (const use of medicinalUseEnum) {
-    medicinalUseOptions.push(<option value={use}>{use}</option>);
+    medicinalUseOptions.push(<option key={use} value={use}>{use}</option>);
   }
 
   const searchByNameHandler = (event) => {
@@ -102,7 +102,8 @@ const PharmacyHomePharmacist = () => {
     );
     const medicineJson = await updatedMedicine.json();
 
-    const newMedicine = await medicineJson.data.medicine;
+    let newMedicine = await medicineJson.data.medicine;
+    newMedicine = {...newMedicine, id: newMedicine._id};
     const allMedicines = [];
     const filteredMedicines = [];
 
@@ -167,7 +168,7 @@ const PharmacyHomePharmacist = () => {
         ) : null}
       </form>
       {filteredList.map((item, index) => (
-        <div key={index} style={borderStyle}>
+        <div key={item.id} style={borderStyle}>
           <img
             src={item.image}
             alt={item.description}
