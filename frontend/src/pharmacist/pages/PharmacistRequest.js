@@ -1,124 +1,143 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-class PharmacistRequestForm extends Component {
+const PharmacistRequestForm = () => {
+  const [formData, setFormData] = useState({
+    username: '',
+    name: '',
+    email: '',
+    password: '',
+    dateOfBirth: '',
+    hourlyRate: '',
+    affiliation: '',
+    educationalBackground: '',
+  });
 
-    constructor(props) {
-        super(props)
+  const navigate = useNavigate();
 
-        this.state = {
-            username: '',
-            name: '',
-            email: '',
-            password: '',
-            dateOfBirth: '',
-            hourlyRate: '',
-            affiliation: '',
-            educationalBackground: ''
-        }
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-type': 'application/json; charset=UTF-8' },
+        body: JSON.stringify(formData),
+      };
+      const response = await fetch(
+        'http://localhost:4000/pharmacist',
+        requestOptions
+      );
+
+      if (response.ok) {
+        // Handle a successful response
+        alert('Request is pending...');
+        navigate('/');
+      } else {
+        // Handle errors if the server response is not ok
+        alert('Registration Failed!');
+      }
+    } catch (error) {
+      // Handle network errors
+      alert('Network error: ' + error.message);
     }
+  };
 
-    handleUsernameChange = event => {
-        this.setState({
-            username: event.target.value
-        })
-    }
+  const {
+    username,
+    name,
+    email,
+    password,
+    dateOfBirth,
+    hourlyRate,
+    affiliation,
+    educationalBackground,
+  } = formData;
 
-    handleNameChange = event => {
-        this.setState({
-            name: event.target.value
-        })
-    }
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label>Username</label>
+        <input
+          type="text"
+          name="username"
+          value={username}
+          onChange={handleInputChange}
+        />
+      </div>
+      <div>
+        <label>Name</label>
+        <input
+          type="text"
+          name="name"
+          value={name}
+          onChange={handleInputChange}
+        />
+      </div>
+      <div>
+        <label>Email</label>
+        <input
+          type="text"
+          name="email"
+          value={email}
+          onChange={handleInputChange}
+        />
+      </div>
+      <div>
+        <label>Password</label>
+        <input
+          type="text"
+          name="password"
+          value={password}
+          onChange={handleInputChange}
+        />
+      </div>
+      <div>
+        <label>Date of Birth</label>
+        <input
+          type="date"
+          name="dateOfBirth"
+          value={dateOfBirth}
+          onChange={handleInputChange}
+        />
+      </div>
+      <div>
+        <label>Hourly Rate</label>
+        <input
+          type="text"
+          name="hourlyRate"
+          value={hourlyRate}
+          onChange={handleInputChange}
+        />
+      </div>
+      <div>
+        <label>Affiliation</label>
+        <input
+          type="text"
+          name="affiliation"
+          value={affiliation}
+          onChange={handleInputChange}
+        />
+      </div>
+      <div>
+        <label>Educational Background</label>
+        <input
+          type="text"
+          name="educationalBackground"
+          value={educationalBackground}
+          onChange={handleInputChange}
+        />
+      </div>
+      <button type="submit">Request registration</button>
+    </form>
+  );
+};
 
-    handleEmailChange = event => {
-        this.setState({
-            email: event.target.value
-        })
-    }
-
-    handlePasswordChange = event => {
-        this.setState({
-            password: event.target.value
-        })
-    }
-
-    handleDateOfBirthChange = event => {
-        this.setState({
-            dateOfBirth: event.target.value
-        })
-    }
-
-    handleHourlyRateChange = event => {
-        this.setState({
-            hourlyRate: event.target.value
-        })
-    }
-
-    handleAffiliationChange = event => {
-        this.setState({
-            affiliation: event.target.value
-        })
-    }
-
-    handleEducationalBackgroundChange = event => {
-        this.setState({
-            educationalBackground: event.target.value
-        })
-    }
-    // 
-    //PharmacistSignup is temp till we make a request function
-    //
-    handleSubmit = event => {
-        event.preventDefault()
-        const requestOptions = {
-            method: 'POST',
-            headers: { "Content-type": "application/json; charset=UTF-8", },
-            body: JSON.stringify(this.state)
-        };
-        fetch('http://localhost:4000/pharmacist', requestOptions)
-   }
-
-
-
-    render() {
-        const { username, name, email, password, dateOfBirth, hourlyRate, affiliation, educationalBackground } = this.state
-        return (
-            <form onSubmit = {this.handleSubmit}>
-                <div>
-                    <label>Username</label>
-                    <input type='text' value={username} onChange={this.handleUsernameChange} />
-                </div>
-                <div>
-                    <label>Name</label>
-                    <input type='text' value={name} onChange={this.handleNameChange} />
-                </div>
-                <div>
-                    <label>Email</label>
-                    <input type='text' value={email} onChange={this.handleEmailChange} />
-                </div>
-                <div>
-                    <label>Password</label>
-                    <input type='text' value={password} onChange={this.handlePasswordChange} />
-                </div>
-                <div>
-                    <label>Date of Birth</label>
-                    <input type='date' value={dateOfBirth} onChange={this.handleDateOfBirthChange} />
-                </div>
-                <div>
-                    <label>Hourly Rate</label>
-                    <input type='text' value={hourlyRate} onChange={this.handleHourlyRateChange} />
-                </div>
-                <div>
-                    <label>Affiliation</label>
-                    <input type='text' value={affiliation} onChange={this.handleAffiliationChange} />
-                </div>
-                <div>
-                    <label>Educational Background</label>
-                    <input type='text' value={educationalBackground} onChange={this.handleEducationalBackgroundChange} />
-                </div>
-                <button type= "submit">Request registeration</button>
-            </form>
-        )
-    }
-}
-
-export default PharmacistRequestForm
+export default PharmacistRequestForm;
