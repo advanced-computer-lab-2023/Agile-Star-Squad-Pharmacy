@@ -1,195 +1,168 @@
-import React, { Component } from "react";
+import React, { useState } from 'react';
+import { setUserRole } from '../../shared/DummyUsers';
+import { useNavigate } from 'react-router-dom';
 
-class PatientRegisterForm extends Component {
-  constructor(props) {
-    super(props);
+const PatientRegisterForm = () => {
+  const navigate = useNavigate();
 
-    this.state = {
-      username: "",
-      name: "",
-      email: "",
-      password: "",
-      dateOfBirth: "",
-      gender: "male",
-      mobileNumber: "",
-      emergencyContact: {
-        fullName: "",
-        phoneNumber: "",
-        relation: "",
-      },
-    };
-  }
+  const [formData, setFormData] = useState({
+    username: '',
+    name: '',
+    email: '',
+    password: '',
+    dateOfBirth: '',
+    gender: 'male',
+    mobileNumber: '',
+    emergencyContact: {
+      fullName: '',
+      phoneNumber: '',
+      relation: '',
+    },
+  });
 
-  handleUsernameChange = (event) => {
-    this.setState({
-      username: event.target.value,
-    });
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+
+    if (name.startsWith('emergencyContact.')) {
+      const fieldName = name.split('.')[1];
+      setFormData({
+        ...formData,
+        emergencyContact: {
+          ...formData.emergencyContact,
+          [fieldName]: value,
+        },
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
 
-  handleNameChange = (event) => {
-    this.setState({
-      name: event.target.value,
-    });
-  };
-
-  handleEmailChange = (event) => {
-    this.setState({
-      email: event.target.value,
-    });
-  };
-
-  handlePasswordChange = (event) => {
-    this.setState({
-      password: event.target.value,
-    });
-  };
-
-  handleDateOfBirthChange = (event) => {
-    this.setState({
-      dateOfBirth: event.target.value,
-    });
-  };
-
-  handleGenderChange = (event) => {
-    this.setState({
-      gender: event.target.value,
-    });
-  };
-
-  handleMoibleNumberChange = (event) => {
-    this.setState({
-      mobileNumber: event.target.value,
-    });
-  };
-
-  handleEmergencyFullNameChange = (event) => {
-    this.setState({
-      emergencyContact: {
-        ...this.state.emergencyContact,
-        fullName: event.target.value,
-      },
-    });
-  };
-
-  handleEmergencyNumberChange = (event) => {
-    this.setState({
-      emergencyContact: {
-        ...this.state.emergencyContact,
-        phoneNumber: event.target.value,
-      },
-    });
-  };
-
-  handleEmergencyRelationChange = (event) => {
-    this.setState({
-      emergencyContact: {
-        ...this.state.emergencyContact,
-        relation: event.target.value,
-      },
-    });
-  };
-
-  handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-type": "application/json; charset=UTF-8" },
-      body: JSON.stringify(this.state),
-    };
-    fetch("http://localhost:4000/patients", requestOptions);
+    try {
+      const response = await fetch('http://localhost:4000/patients', {
+        method: 'POST',
+        headers: { 'Content-type': 'application/json; charset=UTF-8' },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        // Handle a successful response
+        setUserRole('patient');
+        navigate('/pharmacy/home');
+      } else {
+        // Handle errors if the server response is not ok
+        alert('Registration Failed!');
+      }
+    } catch (error) {
+      // Handle network errors
+      alert('Network error: ' + error.message);
+    }
   };
 
-  render() {
-    const {
-      username,
-      name,
-      email,
-      password,
-      dateOfBirth,
-      gender,
-      mobileNumber,
-      emergencyContact,
-    } = this.state;
-    return (
-      <form onSubmit={this.handleSubmit}>
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label>Username</label>
+        <input
+          type="text"
+          name="username"
+          value={formData.username}
+          onChange={handleInputChange}
+        />
+      </div>
+      <div>
+        <label>Name</label>
+        <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleInputChange}
+        />
+      </div>
+      <div>
+        <label>Email</label>
+        <input
+          type="text"
+          name="email"
+          value={formData.email}
+          onChange={handleInputChange}
+        />
+      </div>
+      <div>
+        <label>Password</label>
+        <input
+          type="text"
+          name="password"
+          value={formData.password}
+          onChange={handleInputChange}
+        />
+      </div>
+      <div>
+        <label>Date of Birth</label>
+        <input
+          type="date"
+          name="dateOfBirth"
+          value={formData.dateOfBirth}
+          onChange={handleInputChange}
+        />
+      </div>
+      <div>
+        <label>Gender</label>
+        <select
+          name="gender"
+          value={formData.gender}
+          onChange={handleInputChange}
+        >
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+      </div>
+      <div>
+        <label>Mobile Number</label>
+        <input
+          type="text"
+          name="mobileNumber"
+          value={formData.mobileNumber}
+          onChange={handleInputChange}
+        />
+      </div>
+      <div>
+        <label>Emergency Contact:</label>
         <div>
-          <label>Username</label>
+          <label>Full Name</label>
           <input
             type="text"
-            value={username}
-            onChange={this.handleUsernameChange}
+            name="emergencyContact.fullName"
+            value={formData.emergencyContact.fullName}
+            onChange={handleInputChange}
           />
         </div>
         <div>
-          <label>Name</label>
-          <input type="text" value={name} onChange={this.handleNameChange} />
-        </div>
-        <div>
-          <label>Email</label>
-          <input type="text" value={email} onChange={this.handleEmailChange} />
-        </div>
-        <div>
-          <label>Password</label>
+          <label>Mobile Number</label>
           <input
             type="text"
-            value={password}
-            onChange={this.handlePasswordChange}
+            name="emergencyContact.phoneNumber"
+            value={formData.emergencyContact.phoneNumber}
+            onChange={handleInputChange}
           />
         </div>
         <div>
-          <label>Date of Birth</label>
-          <input
-            type="date"
-            value={dateOfBirth}
-            onChange={this.handleDateOfBirthChange}
-          />
-        </div>
-        <div>
-          <label>Gender</label>
-          <select type="text" value={gender} onChange={this.handleGenderChange}>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
-        </div>
-        <div>
-          <label>Moible Number</label>
+          <label>Relation</label>
           <input
             type="text"
-            value={mobileNumber}
-            onChange={this.handleMoibleNumberChange}
+            name="emergencyContact.relation"
+            value={formData.emergencyContact.relation}
+            onChange={handleInputChange}
           />
         </div>
-        <div>
-          <label>Emergency Contact:</label>
-          <div>
-            <label>Full Name</label>
-            <input
-              type="text"
-              value={emergencyContact.fullName}
-              onChange={this.handleEmergencyFullNameChange}
-            />
-          </div>
-          <div>
-            <label>Moible Number</label>
-            <input
-              type="text"
-              value={emergencyContact.phoneNumber}
-              onChange={this.handleEmergencyNumberChange}
-            />
-          </div>
-          <div>
-            <label>Relation</label>
-            <input
-              type="text"
-              value={emergencyContact.relation}
-              onChange={this.handleEmergencyRelationChange}
-            />
-          </div>
-        </div>
-        <button type="submit">Register</button>
-      </form>
-    );
-  }
-}
+      </div>
+      <button type="submit">Register</button>
+    </form>
+  );
+};
 
 export default PatientRegisterForm;

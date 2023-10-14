@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import medicinalUseEnum from '../../shared/util/MedicinalUseEnum';
 import { useNavigate } from 'react-router-dom';
+import { DUMMY_USER } from '../../shared/DummyUsers';
 
 const PharmacyHomePharmacist = () => {
   const [medicineList, setMedicineList] = useState([]);
@@ -175,7 +176,7 @@ const PharmacyHomePharmacist = () => {
           />
           <p>Description: {item.description}</p>
           <p>Price: {item.price}</p>
-          {true ? ( //DUMMY_USER.role == 'pharmacist' ? (
+          {DUMMY_USER.role == 'pharmacist' ? (
             <React.Fragment>
               <p>Sales: {item.sales}</p>
               <p>Quantity: {item.quantity}</p>
