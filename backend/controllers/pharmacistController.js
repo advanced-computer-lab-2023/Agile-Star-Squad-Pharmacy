@@ -15,9 +15,9 @@ exports.getAllPharmacist = catchAsync(async (req, res, next) => {
 });
 
 exports.removePharmacist = catchAsync(async (req, res, next) => {
-  const Pharmacist = await Pharmacist.findByIdAndDelete(req.params.id);
+  const pharmacist = await Pharmacist.findByIdAndDelete(req.params.id);
 
-  if (!Pharmacist) {
+  if (!pharmacist) {
     return next(new AppError('No Pharmacist found with that ID', 404));
   }
 
