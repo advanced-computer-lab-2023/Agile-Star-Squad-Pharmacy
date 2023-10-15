@@ -9,7 +9,7 @@ const requestSchema = new mongoose.Schema(
             required: [true, 'Please provide a username.'],
             unique: true,
             maxlength: [30, 'A username must have less or equal then 30 characters'],
-            minlength: [8, 'A username must have more or equal to 8 characters'],
+            // minlength: [8, 'A username must have more or equal to 8 characters'],
         },
         name: {
             type: String,
