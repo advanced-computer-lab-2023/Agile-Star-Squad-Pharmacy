@@ -38,10 +38,6 @@ const RequestDetails = (props) => {
                 <span>{props.data['educationalBackground']}</span>
             </div>
             <div>
-                <span><h4>Specialty</h4></span>
-                <span>{props.data['specialty']}</span>
-            </div>
-            <div>
                 <span><h4>Status</h4></span>
                 <span>{props.data['status']}</span>
             </div>

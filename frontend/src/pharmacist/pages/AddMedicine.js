@@ -12,6 +12,7 @@ class AddMedicineForm extends Component {
       sales: '',
       quantity: '',
       image: '',
+      activeIngredients: '',
       medicinalUse: 'cold',
     };
   }
@@ -19,6 +20,12 @@ class AddMedicineForm extends Component {
   handleNameChange = (event) => {
     this.setState({
       name: event.target.value,
+    });
+  };
+
+  handleActiveIngredientsChange = (event) => {
+    this.setState({
+      activeIngredients: event.target.value,
     });
   };
 
@@ -78,7 +85,7 @@ class AddMedicineForm extends Component {
     for (const use of medicinalUseEnum) {
       medicinalUseOptions.push(<option value={use}>{use}</option>);
     }
-    const { name, description, price, sales, quantity, image, medicinalUse } =
+    const { name, description, price, sales, quantity, activeIngredients, image, medicinalUse } =
       this.state;
     return (
       <form onSubmit={this.handleSubmit}>
@@ -108,6 +115,14 @@ class AddMedicineForm extends Component {
             type="number"
             value={sales}
             onChange={this.handleSalesChange}
+          />
+        </div>
+        <div>
+          <label>Active Ingredients</label>
+          <input
+            type="text"
+            value={activeIngredients}
+            onChange={this.handleActiveIngredientsChange}
           />
         </div>
         <div>

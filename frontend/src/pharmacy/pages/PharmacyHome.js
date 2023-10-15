@@ -40,6 +40,7 @@ const PharmacyHomePharmacist = () => {
           Medicine.map((m) => {
             return {
               id: m._id,
+              name: m.name,
               image: m.image,
               description: m.description,
               price: m.price,
@@ -81,6 +82,7 @@ const PharmacyHomePharmacist = () => {
         .map((m) => {
           return {
             image: m.image,
+            name: m.name,
             description: m.description,
             price: m.price,
             sales: m.sales,
@@ -174,6 +176,7 @@ const PharmacyHomePharmacist = () => {
             alt={item.description}
             style={{ width: '500px', height: 'auto' }}
           />
+          <p>Name: {item.name}</p>
           <p>Description: {item.description}</p>
           <p>Price: {item.price}</p>
           {DUMMY_USER.role == 'pharmacist' ? (
