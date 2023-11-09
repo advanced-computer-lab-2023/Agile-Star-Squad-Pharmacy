@@ -3,6 +3,7 @@ import medicinalUseEnum from '../../shared/util/MedicinalUseEnum';
 import { useNavigate } from 'react-router-dom';
 import { DUMMY_USER } from '../../shared/DummyUsers';
 //import Input from '../UI/Input';
+import CartContext from './Cart';
 
 
 const PharmacyHomePharmacist = () => {
@@ -154,16 +155,11 @@ const PharmacyHomePharmacist = () => {
     navigate('/patient/pages/Cart');
   };
 
-  
-    // const [quantity, setQuantity] = useState(1);
+  const cartCtx = useContext(CartContext);
 
-    // const onChange = (value) => {
-    //     setQuantity(value.target.value);
-    // };
-
-    // const addItem = () => {
-    //     props.addItem(quantity);
-    // };
+  const addItem = (medicine) => {
+  cartCtx.addItem({ name: medicine.name, price: medicine.price, description: medicine.description, price: medicine.price, quantity: 1 });
+  };
 
 
   return (
@@ -202,7 +198,7 @@ const PharmacyHomePharmacist = () => {
           {DUMMY_USER.role == 'patient' ? (
             <div>
            {/* <Input type='number' value={quantity} onChange={onChange} label="Amount" /> */}
-            <button >+ Add</button>
+            <button onClick={()=>addItem(item)} type = "submit" >+ Add</button>
             {/* onClick={addItem} */}
            </div>
             ) : null}

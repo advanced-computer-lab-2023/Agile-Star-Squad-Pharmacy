@@ -9,13 +9,14 @@ import CartContext from './Cart';
 const CartPage = (props) => {
     const cartCtx = useContext(CartContext);
     
-    const removeItem = (id) => {
-        cartCtx.removeItem(props.id);
+    const removeItem = (name) => {
+        cartCtx.removeItem(props.name);
     };
 
-    const medSummaryItems = cartCtx.items.map((item) => {
-        return <MedSummaryItem key={item.id} label={item.title} price={item.price} quantity={item.quantity} remove={removeItem} id={item.id}/>;
-    });
+    const medSummaryItems = cartCtx.items.map((medicine) => {
+        return <MedSummaryItem key={item.name} label={item.name} price={item.price} quantity={item.quantity} remove={removeItem} name={item.name}/>;
+   //return <MealSummaryItem key={item.id} label={item.title} price={item.price} quantity={item.quantity} remove={removeItem} id={item.id}/>;
+      });
 
     return (
         <div className="cart-page">
