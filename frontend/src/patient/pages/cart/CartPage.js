@@ -15,7 +15,7 @@ const CartPage = (props) => {
   };
 
   const medSummaryItems = cartCtx.items.map((medicine) => {
-      return <MedSummaryItem key={medicine.name} label={medicine.name} price={medicine.price} quantity={medicine.quantity} remove={removeItem} name={medicine.name} />;
+      return <MedSummaryItem key={medicine.name} id={medicine.id} label={medicine.name} price={medicine.price} quantity={medicine.quantity} remove={removeItem} name={medicine.name} />;
       //return <MealSummaryItem key={item.id} label={item.title} price={item.price} quantity={item.quantity} remove={removeItem} id={item.id}/>;
     })
   ;
