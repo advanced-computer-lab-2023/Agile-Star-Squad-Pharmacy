@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import medicinalUseEnum from '../../shared/util/MedicinalUseEnum';
 import { useNavigate } from 'react-router-dom';
 import { DUMMY_USER } from '../../shared/DummyUsers';
+//import Input from '../UI/Input';
+
 
 const PharmacyHomePharmacist = () => {
   const [medicineList, setMedicineList] = useState([]);
@@ -148,6 +150,22 @@ const PharmacyHomePharmacist = () => {
     navigate('/medicine/add');
   };
 
+  const redirectToCartPage = () => {
+    navigate('/patient/pages/Cart');
+  };
+
+  
+    // const [quantity, setQuantity] = useState(1);
+
+    // const onChange = (value) => {
+    //     setQuantity(value.target.value);
+    // };
+
+    // const addItem = () => {
+    //     props.addItem(quantity);
+    // };
+
+
   return (
     <React.Fragment>
       <form onSubmit={onSubmitHandler}>
@@ -164,6 +182,7 @@ const PharmacyHomePharmacist = () => {
           {medicinalUseOptions}
         </select>
         <button type="submit">SUBMIT</button>
+        <button onClick={redirectToCartPage}>My Cart</button>
         <hr />
         {DUMMY_USER.role == 'pharmacist' ? (
           <button onClick={addNewMedicineHandler}>ADD MEDICINE</button>
@@ -179,6 +198,15 @@ const PharmacyHomePharmacist = () => {
           <p>Name: {item.name}</p>
           <p>Description: {item.description}</p>
           <p>Price: {item.price}</p>
+
+          {DUMMY_USER.role == 'patient' ? (
+            <div>
+           {/* <Input type='number' value={quantity} onChange={onChange} label="Amount" /> */}
+            <button >+ Add</button>
+            {/* onClick={addItem} */}
+           </div>
+            ) : null}
+
           {DUMMY_USER.role == 'pharmacist' ? (
             <React.Fragment>
               <p>Sales: {item.sales}</p>
@@ -199,6 +227,6 @@ const PharmacyHomePharmacist = () => {
       ))}
     </React.Fragment>
   );
-};
-// dihehdjkdsnfdfueh
+          };
+
 export default PharmacyHomePharmacist;

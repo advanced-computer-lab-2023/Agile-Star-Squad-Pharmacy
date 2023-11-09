@@ -8,6 +8,7 @@ import PatientRegisterForm from './patient/pages/PatientRegister';
 import PharmacistRequest from './pharmacist/pages/PharmacistRequest';
 import AdminHome from './admin/Home/AdminHome';
 import ManageUsersPage from './admin/ManageUsers/ManageUsersPage';
+import CartPage from './patient/pages/cart/CartPage';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             element={<PatientRegisterForm />}
             exact
           />
+          <Route path="/patient/pages/Cart" element={<CartPage />} exact />
           <Route path="/medicine/add" element={<AddMedicineForm />} exact />
           <Route path="/admin/home" element={<AdminHome/>} exact/>
           <Route path="/admin/manage" element={<ManageUsersPage/>} exact/>
