@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import medicinalUseEnum from '../../shared/util/MedicinalUseEnum';
 import { useNavigate } from 'react-router-dom';
 import { DUMMY_USER } from '../../shared/DummyUsers';
 //import Input from '../UI/Input';
-import CartContext from './Cart';
+import CartContext, { CartContextProvider } from '../../patient/pages/cart/Cart';
 
 
 const PharmacyHomePharmacist = () => {
@@ -157,8 +157,10 @@ const PharmacyHomePharmacist = () => {
 
   const cartCtx = useContext(CartContext);
 
-  const addItem = (medicine) => {
-  cartCtx.addItem({ name: medicine.name, price: medicine.price, description: medicine.description, price: medicine.price, quantity: 1 });
+  const addItem = (medicine, e) => {
+    e.preventDefault();
+    console.log(medicine);
+  cartCtx.addItem({ id:medicine.id, name: medicine.name, price: medicine.price, description: medicine.description, price: medicine.price, quantity: 1 });
   };
 
 
@@ -198,7 +200,7 @@ const PharmacyHomePharmacist = () => {
           {DUMMY_USER.role == 'patient' ? (
             <div>
            {/* <Input type='number' value={quantity} onChange={onChange} label="Amount" /> */}
-            <button onClick={()=>addItem(item)} type = "submit" >+ Add</button>
+            <button onClick={(e)=>addItem(item, e)} type = "submit" >+ Add</button>
             {/* onClick={addItem} */}
            </div>
             ) : null}

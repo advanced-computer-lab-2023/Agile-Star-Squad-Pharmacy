@@ -9,10 +9,12 @@ import PharmacistRequest from './pharmacist/pages/PharmacistRequest';
 import AdminHome from './admin/Home/AdminHome';
 import ManageUsersPage from './admin/ManageUsers/ManageUsersPage';
 import CartPage from './patient/pages/cart/CartPage';
+import { CartContextProvider } from './patient/pages/cart/Cart';
 
 function App() {
   return (
     <div className="App">
+      <CartContextProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage />} exact />
@@ -35,6 +37,7 @@ function App() {
           <Route path="*" element={<Navigate to="/" />} />{' '}
         </Routes>
       </BrowserRouter>
+      </CartContextProvider>
     </div>
   );
 }

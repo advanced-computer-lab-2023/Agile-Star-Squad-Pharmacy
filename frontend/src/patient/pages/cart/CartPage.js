@@ -7,19 +7,21 @@ import { useContext } from 'react';
 import CartContext from './Cart';
 
 const CartPage = (props) => {
-    const cartCtx = useContext(CartContext);
-    
-    const removeItem = (name) => {
-        cartCtx.removeItem(props.name);
-    };
+  const cartCtx = useContext(CartContext);
+    console.log(cartCtx.items.length);
 
-    const medSummaryItems = cartCtx.items.map((medicine) => {
-        return <MedSummaryItem key={item.name} label={item.name} price={item.price} quantity={item.quantity} remove={removeItem} name={item.name}/>;
-   //return <MealSummaryItem key={item.id} label={item.title} price={item.price} quantity={item.quantity} remove={removeItem} id={item.id}/>;
-      });
+  const removeItem = (name) => {
+    cartCtx.removeItem(props.name);
+  };
 
-    return (
-        <div className="cart-page">
+  const medSummaryItems = cartCtx.items.map((medicine) => {
+      return <MedSummaryItem key={medicine.name} label={medicine.name} price={medicine.price} quantity={medicine.quantity} remove={removeItem} name={medicine.name} />;
+      //return <MealSummaryItem key={item.id} label={item.title} price={item.price} quantity={item.quantity} remove={removeItem} id={item.id}/>;
+    })
+  ;
+
+  return (
+    <div className="cart-page">
       {medSummaryItems.length > 0 ? (
         <>
           <div className="summary">
@@ -38,7 +40,7 @@ const CartPage = (props) => {
       )}
     </div>
 
-       );
+  );
 };
 
 export default CartPage;

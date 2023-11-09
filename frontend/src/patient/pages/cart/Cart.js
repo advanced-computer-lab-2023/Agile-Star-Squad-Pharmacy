@@ -40,7 +40,9 @@ export const CartContextProvider = (props) => {
     const [cartState, dispatchCart] = useReducer(cartReducer, { length: 0, items: [], total: 0 });
 
     const addItem = (item) => {
+        console.log(item);
         dispatchCart({ type: 'ADD-ITEM', item: item });
+        console.log(cartState);
     };
 
     const removeItem = (itemID) => {
