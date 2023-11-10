@@ -15,6 +15,7 @@ const PharmacyHomePharmacist = () => {
 
   const [newPrice, setNewPrice] = useState('');
   const [newDescription, setNewDescription] = useState('');
+  
 
   useEffect(() => {
     async function fetchData() {
@@ -157,10 +158,18 @@ const PharmacyHomePharmacist = () => {
 
   const cartCtx = useContext(CartContext);
 
+  const [quantity, setQuantity] = useState(1);
+
+
+  const onChange = (value) => {
+    setQuantity(value.target.value);
+  };
+
+
   const addItem = (medicine, e) => {
     e.preventDefault();
     console.log(medicine);
-  cartCtx.addItem({ id:medicine.id, name: medicine.name, price: medicine.price, description: medicine.description, price: medicine.price, quantity: 1 });
+  cartCtx.addItem({ id:medicine.id, name: medicine.name, price: medicine.price, description: medicine.description, price: medicine.price, quantity: quantity });
   };
 
 
@@ -199,9 +208,9 @@ const PharmacyHomePharmacist = () => {
 
           {DUMMY_USER.role == 'patient' ? (
             <div>
-           {/* <Input type='number' value={quantity} onChange={onChange} label="Amount" /> */}
+            <input type='number' value={quantity} onChange={onChange}  min="1" label="Amount" />
+
             <button onClick={(e)=>addItem(item, e)} type = "submit" >+ Add</button>
-            {/* onClick={addItem} */}
            </div>
             ) : null}
 

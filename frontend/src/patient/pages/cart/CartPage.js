@@ -32,7 +32,7 @@ const CartPage = (props) => {
             </div>
           </div>
           <div>
-            <button className="secondary" /* onClick={() => Handle order click }*/>Order</button>
+            <button className="secondary" /* onClick={() => Handle order click }*/>Checkout</button>
           </div>
         </>
       ) : (
