@@ -8,7 +8,7 @@ const requestSchema = new mongoose.Schema(
             type: String,
             required: [true, 'Please provide a username.'],
             unique: true,
-            maxlength: [30, 'A username must have less or equal then 30 characters'],
+            maxlength: [30, 'A username must have 30 characters or less'],
             // minlength: [8, 'A username must have more or equal to 8 characters'],
         },
         name: {
@@ -44,8 +44,19 @@ const requestSchema = new mongoose.Schema(
             type: String,
             enum: ['rejected', 'accepted', 'pending'],
             default: 'pending'
+        },
+        idImage: {
+            type: String,
+            required: [true, "Please provide your ID."],
+        },
+        pharmacyLicense: {
+            type: String,
+            required: [true, "Please provide your medical license."],
+        },
+        pharmacyDegree: {
+            type: String,
+            required: [true, "Please provide your medical degree."],
         }
-
     },
     {
         toJSON: { virtuals: true },
