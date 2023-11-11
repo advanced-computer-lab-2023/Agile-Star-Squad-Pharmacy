@@ -169,7 +169,7 @@ const PharmacyHomePharmacist = () => {
   const addItem = (medicine, e) => {
     e.preventDefault();
     console.log(medicine);
-  cartCtx.addItem({ id:medicine.id, name: medicine.name, price: medicine.price, description: medicine.description, price: medicine.price, quantity: quantity });
+  cartCtx.addItem({ id:medicine.id, image:medicine.image , name: medicine.name, price: medicine.price, description: medicine.description, price: medicine.price, quantity: +quantity });
   };
 
 

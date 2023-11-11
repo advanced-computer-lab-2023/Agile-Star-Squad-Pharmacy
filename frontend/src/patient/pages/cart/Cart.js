@@ -17,7 +17,7 @@ const cartReducer = (state, action) => {
             return { length: newLength, items: [action.item, ...state.items], total: newTotal.toFixed(2)};
         } else {
             state.items[existingItemIndex].quantity = state.items[existingItemIndex].quantity + parseInt(action.item.quantity);
-           
+           console.log(1000);
             return {length: newLength, items: state.items, total: newTotal.toFixed(2)}
         }
     }
