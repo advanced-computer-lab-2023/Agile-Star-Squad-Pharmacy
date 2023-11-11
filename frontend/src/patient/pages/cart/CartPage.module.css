@@ -7,11 +7,16 @@
     background-repeat: no-repeat;
     width: 100vw;
     height: 100vh;
+    overflow: hidden;
   }
   .backgroundsvg{
     position:absolute;
-    left:20%;
-    overflow-x: hidden;
+    height: 100vh;
+    overflow: visible;
+    left: -20%;
+    width: 100%;
+    transform: scale(1.2,1.2);
+    z-index: 0;
   }
   .cartItem{
     height: 430px; 
@@ -111,6 +116,7 @@
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
     font-size: 33px;
+    z-index: 2;
   }
 
  .total {
