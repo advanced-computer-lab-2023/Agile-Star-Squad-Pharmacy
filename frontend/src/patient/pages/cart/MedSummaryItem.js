@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import classes from './CartPage.module.css';
 import CartContext from './Cart';
+import bin from './bin.png';
 
 const MedSummaryItem = (props) => {
     const cartCtx = useContext(CartContext);
@@ -11,6 +12,9 @@ const MedSummaryItem = (props) => {
 
     const decrement = () => {
         cartCtx.removeItem(props.id);
+    }
+    const removeAll = () => {
+        cartCtx.removeAll(props.id);
     }
 
     return (
@@ -35,7 +39,11 @@ const MedSummaryItem = (props) => {
                         <button className={classes.inc} onClick={decrement}>-</button>
                         <span > {props.quantity} </span>
                         <button className={classes.inc} onClick={increment}>+</button>
-                    </div>
+
+                        <button className={classes.bin} onClick={removeAll}>
+                        <img src={bin} />
+                         </button>                  
+                           </div>
 
                 </div>
 

@@ -5,7 +5,8 @@ const CartContext = React.createContext({
     items: [],
     total: 0,
     addItem: (item) => { },
-    removeItem: (itemID) => { }
+    removeItem: (itemID) => { },
+    removeAll: (itemID) => { }
 });
 
 const cartReducer = (state, action) => {
@@ -32,6 +33,15 @@ const cartReducer = (state, action) => {
         }
         return { length: state.length - 1, items: state.items, total: newTotal.toFixed(2) };
     }
+    if (action.type === 'REMOVE-ALL') {
+        const removedIndex = state.items.findIndex((item) => action.itemID === item.id);
+        const removedItem = state.items[removedIndex];
+        const newTotal = state.total - (removedItem.price * removedItem.quantity) ;
+        
+        state.items.splice(removedIndex, 1);
+        
+        return { length: state.length - removedItem.quantity , items: state.items, total: newTotal.toFixed(2) };
+    }
 
     return { length: 0, items: {} };
 }
@@ -48,6 +58,9 @@ export const CartContextProvider = (props) => {
     const removeItem = (itemID) => {
         dispatchCart({ type: 'REMOVE-ITEM', itemID: itemID });
     }
+    const removeAll = (itemID) => {
+        dispatchCart({ type: 'REMOVE-ALL', itemID: itemID });
+    }
 
     return (
         <CartContext.Provider value={{
@@ -55,7 +68,8 @@ export const CartContextProvider = (props) => {
             length: cartState.length,
             total: cartState.total,
             addItem: addItem,
-            removeItem: removeItem
+            removeItem: removeItem,
+            removeAll: removeAll
         }}>
             {props.children}
         </CartContext.Provider>

@@ -46,7 +46,7 @@
   .price{
     text-align:center ;
     position: relative;
-    left: 260%;
+    left: 220%;
     top: -45px;
     font-weight: bold;
     color: black;
@@ -80,13 +80,23 @@
       
   }
   .more{
-    background-color: white;
+    background-color: transparent;
     color: black;
     border: none; 
     border-radius: 10px; 
     text-decoration: underline;
     font-weight: bold;
   }
+
+  .bin{
+    background-color: transparent;
+    border: none; 
+    border-radius: 10px; 
+    font-weight: bold;
+    position: relative;
+    left: 144%;
+  }
+
   .back{
     background-color: transparent;
     color: black;

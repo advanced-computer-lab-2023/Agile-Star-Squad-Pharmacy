@@ -157,8 +157,8 @@ const PharmacyHomePharmacist = () => {
 
   const cartCtx = useContext(CartContext);
 
-  const [quantity, setQuantity] = useState(1);
 
+  const [quantity, setQuantity] = useState(1);
 
   const onChange = (value) => {
     setQuantity(value.target.value);
