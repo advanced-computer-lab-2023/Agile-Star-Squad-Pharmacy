@@ -16,7 +16,7 @@ const MedSummaryItem = (props) => {
     return (
         <div>
             
-            <div style={{ display: 'flex', alignItems: 'center' }}>
+             <div style={{ display: 'flex', alignItems: 'center' }}>
                 <img
             src={props.image}
             alt={props.description}
@@ -31,7 +31,6 @@ const MedSummaryItem = (props) => {
                 <div>
                     <label className={classes.price}> $ {props.price}</label>
                     <br></br>
-                    <br></br>
                     <span >Quantity: </span>
                 <button className={classes.inc} onClick={decrement}>-</button>
                 <span > {props.quantity} </span>
@@ -41,8 +40,7 @@ const MedSummaryItem = (props) => {
             </div>
             
             </div>
-            <span>____________________________________________________</span>
-
+            <hr></hr>
             </div>
 
            

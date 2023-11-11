@@ -7,6 +7,7 @@ import { useContext } from 'react';
 import CartContext from './Cart';
 import background from './cartbackground.jpg';
 import icon from './cartIcon.png';
+import arrow from './ArrowLeft.png';
 
 
 const CartPage = (props) => {
@@ -26,12 +27,17 @@ const CartPage = (props) => {
   return (
     <div className={classes.cartpage}>
       <div className='col-5'>
+        <div  className={classes.backarrow}>
+      <img src={arrow}
+              style={{ width: '20px', height: 'auto' }}
+            />
         <button className={classes.back} /* onClick={() => Handle order click }*/> Back</button>
+        </div>
       </div>
       <div className='col-5'>
         <div className={`d-flex flex-row ${classes.rightSection} justify-space-between`}>
           <div>YOUR SHOPPING CART</div>
-          <div className={classes.icon} style={{ width: "30px" }}>
+          <div style={{ width: "30px" }}>
             <img
               src={icon}
               style={{ width: '30px', height: 'auto' }}
@@ -39,25 +45,30 @@ const CartPage = (props) => {
           </div>
 
         </div>
+
         <div className={classes.pageContent}>
           {medSummaryItems.length > 0 ? (
             <div className={classes.summary}>
               <div className={classes.cartItem}>{medSummaryItems}</div>
-              <div className="total">
-                <h2>Total Amount: $ {cartCtx.total}</h2>
+              <div>
+                <h2 className={classes.total}>Total Amount: $ {cartCtx.total}</h2>
                 <div className={classes.checkoutButton}>
                   <button className={classes.check} >Checkout</button>
                 </div>
               </div>
             </div>
+            
+
           ) : (
-            <p className={classes.empty}>Cart seems empty?
+            <div className={classes.empty}>
+            <p >Cart seems empty?
               <button className={classes.more} >Shop more</button>
 
             </p>
+            </div>
           )}
-
-        </div>
+          </div>
+        
       </div>
       <div className='col-2'></div>
 
