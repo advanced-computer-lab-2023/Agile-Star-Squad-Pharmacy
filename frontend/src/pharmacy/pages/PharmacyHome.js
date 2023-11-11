@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import medicinalUseEnum from '../../shared/util/MedicinalUseEnum';
 import { useNavigate } from 'react-router-dom';
 import { DUMMY_USER } from '../../shared/DummyUsers';
-//import Input from '../UI/Input';
 import CartContext, { CartContextProvider } from '../../patient/pages/cart/Cart';
 
 
@@ -189,7 +188,9 @@ const PharmacyHomePharmacist = () => {
           {medicinalUseOptions}
         </select>
         <button type="submit">SUBMIT</button>
+        {DUMMY_USER.role == 'patient' ? (
         <button onClick={redirectToCartPage}>My Cart</button>
+        ) : null}
         <hr />
         {DUMMY_USER.role == 'pharmacist' ? (
           <button onClick={addNewMedicineHandler}>ADD MEDICINE</button>

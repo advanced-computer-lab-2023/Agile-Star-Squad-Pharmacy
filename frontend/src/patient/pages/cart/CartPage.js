@@ -1,6 +1,3 @@
-//import ReactDOM from 'react-dom';
-//import Modal from '../UI/Modal';
-import React from 'react';
 import MedSummaryItem from './MedSummaryItem';
 import classes from './CartPage.module.css';
 import { useContext } from 'react';
@@ -8,6 +5,8 @@ import CartContext from './Cart';
 import background from './cartbackground.jpg';
 import icon from './cartIcon.png';
 import arrow from './ArrowLeft.png';
+import { useNavigate } from 'react-router-dom';
+
 
 
 const CartPage = (props) => {
@@ -21,8 +20,13 @@ const CartPage = (props) => {
   const medSummaryItems = cartCtx.items.map((medicine) => {
     return <MedSummaryItem key={medicine.name} id={medicine.id} label={medicine.name} price={medicine.price} quantity={medicine.quantity} image={medicine.image} description={medicine.description} remove={removeItem} name={medicine.name} />;
     //return <MealSummaryItem key={item.id} label={item.title} price={item.price} quantity={item.quantity} remove={removeItem} id={item.id}/>;
-  })
-    ;
+  });
+
+  const navigate = useNavigate();
+
+  const toPrevious= () => {
+    navigate(-1);
+  };
 
   return (
     <div className={classes.cartpage}>
@@ -31,7 +35,7 @@ const CartPage = (props) => {
           <img src={arrow}
             style={{ width: '20px', height: 'auto' }}
           />
-          <button className={classes.back} /* onClick={() => Handle order click }*/> Back</button>
+          <button className={classes.back} onClick={toPrevious}> Back</button>
         </div>
       </div>
       <div className='col-5 position-relative'>
@@ -65,7 +69,7 @@ const CartPage = (props) => {
           ) : (
             <div className={classes.empty}>
               <p >Cart seems empty?
-                <button className={classes.more} >Shop more</button>
+                <button className={classes.more}onClick={toPrevious} >Shop more</button>
 
               </p>
             </div>

@@ -30,6 +30,7 @@ function App() {
             element={<PatientRegisterForm />}
             exact
           />
+          <Route path="./pharmacy/pages/PharmacyHome" element={<PharmacyHome/>} exact />
           <Route path="/patient/pages/Cart" element={<CartPage />} exact />
           <Route path="/medicine/add" element={<AddMedicineForm />} exact />
           <Route path="/admin/home" element={<AdminHome/>} exact/>
