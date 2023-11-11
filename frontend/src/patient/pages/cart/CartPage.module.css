@@ -3,6 +3,7 @@
     background-image: url('./backgroundImage.png');
     background-size: cover;
     background-position: center;
+    display: flex;
     background-repeat: no-repeat;
     width: 100vw;
     height: 100vh;
@@ -24,7 +25,6 @@
     
     display: flex;
     justify-content: flex-end; /* Align content to the right */
-    height: 100%; /* Fill the entire height of the viewport */
     position: relative;
     right: 270px;
   }
@@ -71,9 +71,6 @@
   }
  .icon{
     text-align: center;
-    position: relative;
-    left: 450px;
-    top: -55px;
   }
 
   .inc{
@@ -107,6 +104,11 @@
     left: 120px;
     font-size: 16px;
     top: 80px;
+  }
+
+  .rightSection {
+    margin-top: 120px;
+    justify-content: space-between;
   }
 
   
