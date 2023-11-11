@@ -10,6 +10,7 @@ import AdminHome from './admin/Home/AdminHome';
 import ManageUsersPage from './admin/ManageUsers/ManageUsersPage';
 import CartPage from './patient/pages/cart/CartPage';
 import { CartContextProvider } from './patient/pages/cart/Cart';
+import "./App.css";
 
 function App() {
   return (

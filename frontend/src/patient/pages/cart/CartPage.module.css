@@ -10,7 +10,7 @@
   .backgroundsvg{
     position:absolute;
     left:20%;
-    overflow: hidden;
+    overflow-x: hidden;
   }
   .cartItem{
     height: 490px;
@@ -66,7 +66,7 @@
     text-align: center;
     position: relative;
     left: 180px;
-    font-family: 'poppins', sans-serif;
+    font-family: 'Poppins', sans-serif;
     
   }
  .icon{
