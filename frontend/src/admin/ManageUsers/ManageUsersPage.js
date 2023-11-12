@@ -165,11 +165,21 @@ const ManageUsersPage = () => {
     }
     setUsers(users.filter((val) => val.username !== username));
   };
+  const statusChangeHandler = (id, status) => {
+    setRequests(
+      requests.map((request) => {
+        if (request.id === id) {
+          request.status = status;
+        }
+        return request;
+      })
+    );
+  } 
 
   return (
     <div className="center">
       {showRequest && (
-        <RequestDetails data={selectedRow} exit={exitRequestModal} />
+        <RequestDetails onStatusChange={statusChangeHandler} data={selectedRow} exit={exitRequestModal} />
       )}
       {showAdminForm && (
         <AdminForm exit={exitAdminModal} refresh={refreshUserData} />

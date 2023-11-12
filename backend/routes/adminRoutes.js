@@ -1,5 +1,6 @@
 const express = require('express');
-const adminController = require('../Controllers/adminController');
+const adminController = require('../controllers/adminController');
+
 
 const router = express.Router();
 
@@ -10,7 +11,10 @@ router
 
 router
   .route('/requests')
-  .get(adminController.viewAllRequests);
+  .get(adminController.viewAllRequests)
+  .post(adminController.acceptRequest)
+  .patch(adminController.rejectRequest);
+
 
 router
   .route('/:id')

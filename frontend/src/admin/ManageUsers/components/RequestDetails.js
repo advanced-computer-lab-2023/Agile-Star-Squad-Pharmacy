@@ -1,16 +1,68 @@
 import Modal from '../../../shared/components/Modal/Modal';
 import ReactDOM from "react-dom";
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const RequestDetails = (props) => {
 
-    const onAccept = () => {
+    const [status, setStatus] = useState(props.data['status']);
 
+    const onAccept = async () => {
+        try {
+            
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-type': 'application/json; charset=UTF-8' },
+                body: JSON.stringify({ ...props.data }),
+            };
+           
+            const response = await fetch(
+                'http://localhost:4000/admins/requests',
+                requestOptions
+            );
+
+            if (response.ok) {
+                // Handle a successful response
+                alert('Pharmacist accepted successfully!');
+                setStatus('Accepted');
+                props.onStatusChange(props.data['id'], 'Accepted');                
+            } else {
+                // Handle errors if the server response is not ok
+                alert('Accepting request Failed!');
+            }
+        } catch (error) {
+            // Handle network errors
+            alert('Network error: ' + error.message);
+        }
     }
 
-    const onReject = () => {
+    const onReject = async () => {
+        try {
+            const requestOptions = {
+                method: 'PATCH',
+                headers: { 'Content-type': 'application/json; charset=UTF-8' },
+                body: JSON.stringify({ ...props.data }),
+            };
+            const response = await fetch(
+                'http://localhost:4000/admins/requests',
+                requestOptions
+            );
+            console.log(response);
 
+            if (response.ok) {
+                // Handle a successful response
+                alert('Pharmacist rejected!');
+                setStatus('Rejected');
+                props.onStatusChange(props.data['id'], 'Rejected');
+            } else {
+                // Handle errors if the server response is not ok
+                alert('Rejecting request Failed!');
+            }
+        } catch (error) {
+            // Handle network errors
+            alert('Network error: ' + error.message);
+        }
     }
-
     return ReactDOM.createPortal(
         <Modal exit={props.exit}>
             <div>
@@ -39,9 +91,9 @@ const RequestDetails = (props) => {
             </div>
             <div>
                 <span><h4>Status</h4></span>
-                <span>{props.data['status']}</span>
+                <span>{status}</span>
             </div>
-            {props.data['status'] === 'pending' && <ActionButtons onReject={onReject} onAccept={onAccept}/>}
+            {status.toLowerCase() === 'pending' && <ActionButtons onReject={onReject} onAccept={onAccept}/>}
         </Modal>, document.getElementById("backdrop-root")
     );
 }
