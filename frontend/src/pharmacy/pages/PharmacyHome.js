@@ -2,8 +2,9 @@ import React, { useState, useEffect, useContext } from 'react';
 import medicinalUseEnum from '../../shared/util/MedicinalUseEnum';
 import { useNavigate } from 'react-router-dom';
 import { DUMMY_USER } from '../../shared/DummyUsers';
-import CartContext, { CartContextProvider } from '../../patient/pages/cart/Cart';
-
+import CartContext, {
+  CartContextProvider,
+} from '../../patient/pages/cart/Cart';
 
 const PharmacyHomePharmacist = () => {
   const [medicineList, setMedicineList] = useState([]);
@@ -14,7 +15,6 @@ const PharmacyHomePharmacist = () => {
 
   const [newPrice, setNewPrice] = useState('');
   const [newDescription, setNewDescription] = useState('');
-  
 
   useEffect(() => {
     async function fetchData() {
@@ -35,6 +35,7 @@ const PharmacyHomePharmacist = () => {
           Medicine.map((m) => {
             return {
               id: m._id,
+              cartQuantity: 1,
               ...m,
             };
           })
@@ -48,6 +49,7 @@ const PharmacyHomePharmacist = () => {
               description: m.description,
               price: m.price,
               sales: m.sales,
+              cartQuantity: 1,
               quantity: m.quantity,
             };
           })
@@ -62,7 +64,11 @@ const PharmacyHomePharmacist = () => {
 
   const medicinalUseOptions = []; // fill options based on medicinalUse enum
   for (const use of medicinalUseEnum) {
-    medicinalUseOptions.push(<option key={use} value={use}>{use}</option>);
+    medicinalUseOptions.push(
+      <option key={use} value={use}>
+        {use}
+      </option>
+    );
   }
 
   const searchByNameHandler = (event) => {
@@ -108,7 +114,7 @@ const PharmacyHomePharmacist = () => {
     const medicineJson = await updatedMedicine.json();
 
     let newMedicine = await medicineJson.data.medicine;
-    newMedicine = {...newMedicine, id: newMedicine._id};
+    newMedicine = { ...newMedicine, id: newMedicine._id };
     const allMedicines = [];
     const filteredMedicines = [];
 
@@ -157,20 +163,37 @@ const PharmacyHomePharmacist = () => {
 
   const cartCtx = useContext(CartContext);
 
-
-  const [quantity, setQuantity] = useState(1);
+  // const [quantity, setQuantity] = useState(1);
 
   const onChange = (value) => {
-    setQuantity(value.target.value);
-  };
+    setFilteredList(
+      filteredList.map((m) => {
+        if (m.id === value.target.id) {
+          return {
+            ...m,
+            cartQuantity: value.target.value,
+          };
+        } else {
+          return m;
+        }
+      })
+    );
 
+    // setQuantity(value.target.value);
+  };
 
   const addItem = (medicine, e) => {
     e.preventDefault();
-    console.log(medicine);
-  cartCtx.addItem({ id:medicine.id, image:medicine.image , name: medicine.name, price: medicine.price, description: medicine.description, price: medicine.price, quantity: +quantity });
+    cartCtx.addItem({
+      id: medicine.id,
+      image: medicine.image,
+      name: medicine.name,
+      price: medicine.price,
+      description: medicine.description,
+      price: medicine.price,
+      quantity: +medicine.cartQuantity,
+    });
   };
-
 
   return (
     <React.Fragment>
@@ -189,7 +212,7 @@ const PharmacyHomePharmacist = () => {
         </select>
         <button type="submit">SUBMIT</button>
         {DUMMY_USER.role == 'patient' ? (
-        <button onClick={redirectToCartPage}>My Cart</button>
+          <button onClick={redirectToCartPage}>My Cart</button>
         ) : null}
         <hr />
         {DUMMY_USER.role == 'pharmacist' ? (
@@ -209,11 +232,20 @@ const PharmacyHomePharmacist = () => {
 
           {DUMMY_USER.role == 'patient' ? (
             <div>
-            <input type='number' value={quantity} onChange={onChange}  min="1" label="Amount" />
+              <input
+                type="number"
+                id={item.id}
+                value={item.cartQuantity}
+                onChange={onChange}
+                min="1"
+                label="Amount"
+              />
 
-            <button onClick={(e)=>addItem(item, e)} type = "submit" >+ Add</button>
-           </div>
-            ) : null}
+              <button onClick={(e) => addItem(item, e)} type="submit">
+                + Add
+              </button>
+            </div>
+          ) : null}
 
           {DUMMY_USER.role == 'pharmacist' ? (
             <React.Fragment>
@@ -235,6 +267,6 @@ const PharmacyHomePharmacist = () => {
       ))}
     </React.Fragment>
   );
-          };
+};
 
 export default PharmacyHomePharmacist;
