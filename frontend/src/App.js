@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
+import Login from './login/pages/login';
+import ResetPassword from './login/pages/ResetPassword';
 import LandingPage from './shared/pages/LandingPage';
 import PharmacyHome from './pharmacy/pages/PharmacyHome';
 import AddMedicineForm from './pharmacist/pages/AddMedicine';
@@ -14,7 +16,8 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<LandingPage />} exact />
+          <Route path="/" element={<Login />} exact />
+          <Route path="/resetPassword" element={<ResetPassword />} exact />
           <Route path="/pharmacy/home" element={<PharmacyHome />} exact />
           <Route
             path="/pharmacist/register"
@@ -27,8 +30,8 @@ function App() {
             exact
           />
           <Route path="/medicine/add" element={<AddMedicineForm />} exact />
-          <Route path="/admin/home" element={<AdminHome/>} exact/>
-          <Route path="/admin/manage" element={<ManageUsersPage/>} exact/>
+          <Route path="/admin/home" element={<AdminHome />} exact />
+          <Route path="/admin/manage" element={<ManageUsersPage />} exact />
           {/*redirect to landing page if wrong url*/}
           <Route path="*" element={<Navigate to="/" />} />{' '}
         </Routes>

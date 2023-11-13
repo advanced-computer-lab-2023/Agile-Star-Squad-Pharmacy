@@ -1,0 +1,12 @@
+.inputField{
+width: 250px;
+  border: none; 
+  border-bottom: 1px solid #a0a0a0; 
+  outline: none; 
+}
+.container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 60px;
+}
