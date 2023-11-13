@@ -51,20 +51,16 @@ function Component2({ setTab3, email }) {
         console.log(id);
         console.log(newPassword);
 
-        fetch(`http://localhost:4000/resetPassword/${id}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ newPassword: newPassword }), // Convert data to JSON format
-          mode: 'no-cors',
-        })
-          .catch((error) => {
-            console.error('Error:', error);
-          });
 
+        const response =await axios
+          .patch(`http://localhost:4000/resetPassword/${id}`, {
+            password: newPassword
+          })
+          .catch(err => {
+            console.log(err);
+          })
 
-        setTab3(true);
+        // setTab3(true);
       }
       else {
         alert("Your password does not match the criteria");
@@ -111,20 +107,22 @@ function Component2({ setTab3, email }) {
         value={retypePassword}
         onChange={handleRetypePassword}
       />
-      <Button
-        style={{ width: '300px', height: '40.541px', marginTop: '-40px' }}
-        onClick={handleSubmit}
-        name="Submit"
-      />
-      <Button
-        style={{
-          backgroundColor: 'white',
-          color: '#193842',
-          borderStyle: 'none',
-        }}
-        onClick={handleEmailCancel}
-        name="Cancel"
-      />
+      <div className={styles.component2Buttons}>
+        <Button
+          style={{ width: '300px', height: '40.541px', marginTop: '-40px' }}
+          onClick={handleSubmit}
+          name="Submit"
+        />
+        <Button
+          style={{
+            backgroundColor: 'white',
+            color: '#193842',
+            borderStyle: 'none',
+          }}
+          onClick={handleEmailCancel}
+          name="Cancel"
+        />
+      </div>
     </div>
   );
 }

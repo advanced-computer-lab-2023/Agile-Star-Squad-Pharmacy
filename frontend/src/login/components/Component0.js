@@ -5,7 +5,7 @@ import InputField from './InputField/InputField';
 import Button from './Button/Button';
 import axios from 'axios';
 
-function Component0({ setTab , setEmail2 }) {
+function Component0({ setTab, setEmail2 }) {
   const [email, setEmail] = useState('');
   const navigate = useNavigate();
 
@@ -13,15 +13,21 @@ function Component0({ setTab , setEmail2 }) {
     if (email === '') {
       return alert("Please provide your email");
     }
-    const response = await axios
-      .post(`http://localhost:4000/resetPassword/${email}`)
-      .then((res) => {
-        setTab(true);
-      })
-      .catch((err) => {
-        alert(err.response.data.message);
+    try {
+      const response = await axios.patch(`http://localhost:4000/resetPassword/${email}`, {
+        withCredentials: true
       });
+      setTab(true);
+      
+      console.log('Password updated:', response.data);
+    } catch (error) {
+      // Handle errors here
+      console.error('Axios Error:', error);
+      console.error('Error Message:', error.message);
+    }
   };
+
+
   const handleInput = (e) => {
     setEmail(e.target.value);
     setEmail2(e.target.value);
@@ -36,7 +42,7 @@ function Component0({ setTab , setEmail2 }) {
           <strong>Forgot Password</strong>
         </p>
       </div>
-      <div>
+      <div className={styles.providEmail}>
         <p className={styles.text}>
           <strong>
             Provide your account's email for which you want to reset your
@@ -50,20 +56,22 @@ function Component0({ setTab , setEmail2 }) {
         placeholder="Email Address"
         onChange={handleInput}
       />
-      <Button
-        style={{ width: '400px', height: '40.541px' }}
-        onClick={handleRequestLink}
-        name="Request reset password link"
-      />
-      <Button
-        style={{
-          backgroundColor: 'white',
-          color: '#193842',
-          borderStyle: 'none',
-        }}
-        onClick={handleEmailCancel}
-        name="Cancel"
-      />
+      <div className={styles.component0Buttons}>
+        <Button
+          style={{ width: '400px', height: '40.541px' }}
+          onClick={handleRequestLink}
+          name="Request OTP"
+        />
+        <Button
+          style={{
+            backgroundColor: 'white',
+            color: '#193842',
+            borderStyle: 'none',
+          }}
+          onClick={handleEmailCancel}
+          name="Cancel"
+        />
+      </div>
     </div>
   );
 }

@@ -23,11 +23,13 @@ function Component3() {
           <strong>Your password has been updated!</strong>
         </p>
       </div>
+      <div className={styles.component3Buttons}>
       <Button
         style={{ width: '300px', height: '40.541px', marginBottom: '-40px' }}
         onClick={handleLogin}
         name="LOGIN"
       />
+      </div>
     </div>
   );
 }

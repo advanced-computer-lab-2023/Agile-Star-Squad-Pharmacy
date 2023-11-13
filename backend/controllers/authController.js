@@ -80,7 +80,7 @@ exports.getUserByEmail = catchAsync(async (req, res, next) => {
     user = pharmacist;
   } else if (patient) {
     user = patient;
-  } else {
+  } else if(admin) {
     user = admin;
   }
   res.status(200).json({
@@ -98,12 +98,12 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   const patient = await Patient.findById(id);
   const admin = await Admin.findById(id);
 
-  if (doctor) {
-    console.log('DOOOOOOCCCC');
+  console.log("DAKHALT")
+ 
+  if (pharmacist) {
     await Pharmacist.findByIdAndUpdate(id, {
       password: newPassword,
     });
-    console.log('LOOOOOOOOOOOOOOOOOOOOL');
   } else if (patient) {
     await Patient.findByIdAndUpdate(id, {
       password: newPassword,

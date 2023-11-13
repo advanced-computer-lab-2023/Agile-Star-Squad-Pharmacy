@@ -50,6 +50,7 @@ function Component1({ setTab2 , email }) {
         </p>
       </div>
       <OTP onOTPChange={handleOTPChange} />
+      <div className={styles.component1Buttons}>
       <Button
         style={{ width: '400px', height: '40.541px' }}
         onClick={handleVerifyCode}
@@ -64,6 +65,7 @@ function Component1({ setTab2 , email }) {
         onClick={handleResendCode}
         name="Resend Code"
       />
+      </div>
     </div>
   );
 }

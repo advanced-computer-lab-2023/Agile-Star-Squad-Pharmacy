@@ -103,7 +103,7 @@ body{
 .p4{
     text-align: center;
     margin-bottom: 70px;
-    margin-top: -30px;
+    margin-top: 40px;
     margin-bottom: 250px;
 }
 
@@ -116,6 +116,27 @@ body{
     list-style-image:url('../images/listBullet.png');
 }
 .buttonAndText{
+    text-align: center;
+    margin-left: -100px;
+}
+
+.providEmail{
+    padding-left: 90px;
+}
+
+.component0Buttons{
+    text-align: center;
+    margin-left: -100px;
+}
+.component1Buttons{
+    text-align: center;
+    margin-left: -100px;
+}
+.component2Buttons{
+    text-align: center;
+    margin-left: -100px;
+}
+.component3Buttons{
     text-align: center;
     margin-left: -100px;
 }
