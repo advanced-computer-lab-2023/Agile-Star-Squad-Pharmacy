@@ -98,6 +98,7 @@ const Login = () => {
                 Forget Password
               </a>
             </div>
+            <div className= {styles.buttonAndText}>
             <Button onClick={handleSubmit} name="Sign In" />
             <div className={styles.createAccount}>
               <p>
@@ -106,6 +107,7 @@ const Login = () => {
                   Sign Up Now
                 </a>
               </p>
+            </div>
             </div>
           </div>
         </div>

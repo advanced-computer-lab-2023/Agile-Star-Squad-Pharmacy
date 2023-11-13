@@ -115,3 +115,7 @@ body{
     line-height: 30px;
     list-style-image:url('../images/listBullet.png');
 }
+.buttonAndText{
+    text-align: center;
+    margin-left: -100px;
+}
