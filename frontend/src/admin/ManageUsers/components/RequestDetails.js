@@ -1,6 +1,5 @@
 import Modal from '../../../shared/components/Modal/Modal';
 import ReactDOM from "react-dom";
-import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 const RequestDetails = (props) => {
@@ -9,13 +8,13 @@ const RequestDetails = (props) => {
 
     const onAccept = async () => {
         try {
-            
+
             const requestOptions = {
                 method: 'POST',
                 headers: { 'Content-type': 'application/json; charset=UTF-8' },
                 body: JSON.stringify({ ...props.data }),
             };
-           
+
             const response = await fetch(
                 'http://localhost:4000/admins/requests',
                 requestOptions
@@ -25,7 +24,7 @@ const RequestDetails = (props) => {
                 // Handle a successful response
                 alert('Pharmacist accepted successfully!');
                 setStatus('Accepted');
-                props.onStatusChange(props.data['id'], 'Accepted');                
+                props.onStatusChange(props.data['id'], 'Accepted');
             } else {
                 // Handle errors if the server response is not ok
                 alert('Accepting request Failed!');
@@ -47,7 +46,6 @@ const RequestDetails = (props) => {
                 'http://localhost:4000/admins/requests',
                 requestOptions
             );
-            console.log(response);
 
             if (response.ok) {
                 // Handle a successful response
@@ -63,6 +61,7 @@ const RequestDetails = (props) => {
             alert('Network error: ' + error.message);
         }
     }
+
     return ReactDOM.createPortal(
         <Modal exit={props.exit}>
             <div>
@@ -93,11 +92,22 @@ const RequestDetails = (props) => {
                 <span><h4>Status</h4></span>
                 <span>{status}</span>
             </div>
-            {status.toLowerCase() === 'pending' && <ActionButtons onReject={onReject} onAccept={onAccept}/>}
+            <div>
+                <span><h4>ID Image</h4></span>
+                <img src={props.data['idImage']} />
+            </div>
+            <div>
+                <span><h4>Pharmacist License</h4></span>
+                <img src={props.data['pharmacyLicense']} />
+            </div>
+            <div>
+                <span><h4>Pharmacist Degree</h4></span>
+                <img src={props.data['pharmacyDegree']} />
+            </div>
+            {status.toLowerCase() === 'pending' && <ActionButtons onReject={onReject} onAccept={onAccept} />}
         </Modal>, document.getElementById("backdrop-root")
     );
 }
-
 
 const ActionButtons = (props) => {
     return (

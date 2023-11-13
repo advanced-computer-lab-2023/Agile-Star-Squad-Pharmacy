@@ -42,7 +42,7 @@ const requestSchema = new mongoose.Schema(
         },
         status: {
             type: String,
-            enum: ['rejected', 'accepted', 'pending'],
+            enum: ['Rejected', 'Accepted', 'Pending'],
             default: 'Pending'
         },
         idImage: {

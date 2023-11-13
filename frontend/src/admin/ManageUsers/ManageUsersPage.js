@@ -117,6 +117,9 @@ const ManageUsersPage = () => {
             affiliation: request['affiliation'],
             educationalBackground: request['educationalBackground'],
             status: request['status'],
+            idImage: request['idImage'],
+            pharmacyLicense: request['pharmacyLicense'],
+            pharmacyDegree: request['pharmacyDegree'],
           };
         }),
       ]);

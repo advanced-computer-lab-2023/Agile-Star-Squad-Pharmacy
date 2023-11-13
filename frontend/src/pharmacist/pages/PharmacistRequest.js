@@ -30,15 +30,15 @@ const PharmacistRequestForm = () => {
   };
 
   const onIdImageChange = (file) => {
-    setIdImage(file);
+    setIdImage(file.target.files[0]);
   }
 
   const onPharmacyLicenseChange = (file) => {
-    setLicenseImage(file);
+    setLicenseImage(file.target.files[0]);
   }
 
   const onPharmacyDegreeChange = (file) => {
-    setDegreeImage(file);
+    setDegreeImage(file.target.files[0]);
   }
 
   const handleSubmit = async (event) => {
@@ -68,10 +68,10 @@ const PharmacistRequestForm = () => {
         degreeDownloadUrl = await getDownloadURL(snapshot.ref)
       });
     }
-    
-    setIdImage(idDownloadUrl);
-    setLicenseImage(licenseDownloadUrl);
-    setDegreeImage(degreeDownloadUrl);
+
+    // setIdImage(idDownloadUrl);
+    // setLicenseImage(licenseDownloadUrl);
+    // setDegreeImage(degreeDownloadUrl);
 
     const data = {
       "username": formData.username,
@@ -82,9 +82,9 @@ const PharmacistRequestForm = () => {
       "hourlyRate": formData.hourlyRate,
       "affiliation": formData.affiliation,
       "educationalBackground": formData.educationalBackground,
-      "idImage": idImageForm,
-      "pharmacyLicense": pharmacyLicenseForm,
-      "pharmacyDegree": pharmacyDegreeForm
+      "idImage": idDownloadUrl,
+      "pharmacyLicense": licenseDownloadUrl,
+      "pharmacyDegree": degreeDownloadUrl,
     }
 
     try {
@@ -122,9 +122,9 @@ const PharmacistRequestForm = () => {
     affiliation,
     educationalBackground,
   } = formData;
-  const {idImage} = idImageForm;
-  const {pharmacyDegree} = pharmacyDegreeForm;
-  const {pharmacyLicense} = pharmacyLicenseForm;
+  const { idImage } = idImageForm;
+  const { pharmacyDegree } = pharmacyDegreeForm;
+  const { pharmacyLicense } = pharmacyLicenseForm;
 
   return (
     <form onSubmit={handleSubmit}>
