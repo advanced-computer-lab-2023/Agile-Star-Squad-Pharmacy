@@ -64,7 +64,7 @@ function Component2({ setTab3, email }) {
           });
 
 
-        // setTab3(true);
+        setTab3(true);
       }
       else {
         alert("Your password does not match the criteria");
