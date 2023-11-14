@@ -13,6 +13,7 @@ import AdminHome from './admin/Home/AdminHome';
 import ManageUsersPage from './admin/ManageUsers/ManageUsersPage';
 import UserContext from './user-store/user-context';
 import CartPage from './patient/pages/cart/CartPage';
+import ChangePassword from './login/pages/ChangePassword';
 import { CartContextProvider } from './patient/pages/cart/Cart';
 import './App.css';
 import Order from "./patient/pages/order/Order"
@@ -29,6 +30,7 @@ function App() {
             <Route path="/pharmacy/home" element={<PharmacyHome />} exact />
             <Route path="/cart" element={<CartPage />} exact />
             <Route path="/order" element={<Order />} exact />
+            <Route path="changePassword" element={<ChangePassword />} exact />
             <Route path="*" element={<Navigate to="/pharmacy/home" />} />{' '}
           </Routes>
         </CartContextProvider>
@@ -38,6 +40,7 @@ function App() {
         <Routes>
           <Route path="/pharmacy/home" element={<PharmacyHome />} exact />
           <Route path="/medicine/add" element={<AddMedicineForm />} exact />
+          <Route path="changePassword" element={<ChangePassword />} exact />
           <Route path="*" element={<Navigate to="/pharmacy/home" />} />{' '}
         </Routes>
       );
@@ -46,6 +49,7 @@ function App() {
         <Routes>
           <Route path="/admin/home" element={<AdminHome />} exact />
           <Route path="/admin/manage" element={<ManageUsersPage />} exact />
+          <Route path="changePassword" element={<ChangePassword />} exact />
           <Route path="*" element={<Navigate to="/admin/home" />} />{' '}
         </Routes>
       );
@@ -86,7 +90,9 @@ function App() {
   }, []);
 
   const logoutHandler = async () => {
-    await axios.get('http://localhost:4000/auth/logout', { withCredentials: true });
+    await axios.get('http://localhost:4000/auth/logout', {
+      withCredentials: true,
+    });
     removeCookie('jwt', { path: '/' });
     user.logout();
   };

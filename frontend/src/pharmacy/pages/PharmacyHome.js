@@ -203,6 +203,10 @@ const PharmacyHomePharmacist = () => {
     navigate(`/order`);
   };
 
+  const changePasswordHandler = () => {
+    navigate('/changePassword');
+  };
+
   return (
     <React.Fragment>
       <form onSubmit={onSubmitHandler}>
@@ -230,6 +234,7 @@ const PharmacyHomePharmacist = () => {
           <button onClick={addNewMedicineHandler}>ADD MEDICINE</button>
         ) : null}
         <button onClick={logout}>logout</button>
+        <button onClick={changePasswordHandler}>change password</button>
       </form>
       {filteredList.map((item, index) => (
         <div key={item.id} style={borderStyle}>
