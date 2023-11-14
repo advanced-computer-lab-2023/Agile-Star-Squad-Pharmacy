@@ -1,6 +1,6 @@
 // Import the necessary models
-const Order = require('../models/Order');
-const Patient = require('../models/Patient');
+const Order = require('../models/orderModel');
+const Patient = require('../models/patientModel');
 
 // Function to get all orders of a patient by their id
 const getOrdersByPatientId = async (req, res) => {
@@ -41,7 +41,13 @@ const deleteOrder = async (req, res) => {
     if (!order) {
       return res.status(404).json({ message: 'Order not found' });
     }
+    const patient = await Patient.findById(order.patient);
+    if (!patient) {
+      return res.status(404).json({ message: 'Patient not found' });
+    }
     await Order.findByIdAndDelete(id);
+    patient.orders.pull(id);
+    await patient.save();
     res.status(200).json({ message: 'Order deleted successfully' });
   } catch (error) {
     console.error(error);
@@ -72,6 +78,7 @@ const addOrder = async (req, res) => {
   try {
     const { patientId, medicineList, totalCost } = req.body;
     const patient = await Patient.findById(patientId);
+
     if (!patient) {
       return res.status(404).json({ message: 'Patient not found' });
     }
@@ -81,6 +88,8 @@ const addOrder = async (req, res) => {
       totalCost,
     });
     await order.save();
+    patient.orders.push(order._id);
+    await patient.save();
     res.status(201).json({ message: 'Order added successfully', order });
   } catch (error) {
     console.error(error);
