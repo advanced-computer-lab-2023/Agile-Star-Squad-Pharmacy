@@ -1,0 +1,12 @@
+.row{
+    justify-content: space-between;
+    
+}
+
+#card2{
+    flex: 0 0 66%;
+}
+.card1{
+    width: 778px;
+    background-color: aqua;
+}
