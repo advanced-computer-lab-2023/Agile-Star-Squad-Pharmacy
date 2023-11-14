@@ -10,11 +10,11 @@ import PharmacistRequest from './pharmacist/pages/PharmacistRequest';
 import AdminHome from './admin/Home/AdminHome';
 import ManageUsersPage from './admin/ManageUsers/ManageUsersPage';
 import CartPage from './patient/pages/cart/CartPage';
-import { CartContextProvider } from './patient/pages/cart/Cart';
+
 import "./App.css";
 import AddingInfo from './payment/AddingInformation';
 import Order from './patient/pages/order/Order';
-import './App.css';
+
 
 function App() {
   return (
@@ -41,6 +41,7 @@ function App() {
             />
             <Route path="/patient/pages/Cart" element={<CartPage />} exact />
             <Route path="/order" element={<Order />} exact />
+            <Route path="/pay" element={<AddingInfo />} exact />
             <Route path="/medicine/add" element={<AddMedicineForm />} exact />
             <Route path="/admin/home" element={<AdminHome />} exact />
             <Route path="/admin/manage" element={<ManageUsersPage />} exact />

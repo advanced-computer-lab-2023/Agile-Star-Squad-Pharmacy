@@ -4,6 +4,9 @@
   "description": "",
   "main": "app.js",
   "dependencies": {
+    "@stripe/react-stripe-js": "^2.3.2",
+    "@stripe/stripe-js": "^2.1.11",
+    "axios": "^1.6.1",
     "body-parser": "^1.20.2",
     "bson": "^5.5.0",
     "debug": "^4.3.4",
@@ -24,6 +27,7 @@
     "smart-buffer": "^4.2.0",
     "socks": "^2.7.1",
     "sparse-bitfield": "^3.0.3",
+    "stripe": "^14.4.0",
     "tr46": "^3.0.0",
     "validator": "^13.11.0",
     "webidl-conversions": "^7.0.0",

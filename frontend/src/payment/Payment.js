@@ -52,8 +52,7 @@ function Payment(props) {
 
       {clientSecret && stripePromise && (
         <Elements stripe={stripePromise} options={{ clientSecret, ...elementStyleOptions }}>
-          <SubscriptionForm doctorId={props.props[0].doctor} patientId={props.props[0].patient} appDate={props.props[0].date} price={props.props[0].price}/>
-          {/* <SubscriptionForm customerId={props.props[0].patient} price= {props.props[0].patient}/> */}
+          <CheckoutForm/>
         </Elements>
       )}
     </>
