@@ -195,6 +195,10 @@ const PharmacyHomePharmacist = () => {
     });
   };
 
+  const goToOrdersHandler = () => {
+    navigate(`/orders/${DUMMY_USER.id}`);
+  };
+
   return (
     <React.Fragment>
       <form onSubmit={onSubmitHandler}>
@@ -212,7 +216,10 @@ const PharmacyHomePharmacist = () => {
         </select>
         <button type="submit">SUBMIT</button>
         {DUMMY_USER.role == 'patient' ? (
-          <button onClick={redirectToCartPage}>My Cart</button>
+          <>
+            <button onClick={redirectToCartPage}>My Cart</button>
+            <button onClick={goToOrdersHandler}>Go to Orders</button>
+          </>
         ) : null}
         <hr />
         {DUMMY_USER.role == 'pharmacist' ? (

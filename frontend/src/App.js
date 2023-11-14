@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { CartContextProvider } from './patient/pages/cart/Cart';
 
 import LandingPage from './shared/pages/LandingPage';
 import PharmacyHome from './pharmacy/pages/PharmacyHome';
@@ -12,36 +13,41 @@ import CartPage from './patient/pages/cart/CartPage';
 import { CartContextProvider } from './patient/pages/cart/Cart';
 import "./App.css";
 import AddingInfo from './payment/AddingInformation';
+import Order from './patient/pages/order/Order';
+import './App.css';
 
 function App() {
   return (
     <div className="App">
       <CartContextProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<LandingPage />} exact />
-          <Route path="/pharmacy/home" element={<PharmacyHome />} exact />
-          <Route
-            path="/pharmacist/register"
-            element={<PharmacistRequest />}
-            exact
-          />
-          <Route
-            path="/patient/register"
-            element={<PatientRegisterForm />}
-            exact
-          />
-          <Route path="./pharmacy/pages/PharmacyHome" element={<PharmacyHome/>} exact />
-          <Route path="/patient/pages/Cart" element={<CartPage />} exact />
-          <Route path="/patient/pages/Cart/pay" element={<AddingInfo />} exact />
-          
-          <Route path="/medicine/add" element={<AddMedicineForm />} exact />
-          <Route path="/admin/home" element={<AdminHome/>} exact/>
-          <Route path="/admin/manage" element={<ManageUsersPage/>} exact/>
-          {/*redirect to landing page if wrong url*/}
-          <Route path="*" element={<Navigate to="/" />} />{' '}
-        </Routes>
-      </BrowserRouter>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Order />} exact />
+            <Route path="/pharmacy/home" element={<PharmacyHome />} exact />
+            <Route
+              path="/pharmacist/register"
+              element={<PharmacistRequest />}
+              exact
+            />
+            <Route
+              path="/patient/register"
+              element={<PatientRegisterForm />}
+              exact
+            />
+            <Route
+              path="./pharmacy/pages/PharmacyHome"
+              element={<PharmacyHome />}
+              exact
+            />
+            <Route path="/patient/pages/Cart" element={<CartPage />} exact />
+            <Route path="/order" element={<Order />} exact />
+            <Route path="/medicine/add" element={<AddMedicineForm />} exact />
+            <Route path="/admin/home" element={<AdminHome />} exact />
+            <Route path="/admin/manage" element={<ManageUsersPage />} exact />
+            {/*redirect to landing page if wrong url*/}
+            <Route path="*" element={<Navigate to="/" />} />{' '}
+          </Routes>
+        </BrowserRouter>
       </CartContextProvider>
     </div>
   );
