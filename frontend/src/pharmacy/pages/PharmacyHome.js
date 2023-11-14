@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import medicinalUseEnum from '../../shared/util/MedicinalUseEnum';
 import { useNavigate } from 'react-router-dom';
-import { user } from '../../shared/DummyUsers';
 import CartContext from '../../patient/pages/cart/Cart';
 import UserContext from '../../user-store/user-context';
 
@@ -200,6 +199,9 @@ const PharmacyHomePharmacist = () => {
     user.logout();
     navigate("/");
   }
+  const goToOrdersHandler = () => {
+    navigate(`/order`);
+  };
 
   return (
     <React.Fragment>
@@ -218,7 +220,10 @@ const PharmacyHomePharmacist = () => {
         </select>
         <button type="submit">SUBMIT</button>
         {user.role == 'patient' ? (
-          <button onClick={redirectToCartPage}>My Cart</button>
+          <>
+            <button onClick={redirectToCartPage}>My Cart</button>
+            <button onClick={goToOrdersHandler}>Go to Orders</button>
+          </>
         ) : null}
         <hr />
         {user.role == 'pharmacist' ? (

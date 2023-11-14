@@ -48,16 +48,17 @@ const patientSchema = new mongoose.Schema({
     },
     relation: {
       type: String,
-      required: [true, 'Please provide a relation.']
-    }
+      required: [true, 'Please provide a relation.'],
+    },
   },
-  
+  orders: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Order',
+    },
+  ],
 });
-// tourSchema.virtual('familyMembers', {
-//   ref: 'Family',
-//   foreignField: 'patient',
-//   localField: '_id',
-// });
+
 const Patient = mongoose.model('Patient', patientSchema);
 
 module.exports = Patient;

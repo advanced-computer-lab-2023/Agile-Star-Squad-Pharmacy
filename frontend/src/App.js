@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
-
 import Login from './login/pages/Login';
 import ResetPassword from './login/pages/ResetPassword';
 import LandingPage from './shared/pages/LandingPage';
@@ -16,6 +15,7 @@ import UserContext from './user-store/user-context';
 import CartPage from './patient/pages/cart/CartPage';
 import { CartContextProvider } from './patient/pages/cart/Cart';
 import './App.css';
+import Order from "./patient/pages/order/Order"
 
 function App() {
   const user = useContext(UserContext);
@@ -28,6 +28,7 @@ function App() {
           <Routes>
             <Route path="/pharmacy/home" element={<PharmacyHome />} exact />
             <Route path="/cart" element={<CartPage />} exact />
+            <Route path="/order" element={<Order />} exact />
             <Route path="*" element={<Navigate to="/pharmacy/home" />} />{' '}
           </Routes>
         </CartContextProvider>
