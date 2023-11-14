@@ -93,16 +93,28 @@ const RequestDetails = (props) => {
                 <span>{status}</span>
             </div>
             <div>
-                <span><h4>ID Image</h4></span>
-                <img src={props.data['idImage']} />
+                <span>ID Image</span>
+                {props.data['idImage'].includes('pdf') ? (
+                    <a href={props.data['idImage']} target="_blank">View PDF</a>
+                ) : (
+                    <img src={props.data['idImage']} alt="ID Image" />
+                )}
             </div>
             <div>
                 <span><h4>Pharmacist License</h4></span>
-                <img src={props.data['pharmacyLicense']} />
+                {props.data['pharmacyLicense'].includes('pdf') ? (
+                    <a href={props.data['pharmacyLicense']} target="_blank" rel="noopener noreferrer">Download PDF</a>
+                ) : (
+                    <img src={props.data['pharmacyLicense']} alt="Pharmacist License" />
+                )}
             </div>
             <div>
                 <span><h4>Pharmacist Degree</h4></span>
-                <img src={props.data['pharmacyDegree']} />
+                {props.data['pharmacyDegree'].includes('pdf') ? (
+                    <a href={props.data['pharmacyDegree']} target="_blank" rel="noopener noreferrer">Download PDF</a>
+                ) : (
+                    <img src={props.data['pharmacyDegree']} alt="Pharmacist Degree" />
+                )}
             </div>
             {status.toLowerCase() === 'pending' && <ActionButtons onReject={onReject} onAccept={onAccept} />}
         </Modal>, document.getElementById("backdrop-root")
