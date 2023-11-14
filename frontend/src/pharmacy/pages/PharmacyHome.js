@@ -196,6 +196,11 @@ const PharmacyHomePharmacist = () => {
     });
   };
 
+  const logout = () => {
+    user.logout();
+    navigate("/");
+  }
+
   return (
     <React.Fragment>
       <form onSubmit={onSubmitHandler}>
@@ -219,6 +224,7 @@ const PharmacyHomePharmacist = () => {
         {user.role == 'pharmacist' ? (
           <button onClick={addNewMedicineHandler}>ADD MEDICINE</button>
         ) : null}
+        <button onClick={logout}>logout</button>
       </form>
       {filteredList.map((item, index) => (
         <div key={item.id} style={borderStyle}>

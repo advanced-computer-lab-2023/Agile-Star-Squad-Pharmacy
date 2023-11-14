@@ -85,14 +85,13 @@ function App() {
   }, []);
 
   const logoutHandler = async () => {
-    await axios.get('http://localhost:4000/auth/logout');
+    await axios.get('http://localhost:4000/auth/logout', { withCredentials: true });
     removeCookie('jwt', { path: '/' });
     user.logout();
   };
 
   return (
     <div className="App">
-      <button onClick={logoutHandler}>logout</button>
       <BrowserRouter>{getUserRoutes()}</BrowserRouter>
     </div>
   );
