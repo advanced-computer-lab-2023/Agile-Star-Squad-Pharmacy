@@ -13,6 +13,9 @@ import PharmacistRequest from './pharmacist/pages/PharmacistRequest';
 import AdminHome from './admin/Home/AdminHome';
 import ManageUsersPage from './admin/ManageUsers/ManageUsersPage';
 import UserContext from './user-store/user-context';
+import CartPage from './patient/pages/cart/CartPage';
+import { CartContextProvider } from './patient/pages/cart/Cart';
+import './App.css';
 
 function App() {
   const user = useContext(UserContext);
@@ -24,6 +27,7 @@ function App() {
       return (
         <Routes>
           <Route path="/pharmacy/home" element={<PharmacyHome />} exact />
+          <Route path="/cart" element={<CartPage />} exact />
           <Route path="*" element={<Navigate to="/pharmacy/home" />} />{' '}
         </Routes>
       );
