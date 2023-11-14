@@ -45,7 +45,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
 
     const response = await axios
-    .get(`http://localhost:4000/${username}/${password}` , {
+    .get(`http://localhost:4000/auth/${username}/${password}` , {
       withCredentials: true
     })
     .then((res) => {
