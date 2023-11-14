@@ -9,7 +9,6 @@ function Component2({ setTab3, email }) {
   const navigate = useNavigate();
   const [newPassword, setNewPassword] = useState('');
   const [retypePassword, setRetypePassword] = useState('');
-  const [id, setId] = useState('');
 
   const handleEmailCancel = () => {
     navigate('/');
@@ -42,10 +41,11 @@ function Component2({ setTab3, email }) {
   const handleSubmit = async (e) => {
     if ((newPassword === retypePassword)) {
       if (isPasswordValid()) {
+        let id = "";
         const user = await axios
           .get(`http://localhost:4000/resetPassword/${email}`)
           .then((res) => {
-            setId(res.data.data.user._id);
+            id=res.data.data.user._id;
           });
 
         console.log(id);
