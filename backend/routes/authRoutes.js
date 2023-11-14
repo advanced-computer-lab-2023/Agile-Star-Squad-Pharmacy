@@ -13,4 +13,8 @@ router.patch('/resetPassword/:id', authController.updatePassword);
 
 router.get('/:username/:password', authController.logIn);
 
+router.route('/logout').get(authController.logout);
+
+router.route('/me').get(authController.me);
+
 module.exports = router;
