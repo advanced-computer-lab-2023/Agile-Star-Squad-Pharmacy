@@ -20,16 +20,17 @@ import './App.css';
 function App() {
   const user = useContext(UserContext);
   const [cookies, setCookie, removeCookie] = useCookies(['jwt']);
-  const [userData, setUserData] = useState(null);
 
   const getUserRoutes = () => {
     if (user.role === 'patient') {
       return (
-        <Routes>
-          <Route path="/pharmacy/home" element={<PharmacyHome />} exact />
-          <Route path="/cart" element={<CartPage />} exact />
-          <Route path="*" element={<Navigate to="/pharmacy/home" />} />{' '}
-        </Routes>
+        <CartContextProvider>
+          <Routes>
+            <Route path="/pharmacy/home" element={<PharmacyHome />} exact />
+            <Route path="/cart" element={<CartPage />} exact />
+            <Route path="*" element={<Navigate to="/pharmacy/home" />} />{' '}
+          </Routes>
+        </CartContextProvider>
       );
     } else if (user.role === 'pharmacist') {
       return (

@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
 import medicinalUseEnum from '../../shared/util/MedicinalUseEnum';
 import { useNavigate } from 'react-router-dom';
-import { DUMMY_USER } from '../../shared/DummyUsers';
-import CartContext, {
-  CartContextProvider,
-} from '../../patient/pages/cart/Cart';
+import { user } from '../../shared/DummyUsers';
+import CartContext from '../../patient/pages/cart/Cart';
+import UserContext from '../../user-store/user-context';
 
 const PharmacyHomePharmacist = () => {
+  const user = useContext(UserContext);
+
   const [medicineList, setMedicineList] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
 
@@ -158,7 +159,7 @@ const PharmacyHomePharmacist = () => {
   };
 
   const redirectToCartPage = () => {
-    navigate('/patient/pages/Cart');
+    navigate('/cart');
   };
 
   const cartCtx = useContext(CartContext);
@@ -211,11 +212,11 @@ const PharmacyHomePharmacist = () => {
           {medicinalUseOptions}
         </select>
         <button type="submit">SUBMIT</button>
-        {DUMMY_USER.role == 'patient' ? (
+        {user.role == 'patient' ? (
           <button onClick={redirectToCartPage}>My Cart</button>
         ) : null}
         <hr />
-        {DUMMY_USER.role == 'pharmacist' ? (
+        {user.role == 'pharmacist' ? (
           <button onClick={addNewMedicineHandler}>ADD MEDICINE</button>
         ) : null}
       </form>
@@ -230,7 +231,7 @@ const PharmacyHomePharmacist = () => {
           <p>Description: {item.description}</p>
           <p>Price: {item.price}</p>
 
-          {DUMMY_USER.role == 'patient' ? (
+          {user.role == 'patient' ? (
             <div>
               <input
                 type="number"
@@ -247,7 +248,7 @@ const PharmacyHomePharmacist = () => {
             </div>
           ) : null}
 
-          {DUMMY_USER.role == 'pharmacist' ? (
+          {user.role == 'pharmacist' ? (
             <React.Fragment>
               <p>Sales: {item.sales}</p>
               <p>Quantity: {item.quantity}</p>
