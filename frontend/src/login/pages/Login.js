@@ -3,34 +3,17 @@ import logo from '../images/logo.svg';
 import img from '../images/login-image.png';
 import styles from '../components/login.module.css';
 import InputField from '../components/InputField/InputField';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Button from '../components/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import UserContext from '../../user-store/user-context';
 
 const Login = (props) => {
-  const [token, setToken] = useState(null);
+  const userCtx = useContext(UserContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  let page;
-
-  useEffect(() => {
-    // Function to get the cookie by name
-    const getCookie = (name) => {
-      const value = `; ${document.cookie}`;
-      const parts = value.split(`; ${name}=`);
-
-      if (parts.length === 2) return parts.pop().split(';').shift();
-    };
-
-    // Check if the token exists in cookies
-    const jwtCookie = getCookie('jwt');
-
-    if (jwtCookie) {
-      setToken(jwtCookie);
-    }
-  }, []);
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -47,9 +30,8 @@ const Login = (props) => {
         { withCredentials: true }
       );
       const { role, userId } = response.data.data;
-      // Store the token in state or wherever you manage your application state
-      props.setUser({ role, userId });
-      // You may also want to store the token in a more persistent way (e.g., localStorage)
+      console.log('role', role);
+      userCtx.login({ role, userId });
 
       navigate('/');
     } catch (err) {
@@ -58,7 +40,7 @@ const Login = (props) => {
   };
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid" style={{ backgroundColor: '#96B7C7' }}>
       <div className="row">
         <div className="col-md-7">
           <div className={styles.logo}>

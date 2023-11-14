@@ -11,7 +11,7 @@ router
 
 router
   .route('/:id')
-  .get(middleware.adminAuth,patientController.getPatient)
-  .delete(middleware.adminAuth,patientController.removePatient);
+  .get(middleware.patientAuth, patientController.getPatient)
+  .delete(middleware.adminAuth, patientController.removePatient);
 
 module.exports = router;
