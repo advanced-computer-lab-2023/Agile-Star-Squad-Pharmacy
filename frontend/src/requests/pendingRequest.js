@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 const PendingRequest = (props)=>{
   const navigate = useNavigate();
   const handleButtonLogout = () => {
-    navigate('/landingpage');
+    navigate('/');
 
   }
     return(

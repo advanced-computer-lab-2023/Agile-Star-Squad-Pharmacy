@@ -27,7 +27,7 @@ const AcceptedRequest = (props) => {
 
   }
   const handleButtonLogout = () => {
-    navigate('/landingpage');
+    navigate('/');
 
   }
   const slotSelectStyle = isButtonPressed2 ? classes.slotSelectStyle : "";
@@ -176,7 +176,7 @@ const AcceptedRequest = (props) => {
                       <div className={classes.terms}>Employment Contract</div>
                       <div className={classes.agreement}>Your agreement</div>
                       <div className={`${classes.container} text-start`}>Last Revised: November 14, 2023<br/>
-                      By registering as a doctor on our virtual clinic platform, you agree to adhere to the following terms and conditions:
+                      By registering as a pharmacist on our virtual pharmacy platform, you agree to adhere to the following terms and conditions:
 <br/><br/>
 1.Eligibility and Registration Approval:
 <br/>

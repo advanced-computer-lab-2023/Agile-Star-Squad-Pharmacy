@@ -8,6 +8,9 @@ import PatientRegisterForm from './patient/pages/PatientRegister';
 import PharmacistRequest from './pharmacist/pages/PharmacistRequest';
 import AdminHome from './admin/Home/AdminHome';
 import ManageUsersPage from './admin/ManageUsers/ManageUsersPage';
+import AcceptedRequest from './requests/acceptedRequest';
+import RejectedRequest from './requests/rejectedRequest';
+import PendingRequest from './requests/pendingRequest';
 
 function App() {
   return (
@@ -28,7 +31,9 @@ function App() {
           />
           <Route path="/medicine/add" element={<AddMedicineForm />} exact />
           <Route path="/admin/home" element={<AdminHome/>} exact/>
-          <Route path="/admin/manage" element={<ManageUsersPage/>} exact/>
+          <Route path="/rejectedRequest" element={<RejectedRequest/>} exact />
+          <Route path="/pendingRequest" element={<PendingRequest/>} exact />
+          <Route path="/acceptedRequest" element={<AcceptedRequest/>} exact />
           {/*redirect to landing page if wrong url*/}
           <Route path="*" element={<Navigate to="/" />} />{' '}
         </Routes>
