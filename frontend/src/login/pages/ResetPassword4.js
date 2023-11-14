@@ -13,7 +13,6 @@ const ResetPassword = () => {
   
 
   return (
-    <body>
       <div className="container-fluid">
         <div className="row">
           <div className="col-md-5">
@@ -26,7 +25,6 @@ const ResetPassword = () => {
           
         </div>
       </div>
-    </body>
   );
 };
 

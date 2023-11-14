@@ -11,24 +11,20 @@ const ResetPassword = () => {
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
-    navigate('/')
+    navigate('/');
   };
 
   return (
-    <body>
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-md-5">
-            <div className={styles.logo}>
-              <img src={logo} alt="logo" />
-            </div>
-            <img className={styles.bandage} src={img} alt="login" />
+    <div className="container-fluid">
+      <div className="row">
+        <div className="col-md-5">
+          <div className={styles.logo}>
+            <img src={logo} alt="logo" />
           </div>
-
-          
+          <img className={styles.bandage} src={img} alt="login" />
         </div>
       </div>
-    </body>
+    </div>
   );
 };
 

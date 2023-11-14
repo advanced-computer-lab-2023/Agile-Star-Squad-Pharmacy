@@ -80,7 +80,7 @@ exports.getUserByEmail = catchAsync(async (req, res, next) => {
     user = pharmacist;
   } else if (patient) {
     user = patient;
-  } else if(admin) {
+  } else if (admin) {
     user = admin;
   }
   res.status(200).json({
@@ -98,8 +98,6 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   const patient = await Patient.findById(id);
   const admin = await Admin.findById(id);
 
-  console.log("DAKHALT")
- 
   if (pharmacist) {
     await Pharmacist.findByIdAndUpdate(id, {
       password: newPassword,
@@ -211,7 +209,9 @@ exports.logIn = catchAsync(async (req, res, next) => {
 
   const token = createToken(user._id, role);
 
-  res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+  res.cookie('jwt', token, {
+    maxAge: maxAge * 1000,
+  });
 
   res.status(200).json({
     status: 'success',
@@ -223,17 +223,24 @@ exports.logIn = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getRole = (req, res, next) => {
+exports.logout = (req, res) => {
+  res
+    .status(200)
+    .clearCookie('jwt', {
+      maxAge: 1,
+    })
+    .json({ status: 'success' });
+};
+
+exports.me = (req, res) => {
   const token = req.cookies.jwt;
-  // check json web token exists & is verified
-  let role = 'guest';
   if (token) {
     jwt.verify(token, 'supersecret', (err, decodedToken) => {
       if (!err) {
-        // console.log(`decoded token ${decodedToken.role}`);
-        role = decodedToken.role;
+        res.status(200).json({ data: decodedToken });
+      } else {
+        res.status(200).json({ data: null });
       }
     });
   }
-  res.status(200).json({ role });
 };

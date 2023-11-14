@@ -11,14 +11,17 @@ function Component0({ setTab, setEmail2 }) {
 
   const handleRequestLink = async (e) => {
     if (email === '') {
-      return alert("Please provide your email");
+      return alert('Please provide your email');
     }
     try {
-      const response = await axios.patch(`http://localhost:4000/resetPassword/${email}`, {
-        withCredentials: true
-      });
+      const response = await axios.post(
+        `http://localhost:4000/auth/resetPassword/${email}`,
+        {
+          withCredentials: true,
+        }
+      );
       setTab(true);
-      
+
       console.log('Password updated:', response.data);
     } catch (error) {
       // Handle errors here
@@ -26,7 +29,6 @@ function Component0({ setTab, setEmail2 }) {
       console.error('Error Message:', error.message);
     }
   };
-
 
   const handleInput = (e) => {
     setEmail(e.target.value);

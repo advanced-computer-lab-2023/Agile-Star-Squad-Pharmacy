@@ -19,7 +19,7 @@ function Component2({ setTab3, email }) {
   };
   const handleRetypePassword = (e) => {
     setRetypePassword(e.target.value);
-  }
+  };
 
   const isPasswordValid = () => {
     // Password validation checks
@@ -28,51 +28,42 @@ function Component2({ setTab3, email }) {
     const lowercaseCheck = /[a-z]/.test(newPassword);
     const specialCharOrDigitCheck = /[0-9!@#$%^&*]/.test(newPassword);
 
-
     return (
-      lengthCheck &&
-      uppercaseCheck &&
-      lowercaseCheck &&
-      specialCharOrDigitCheck
+      lengthCheck && uppercaseCheck && lowercaseCheck && specialCharOrDigitCheck
     );
   };
 
-
   const handleSubmit = async (e) => {
-    if ((newPassword === retypePassword)) {
+    if (newPassword === retypePassword) {
       if (isPasswordValid()) {
-        let id = "";
+        let id = '';
         const user = await axios
-          .get(`http://localhost:4000/resetPassword/${email}`)
+          .get(`http://localhost:4000/auth/resetPassword/${email}`)
           .then((res) => {
-            id=res.data.data.user._id;
+            id = res.data.data.user._id;
           });
 
         console.log(id);
         console.log(newPassword);
 
-
-        const response =await axios
-          .patch(`http://localhost:4000/resetPassword/${id}`, {
-            password: newPassword
+        const response = await axios
+          .patch(`http://localhost:4000/auth/resetPassword/${id}`, {
+            password: newPassword,
           })
-          .catch(err => {
+          .catch((err) => {
             console.log(err);
-          })
+          });
 
-        // setTab3(true);
-      }
-      else {
-        alert("Your password does not match the criteria");
+        setTab3(true);
+      } else {
+        alert('Your password does not match the criteria');
       }
     } else {
       setNewPassword('');
       setRetypePassword('');
-      alert("Passwords do not match");
+      alert('Passwords do not match');
     }
   };
-
-
 
   return (
     <div className="col-md-7" id={styles.rightCol}>

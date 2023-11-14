@@ -12,7 +12,7 @@ function Component1({ setTab2 , email }) {
 
   const handleVerifyCode = async (e) => {
     const response = await axios
-      .get('http://localhost:4000/resetPassword')
+      .get('http://localhost:4000/auth/resetPassword')
       .then((res) => {
         otpBackend = res.data.code;
         if (otpBackend == otp) {
@@ -29,7 +29,7 @@ function Component1({ setTab2 , email }) {
 
   const handleResendCode = async (e) => {
     const response = await axios
-    .post(`http://localhost:4000/resetPassword/${email}`)
+    .post(`http://localhost:4000/auth/resetPassword/${email}`)
     .then((res) => {
     })
     .catch((err) => {
