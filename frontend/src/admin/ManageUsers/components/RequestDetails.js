@@ -95,7 +95,7 @@ const RequestDetails = (props) => {
             <div>
                 <span>ID Image</span>
                 {props.data['idImage'].includes('pdf') ? (
-                    <a href={props.data['idImage']} target="_blank">View PDF</a>
+                    <a href={props.data['idImage']} target="_blank" rel="noopener noreferrer">View PDF</a>
                 ) : (
                     <img src={props.data['idImage']} alt="ID Image" />
                 )}
