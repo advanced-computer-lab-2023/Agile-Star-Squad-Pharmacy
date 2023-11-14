@@ -1,0 +1,20 @@
+/* OTPInput.css */
+
+/* Style for each input field (square) */
+.otpInputContainer {
+    display: flex;
+    margin-bottom: 40px;
+    justify-content: center;
+  }
+  
+  .otpInputContainer input {
+    width: 40px; /* Adjust the width as needed */
+    height: 40px; /* Set the height to match the width for a square */
+    text-align: center; /* Center the text within the square */
+    font-size: 16px; /* Adjust the font size as needed */
+    border: 1px solid #949494;
+    margin: 0 5px; /* Add spacing between squares */
+  }
+  
+ 
+  
