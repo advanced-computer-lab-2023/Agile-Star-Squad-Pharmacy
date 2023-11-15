@@ -5,7 +5,7 @@ import CartContext from '../../patient/pages/cart/Cart';
 import UserContext from '../../user-store/user-context';
 
 const PharmacyHomePharmacist = () => {
-  const user = useContext(UserContext);
+  const userCtx = useContext(UserContext);
 
   const [medicineList, setMedicineList] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
@@ -193,10 +193,11 @@ const PharmacyHomePharmacist = () => {
       price: medicine.price,
       quantity: +medicine.cartQuantity,
     });
+    // call to the backend to add an item
   };
 
   const logout = () => {
-    user.logout();
+    userCtx.logout();
     navigate("/");
   }
   const goToOrdersHandler = () => {
@@ -223,14 +224,14 @@ const PharmacyHomePharmacist = () => {
           {medicinalUseOptions}
         </select>
         <button type="submit">SUBMIT</button>
-        {user.role == 'patient' ? (
+        {userCtx.role == 'patient' ? (
           <>
             <button onClick={redirectToCartPage}>My Cart</button>
             <button onClick={goToOrdersHandler}>Go to Orders</button>
           </>
         ) : null}
         <hr />
-        {user.role == 'pharmacist' ? (
+        {userCtx.role == 'pharmacist' ? (
           <button onClick={addNewMedicineHandler}>ADD MEDICINE</button>
         ) : null}
         <button onClick={logout}>logout</button>
@@ -247,7 +248,7 @@ const PharmacyHomePharmacist = () => {
           <p>Description: {item.description}</p>
           <p>Price: {item.price}</p>
 
-          {user.role == 'patient' ? (
+          {userCtx.role == 'patient' ? (
             <div>
               <input
                 type="number"
@@ -264,7 +265,7 @@ const PharmacyHomePharmacist = () => {
             </div>
           ) : null}
 
-          {user.role == 'pharmacist' ? (
+          {userCtx.role == 'pharmacist' ? (
             <React.Fragment>
               <p>Sales: {item.sales}</p>
               <p>Quantity: {item.quantity}</p>

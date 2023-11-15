@@ -13,8 +13,11 @@ const CartPage = (props) => {
   const cartCtx = useContext(CartContext);
   console.log(cartCtx.items.length);
 
+  // useEffect & a call to the backend to get cart items
+
   const removeItem = (name) => {
     cartCtx.removeItem(props.name);
+    // call ll backend to remove item
   };
 
   const medSummaryItems = cartCtx.items.map((medicine) => {

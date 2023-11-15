@@ -57,6 +57,19 @@ const patientSchema = new mongoose.Schema({
       ref: 'Order',
     },
   ],
+  addressess: [
+    {
+      address: {
+        type: String,
+      },
+    },
+  ],
+  cart: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Cart',
+    },
+  ],
 });
 
 const Patient = mongoose.model('Patient', patientSchema);

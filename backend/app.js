@@ -11,8 +11,9 @@ const medicineRouter = require('./routes/medicineRoutes');
 const pharmacistRouter = require('./routes/pharmacistRoutes');
 const pharmacyRouter = require('./routes/pharmacyRoutes');
 const authRouter = require('./routes/authRoutes');
+const orderRouter = require('./routes/orderRoutes');
+const cartRouter = require('./routes/cartRoutes');
 const middleware = require('./middleware/middleware.js');
-const orderRoutes = require('./routes/orderRoutes');
 
 const app = express();
 
@@ -38,8 +39,9 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('/cart', cartRouter);
 app.use('/pharmacy', pharmacyRouter);
-app.use('/orders', orderRoutes);
+app.use('/orders', orderRouter);
 app.use('/admins', adminRouter);
 app.use('/pharmacist', pharmacistRouter);
 app.use('/patients', patientRouter);
