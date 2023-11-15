@@ -13,7 +13,7 @@ const addressSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-  patient: {
+    patient: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Patient',
     },
