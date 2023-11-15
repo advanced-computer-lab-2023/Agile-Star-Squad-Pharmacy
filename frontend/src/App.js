@@ -15,6 +15,7 @@ import ManageUsersPage from './admin/ManageUsers/ManageUsersPage';
 import UserContext from './user-store/user-context';
 import CartPage from './patient/pages/cart/CartPage';
 import { CartContextProvider } from './patient/pages/cart/Cart';
+import AddingInfo from './patient/pages/payment/AddingInfo';
 import './App.css';
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           <Routes>
             <Route path="/pharmacy/home" element={<PharmacyHome />} exact />
             <Route path="/cart" element={<CartPage />} exact />
+            <Route path="/payment/AddingInfo" element={<AddingInfo />} exact />
             <Route path="*" element={<Navigate to="/pharmacy/home" />} />{' '}
           </Routes>
         </CartContextProvider>
