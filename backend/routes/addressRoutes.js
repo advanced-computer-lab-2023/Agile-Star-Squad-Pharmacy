@@ -5,7 +5,7 @@ const router = express.Router();
 
 router
     .route('/:patientId')
-    .get(addressController.getAllAddresses);
+    .get(addressController.getAllAddresses)
     .post(addressController.addAddress);
 
 //add routes
