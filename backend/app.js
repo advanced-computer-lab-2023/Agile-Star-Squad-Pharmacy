@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const env = require("dotenv").config({ path: "./config.env" });
 const globalErrorHandler = require('./Controllers/errorController');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
@@ -66,17 +67,17 @@ app.get("/config", (req, res) => {
 
 app.post("/create-payment-intent", async (req, res) => {
   try {
-    // const { patient_id, price } = req.body; 
-
+    const data = req.body;  // Get the entire data object
+    console.log("backkk", data.price);
     const paymentIntent = await stripe.paymentIntents.create({
       currency: "EUR",
-      // amount: price * 100, 
-      amount:100,
+      amount: data.price * 100,
       payment_method_types: ['card'],
-      // metadata: {
-      //   patient_id, 
-      // },
+      metadata: {
+        patient_id: data.patient_id,
+      },
     });
+
 
     res.send({
       clientSecret: paymentIntent.client_secret,

@@ -14,15 +14,18 @@ function Payment(props) {
     const fetchConfig = async () => {
       try {
         const response = await fetch("http://localhost:4000/config");
-        const { publishableKey } = await response.json();
+        const configData = await response.json();
+        console.log("Config Data:", configData); // Add this line
+        const { publishableKey } = configData;
         setStripePromise(loadStripe(publishableKey));
       } catch (error) {
         console.error("Error fetching config:", error);
       }
     };
-
+  
     fetchConfig();
   }, []);
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,10 +35,14 @@ function Payment(props) {
       };
 
       try {
+        console.log(data);
         const response = await fetch("http://localhost:4000/create-payment-intent", {
-          method: "POST",
-          body: JSON.stringify(data),
-        });
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
         const { clientSecret } = await response.json();
         setClientSecret(clientSecret);
@@ -45,7 +52,7 @@ function Payment(props) {
     };
 
     fetchData();
-  }, [props.CartCtx.total]);
+  }, [cartCtx.total]);
 
   const elementStyleOptions = {
     base: {

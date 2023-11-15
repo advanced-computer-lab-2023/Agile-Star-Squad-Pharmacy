@@ -14,9 +14,9 @@ export default function CheckoutForm(props) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [useWallet, setUseWallet] = useState(false);
   
-  const fetchUserBalance= async()=>{
+  // const fetchUserBalance= async()=>{
     
-  }
+  // }
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,7 +34,7 @@ export default function CheckoutForm(props) {
       elements,
       confirmParams: {
        
-        return_url: navigate(-1),
+        return_url: 'http://localhost:3000/order',
       },
     });
     
@@ -71,6 +71,8 @@ export default function CheckoutForm(props) {
     setIsProcessing(false);
     
   };
+  console.log("kkkkkk",userCtx.userId);
+  console.log("pppppp",props.CartCtx.total);
   const handleWallet=async(e)=>{
     e.preventDefault();
     setIsProcessing(true);

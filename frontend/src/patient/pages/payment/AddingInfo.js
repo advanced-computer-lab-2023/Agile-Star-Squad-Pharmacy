@@ -11,35 +11,35 @@ const AddingInfo = (props) => {
   const userCtx = useContext(UserContext);
   const cartCtx = useContext(CartContext);
   const [stripePromise, setStripePromise] = useState(null);
-  const [clientSecret, setClientSecret] = useState('');
+  // const [clientSecret, setClientSecret] = useState('');
 
   const navigate = useNavigate();
 
   const goToOrdersHandler = () => {
     navigate(`/order`);
   };
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = {
-        patient_id: userCtx.userId,
-        price: cartCtx.total,
-      };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const data = {
+  //       patient_id: userCtx.userId,
+  //       price: cartCtx.total,
+  //     };
 
-      try {
-        const response = await fetch('http://localhost:4000/create-payment-intent', {
-          method: 'POST',
-          body: JSON.stringify(data),
-        });
+  //     try {
+  //       const response = await fetch('http://localhost:4000/create-payment-intent', {
+  //         method: 'POST',
+  //         body: JSON.stringify(data),
+  //       });
 
-        const { clientSecret } = await response.json();
-        setClientSecret(clientSecret);
-      } catch (error) {
-        console.error('Error creating payment intent:', error);
-      }
-    };
+  //       const { clientSecret } = await response.json();
+  //       setClientSecret(clientSecret);
+  //     } catch (error) {
+  //       console.error('Error creating payment intent:', error);
+  //     }
+  //   };
 
-    fetchData();
-  }, [cartCtx.total]);
+  //   fetchData();
+  // }, [cartCtx.total]);
 
   useEffect(() => {
     const fetchConfig = async () => {
