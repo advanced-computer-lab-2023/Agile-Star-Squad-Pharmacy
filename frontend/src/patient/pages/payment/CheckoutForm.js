@@ -18,7 +18,14 @@ export default function CheckoutForm(props) {
   // const fetchUserBalance= async()=>{
     
   // }
-  
+  let paymentIntentData = {
+    patient: userCtx.userId,
+    medicineList: props.CartCtx.items,
+    totalCost: props.CartCtx.total,
+   
+  };
+   console.log(paymentIntentData)
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage('');
@@ -31,48 +38,54 @@ export default function CheckoutForm(props) {
     setIsProcessing(true);
   
       try{
-    const { error } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
+    // const { error } = await stripe.confirmPayment({
+    //   elements,
+    //   confirmParams: {
        
-         return_url: 'http://localhost:3000/order',
-      },
-    });
+    //      return_url: 'http://localhost:3000/order',
+    //   },
+    // });
     
-    if (error.type === "card_error" || error.type === "validation_error") {
-      setMessage(error.message);
-    } else {
-        
+    // if (error.type === "card_error" || error.type === "validation_error") {
+    //   setMessage(error.message);
+    // } else {
+      console.log("//////////////////////////")
+      console.log(props.CartCtx.items)
+        const medicineList=props.CartContext.items.map((item)=>{
+          return{medicineId:item.id,count:item.quantity}
+        })
         let paymentIntentData = {
-          patient: useContext.userId,
-          medicineList: props.CartCtx.items,
+          patientId: userCtx.userId,
+          medicineList: medicineList,
           totalCost: props.CartCtx.total,
          
         };
-        console.log("xxxx",paymentIntentData);
-        // Send data to the backend
-        const response = await fetch('http://localhost:4000/addOrder', {
+        console.log(medicineList)
+       
+       
+        const response = await fetch('http://localhost:4000/orders', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(paymentIntentData),
-        });
-        console.log("ffff",paymentIntentData);
+        }).catch( (err)=>{console.log(err);
+        alert("       ")});
+       
         if (!response.ok) {
           throw new Error('Failed to send data to the server.');
         }
         
         setMessage('Payment successful!');
       }
-    } catch (error) {
+    // }
+     catch (error) {
       setMessage('Failed to process payment.');
     }
     setIsProcessing(false);
     
   };
-  console.log("kkkkkk",userCtx.userId);
-  console.log("pppppp",props.CartCtx.total);
+ 
   const handleWallet=async(e)=>{
     e.preventDefault();
     setIsProcessing(true);
