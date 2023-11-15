@@ -1,17 +1,19 @@
-import { useEffect, useState } from "react";
+import React, { useState, useEffect, useContext} from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
 import { loadStripe } from "@stripe/stripe-js";
-
+import UserContext from '../../../user-store/user-context';
 
 function Payment(props) {
   const [stripePromise, setStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState("");
+  const userCtx = useContext(UserContext);
+  const cartCtx= props.CartCtx;
 
   useEffect(() => {
     const fetchConfig = async () => {
       try {
-        const response = await fetch("http://localhost:3000/config");
+        const response = await fetch("http://localhost:4000/config");
         const { publishableKey } = await response.json();
         setStripePromise(loadStripe(publishableKey));
       } catch (error) {
@@ -25,12 +27,12 @@ function Payment(props) {
   useEffect(() => {
     const fetchData = async () => {
       const data = {
-        patient_id: "6521fc7bb512c918531f7e0b",
-        price: props.props.total,
+        patient_id: userCtx.userId,
+        price: cartCtx.total, // Change this line
       };
 
       try {
-        const response = await fetch("http://localhost:3000/create-payment-intent", {
+        const response = await fetch("http://localhost:4000/create-payment-intent", {
           method: "POST",
           body: JSON.stringify(data),
         });
@@ -43,7 +45,7 @@ function Payment(props) {
     };
 
     fetchData();
-  }, [props.props.total]);
+  }, [props.CartCtx.total]);
 
   const elementStyleOptions = {
     base: {
@@ -60,12 +62,13 @@ function Payment(props) {
       iconColor: "#fa755a",
     },
   };
-
+  // console.log("kkkkkk",userCtx.userId);
+  // console.log("pppppp",props.CartCtx.total);
   return (
     <>
       {clientSecret && stripePromise && (
         <Elements stripe={stripePromise} options={{ clientSecret, ...elementStyleOptions }}>
-          <CheckoutForm />
+          <CheckoutForm CartCtx={cartCtx} />
         </Elements>
       )}
     </>

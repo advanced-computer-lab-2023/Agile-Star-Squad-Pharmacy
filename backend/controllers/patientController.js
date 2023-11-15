@@ -69,7 +69,26 @@ exports.signup = catchAsync(async (req, res, next) => {
     },
   });
 });
+exports.updateWallet = catchAsync(async (req, res, next) => {
+  const patientId = req.params.patientId;
+  
+ 
+  
+  const patient = await Patient.findById(patientId);
+   const walletAmount=req.body.walletAmount + patient.wallet;
+  if (!patient) {
+    return next(new AppError('Patient not found', 404));
+  }
+  
+  
+  await Patient.findByIdAndUpdate(patient._id, {
+    wallet: walletAmount,
+  });
 
+  res.status(200).json({
+    status: 'success',
+  });
+});
 exports.getPatient = catchAsync(async (req, res, next) => {
   const patient = await Patient.findById(req.params.id);
 

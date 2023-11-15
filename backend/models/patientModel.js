@@ -57,6 +57,11 @@ const patientSchema = new mongoose.Schema({
       ref: 'Order',
     },
   ],
+  wallet:{
+    type: Number,
+    default:0,
+
+  }
 });
 
 const Patient = mongoose.model('Patient', patientSchema);

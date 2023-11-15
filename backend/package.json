@@ -28,6 +28,7 @@
     "smart-buffer": "^4.2.0",
     "socks": "^2.7.1",
     "sparse-bitfield": "^3.0.3",
+    "stripe": "^14.4.0",
     "tr46": "^3.0.0",
     "validator": "^13.11.0",
     "webidl-conversions": "^7.0.0",

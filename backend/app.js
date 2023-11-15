@@ -4,6 +4,10 @@ const globalErrorHandler = require('./Controllers/errorController');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
+  apiVersion: "2022-08-01",
+});
+const { resolve } = require("path");
 const AppError = require('./utils/appError');
 const adminRouter = require('./routes/adminRoutes');
 const patientRouter = require('./routes/patientRoutes');
@@ -13,6 +17,9 @@ const pharmacyRouter = require('./routes/pharmacyRoutes');
 const authRouter = require('./routes/authRoutes');
 const middleware = require('./middleware/middleware.js');
 const orderRoutes = require('./routes/orderRoutes');
+
+
+
 
 const app = express();
 
@@ -45,6 +52,43 @@ app.use('/pharmacist', pharmacistRouter);
 app.use('/patients', patientRouter);
 app.use('/medicine', medicineRouter);
 app.use('/auth', authRouter);
+
+app.get("/", (req, res) => {
+  const path = resolve(process.env.STATIC_DIR + "/index.html");
+  res.sendFile(path);
+});
+
+app.get("/config", (req, res) => {
+  res.send({
+    publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
+  });
+});
+
+app.post("/create-payment-intent", async (req, res) => {
+  try {
+    // const { patient_id, price } = req.body; 
+
+    const paymentIntent = await stripe.paymentIntents.create({
+      currency: "EUR",
+      // amount: price * 100, 
+      amount:100,
+      payment_method_types: ['card'],
+      // metadata: {
+      //   patient_id, 
+      // },
+    });
+
+    res.send({
+      clientSecret: paymentIntent.client_secret,
+    });
+  } catch (e) {
+    return res.status(400).send({
+      error: {
+        message: e.message,
+      },
+    });
+  }
+});
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`));

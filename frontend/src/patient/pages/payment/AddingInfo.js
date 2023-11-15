@@ -4,48 +4,58 @@ import Card from '../../../shared/components/Card/Card';
 import { loadStripe } from '@stripe/stripe-js';
 import CartContext from '../cart/Cart';
 import Payment from './Payment';
-import { Link, useLocation } from 'react-router-dom';
-import Cart from '../cart/Cart';
+import { useNavigate,Link} from 'react-router-dom';
+import UserContext from '../../../user-store/user-context';
 
 const AddingInfo = (props) => {
+  const userCtx = useContext(UserContext);
   const cartCtx = useContext(CartContext);
-  const { items, length, total, addItem, removeItem, removeAll } = useContext(CartContext);
   const [stripePromise, setStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState('');
-  const data = {
-    patient_id: '6521fc7bb512c918531f7e0b',
-    price: total,
+
+  const navigate = useNavigate();
+
+  const goToOrdersHandler = () => {
+    navigate(`/order`);
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = {
+        patient_id: userCtx.userId,
+        price: cartCtx.total,
+      };
 
+      try {
+        const response = await fetch('http://localhost:4000/create-payment-intent', {
+          method: 'POST',
+          body: JSON.stringify(data),
+        });
 
+        const { clientSecret } = await response.json();
+        setClientSecret(clientSecret);
+      } catch (error) {
+        console.error('Error creating payment intent:', error);
+      }
+    };
+
+    fetchData();
+  }, [cartCtx.total]);
 
   useEffect(() => {
-    fetch('http://localhost:3000/config')
-      .then(async (r) => {
-        const { publishableKey } = await r.json();
+    const fetchConfig = async () => {
+      try {
+        const response = await fetch('http://localhost:4000/config');
+        const { publishableKey } = await response.json();
         setStripePromise(loadStripe(publishableKey));
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error('Error loading Stripe config:', error);
-      });
+      }
+    };
+
+    fetchConfig();
   }, []);
 
-  useEffect(() => {
-    fetch('http://localhost:3000/create-payment-intent', {
-      method: 'POST',
-      body: JSON.stringify(data),
-    })
-      .then(async (result) => {
-        const { clientSecret } = await result.json();
-        setClientSecret(clientSecret);
-      })
-      .catch((error) => {
-        console.error('Error fetching payment intent:', error);
-      });
-  }, [data]);
-
   return (
- 
     <div className="container">
       <br />
       <br />
@@ -53,28 +63,28 @@ const AddingInfo = (props) => {
         <div className="col card1">
           <Card>
             <Elements stripe={stripePromise}>
-              <Payment props={cartCtx} clientSecret={clientSecret} />
+              <Payment CartCtx={cartCtx} />
             </Elements>
           </Card>
         </div>
         <div className="col" id="card2">
           <Card>
             {/* Display your cart items, length, and total here */}
-            <div>Items: {length}</div>
-            <div>Total: ${total}</div>
-            {items.map((item) => (
+            <div>Items: {cartCtx.length}</div>
+            <div>Total: ${cartCtx.total}</div>
+            {cartCtx.items.map((item) => (
               <div key={item.id}>
                 {item.name} - Quantity: {item.quantity} - Price: ${item.price}
               </div>
             ))}
           </Card>
           <Link to="../patient/pages/order/Order">
-            <button className='orders'>Go to Order Page</button>
+          <button onClick={goToOrdersHandler}>Go to Orders</button>
           </Link>
         </div>
       </div>
     </div>
-   );
+  );
 };
 
 export default AddingInfo;
