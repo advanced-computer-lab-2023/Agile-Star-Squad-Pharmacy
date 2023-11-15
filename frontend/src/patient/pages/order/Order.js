@@ -1,15 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import styles from './Orders.module.css';
+import { useNavigate } from 'react-router-dom';
+import UserContext from '../../../user-store/user-context';
 
 const Order = () => {
-  const patientId = '6521fc7bb512c918531f7e0b';
+  const user = useContext(UserContext);
+  const patientId = user.userId;
+  const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
     const fetchOrders = async () => {
       const res = await axios
-        .get(`http://localhost:4000/orders/patient/${patientId}`)
+        .get(`http://localhost:4000/orders/patient/${patientId}`, {withCredentials: true})
         .catch((err) => {
           console.error(err);
         });
@@ -20,7 +24,7 @@ const Order = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:4000/orders/${id}`);
+      await axios.delete(`http://localhost:4000/orders/${id}`, {withCredentials: true});
       setOrders((prev) => prev.filter((order) => order._id != id));
     } catch (error) {
       console.error(error);
@@ -32,7 +36,7 @@ const Order = () => {
   useEffect(() => {
     const fetchMedicines = async () => {
       const res = await axios
-        .get(`http://localhost:4000/medicine`)
+        .get(`http://localhost:4000/medicine`, {withCredentials: true})
         .catch((err) => {
           console.error(err);
         });
@@ -48,9 +52,14 @@ const Order = () => {
     return medicine ? medicine.name : 'Unknown';
   };
 
+  const toPrevious = () => {
+    navigate(-1);
+  }
+
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Orders</h1>
+      <button onClick={toPrevious}>Back</button>
       <table className={styles.table}>
         <thead>
           <tr>

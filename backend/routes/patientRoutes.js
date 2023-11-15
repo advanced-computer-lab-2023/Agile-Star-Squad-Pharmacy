@@ -1,9 +1,8 @@
 const express = require('express');
 const patientController = require('../Controllers/patientController');
+const middleware = require('../middleware/middleware');
 
 const router = express.Router();
-
-
 
 router
   .route('/')
@@ -12,7 +11,7 @@ router
 
 router
   .route('/:id')
-  .get(patientController.getPatient)
-  .delete(patientController.removePatient);
+  .get(middleware.patientAuth, patientController.getPatient)
+  .delete(middleware.adminAuth, patientController.removePatient);
 
 module.exports = router;

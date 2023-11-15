@@ -1,5 +1,6 @@
 const express = require('express');
 const pharmacistController = require('../controllers/pharmacistController');
+const middleware = require('../middleware/middleware');
 
 const router = express.Router({
   mergeParams: true,
@@ -13,7 +14,7 @@ router
 router
   .route('/:id')
   .get(pharmacistController.getPharmacist)
-  .patch(pharmacistController.updatePharmacist)
+  .patch(middleware.pharmacistAuth, pharmacistController.updatePharmacist)
   .delete(pharmacistController.removePharmacist);
 
 module.exports = router;
