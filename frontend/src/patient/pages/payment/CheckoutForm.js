@@ -4,6 +4,7 @@ import { useStripe, useElements } from "@stripe/react-stripe-js";
 import { useNavigate } from "react-router-dom";
 import './CheckoutForm.css'
 import UserContext from '../../../user-store/user-context';
+import CartContext from "../cart/Cart";
 
 export default function CheckoutForm(props) {
   const userCtx = useContext(UserContext);
@@ -34,7 +35,7 @@ export default function CheckoutForm(props) {
       elements,
       confirmParams: {
        
-        return_url: 'http://localhost:3000/order',
+         return_url: 'http://localhost:3000/order',
       },
     });
     
@@ -42,26 +43,25 @@ export default function CheckoutForm(props) {
       setMessage(error.message);
     } else {
         
-        // let paymentIntentData = {
-          
-        //   doctor: props.doctorId,
-        //   patient: props.patientId,
-        //   dateOfAppointment: props.appDate,
-        //   status: 'reserved'
-        // };
-        
-        // // Send data to the backend
-        // const response = await fetch('http://localhost:4000/', {
-        //   method: 'POST',
-        //   headers: {
-        //     'Content-Type': 'application/json',
-        //   },
-        //   body: JSON.stringify(paymentIntentData),
-        // });
-
-        // if (!response.ok) {
-        //   throw new Error('Failed to send data to the server.');
-        // }
+        let paymentIntentData = {
+          patient: useContext.userId,
+          medicineList: props.CartCtx.items,
+          totalCost: props.CartCtx.total,
+         
+        };
+        console.log("xxxx",paymentIntentData);
+        // Send data to the backend
+        const response = await fetch('http://localhost:4000/addOrder', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(paymentIntentData),
+        });
+        console.log("ffff",paymentIntentData);
+        if (!response.ok) {
+          throw new Error('Failed to send data to the server.');
+        }
         
         setMessage('Payment successful!');
       }
