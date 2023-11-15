@@ -1,10 +1,12 @@
 const express = require('express');
-const addressController = require('../Controllers/addressController');
+const addressController = require('../controllers/addressController');
 
 const router = express.Router();
 
 router
-    .route('/')
+    .route('/:patientId')
+    .get(addressController.getAllAddresses);
+    .post(addressController.addAddress);
 
 //add routes
 
