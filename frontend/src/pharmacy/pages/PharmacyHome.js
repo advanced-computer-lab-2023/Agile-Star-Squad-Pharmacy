@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import medicinalUseEnum from '../../shared/util/MedicinalUseEnum';
 import { useNavigate } from 'react-router-dom';
-import { user } from '../../shared/DummyUsers';
 import CartContext from '../../patient/pages/cart/Cart';
 import UserContext from '../../user-store/user-context';
 
@@ -200,6 +199,13 @@ const PharmacyHomePharmacist = () => {
     user.logout();
     navigate("/");
   }
+  const goToOrdersHandler = () => {
+    navigate(`/order`);
+  };
+
+  const changePasswordHandler = () => {
+    navigate('/changePassword');
+  };
 
   return (
     <React.Fragment>
@@ -218,13 +224,17 @@ const PharmacyHomePharmacist = () => {
         </select>
         <button type="submit">SUBMIT</button>
         {user.role == 'patient' ? (
-          <button onClick={redirectToCartPage}>My Cart</button>
+          <>
+            <button onClick={redirectToCartPage}>My Cart</button>
+            <button onClick={goToOrdersHandler}>Go to Orders</button>
+          </>
         ) : null}
         <hr />
         {user.role == 'pharmacist' ? (
           <button onClick={addNewMedicineHandler}>ADD MEDICINE</button>
         ) : null}
         <button onClick={logout}>logout</button>
+        <button onClick={changePasswordHandler}>change password</button>
       </form>
       {filteredList.map((item, index) => (
         <div key={item.id} style={borderStyle}>

@@ -8,7 +8,12 @@ const AdminHome = (props) => {
   const logout = () => {
     userLogout();
     navigate('/');
-  }
+  };
+
+  const changePasswordHandler = () => {
+    navigate('/changePassword');
+  };
+
   return (
     <div>
       <h1>Welcome to Admin Home</h1>
@@ -19,6 +24,7 @@ const AdminHome = (props) => {
         <button>Go to Pharmacy</button>
       </Link>
       <button onClick={logout}>Logout</button>
+      <button onClick={changePasswordHandler}>change password</button>
     </div>
   );
 };
