@@ -117,6 +117,9 @@ const ManageUsersPage = () => {
             affiliation: request['affiliation'],
             educationalBackground: request['educationalBackground'],
             status: request['status'],
+            idImage: request['idImage'],
+            pharmacyLicense: request['pharmacyLicense'],
+            pharmacyDegree: request['pharmacyDegree'],
           };
         }),
       ]);
@@ -165,11 +168,21 @@ const ManageUsersPage = () => {
     }
     setUsers(users.filter((val) => val.username !== username));
   };
+  const statusChangeHandler = (id, status) => {
+    setRequests(
+      requests.map((request) => {
+        if (request.id === id) {
+          request.status = status;
+        }
+        return request;
+      })
+    );
+  } 
 
   return (
     <div className="center">
       {showRequest && (
-        <RequestDetails data={selectedRow} exit={exitRequestModal} />
+        <RequestDetails onStatusChange={statusChangeHandler} data={selectedRow} exit={exitRequestModal} />
       )}
       {showAdminForm && (
         <AdminForm exit={exitAdminModal} refresh={refreshUserData} />

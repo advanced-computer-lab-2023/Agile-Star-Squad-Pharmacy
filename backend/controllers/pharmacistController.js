@@ -69,14 +69,17 @@ exports.updatePharmacist = catchAsync(async (req, res, next) => {
 });
 
 exports.pharmacistSignup = catchAsync(async (req, res, next) => {
-  const newRequest = await Request.create(req.body);
-  // const newPharmacist = await Pharmacist.create(req.body);
-  res.status(200).json({
-    status: 'success',
-    data: {
-      Request: newRequest,
-    },
-  });
+  try {
+    const newRequest = await Request.create(req.body);
+    res.status(200).json({
+      status: 'success',
+      data: {
+        request: newRequest,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 exports.getPharmacist = catchAsync(async (req, res, next) => {

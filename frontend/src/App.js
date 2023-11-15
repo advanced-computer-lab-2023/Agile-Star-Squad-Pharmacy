@@ -17,6 +17,7 @@ import ChangePassword from './login/pages/ChangePassword';
 import { CartContextProvider } from './patient/pages/cart/Cart';
 import './App.css';
 import Order from "./patient/pages/order/Order"
+import SignupOptions from './login/pages/SignupOptions';
 
 function App() {
   const user = useContext(UserContext);
@@ -58,6 +59,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} exact />
           <Route path="/resetPassword" element={<ResetPassword />} exact />
+          <Route path="signupOptions" element={<SignupOptions />} exact />
           <Route
             path="/pharmacist/register"
             element={<PharmacistRequest />}
