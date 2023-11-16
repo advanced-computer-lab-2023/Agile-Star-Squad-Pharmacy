@@ -9,6 +9,12 @@ function Payment(props) {
   const [clientSecret, setClientSecret] = useState("");
   const userCtx = useContext(UserContext);
   const cartCtx= props.CartCtx;
+  const addressInfo = props.SelectedAddressId;
+
+
+// const [address, setAddress] = useState([]);
+
+// setAddresses(address);
 
   useEffect(() => {
     const fetchConfig = async () => {
@@ -75,7 +81,7 @@ function Payment(props) {
     <>
       {clientSecret && stripePromise && (
         <Elements stripe={stripePromise} options={{ clientSecret, ...elementStyleOptions }}>
-          <CheckoutForm CartCtx={cartCtx} />
+          <CheckoutForm CartCtx={cartCtx} addressInfo={props.SelectedAddressId}/>
         </Elements>
       )}
     </>

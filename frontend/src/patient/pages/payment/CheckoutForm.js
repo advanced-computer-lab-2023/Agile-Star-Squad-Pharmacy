@@ -14,6 +14,7 @@ export default function CheckoutForm(props) {
   const [message, setMessage] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
   const [useWallet, setUseWallet] = useState(false);
+  const addressId = props.addressInfo;
 
   // const fetchUserBalance= async()=>{
 
@@ -22,6 +23,7 @@ export default function CheckoutForm(props) {
     patient: userCtx.userId,
     medicineList: props.CartCtx.items,
     totalCost: props.CartCtx.total,
+    address: addressId,
   };
   // console.log(paymentIntentData);
 

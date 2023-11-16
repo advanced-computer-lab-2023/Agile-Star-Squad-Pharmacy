@@ -14,6 +14,7 @@ const AddingInfo = (props) => {
   const cartCtx = useContext(CartContext);
   const [stripePromise, setStripePromise] = useState(null);
   const [addresses, setAddresses] = useState([]);
+  const [selectedAddressId, setSelectedAddressId] = useState(null);
   // const [clientSecret, setClientSecret] = useState('');
 
   const navigate = useNavigate();
@@ -42,20 +43,24 @@ const AddingInfo = (props) => {
     fetchAddresses();
   }, []);
 
-  const hanldeAddressSelect = async () => {
-    // try {
-    //   const res = await axios
-    //     .post(`http://localhost:4000/order/${patientId}`, { withCredentials: true })
-    //     .catch((err) => {
-    //       console.error(err);
-    //     });
-    //   setAddresses(res.data.data.addresses);
-    // }
-    // catch (error) {
-    //   console.error('Error fetching data:', error);
-    // }
-  }
+  // const hanldeAddressSelect = async () => {
+  //   // try {
+  //   //   const res = await axios
+  //   //     .post(`http://localhost:4000/order/${patientId}`, { withCredentials: true })
+  //   //     .catch((err) => {
+  //   //       console.error(err);
+  //   //     });
+  //   //   setAddresses(res.data.data.addresses);
+  //   // }
+  //   // catch (error) {
+  //   //   console.error('Error fetching data:', error);
+  //   // }
+  // }
 
+
+  const handleAddressSelect = (addressId) => {
+    setSelectedAddressId(addressId);
+  };
 
   console.log("addresses///////////////////////////");
   console.log(addresses);
@@ -134,7 +139,7 @@ const AddingInfo = (props) => {
                     </div>
 
                   </td>
-                  <button onClick={hanldeAddressSelect}>Select</button>
+                  <button onClick={() => handleAddressSelect(address._id)}>Select</button>
                 </tr>
               ))
               }
@@ -146,7 +151,7 @@ const AddingInfo = (props) => {
         <div className="col card1">
           <Card>
             <Elements stripe={stripePromise}>
-              <Payment CartCtx={cartCtx} />
+              <Payment CartCtx={cartCtx} SelectedAddressId={selectedAddressId}/>
             </Elements>
           </Card>
         </div>
