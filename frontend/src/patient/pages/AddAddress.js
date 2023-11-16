@@ -2,11 +2,16 @@ import InputField from '../../shared/components/InputField/InputField';
 import { useContext, useState } from 'react';
 import ReactDOM from 'react-dom';
 import Modal from '../../shared/components/Modal/Modal';
+import { useNavigate } from 'react-router-dom';
 import '../../shared/components/InputField/InputField.css';
 import UserContext from '../../user-store/user-context';
 
+
 const AddAddress = (props) => {
-    const userCtx = useContext(UserContext);
+  const user = useContext(UserContext);
+  const patientId = user.userId;
+  const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
       country: '',
       city: '',
@@ -21,20 +26,21 @@ const AddAddress = (props) => {
       };
 
       const onAdd = async () => {
+      
         const { country, city, street } = formData;
-    
         if (country && city && street) {
           const requestOptions = {
             method: 'POST',
             headers: { 'Content-type': 'application/json; charset=UTF-8' },
             body: JSON.stringify(formData),
+            credentials: 'include',
           };
-        //   fetch(
-        //     `http://localhost:4000/patients/${userCtx.userId}/`,
-        //     requestOptions,
-        //   );
-        //   props.exit();
-        //   props.onAddAddress(formData);
+          fetch(
+            `http://localhost:4000/address/${patientId}/`,
+            requestOptions,
+          );
+          alert('Address added successfully');
+          navigate(-1);
         } else {
           alert('Please fill in all required fields');
         }

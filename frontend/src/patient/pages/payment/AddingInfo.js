@@ -4,16 +4,65 @@ import Card from '../../../shared/components/Card/Card';
 import { loadStripe } from '@stripe/stripe-js';
 import CartContext from '../cart/Cart';
 import Payment from './Payment';
-import { useNavigate,Link} from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import UserContext from '../../../user-store/user-context';
+import axios from 'axios';
 
 const AddingInfo = (props) => {
   const userCtx = useContext(UserContext);
+  const patientId = userCtx.userId;
   const cartCtx = useContext(CartContext);
   const [stripePromise, setStripePromise] = useState(null);
+  const [addresses, setAddresses] = useState([]);
   // const [clientSecret, setClientSecret] = useState('');
 
   const navigate = useNavigate();
+
+  // const fetchAddresses = async () => {
+  //   try {
+  //     fetch(`http://localhost:4000/address/${userCtx.userId}`, {
+  //       method: 'GET',
+  //       headers: { 'Content-type': 'application/json' },
+  //     })
+  // },
+  // catch (error) {
+  //   console.error('Error fetching data:', error);
+  // } 
+  // };
+
+  useEffect(() => {
+    const fetchAddresses = async () => {
+      const res = await axios
+        .get(`http://localhost:4000/address/${patientId}`, { withCredentials: true })
+        .catch((err) => {
+          console.error(err);
+        });
+      setAddresses(res.data.data.addresses);
+    };
+    fetchAddresses();
+  }, []);
+
+  const hanldeAddressSelect = async () => {
+    // try {
+    //   const res = await axios
+    //     .post(`http://localhost:4000/order/${patientId}`, { withCredentials: true })
+    //     .catch((err) => {
+    //       console.error(err);
+    //     });
+    //   setAddresses(res.data.data.addresses);
+    // }
+    // catch (error) {
+    //   console.error('Error fetching data:', error);
+    // }
+
+    const data = {"address": address._id };
+  }
+
+
+  console.log("addresses///////////////////////////");
+  console.log(addresses);
+  console.log("addresses///////////////////////////");
+
 
   const goToOrdersHandler = () => {
     navigate(`/order`);
@@ -59,7 +108,43 @@ const AddingInfo = (props) => {
     <div className="container">
       <br />
       <br />
+
       <div className="row justify-content-evenly gx-5">
+        <Card>
+          <div>
+            <h3>Shipping Address</h3>
+            <tbody>
+              {addresses.map((address) => (
+                <tr key={address._id}>
+                  <td>
+                    Country:
+                    <div key={address._id}>
+                      {address.country}
+                    </div>
+                  </td>
+                  <td>
+                    City:
+                    <div key={address._id}>
+                      {address.city}
+                    </div>
+                  </td>
+
+                  <td>
+                    Street:
+                    <div key={address._id}>
+                      {address.street}
+                    </div>
+
+                  </td>
+                  <button key = {address._id} onClick={hanldeAddressSelect}>Select</button>
+                </tr>
+              ))
+              }
+            </tbody>
+
+
+          </div>
+        </Card>
         <div className="col card1">
           <Card>
             <Elements stripe={stripePromise}>
@@ -78,9 +163,11 @@ const AddingInfo = (props) => {
               </div>
             ))}
           </Card>
+
           <Link to="../patient/pages/order/Order">
-          <button onClick={goToOrdersHandler}>Go to Orders</button>
+            <button onClick={goToOrdersHandler}>Go to Orders</button>
           </Link>
+
         </div>
       </div>
     </div>

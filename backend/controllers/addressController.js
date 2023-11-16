@@ -27,19 +27,24 @@ exports.addAddress = async (req, res, next) => {
 
 
 exports.getAllAddresses = async (req, res, next) => {
+    console.log("getAllAddresses");
     try {
         const addresses = await Address.find({ patient: req.params.patientId });
+        console.log(addresses);
         res.status(200).json({
             status: 'success',
             results: addresses.length,
             data: {
                 addresses
             }
+
         });
+        
     } catch (err) {
         res.status(400).json({
             status: 'fail',
             message: err.message
         });
     }
+
 }

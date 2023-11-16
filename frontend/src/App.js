@@ -29,10 +29,11 @@ function App() {
       return (
         <CartContextProvider>
           <Routes>
-            <Route path="/pharmacy/home" element={<AddAddress />} exact />
+            <Route path="/pharmacy/home" element={<PharmacyHome />} exact />
             <Route path="/cart" element={<CartPage />} exact />
             <Route path="/payment/AddingInfo" element={<AddingInfo />} exact />
             <Route path="/order" element={<Order />} exact />
+            <Route path="/address/add" element={<AddAddress />} exact />
             <Route path="changePassword" element={<ChangePassword />} exact />
             <Route path="*" element={<Navigate to="/pharmacy/home" />} />{' '}
           </Routes>

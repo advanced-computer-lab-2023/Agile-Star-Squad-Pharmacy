@@ -203,6 +203,10 @@ const PharmacyHomePharmacist = () => {
     navigate(`/order`);
   };
 
+  const goToAddressHandler = () => {
+    navigate(`/address/add`);
+  };
+
   const changePasswordHandler = () => {
     navigate('/changePassword');
   };
@@ -227,6 +231,7 @@ const PharmacyHomePharmacist = () => {
           <>
             <button onClick={redirectToCartPage}>My Cart</button>
             <button onClick={goToOrdersHandler}>Go to Orders</button>
+            <button onClick={goToAddressHandler}>Add Address</button>
           </>
         ) : null}
         <hr />

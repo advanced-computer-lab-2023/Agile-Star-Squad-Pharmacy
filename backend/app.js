@@ -16,6 +16,7 @@ const medicineRouter = require('./routes/medicineRoutes');
 const pharmacistRouter = require('./routes/pharmacistRoutes');
 const pharmacyRouter = require('./routes/pharmacyRoutes');
 const authRouter = require('./routes/authRoutes');
+const addressRouter = require('./routes/addressRoutes');
 const middleware = require('./middleware/middleware.js');
 const orderRoutes = require('./routes/orderRoutes');
 
@@ -52,7 +53,9 @@ app.use('/admins', adminRouter);
 app.use('/pharmacist', pharmacistRouter);
 app.use('/patients', patientRouter);
 app.use('/medicine', medicineRouter);
+app.use('/address', addressRouter);
 app.use('/auth', authRouter);
+
 
 app.get("/", (req, res) => {
   const path = resolve(process.env.STATIC_DIR + "/index.html");
