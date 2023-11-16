@@ -54,8 +54,6 @@ const AddingInfo = (props) => {
     // catch (error) {
     //   console.error('Error fetching data:', error);
     // }
-
-    const data = {"address": address._id };
   }
 
 
@@ -136,7 +134,7 @@ const AddingInfo = (props) => {
                     </div>
 
                   </td>
-                  <button key = {address._id} onClick={hanldeAddressSelect}>Select</button>
+                  <button onClick={hanldeAddressSelect}>Select</button>
                 </tr>
               ))
               }
@@ -157,6 +155,7 @@ const AddingInfo = (props) => {
             {/* Display your cart items, length, and total here */}
             <div>Items: {cartCtx.length}</div>
             <div>Total: ${cartCtx.total}</div>
+            
             {cartCtx.items.map((item) => (
               <div key={item.id}>
                 {item.name} - Quantity: {item.quantity} - Price: ${item.price}
