@@ -81,4 +81,20 @@ exports.getPatient = catchAsync(async (req, res, next) => {
   });
 });
 
-//Modules.exports = {createPatient}
+exports.getCart = async (req, res) => {
+  try {
+    const patient = await Patient.findById(req.params.id);
+    res.status(200).json({ message: 'Cart gotten successfully', cart: patient.kimoCart });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+exports.setCart = async (req, res) => {
+  try {
+    await Patient.findByIdAndUpdate(req.params.id, {kimoCart: req.body.cart});
+    res.status(200).json({ message: 'Cart set successfully' });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
