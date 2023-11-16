@@ -90,6 +90,7 @@ exports.updateWallet = catchAsync(async (req, res, next) => {
   });
 });
 exports.getPatient = catchAsync(async (req, res, next) => {
+  try {
   const patient = await Patient.findById(req.params.id);
 
   res.status(200).json({
@@ -98,6 +99,8 @@ exports.getPatient = catchAsync(async (req, res, next) => {
       patient,
     },
   });
+  } catch (error) {
+  }
 });
 
 //Modules.exports = {createPatient}

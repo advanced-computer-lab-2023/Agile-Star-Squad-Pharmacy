@@ -1,5 +1,5 @@
 import { PaymentElement } from '@stripe/react-stripe-js';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useStripe, useElements } from '@stripe/react-stripe-js';
 import { useNavigate } from 'react-router-dom';
 import './CheckoutForm.css';
@@ -8,24 +8,24 @@ import CartContext from '../cart/Cart';
 
 export default function CheckoutForm(props) {
   const userCtx = useContext(UserContext);
+  const cartCtx = useContext(CartContext);
   const stripe = useStripe();
   const elements = useElements();
   let navigate = useNavigate();
   const [message, setMessage] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
-  const [useWallet, setUseWallet] = useState(false);
+  const [useWallet, setUseWallet] = useState(0);
   const addressId = props.addressInfo;
+  const [balance, setBalance] = useState(0);
 
-  // const fetchUserBalance= async()=>{
-
-  // }
-  let paymentIntentData = {
-    patient: userCtx.userId,
-    medicineList: props.CartCtx.items,
-    totalCost: props.CartCtx.total,
-    address: addressId,
-  };
-  // console.log(paymentIntentData);
+  useEffect(() => {
+    fetch(
+      `http://localhost:4000/patients/${userCtx.userId}`, { credentials: "include" }
+    ).then(async response => {
+      const responseData = await response.json();
+      setBalance(+responseData.data.patient.wallet);
+    });
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,47 +39,39 @@ export default function CheckoutForm(props) {
     setIsProcessing(true);
 
     try {
+
+      // console.log('//////////////////////////');
+      // console.log(props.CartCtx.items);
+      const cartItems = cartCtx.items;
+      const medicineList = cartItems.map((item) => {
+        return { medicineId: item.id, count: item.quantity };
+      });
+      let paymentIntentData = {
+        patientId: userCtx.userId,
+        medicineList,
+        totalCost: cartCtx.total,
+        address: addressId
+      };
+      const response = await fetch('http://localhost:4000/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(paymentIntentData),
+        credentials: "include"
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to send data to the server.');
+      }
+
+      setMessage('Payment successful!');
       const { error } = await stripe.confirmPayment({
         elements,
         confirmParams: {
           return_url: 'http://localhost:3000/order',
         },
       });
-
-      if (error.type === 'card_error' || error.type === 'validation_error') {
-        setMessage(error.message);
-      } else {
-        // console.log('//////////////////////////');
-        // console.log(props.CartCtx.items);
-        const cartItems = props.CartCtx.items;
-        const medicineList = cartItems.map((item) => {
-          return { medicineId: item.id, count: item.quantity };
-        });
-        let paymentIntentData = {
-          patientId: userCtx.userId,
-          medicineList,
-          totalCost: props.CartCtx.total,
-        };
-
-        console.log(paymentIntentData);
-
-        const response = await fetch('http://localhost:4000/orders', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(paymentIntentData),
-        }).catch((err) => {
-          console.log(err);
-          alert('       ');
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to send data to the server.');
-        }
-
-        setMessage('Payment successful!');
-      }
     } catch (error) {
       setMessage('Failed to process payment.');
     }
@@ -89,64 +81,147 @@ export default function CheckoutForm(props) {
   const handleWallet = async (e) => {
     e.preventDefault();
     setIsProcessing(true);
-    const response = await fetch(
-      `http://localhost:4000/patients/${userCtx.userID}`
-    );
-    const responseData = await response.json();
-    const currentWallet = responseData.data.patient.wallet;
+    const deduct = cartCtx.total * -1;
 
-    const deduct = props.price * -1;
+    try {
+      const response = await fetch(
+        `http://localhost:4000/patients/${userCtx.userId}/wallet`,
 
-    if (currentWallet + deduct >= 0) {
-      try {
-        const response = await fetch(
-          `http://localhost:4000/patients/${userCtx.userID}/wallet`,
-
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ walletAmount: deduct }),
-          }
-        );
-
-        if (response.ok) {
-          // Handle a successful response
-          setMessage('Payment successful via wallet!');
-          alert('Payment successful via wallet!');
-          navigate(-1);
-        } else {
-          // Handle errors if the server response is not ok
-          alert('Failed to update data.');
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ walletAmount: deduct }),
         }
-      } catch (error) {
-        // Handle network errors
-        alert('Network error: ' + error.message);
+      );
+
+      const cartItems = cartCtx.items;
+      const medicineList = cartItems.map((item) => {
+        return { medicineId: item.id, count: item.quantity };
+      });
+      let paymentIntentData = {
+        patientId: userCtx.userId,
+        medicineList,
+        totalCost: cartCtx.total,
+        address: addressId
+      };
+      await fetch('http://localhost:4000/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(paymentIntentData),
+        credentials: "include"
+      })
+
+      if (response.ok) {
+        // Handle a successful response
+        navigate("/orders");
+      } else {
+        // Handle errors if the server response is not ok
+        alert('Failed to update data.');
       }
-    } else {
-      setMessage('Insufficient balance in your wallet.');
+    } catch (error) {
+      // Handle network errors
+      alert('Network error: ' + error.message);
     }
+
 
     setIsProcessing(false);
   };
-  const handleCancel = () => {
+  const handleCancel = (e) => {
+    e.preventDefault();
     navigate(-1);
   };
+
+  const handleCOD = async () => {
+    try {
+      const cartItems = cartCtx.items;
+      const medicineList = cartItems.map((item) => {
+        return { medicineId: item.id, count: item.quantity };
+      });
+      let paymentIntentData = {
+        patientId: userCtx.userId,
+        medicineList,
+        totalCost: cartCtx.total,
+        address: addressId
+      };
+      await fetch('http://localhost:4000/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(paymentIntentData),
+        credentials: "include"
+      })
+      navigate("/");
+    } catch (error) {
+    }
+
+  }
+
+  const onSubmit = () => {
+    switch (useWallet) {
+      case 0:
+        handleSubmit();
+        break;
+      case 1:
+        handleWallet();
+      case 2:
+        handleCOD();
+      default:
+        break;
+    }
+  }
+
+
   return (
-    <form id="payment-form" onSubmit={!useWallet ? handleSubmit : handleWallet}>
-      <input
-        type="checkbox"
-        id="use-wallet"
-        checked={useWallet}
-        onChange={(e) => setUseWallet(e.target.checked)}
-      />
-      <label htmlFor="use-wallet">Pay with Wallet</label>
-      <div>{!useWallet && <PaymentElement id="payment-element" />}</div>
-      <button disabled={isProcessing || !stripe || !elements} id="submit">
+    <form id="payment-form" onSubmit={onSubmit}>
+      <div className='d-flex flex-row justify-content-between'>
+        <div>
+          <input
+            type="radio"
+            className='me-2'
+            name='radio'
+            id="use-wallet"
+            // checked={useWallet}
+            onChange={(e) => setUseWallet(1)}
+          />
+          <label htmlFor="use-wallet">Pay with Wallet</label>
+        </div>
+        <label>Balance: {balance}</label>
+      </div>
+      <div>
+        <input
+          type="radio"
+          name='radio'
+          className='me-2'
+          // id="use-wallet"
+          // checked={false}
+          onChange={(e) => setUseWallet(2)}
+        />
+        <label htmlFor="use-wallet">Cash on Delivery</label>
+      </div>
+      <div>
+        <input
+          type="radio"
+          className='me-2'
+          name='radio'
+          // id="use-wallet"
+          // checked={false}
+          onChange={(e) => setUseWallet(0)}
+        />
+        <label htmlFor="use-wallet">Credit Card</label>
+      </div>
+      {useWallet == 1 && balance < cartCtx.total && <div>
+        Insufficient funds!
+      </div>}
+      <div>{useWallet == 0 && <PaymentElement id="payment-element" />}</div>
+      <button disabled={isProcessing || !stripe || !elements || (useWallet == 1 && balance < cartCtx.total)} id="submit">
         <span id="button-text">
           {isProcessing ? 'Processing ... ' : 'Pay now'}
         </span>
       </button>
-      <button onClick={handleCancel}>Cancel</button>
+      <button onClick={(e)=> handleCancel(e)}>Cancel</button>
       {/* Show any error or success messages */}
       {message && <div id="payment-message">{message}</div>}
     </form>

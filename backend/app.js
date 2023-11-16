@@ -71,7 +71,6 @@ app.get("/config", (req, res) => {
 app.post("/create-payment-intent", async (req, res) => {
   try {
     const data = req.body;  // Get the entire data object
-    console.log("backkk", data.price);
     const paymentIntent = await stripe.paymentIntents.create({
       currency: "EUR",
       amount: data.price * 100,

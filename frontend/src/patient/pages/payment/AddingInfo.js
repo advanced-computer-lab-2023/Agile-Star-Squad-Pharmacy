@@ -15,21 +15,8 @@ const AddingInfo = (props) => {
   const [stripePromise, setStripePromise] = useState(null);
   const [addresses, setAddresses] = useState([]);
   const [selectedAddressId, setSelectedAddressId] = useState(null);
-  // const [clientSecret, setClientSecret] = useState('');
 
   const navigate = useNavigate();
-
-  // const fetchAddresses = async () => {
-  //   try {
-  //     fetch(`http://localhost:4000/address/${userCtx.userId}`, {
-  //       method: 'GET',
-  //       headers: { 'Content-type': 'application/json' },
-  //     })
-  // },
-  // catch (error) {
-  //   console.error('Error fetching data:', error);
-  // } 
-  // };
 
   useEffect(() => {
     const fetchAddresses = async () => {
@@ -39,6 +26,7 @@ const AddingInfo = (props) => {
           console.error(err);
         });
       setAddresses(res.data.data.addresses);
+      setSelectedAddressId(res.data.data.addresses[0]._id);
     };
     fetchAddresses();
   }, []);
@@ -118,7 +106,7 @@ const AddingInfo = (props) => {
             <h3>Shipping Address</h3>
             <tbody>
               {addresses.map((address) => (
-                <tr key={address._id}>
+                <tr key={address._id} className={`${address._id == selectedAddressId ? "bg-success" : ""}`}>
                   <td>
                     Country:
                     <div key={address._id}>
@@ -167,7 +155,6 @@ const AddingInfo = (props) => {
               </div>
             ))}
           </Card>
-          <button onClick={goToOrdersHandler}>Go to Orders</button>
         </div>
       </div>
     </div>
