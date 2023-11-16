@@ -5,7 +5,7 @@ import CartContext from './Cart';
 import background from './cartbackground.jpg';
 import icon from './cartIcon.png';
 import arrow from './ArrowLeft.png';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 
@@ -18,6 +18,7 @@ const CartPage = (props) => {
     cartCtx.removeItem(props.name);
     // call ll backend to remove item
   };
+   
 
   const medSummaryItems = cartCtx.items.map((medicine) => {
     return <MedSummaryItem key={medicine.name} id={medicine.id} label={medicine.name} price={medicine.price} quantity={medicine.quantity} image={medicine.image} description={medicine.description} remove={removeItem} name={medicine.name} />;
@@ -62,7 +63,11 @@ const CartPage = (props) => {
               <div>
                 <h2 className={classes.total}>Total Amount: $ {cartCtx.total}</h2>
                 <div className={classes.checkoutButton}>
-                  <button className={classes.check} >Checkout</button>
+                  <Link to="../payment/AddingInfo">
+                <button className={classes.check} >
+                  Checkout
+                </button>
+                </Link>
                 </div>
               </div>
             </div>
