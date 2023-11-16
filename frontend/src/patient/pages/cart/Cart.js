@@ -8,7 +8,8 @@ const CartContext = React.createContext({
     addItem: (item) => { },
     removeItem: (itemID) => { },
     removeAll: (itemID) => { },
-    initItem: (item) => {}
+    initItem: (item) => {},
+    clearCart: () => {}
 });
 
 const cartReducer = (state, action) => {
@@ -84,6 +85,17 @@ const cartReducer = (state, action) => {
 
         return { length: state.length - removedItem.quantity, items: state.items, total: newTotal.toFixed(2) };
     }
+    if (action.type === "CLEAR-CART") {
+        const options = {
+        credentials: "include",
+        method: 'POST',
+        headers: { 'Content-type': 'application/json' },
+        body: JSON.stringify({cart: []})
+    };
+    fetch(`http://localhost:4000/patients/${action.id}/cart`, options);
+
+        return {length: 0, items: [], total: 0};
+    }
 
     return { length: 0, items: {} };
 }
@@ -105,6 +117,9 @@ export const CartContextProvider = (props) => {
     const initItem = (item) => {
         dispatchCart({ type: 'SET-ITEM', item: item });
     }
+    const clearCart = () => {
+        dispatchCart({ type: 'CLEAR-CART', id: patientId });
+    }
 
     return (
         <CartContext.Provider value={{
@@ -114,7 +129,8 @@ export const CartContextProvider = (props) => {
             addItem: addItem,
             removeItem: removeItem,
             removeAll: removeAll,
-            initItem: initItem
+            initItem: initItem,
+            clearCart: clearCart
         }}>
             {props.children}
         </CartContext.Provider>

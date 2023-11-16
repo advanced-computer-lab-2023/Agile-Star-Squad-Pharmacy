@@ -66,6 +66,7 @@ export default function CheckoutForm(props) {
       }
 
       setMessage('Payment successful!');
+      cartCtx.clearCart();
       const { error } = await stripe.confirmPayment({
         elements,
         confirmParams: {
@@ -115,7 +116,8 @@ export default function CheckoutForm(props) {
 
       if (response.ok) {
         // Handle a successful response
-        navigate("/orders");
+        cartCtx.clearCart();
+        navigate("/");
       } else {
         // Handle errors if the server response is not ok
         alert('Failed to update data.');
@@ -153,6 +155,7 @@ export default function CheckoutForm(props) {
         body: JSON.stringify(paymentIntentData),
         credentials: "include"
       })
+      cartCtx.clearCart();
       navigate("/");
     } catch (error) {
     }
@@ -166,6 +169,7 @@ export default function CheckoutForm(props) {
         break;
       case 1:
         handleWallet(e);
+        break;
       case 2:
         handleCOD();
       default:
