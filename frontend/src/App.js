@@ -29,7 +29,7 @@ function App() {
       return (
         <CartContextProvider>
           <Routes>
-            <Route path="/pharmacy/home" element={<AddAddress />} exact />
+            <Route path="/pharmacy/home" element={<PharmacyHome />} exact />
             <Route path="/cart" element={<CartPage />} exact />
             <Route path="/payment/AddingInfo" element={<AddingInfo />} exact />
             <Route path="/order" element={<Order />} exact />

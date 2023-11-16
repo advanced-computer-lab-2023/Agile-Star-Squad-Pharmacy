@@ -4,7 +4,7 @@ import Card from '../../../shared/components/Card/Card';
 import { loadStripe } from '@stripe/stripe-js';
 import CartContext from '../cart/Cart';
 import Payment from './Payment';
-import { useNavigate,Link} from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import UserContext from '../../../user-store/user-context';
 
 const AddingInfo = (props) => {
@@ -16,7 +16,7 @@ const AddingInfo = (props) => {
   const navigate = useNavigate();
 
   const goToOrdersHandler = () => {
-    navigate(`/order`);
+    navigate('/order');
   };
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -78,9 +78,7 @@ const AddingInfo = (props) => {
               </div>
             ))}
           </Card>
-          <Link to="../patient/pages/order/Order">
           <button onClick={goToOrdersHandler}>Go to Orders</button>
-          </Link>
         </div>
       </div>
     </div>

@@ -75,9 +75,7 @@ const changeOrderStatus = async (req, res) => {
 
 // Function to add an order
 const addOrder = async (req, res) => {
- 
   try {
-    console.log(req.body)
     const { patientId, medicineList, totalCost } = req.body;
     const patient = await Patient.findById(patientId);
     if (!patient) {
