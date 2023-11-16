@@ -25,7 +25,7 @@ export default function CheckoutForm(props) {
     totalCost: props.CartCtx.total,
     address: addressId,
   };
-  // console.log(paymentIntentData);
+  console.log(paymentIntentData);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -59,9 +59,10 @@ export default function CheckoutForm(props) {
           patientId: userCtx.userId,
           medicineList,
           totalCost: props.CartCtx.total,
+          address: addressId,
         };
 
-        console.log(paymentIntentData);
+        // console.log(paymentIntentData);
 
         const response = await fetch('http://localhost:4000/orders', {
           method: 'POST',
