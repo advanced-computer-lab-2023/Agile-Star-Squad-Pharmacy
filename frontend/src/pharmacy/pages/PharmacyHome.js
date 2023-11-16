@@ -54,6 +54,18 @@ const PharmacyHomePharmacist = () => {
             };
           })
         );
+        fetchCart(Medicine.map((m) => {
+          return {
+            id: m._id,
+            name: m.name,
+            image: m.image,
+            description: m.description,
+            price: m.price,
+            sales: m.sales,
+            cartQuantity: 1,
+            quantity: m.quantity,
+          };
+        }));
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -61,6 +73,18 @@ const PharmacyHomePharmacist = () => {
 
     fetchData();
   }, []);
+
+  const fetchCart = async (medicines) => {
+    if (cartCtx.length == 0) {
+      const response = await fetch(`http://localhost:4000/patients/${userCtx.userId}/cart`, { credentials: "include" });
+      const cartJson = await response.json();
+      const cart = cartJson.cart;
+      cart.forEach(item => {
+        const medicine = medicines.find(medicineItem => medicineItem.id == item.id);
+        cartCtx.initItem({ id: item.id, image: medicine.image, name: medicine.name, description: medicine.description, price: medicine.price, quantity: +item.quantity });
+      });
+    }
+  }
 
   const medicinalUseOptions = []; // fill options based on medicinalUse enum
   for (const use of medicinalUseEnum) {

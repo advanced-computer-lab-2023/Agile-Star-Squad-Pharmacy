@@ -70,6 +70,16 @@ const patientSchema = new mongoose.Schema({
       ref: 'Cart',
     },
   ],
+  kimoCart: [
+    {
+      id: {
+        type: String
+      },
+      quantity: {
+        type: Number
+      },
+    }
+  ]
 });
 
 const Patient = mongoose.model('Patient', patientSchema);

@@ -14,4 +14,9 @@ router
   .get(middleware.patientAuth, patientController.getPatient)
   .delete(middleware.adminAuth, patientController.removePatient);
 
+router 
+  .route('/:id/cart')
+  .get(middleware.patientAuth, patientController.getCart)
+  .post(middleware.patientAuth, patientController.setCart);
+
 module.exports = router;
