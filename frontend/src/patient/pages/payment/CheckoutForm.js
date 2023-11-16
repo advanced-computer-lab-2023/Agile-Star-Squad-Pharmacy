@@ -159,13 +159,13 @@ export default function CheckoutForm(props) {
 
   }
 
-  const onSubmit = () => {
+  const onSubmit = (e) => {
     switch (useWallet) {
       case 0:
-        handleSubmit();
+        handleSubmit(e);
         break;
       case 1:
-        handleWallet();
+        handleWallet(e);
       case 2:
         handleCOD();
       default:
@@ -207,7 +207,7 @@ export default function CheckoutForm(props) {
           className='me-2'
           name='radio'
           // id="use-wallet"
-          // checked={false}
+          checked={useWallet == 0}
           onChange={(e) => setUseWallet(0)}
         />
         <label htmlFor="use-wallet">Credit Card</label>
