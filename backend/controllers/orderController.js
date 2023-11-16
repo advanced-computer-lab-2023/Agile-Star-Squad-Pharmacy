@@ -78,7 +78,6 @@ const addOrder = async (req, res) => {
   try {
     const { patientId, medicineList, totalCost } = req.body;
     const patient = await Patient.findById(patientId);
-
     if (!patient) {
       return res.status(404).json({ message: 'Patient not found' });
     }

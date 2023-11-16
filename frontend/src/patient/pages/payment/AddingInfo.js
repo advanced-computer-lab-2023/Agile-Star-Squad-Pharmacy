@@ -65,7 +65,7 @@ const AddingInfo = (props) => {
 
 
   const goToOrdersHandler = () => {
-    navigate(`/order`);
+    navigate('/order');
   };
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -163,11 +163,7 @@ const AddingInfo = (props) => {
               </div>
             ))}
           </Card>
-
-          <Link to="../patient/pages/order/Order">
-            <button onClick={goToOrdersHandler}>Go to Orders</button>
-          </Link>
-
+          <button onClick={goToOrdersHandler}>Go to Orders</button>
         </div>
       </div>
     </div>
