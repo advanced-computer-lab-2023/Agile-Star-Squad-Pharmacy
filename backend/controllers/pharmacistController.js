@@ -68,9 +68,50 @@ exports.updatePharmacist = catchAsync(async (req, res, next) => {
   });
 });
 
+// exports.pharmacistSignup = catchAsync(async (req, res, next) => {
+//   try {
+//     const newRequest = await Request.create(req.body);
+//     res.status(200).json({
+//       status: 'success',
+//       data: {
+//         request: newRequest,
+//       },
+//     });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
+
 exports.pharmacistSignup = catchAsync(async (req, res, next) => {
+  console.log("eehhhhhhhhhh");
   try {
+    // Check if the username or email already exist in the 'requests' collection
+    const existingRequest = await Request.findOne({
+      $or: [{ username: req.body.username }, { email: req.body.email }],
+    });
+
+    if (existingRequest) {
+      return res.status(400).json({
+        status: 'fail',
+        message: 'Your request is still pending.',
+      });
+    }
+
+    // Check if the username or email already exist in the 'pharmacists' collection
+    const existingPharmacist = await Pharmacist.findOne({
+      $or: [{ username: req.body.username }, { email: req.body.email }],
+    });
+
+    if (existingPharmacist) {
+      return res.status(400).json({
+        status: 'fail',
+        message: 'You are already a Pharmacist, try logging in instead.',
+      });
+    }
+
+    // If neither username nor email exist, create a new request
     const newRequest = await Request.create(req.body);
+
     res.status(200).json({
       status: 'success',
       data: {
@@ -79,8 +120,13 @@ exports.pharmacistSignup = catchAsync(async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
+    res.status(500).json({
+      status: 'error',
+      message: 'Internal Server Error',
+    });
   }
 });
+
 
 exports.getPharmacist = catchAsync(async (req, res, next) => {
   const Pharmacist = await Pharmacist.findById(req.params.id);

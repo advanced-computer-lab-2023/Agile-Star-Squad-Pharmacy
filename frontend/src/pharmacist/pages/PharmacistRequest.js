@@ -92,11 +92,15 @@ const PharmacistRequestForm = () => {
         method: 'POST',
         headers: { 'Content-type': 'application/json; charset=UTF-8' },
         body: JSON.stringify(data),
+        credentials: 'include',
       };
+      console.log(data);
+      console.log("requestOptions");
       const response = await fetch(
         'http://localhost:4000/pharmacist',
         requestOptions
       );
+      console.log("response");
 
       if (response.ok) {
         // Handle a successful response
@@ -104,9 +108,12 @@ const PharmacistRequestForm = () => {
         navigate('/');
       } else {
         // Handle errors if the server response is not ok
-        alert('Registration Failed!');
+        const responseData = await response.json();
+        alert(responseData.message);
+        navigate('/');
       }
     } catch (error) {
+      console.log("error");
       // Handle network errors
       alert('Network error: ' + error.message);
     }
