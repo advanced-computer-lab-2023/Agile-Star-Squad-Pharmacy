@@ -3,6 +3,7 @@ import medicinalUseEnum from '../../shared/util/MedicinalUseEnum';
 import { useNavigate } from 'react-router-dom';
 import CartContext from '../../patient/pages/cart/Cart';
 import UserContext from '../../user-store/user-context';
+import NavBar from '../../shared/components/NavBar/NavBar';
 
 const PharmacyHomePharmacist = () => {
   const userCtx = useContext(UserContext);
@@ -238,6 +239,8 @@ const PharmacyHomePharmacist = () => {
 
   return (
     <React.Fragment>
+      <NavBar/>
+      <br/>
       <form onSubmit={onSubmitHandler}>
         <input
           type="text"
@@ -312,6 +315,7 @@ const PharmacyHomePharmacist = () => {
           ) : null}
         </div>
       ))}
+      
     </React.Fragment>
   );
 };

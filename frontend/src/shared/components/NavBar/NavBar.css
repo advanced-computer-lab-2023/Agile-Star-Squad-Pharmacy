@@ -1,0 +1,68 @@
+.bodyN {
+  width: 100%;
+  height: 90px;
+  flex-shrink: 0;
+  background: var(--white-100, #fff);
+  box-shadow: 0px 4px 38px 0px rgba(0, 0, 0, 0.25);
+  padding-bottom: 10px;
+}
+
+.container-fluid {
+  height: 56px;
+}
+.navbar-expand-lg {
+  height: 110%;
+}
+.navbar-collapse {
+  padding-top: 15px;
+  padding-left: 190px;
+}
+
+.navbar-brand {
+  padding-left: 80px;
+  width: 196px;
+  height: 31px;
+  flex-shrink: 0;
+  color: rgba(60, 90, 11, 0.61);
+  font-family: 'Yeseva One', serif;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+#patient {
+  width: 75px;
+  height: 75px;
+  flex-shrink: 0;
+  border-radius: 200px;
+  background: url('../../../patient.png'), lightgray 50% / cover no-repeat;
+}
+.nav-item {
+  /* padding-right: 48px;
+    color: #0f172af7;
+    font-size: 16px; */
+  padding: 20px;
+  color: #385a58;
+  font-family: 'Avenir', serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+#dropdownMenuButton1 {
+  color: black;
+  background-color: white;
+  border-color: white;
+  border-radius: 0%;
+  font-size: 30px;
+  padding-top: 20px;
+}
+#last {
+  color: #ea580c;
+}
+.btn {
+  font-size: 16px;
+}
+.btn-group {
+  padding-right: 80px;
+}
