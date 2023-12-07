@@ -20,7 +20,10 @@ import Order from './patient/pages/order/Order';
 import ChangePassword from './login/pages/ChangePassword';
 import { CartContextProvider } from './patient/pages/cart/Cart';
 import './App.css';
-
+import Order from "./patient/pages/order/Order"
+import SignupOptions from './login/pages/SignupOptions';
+import AddAddress from "./patient/pages/AddAddress";
+import Checking from './patient/pages/payment/Checking';
 
 function App() {
   const user = useContext(UserContext);
@@ -33,6 +36,8 @@ function App() {
           <Routes>
             <Route path="/pharmacy/home" element={<PharmacyHome />} exact />
             <Route path="/cart" element={<CartPage />} exact />
+            <Route path="/payment/AddingInfo" element={<AddingInfo />} exact />
+            <Route path="/payment/temp" element={<Checking />} exact />
             <Route path="/order" element={<Order />} exact />
             <Route path="changePassword" element={<ChangePassword />} exact />
             <Route path="*" element={<Navigate to="/pharmacy/home" />} />{' '}
