@@ -1,6 +1,6 @@
 import React from 'react';
-import { FontistoAmerican } from '../../../shared/components/FontistoAmerican';
-import { LogosVisa } from '../../../shared/components/LogosVisa';
+// import { FontistoAmerican } from '../../../shared/components/FontistoAmerican';
+// import { LogosVisa } from '../../../shared/components/LogosVisa';
 import CartContext from '../cart/Cart';
 import {useContext} from 'react';
 import './style.css';

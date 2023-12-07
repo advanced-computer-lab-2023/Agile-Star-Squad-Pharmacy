@@ -14,8 +14,7 @@ import ManageUsersPage from './admin/ManageUsers/ManageUsersPage';
 import UserContext from './user-store/user-context';
 import CartPage from './patient/pages/cart/CartPage';
 
-import AddingInfo from './payment/AddingInformation';
-import Order from './patient/pages/order/Order';
+
 
 import ChangePassword from './login/pages/ChangePassword';
 import { CartContextProvider } from './patient/pages/cart/Cart';
