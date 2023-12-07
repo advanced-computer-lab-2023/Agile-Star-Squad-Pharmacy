@@ -3,9 +3,10 @@ import medicinalUseEnum from '../../shared/util/MedicinalUseEnum';
 import { useNavigate } from 'react-router-dom';
 import CartContext from '../../patient/pages/cart/Cart';
 import UserContext from '../../user-store/user-context';
+import NavBar from '../../shared/components/NavBar/NavBar';
 
 const PharmacyHomePharmacist = () => {
-  const user = useContext(UserContext);
+  const userCtx = useContext(UserContext);
 
   const [medicineList, setMedicineList] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
@@ -54,6 +55,18 @@ const PharmacyHomePharmacist = () => {
             };
           })
         );
+        fetchCart(Medicine.map((m) => {
+          return {
+            id: m._id,
+            name: m.name,
+            image: m.image,
+            description: m.description,
+            price: m.price,
+            sales: m.sales,
+            cartQuantity: 1,
+            quantity: m.quantity,
+          };
+        }));
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -61,6 +74,18 @@ const PharmacyHomePharmacist = () => {
 
     fetchData();
   }, []);
+
+  const fetchCart = async (medicines) => {
+    if (cartCtx.length == 0) {
+      const response = await fetch(`http://localhost:4000/patients/${userCtx.userId}/cart`, { credentials: "include" });
+      const cartJson = await response.json();
+      const cart = cartJson.cart;
+      cart.forEach(item => {
+        const medicine = medicines.find(medicineItem => medicineItem.id == item.id);
+        cartCtx.initItem({ id: item.id, image: medicine.image, name: medicine.name, description: medicine.description, price: medicine.price, quantity: +item.quantity });
+      });
+    }
+  }
 
   const medicinalUseOptions = []; // fill options based on medicinalUse enum
   for (const use of medicinalUseEnum) {
@@ -193,14 +218,19 @@ const PharmacyHomePharmacist = () => {
       price: medicine.price,
       quantity: +medicine.cartQuantity,
     });
+    // call to the backend to add an item
   };
 
   const logout = () => {
-    user.logout();
+    userCtx.logout();
     navigate("/");
   }
   const goToOrdersHandler = () => {
     navigate(`/order`);
+  };
+
+  const goToAddressHandler = () => {
+    navigate(`/address/add`);
   };
 
   const changePasswordHandler = () => {
@@ -209,6 +239,8 @@ const PharmacyHomePharmacist = () => {
 
   return (
     <React.Fragment>
+      <NavBar/>
+      <br/>
       <form onSubmit={onSubmitHandler}>
         <input
           type="text"
@@ -223,14 +255,15 @@ const PharmacyHomePharmacist = () => {
           {medicinalUseOptions}
         </select>
         <button type="submit">SUBMIT</button>
-        {user.role == 'patient' ? (
+        {userCtx.role == 'patient' ? (
           <>
             <button onClick={redirectToCartPage}>My Cart</button>
             <button onClick={goToOrdersHandler}>Go to Orders</button>
+            <button onClick={goToAddressHandler}>Add Address</button>
           </>
         ) : null}
         <hr />
-        {user.role == 'pharmacist' ? (
+        {userCtx.role == 'pharmacist' ? (
           <button onClick={addNewMedicineHandler}>ADD MEDICINE</button>
         ) : null}
         <button onClick={logout}>logout</button>
@@ -247,7 +280,7 @@ const PharmacyHomePharmacist = () => {
           <p>Description: {item.description}</p>
           <p>Price: {item.price}</p>
 
-          {user.role == 'patient' ? (
+          {userCtx.role == 'patient' ? (
             <div>
               <input
                 type="number"
@@ -264,7 +297,7 @@ const PharmacyHomePharmacist = () => {
             </div>
           ) : null}
 
-          {user.role == 'pharmacist' ? (
+          {userCtx.role == 'pharmacist' ? (
             <React.Fragment>
               <p>Sales: {item.sales}</p>
               <p>Quantity: {item.quantity}</p>
@@ -282,6 +315,7 @@ const PharmacyHomePharmacist = () => {
           ) : null}
         </div>
       ))}
+      
     </React.Fragment>
   );
 };

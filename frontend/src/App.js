@@ -19,6 +19,7 @@ import Order from './patient/pages/order/Order';
 
 import ChangePassword from './login/pages/ChangePassword';
 import { CartContextProvider } from './patient/pages/cart/Cart';
+import AddingInfo from './patient/pages/payment/AddingInfo';
 import './App.css';
 import Order from "./patient/pages/order/Order"
 import SignupOptions from './login/pages/SignupOptions';
@@ -39,6 +40,7 @@ function App() {
             <Route path="/payment/AddingInfo" element={<AddingInfo />} exact />
             <Route path="/payment/temp" element={<Checking />} exact />
             <Route path="/order" element={<Order />} exact />
+            <Route path="/address/add" element={<AddAddress />} exact />
             <Route path="changePassword" element={<ChangePassword />} exact />
             <Route path="*" element={<Navigate to="/pharmacy/home" />} />{' '}
           </Routes>
@@ -67,6 +69,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} exact />
           <Route path="/resetPassword" element={<ResetPassword />} exact />
+          <Route path="signupOptions" element={<SignupOptions />} exact />
           <Route
             path="/pharmacist/register"
             element={<PharmacistRequest />}

@@ -29,6 +29,11 @@ const orderSchema = new mongoose.Schema({
     ref: 'Patient',
     required: true,
   },
+  address: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Address',
+    required: true,
+  },
   totalCost: {
     type: Number,
     required: true,

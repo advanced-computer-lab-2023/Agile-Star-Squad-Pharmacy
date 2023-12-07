@@ -1,9 +1,14 @@
 const express = require('express');
+const dotenv = require('dotenv');
 const env = require("dotenv").config({ path: "./config.env" });
 const globalErrorHandler = require('./Controllers/errorController');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
+  apiVersion: "2022-08-01",
+});
+const { resolve } = require("path");
 const AppError = require('./utils/appError');
 const adminRouter = require('./routes/adminRoutes');
 const patientRouter = require('./routes/patientRoutes');
@@ -11,8 +16,13 @@ const medicineRouter = require('./routes/medicineRoutes');
 const pharmacistRouter = require('./routes/pharmacistRoutes');
 const pharmacyRouter = require('./routes/pharmacyRoutes');
 const authRouter = require('./routes/authRoutes');
+const orderRouter = require('./routes/orderRoutes');
+const cartRouter = require('./routes/cartRoutes');
+const addressRouter = require('./routes/addressRoutes');
 const middleware = require('./middleware/middleware.js');
-const orderRoutes = require('./routes/orderRoutes');
+
+
+
 
 const app = express();
 
@@ -28,15 +38,25 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
-
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
   next();
 });
+app.get("/", (req, res) => {
+  const path = resolve(process.env.STATIC_DIR + "/index.html");
+  res.sendFile(path);
+});
+
+app.use('/cart', cartRouter);
+app.use('/pharmacy', pharmacyRouter);
+app.use('/orders', orderRouter);
+app.use('/admins', adminRouter);
+app.use('/pharmacist', pharmacistRouter);
+app.use('/patients', patientRouter);
+app.use('/medicine', medicineRouter);
+app.use('/address', addressRouter);
+app.use('/auth', authRouter);
+
+
 app.get("/", (req, res) => {
   const path = resolve(process.env.STATIC_DIR + "/index.html");
   res.sendFile(path);
@@ -50,13 +70,17 @@ app.get("/config", (req, res) => {
 
 app.post("/create-payment-intent", async (req, res) => {
   try {
+    const data = req.body;  // Get the entire data object
     const paymentIntent = await stripe.paymentIntents.create({
       currency: "EUR",
-      amount: 1999,
-      automatic_payment_methods: { enabled: true },
+      amount: data.price * 100,
+      payment_method_types: ['card'],
+      metadata: {
+        patient_id: data.patient_id,
+      },
     });
 
-    // Send publishable key and PaymentIntent details to client
+
     res.send({
       clientSecret: paymentIntent.client_secret,
     });
@@ -68,13 +92,8 @@ app.post("/create-payment-intent", async (req, res) => {
     });
   }
 });
-app.use("/pharmacy", pharmacyRouter);
-app.use("/admins", adminRouter);
-app.use("/pharmacist", pharmacistRouter);
-app.use("/patients", patientRouter);
-app.use("/medicine", medicineRouter);
 
-app.all("*", (req, res, next) => {
+app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`));
 });
 

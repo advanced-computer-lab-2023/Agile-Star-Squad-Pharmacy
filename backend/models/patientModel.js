@@ -57,6 +57,34 @@ const patientSchema = new mongoose.Schema({
       ref: 'Order',
     },
   ],
+  addressess: [
+    {
+      address: {
+        type: String,
+      },
+    },
+  ],
+  cart: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Cart',
+    },
+  ],
+  kimoCart: [
+    {
+      id: {
+        type: String
+      },
+      quantity: {
+        type: Number
+      },
+    }
+  ],
+  wallet:{
+    type: Number,
+    default:0,
+
+  }
 });
 
 const Patient = mongoose.model('Patient', patientSchema);

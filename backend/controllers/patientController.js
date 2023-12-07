@@ -69,8 +69,28 @@ exports.signup = catchAsync(async (req, res, next) => {
     },
   });
 });
+exports.updateWallet = catchAsync(async (req, res, next) => {
+  const patientId = req.params.patientId;
+  
+ 
+  
+  const patient = await Patient.findById(patientId);
+   const walletAmount=req.body.walletAmount + patient.wallet;
+  if (!patient) {
+    return next(new AppError('Patient not found', 404));
+  }
+  
+  
+  await Patient.findByIdAndUpdate(patient._id, {
+    wallet: walletAmount,
+  });
 
+  res.status(200).json({
+    status: 'success',
+  });
+});
 exports.getPatient = catchAsync(async (req, res, next) => {
+  try {
   const patient = await Patient.findById(req.params.id);
 
   res.status(200).json({
@@ -79,6 +99,24 @@ exports.getPatient = catchAsync(async (req, res, next) => {
       patient,
     },
   });
+  } catch (error) {
+  }
 });
 
-//Modules.exports = {createPatient}
+exports.getCart = async (req, res) => {
+  try {
+    const patient = await Patient.findById(req.params.id);
+    res.status(200).json({ message: 'Cart gotten successfully', cart: patient.kimoCart });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+exports.setCart = async (req, res) => {
+  try {
+    await Patient.findByIdAndUpdate(req.params.id, {kimoCart: req.body.cart});
+    res.status(200).json({ message: 'Cart set successfully' });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};

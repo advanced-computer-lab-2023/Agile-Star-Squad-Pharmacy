@@ -74,7 +74,7 @@ const UserDetails = (props) => {
                 <span>{props.data['name']}</span>
             </div>
             <div>
-                <span><h4>Name</h4></span>
+                <span><h4>Email</h4></span>
                 <span>{props.data['email']}</span>
             </div>
             <div>

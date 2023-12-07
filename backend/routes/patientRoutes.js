@@ -14,4 +14,16 @@ router
   .get(middleware.patientAuth, patientController.getPatient)
   .delete(middleware.adminAuth, patientController.removePatient);
 
+router 
+  .route('/:id/cart')
+  .get(middleware.patientAuth, patientController.getCart)
+  .post(middleware.patientAuth, patientController.setCart);
+
+  router
+  .route('/:patientId/wallet')
+  .post(patientController.updateWallet)
+  // .get(
+  //   middleware.patientAuth,
+  //   appointmentController.upComingAppointmentsForPatients
+  // );
 module.exports = router;

@@ -13,6 +13,6 @@ router.get('/patient/:patientId', getOrdersByPatientId);
 router.get('/:id', getOrderById);
 router.delete('/:id', deleteOrder);
 router.put('/:id', changeOrderStatus);
-router.post('/', addOrder);
+router.route('/').post(addOrder);
 
 module.exports = router;

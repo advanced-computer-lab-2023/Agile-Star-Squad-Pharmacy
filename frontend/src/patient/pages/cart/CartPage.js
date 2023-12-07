@@ -12,11 +12,14 @@ import NavBar from '../../../shared/components/NavBar/NavBar';
 
 const CartPage = (props) => {
   const cartCtx = useContext(CartContext);
-  console.log(cartCtx.items.length);
+
+  // useEffect & a call to the backend to get cart items
 
   const removeItem = (name) => {
     cartCtx.removeItem(props.name);
+    // call ll backend to remove item
   };
+   
 
   const medSummaryItems = cartCtx.items.map((medicine) => {
     return <MedSummaryItem key={medicine.name} id={medicine.id} label={medicine.name} price={medicine.price} quantity={medicine.quantity} image={medicine.image} description={medicine.description} remove={removeItem} name={medicine.name} />;

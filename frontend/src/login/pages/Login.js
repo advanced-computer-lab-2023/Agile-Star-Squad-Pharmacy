@@ -8,6 +8,7 @@ import Button from '../components/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import UserContext from '../../user-store/user-context';
+import { Link } from "react-router-dom"
 
 const Login = (props) => {
   const userCtx = useContext(UserContext);
@@ -78,8 +79,8 @@ const Login = (props) => {
               <p>
                 Don't have an account?{' '}
                 <a className={styles.signupLink} href="#">
-                  Sign Up Now
-                </a>
+                <Link to="/signupOptions">Sign Up Now</Link>
+              </a>
               </p>
             </div>
           </div>
