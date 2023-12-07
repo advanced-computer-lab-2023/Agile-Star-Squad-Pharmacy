@@ -42,8 +42,8 @@ const Login = (props) => {
 
   return (
     <div className="container-fluid" style={{ backgroundColor: '#96B7C7' }}>
-      <div className="row">
-        <div className="col-md-7">
+      <div className="row" style={{ backgroundColor: '#96B7C7' }}>
+        <div className="col-md-7" >
           <div className={styles.logo}>
             <img src={logo} alt="logo" />
           </div>
