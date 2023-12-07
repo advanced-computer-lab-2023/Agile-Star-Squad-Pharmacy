@@ -1,136 +1,152 @@
-
 .cartpage {
-    background-image: url('./backgroundImage.png');
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    background-repeat: no-repeat;
-    width: 100vw;
-    height: 100vh;
-    /* overflow: hidden; */
-  }
-  .backgroundsvg{
-    position:absolute;
-    height: 100vh;
-    overflow: visible;
-    left: -20%;
-    width: 100%;
-    transform: scale(1.2,1.2);
-    z-index: 0;
-  }
-  .cartItem{
-    height: 430px; 
-    overflow-y: auto;
-    width: 500px;
-  }
- /* background-size: cover;  Scale the image to cover the entire container */
+  background-image: url('./backgroundImage.png');
+  background-size: cover;
 
-  /* You may need to adjust the following styles depending on your design */
-  .pageContent {
-    
-    display: flex;
-    justify-content: flex-end; /* Align content to the right */
-    position: relative;
-  }
-  .summary {
-    text-align: right;
-  } 
-  .items{
-    color: gray;
-    text-align: left;
-    position: relative;
-    left: 4%;
-    font-family: 'manrope', sans-serif;
-    font-size: 12.29px;
-  }
-  .price{
-    text-align:center ;
-    position: relative;
-    left: 220%;
-    top: -45px;
-    font-weight: bold;
-    color: black;
-  }
+  background-position: center;
+  display: flex;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+  /* overflow: hidden; */
+}
+.backgroundsvg {
+  position: absolute;
+  height: 100vh;
+  overflow: visible;
+  left: -20%;
+  width: 100%;
+  transform: scale(1.2, 1.2);
+  z-index: 0;
+}
+.naving {
+  z-index: 3;
+}
+.cartItem {
+  height: 430px;
+  overflow-y: auto;
+  width: 500px;
+  padding-bottom: 10px;
+}
+/* background-size: cover;  Scale the image to cover the entire container */
 
-  .label{
-    color: black;
-    font-family: 'Poppins', sans-serif;
-    font-weight: normal;
-    font-size: 18.63px;
-  }
-  .empty{
-    color: gray;
-    font-family: 'poppins', sans-serif;
-    text-align: left;
-    font-weight: bold;
-    margin-right: 40%;
-    }
-  
+/* You may need to adjust the following styles depending on your design */
+.pageContent {
+  display: flex;
+  justify-content: flex-end; /* Align content to the right */
+  position: relative;
+}
+.summary {
+  text-align: right;
+}
 
-  .inc{
-    background-color: #193842;
-    color: white;
-  }
-  .check{
-    background-color: #193842;
-    color: white;
-    padding: 10px 20px; 
-    border: none; 
-    border-radius: 10px; 
-      
-  }
-  .more{
-    background-color: transparent;
-    color: black;
-    border: none; 
-    border-radius: 10px; 
-    text-decoration: underline;
-    font-weight: bold;
-  }
+.items {
+  color: gray;
+  text-align: left;
+  position: relative;
+  left: 4%;
+  font-family: 'manrope', sans-serif;
+  font-size: 12.29px;
+}
+.price {
+  text-align: center;
+  position: relative;
+  left: 220%;
+  top: -45px;
+  font-weight: bold;
+  color: black;
+}
 
-  .bin{
-    background-color: transparent;
-    border: none; 
-    border-radius: 10px; 
-    font-weight: bold;
-    position: relative;
-    left: 144%;
-  }
+.label {
+  color: #000;
+  font-family: 'Poppins';
+  font-size: 18.63px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.empty {
+  color: gray;
+  font-family: 'poppins', sans-serif;
+  text-align: left;
+  font-weight: bold;
+  margin-right: 40%;
+}
 
-  .back{
-    background-color: transparent;
-    color: black;
-    font-weight: bold;
-    border: none; /* Remove the default border */
-    border-radius: 10px; /* Apply border-radius to round the corners */
-    font-family: 'manrope', sans-serif;
-    position: absolute;
-    left: 90%;
-    top: 10%;
-    font-size: 16px;
-    
-  }
-  .backarrow{
-    
-    position: absolute;
-    left: 8%;
-    top: 10%;
-  
-  }
+.inc {
+  background-color: #193842;
+  color: white;
+}
+.hello{
+  margin-top: 10px;
+}
+.check {
+  border-radius: 0px 5px 5px 0px;
+  background: var(--white-100, #fff);
+  box-shadow: 6px 6px 33px 0px rgba(0, 0, 0, 0.25);
+  display: flex;
+  width: 172px;
+  height: 47px;
+  padding: 14px 81px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  color: #000;
+  font-family: 'Poppins';
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-left: auto;
+}
+.more {
+  background-color: transparent;
+  color: black;
+  border: none;
+  border-radius: 10px;
+  text-decoration: underline;
+  font-weight: bold;
+}
 
-  .rightSection {
-    margin-top: 10%;
-    margin-bottom: 10%;
-    margin-left: 25%;
-    justify-content: space-between;
-    font-family: 'Poppins', sans-serif;
-    font-weight: bold;
-    font-size: 33px;
-    z-index: 2;
-  }
+.bin {
+  background-color: transparent;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  position: relative;
+  left: 144%;
+}
 
- .total {
+.back {
+  background-color: transparent;
+  color: black;
+  font-weight: bold;
+  border: none; /* Remove the default border */
+  border-radius: 10px; /* Apply border-radius to round the corners */
+  font-family: 'manrope', sans-serif;
+  position: absolute;
+  left: 90%;
+  top: 10%;
+  font-size: 16px;
+}
+.backarrow {
+  position: absolute;
+  left: 8%;
+  top: 10%;
+}
+
+.rightSection {
+  margin-top: 10%;
+  margin-bottom: 10%;
+  margin-left: 20%;
+  justify-content: space-between;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  font-size: 33px;
+  z-index: 2;
+}
+
+.total {
   font-size: 23px;
   margin-top: 5%;
-  }
-  
+}
