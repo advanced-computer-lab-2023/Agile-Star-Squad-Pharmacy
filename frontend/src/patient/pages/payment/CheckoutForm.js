@@ -161,6 +161,23 @@ export default function CheckoutForm(props) {
     }
 
   }
+  const cardElementOptions = {
+    style: {
+      base: {
+        fontSize: '40px',
+        
+        color: '#32325d',
+        '::placeholder': {
+          color: '#aab7c4',
+        },
+      },
+      invalid: {
+        color: '#fa755a',
+      },
+    },
+    // Customize other options here
+  };
+
 
   const onSubmit = (e) => {
     switch (useWallet) {
@@ -215,11 +232,13 @@ export default function CheckoutForm(props) {
           onChange={(e) => setUseWallet(0)}
         />
         <label htmlFor="use-wallet">Credit Card</label>
+        
       </div>
       {useWallet == 1 && balance < cartCtx.total && <div>
         Insufficient funds!
       </div>}
-      <div>{useWallet == 0 && <PaymentElement id="payment-element" />}</div>
+      
+      <div>{useWallet == 0 && <PaymentElement id="payment-element"   />}</div>
       <button disabled={isProcessing || !stripe || !elements || (useWallet == 1 && balance < cartCtx.total)} id="submit">
         <span id="button-text">
           {isProcessing ? 'Processing ... ' : 'Pay now'}

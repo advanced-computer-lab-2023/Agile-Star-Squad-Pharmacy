@@ -13,9 +13,6 @@ import AdminHome from './admin/Home/AdminHome';
 import ManageUsersPage from './admin/ManageUsers/ManageUsersPage';
 import UserContext from './user-store/user-context';
 import CartPage from './patient/pages/cart/CartPage';
-
-
-
 import ChangePassword from './login/pages/ChangePassword';
 import { CartContextProvider } from './patient/pages/cart/Cart';
 import AddingInfo from './patient/pages/payment/AddingInfo';
@@ -24,6 +21,7 @@ import Order from "./patient/pages/order/Order"
 import SignupOptions from './login/pages/SignupOptions';
 import AddAddress from "./patient/pages/AddAddress";
 import Checking from './patient/pages/payment/Checking';
+import NavBar from './shared/components/NavBar/NavBar';
 
 function App() {
   const user = useContext(UserContext);
@@ -113,7 +111,7 @@ function App() {
       <CartContextProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Order />} exact />
+            {/* <Route path="/" element={<NavBar />} exact /> */}
             <Route path="/pharmacy/home" element={<PharmacyHome />} exact />
             <Route
               path="/pharmacist/register"
