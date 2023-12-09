@@ -62,7 +62,7 @@ function Payment(props) {
   }, [cartCtx.total]);
 
   const appearance = {
-    theme: 'minimal',
+    theme: 'stripe',
 
     variables: {
       colorPrimary: '#0570de',
@@ -74,15 +74,19 @@ function Payment(props) {
       borderRadius: '4px',
       fontLineHeight: 'normal',
       spacingUnit: '5px',
-      colorTextPlaceholder: 'rgba(255, 255, 255, 0.5)',
-      tabIconSelectedColor:'white'
+      colorTextPlaceholder: 'rgba(255, 255, 255, 0.7)',
+    
       
 
       // See all possible variables below
     },
+  
     rules: {
+      '.DropdownItem --highlight':{
+        backgroundColor:'black'
+      },
       '.Input': {
-        backgroundColor: 'rgba(0, 0, 0, 0.07)',
+        backgroundColor: 'rgba(0, 0, 0, 0.2)',
         borderBottomColor: 'black',
         borderBottomWidth: '2px',
         borderTopWidth: '0px',
@@ -90,7 +94,8 @@ function Payment(props) {
         borderRightWidth: '0px',
         boxShadow:'none',
         width:'larger',
-        color:'white'
+        color:'white',
+        outline:'black'
       },
       
       
@@ -102,6 +107,7 @@ function Payment(props) {
         fontWeight: '400',
         lineHeight: 'normal',
       },
+      
 
       // See all supported class names and selector syntax below
     },
@@ -126,10 +132,6 @@ function Payment(props) {
             ],
           }}
         >
-          {/* <div className='cardholdername'> */}
-          {/* <label>HELLLLLLLLLLLLLLLLLOOOOOOOOOOOOOOOOOOOOOOOOOOO: </label>
-          <input type='text' name="name"
-          placeholder='Kareem El Kadery' ></input></div> */}
           <CheckoutForm
             CartCtx={cartCtx}
             addressInfo={props.SelectedAddressId}

@@ -1,5 +1,5 @@
 import { PaymentElement } from '@stripe/react-stripe-js';
-import { useState, useContext, useEffect } from 'react';
+import React,{ useState, useContext, useEffect } from 'react';
 import { useStripe, useElements } from '@stripe/react-stripe-js';
 import { useNavigate } from 'react-router-dom';
 import './CheckoutForm.css';
@@ -197,7 +197,13 @@ export default function CheckoutForm(props) {
 
   return (
     <form id="payment-form" onSubmit={onSubmit}>
+        <div style={{display:'flex',marginLeft:'25px',paddingBottom:'14px',justifyContent:'space-between'}}><span id="title">Payment</span> 
+      <label id='title2' style={{marginTop:'15px',marginLeft:'150px',textDecoration:'none',fontSize:'smaller',color:'white',fontWeight:'300'}}>Balance: {balance} </label></div>
+      
+
       <div className='d-flex flex-row justify-content-between'>
+      
+        <div style={{display:'flex',marginLeft:'25px'}}>
         <div>
           <input
             type="radio"
@@ -207,9 +213,11 @@ export default function CheckoutForm(props) {
             // checked={useWallet}
             onChange={(e) => setUseWallet(1)}
           />
-          <label htmlFor="use-wallet">Pay with Wallet</label>
+          {/* <label htmlFor="use-wallet">Pay with Wallet</label> */}
+          <img className='hellokitty' src='/wallet.png'  />
+
         </div>
-        <label>Balance: {balance}</label>
+        
       </div>
       <div>
         <input
@@ -220,7 +228,9 @@ export default function CheckoutForm(props) {
           // checked={false}
           onChange={(e) => setUseWallet(2)}
         />
-        <label htmlFor="use-wallet">Cash on Delivery</label>
+        {/* <label htmlFor="use-wallet">Cash on Delivery</label> */}
+        <img className='hellokitty' src='/cod.png'  />
+
       </div>
       <div>
         <input
@@ -231,20 +241,37 @@ export default function CheckoutForm(props) {
           checked={useWallet == 0}
           onChange={(e) => setUseWallet(0)}
         />
-        <label htmlFor="use-wallet">Credit Card</label>
         
+        <img className='hellokitty' src='/cc.png'  />
+        
+      </div>
       </div>
       {useWallet == 1 && balance < cartCtx.total && <div>
         Insufficient funds!
       </div>}
       
-      <div>{useWallet == 0 && <PaymentElement id="payment-element"   />}</div>
-      <button disabled={isProcessing || !stripe || !elements || (useWallet == 1 && balance < cartCtx.total)} id="submit">
+      <div>{useWallet == 0 && <React.Fragment><div>
+        <label className='label1'>Card Holder Name</label><br/>
+        <input
+          type="text"
+          className='input1'
+          name='radio'
+          placeholder='Name'
+          // id="use-wallet"
+          checked={useWallet == 0}
+          onChange={(e) => setUseWallet(0)}
+        />
+        </div><PaymentElement id="payment-element"   /></React.Fragment>}</div>
+        <div className='buttons' style={{paddingTop:'20px'}}>
+        <div >Your Total : {cartCtx.total}</div>
+      <button disabled={isProcessing || !stripe || !elements || (useWallet == 1 && balance < cartCtx.total)} id="submit"style={{marginLeft:'25px'}}>
         <span id="button-text">
           {isProcessing ? 'Processing ... ' : 'Pay now'}
         </span>
       </button>
       <button onClick={(e)=> handleCancel(e)}>Cancel</button>
+      
+      </div>
       {/* Show any error or success messages */}
       {message && <div id="payment-message">{message}</div>}
     </form>
