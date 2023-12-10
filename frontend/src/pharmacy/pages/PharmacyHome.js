@@ -218,6 +218,8 @@ const PharmacyHomePharmacist = () => {
       price: medicine.price,
       quantity: +medicine.cartQuantity,
     });
+    alert('Medicine added to cart successfully!')
+
     // call to the backend to add an item
   };
 

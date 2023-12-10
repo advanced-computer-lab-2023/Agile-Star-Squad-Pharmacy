@@ -3,6 +3,7 @@ import axios from 'axios';
 import styles from './Orders.module.css';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../../../user-store/user-context';
+import NavBar from '../../../shared/components/NavBar/NavBar';
 
 const Order = () => {
   const user = useContext(UserContext);
@@ -13,7 +14,9 @@ const Order = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       const res = await axios
-        .get(`http://localhost:4000/orders/patient/${patientId}`, {withCredentials: true})
+        .get(`http://localhost:4000/orders/patient/${patientId}`, {
+          withCredentials: true,
+        })
         .catch((err) => {
           console.error(err);
         });
@@ -24,7 +27,9 @@ const Order = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:4000/orders/${id}`, {withCredentials: true});
+      await axios.delete(`http://localhost:4000/orders/${id}`, {
+        withCredentials: true,
+      });
       setOrders((prev) => prev.filter((order) => order._id != id));
     } catch (error) {
       console.error(error);
@@ -36,7 +41,7 @@ const Order = () => {
   useEffect(() => {
     const fetchMedicines = async () => {
       const res = await axios
-        .get(`http://localhost:4000/medicine`, {withCredentials: true})
+        .get(`http://localhost:4000/medicine`, { withCredentials: true })
         .catch((err) => {
           console.error(err);
         });
@@ -54,72 +59,99 @@ const Order = () => {
 
   const toPrevious = () => {
     navigate(-1);
-  }
+  };
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return date.toLocaleDateString(undefined, options);
+  };
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Orders</h1>
-      <button onClick={toPrevious}>Back</button>
-      <table className={styles.table}>
-        <thead>
-          <tr>
-            <th>Medicine Name</th>
-            <th>Medicine Image</th>
-            <th>Quantity</th>
-            <th>Issue Date</th>
-            <th>Delivery Date</th>
-            <th>Total Cost</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {orders.map((order) => (
-            <tr key={order._id}>
-              <td>
-                {order.medicineList.map((medicine) => (
-                  <div key={medicine.id}>
-                    {getMedicineById(medicine.medicineId)}
-                  </div>
-                ))}
-              </td>
-              <td>
-                {order.medicineList.map((medicine) => (
-                  <div key={medicine.id}>
-                    <img
-                      src={
-                        medicines.find((m) => m._id === medicine.medicineId)
-                          ?.image
-                      }
-                      alt={getMedicineById(medicine.id)}
-                      width="50"
-                      height="50"
-                    />
-                  </div>
-                ))}
-              </td>
-              <td>
-                {order.medicineList.map((medicine) => (
-                  <div key={medicine.medicineId}>{medicine.count}</div>
-                ))}
-              </td>
-              <td>{order.issueDate}</td>
-              <td>{order.deliveryDate}</td>
-              <td>{order.totalCost}</td>
-              <td>{order.status}</td>
-              <td>
-                <button
-                  className={styles.button}
-                  onClick={() => handleDelete(order._id)}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <>
+      <div>
+        <a className={styles.backArrow} href="/HomePage">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="23"
+            height="14"
+            viewBox="0 0 23 14"
+            fill="none"
+          >
+            <path
+              d="M1.59583 1.53345L11.9077 11.9807L22.2571 1.57064"
+              stroke="black"
+              strokeOpacity="0.6"
+              strokeWidth="2.04827"
+            />
+          </svg>
+        </a>
+        <NavBar />
+      </div>
+      <div className={styles.container}>
+        <h1 className={styles.title}>Orders</h1>
+        <div className={styles.tableContainer}>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Medicine Image</th>
+                <th>Medicine Name</th>
+                <th>Quantity</th>
+                <th>Issue Date</th>
+                <th>Delivery Date</th>
+                <th>Total Cost</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {orders.map((order) =>
+                order.medicineList.map((medicine, index) => (
+                  <tr>
+                    {index === 0 && ( // Display Action only once for multiple medicines in the same order
+                      <td rowSpan={order.medicineList.length}>
+                        <td>{order._id}</td>
+                      </td>
+                    )}
+                    <td>
+                      <img
+                        src={
+                          medicines.find((m) => m._id === medicine.medicineId)
+                            ?.image
+                        }
+                        alt={getMedicineById(medicine.medicineId)}
+                        width="50"
+                        height="50"
+                      />
+                    </td>
+                    <td>{getMedicineById(medicine.medicineId)}</td>
+                    <td>{medicine.count}</td>
+                    <td>{formatDate(order.issueDate)}</td>
+                    <td>{formatDate(order.deliveryDate)}</td>
+                    {index === 0 && ( // Display Action only once for multiple medicines in the same order
+                      <td rowSpan={order.medicineList.length}>
+                        <td>{order.totalCost}</td>
+                      </td>
+                    )}
+                    <td>{order.status}</td>
+                    {index === 0 && ( // Display Action only once for multiple medicines in the same order
+                      <td rowSpan={order.medicineList.length}>
+                        <button
+                          className={styles.button}
+                          onClick={() => handleDelete(order._id)}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    )}
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </>
   );
 };
 
