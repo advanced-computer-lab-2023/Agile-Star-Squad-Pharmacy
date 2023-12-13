@@ -21,7 +21,9 @@ const AddingInfo = (props) => {
   useEffect(() => {
     const fetchAddresses = async () => {
       const res = await axios
-        .get(`http://localhost:4000/address/${patientId}`, { withCredentials: true })
+        .get(`http://localhost:4000/address/${patientId}`, {
+          withCredentials: true,
+        })
         .catch((err) => {
           console.error(err);
         });
@@ -45,15 +47,13 @@ const AddingInfo = (props) => {
   //   // }
   // }
 
-
   const handleAddressSelect = (addressId) => {
     setSelectedAddressId(addressId);
   };
 
-  console.log("addresses///////////////////////////");
+  console.log('addresses///////////////////////////');
   console.log(addresses);
-  console.log("addresses///////////////////////////");
-
+  console.log('addresses///////////////////////////');
 
   const goToOrdersHandler = () => {
     navigate('/order');
@@ -104,42 +104,38 @@ const AddingInfo = (props) => {
         <Card>
           <div>
             <h3>Shipping Address</h3>
-            <tbody>
+            <select >
+              <option value="" disabled selected>
+                Select an Address
+              </option>
               {addresses.map((address) => (
-                <tr key={address._id} className={`${address._id == selectedAddressId ? "bg-success" : ""}`}>
-                  <td>
-                    Country:
-                    <div key={address._id}>
-                      {address.country}
-                    </div>
-                  </td>
-                  <td>
-                    City:
-                    <div key={address._id}>
-                      {address.city}
-                    </div>
-                  </td>
-
-                  <td>
-                    Street:
-                    <div key={address._id}>
-                      {address.street}
-                    </div>
-
-                  </td>
-                  <button onClick={() => handleAddressSelect(address._id)}>Select</button>
-                </tr>
-              ))
-              }
-            </tbody>
-
-
+                <option
+                  key={address._id}
+                 
+                >
+                  <div>{address.country} - {address.city} - {address.street}</div>
+                  <div>
+                    <strong>       Country:</strong> {address.country}  
+                  </div>
+                  <div>
+                    <strong>       City:</strong> {address.city}  
+                  </div>
+                  <div>
+                    
+                    <strong>       Street:</strong> {address.street}  
+                  </div>
+                </option>
+              ))}
+            </select>
           </div>
         </Card>
         <div className="col card1">
           <Card>
             <Elements stripe={stripePromise}>
-              <Payment CartCtx={cartCtx} SelectedAddressId={selectedAddressId}/>
+              <Payment
+                CartCtx={cartCtx}
+                SelectedAddressId={selectedAddressId}
+              />
             </Elements>
           </Card>
         </div>
@@ -148,7 +144,7 @@ const AddingInfo = (props) => {
             {/* Display your cart items, length, and total here */}
             <div>Items: {cartCtx.length}</div>
             <div>Total: ${cartCtx.total}</div>
-            
+
             {cartCtx.items.map((item) => (
               <div key={item.id}>
                 {item.name} - Quantity: {item.quantity} - Price: ${item.price}

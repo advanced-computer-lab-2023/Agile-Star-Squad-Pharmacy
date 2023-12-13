@@ -200,7 +200,7 @@ export default function CheckoutForm(props) {
         <div style={{display:'flex',marginLeft:'25px',paddingBottom:'14px',justifyContent:'space-between'}}><span id="title">Payment</span> 
       <label id='title2' style={{marginTop:'15px',marginLeft:'150px',textDecoration:'none',fontSize:'smaller',color:'white',fontWeight:'300'}}>Balance: {balance} </label></div>
       
-
+    
       <div className='d-flex flex-row justify-content-between'>
       
         <div style={{display:'flex',marginLeft:'25px'}}>
@@ -246,7 +246,7 @@ export default function CheckoutForm(props) {
         
       </div>
       </div>
-      {useWallet == 1 && balance < cartCtx.total && <div>
+      {useWallet == 1 && balance < cartCtx.total && <div style={{margin:'25px',fontFamily:'poppins',fontWeight:'400',color:'rgb(184, 4, 4)'}}>
         Insufficient funds!
       </div>}
       
@@ -263,7 +263,8 @@ export default function CheckoutForm(props) {
         />
         </div><PaymentElement id="payment-element"   /></React.Fragment>}</div>
         <div className='buttons' style={{paddingTop:'20px'}}>
-        <div >Your Total : {cartCtx.total}</div>
+        
+        
       <button disabled={isProcessing || !stripe || !elements || (useWallet == 1 && balance < cartCtx.total)} id="submit"style={{marginLeft:'25px'}}>
         <span id="button-text">
           {isProcessing ? 'Processing ... ' : 'Pay now'}
@@ -271,9 +272,10 @@ export default function CheckoutForm(props) {
       </button>
       <button onClick={(e)=> handleCancel(e)}>Cancel</button>
       
-      </div>
+      
       {/* Show any error or success messages */}
       {message && <div id="payment-message">{message}</div>}
+      </div>
     </form>
   );
 }

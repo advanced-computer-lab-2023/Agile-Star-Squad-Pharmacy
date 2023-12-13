@@ -4,11 +4,27 @@
   flex-direction: row;
   justify-content: center;
   width: 100%; /* Fill the entire width of the screen */
-  height: 100vh; /* Fill the entire height of the screen */
+  height: 150vh; /* Fill the entire height of the screen */
+  margin-left: 0px;
 }
 
 .p-Grid{
     background-color: red;
+}
+.carousel-container {
+  width: 288px;
+  height: 301px;
+  margin: 0 auto; /* To center align the carousel */
+}
+.slick-dots {
+  /* Change the size of the dots */
+  font-size: 20px;
+}
+
+/* Change the size of individual dots */
+.slick-dots li button:before {
+  font-size: 10px; /* Adjust the size of the dots */
+  /* Additional styles if needed */
 }
 
 #payment-form{
@@ -31,7 +47,7 @@
 .checkout .overlap-2 {
   background-image: url(https://cdn.animaapp.com/projects/6536ca3087fc067bdeed2d5e/releases/656d37045c84f45c768146e6/img/mask-group.png);
   background-size: cover; /* Ensure the background covers the entire container */
-  height: 100%; /* Fill the entire height of the container */
+  height: 150vh; /* Fill the entire height of the container */
   position: relative;
 }
 
@@ -46,7 +62,10 @@
 }
 
 .checkout .overlap-group {
-  height: 1024px;
+  /* Remove fixed height */
+  /* height: 1024px; */
+
+  height: auto; /* Let it adjust based on content */
   left: 0;
   position: absolute;
   top: 0px;
@@ -56,7 +75,7 @@
 .checkout .overlap-3 {
   background-image: url(https://cdn.animaapp.com/projects/6536ca3087fc067bdeed2d5e/releases/656d37045c84f45c768146e6/img/vector.svg);
   background-size: 100% 100%;
-  height: 923px;
+  height: 150vh;
   left: 0;
   position: absolute;
   top: 0;

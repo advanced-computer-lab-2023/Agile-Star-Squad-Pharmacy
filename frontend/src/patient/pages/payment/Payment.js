@@ -75,10 +75,7 @@ function Payment(props) {
       fontLineHeight: 'normal',
       spacingUnit: '5px',
       colorTextPlaceholder: 'rgba(255, 255, 255, 0.7)',
-    
       
-
-      // See all possible variables below
     },
   
     rules: {
@@ -95,9 +92,13 @@ function Payment(props) {
         boxShadow:'none',
         width:'larger',
         color:'white',
-        outline:'black'
+        outline:'black',
+        height: '32px',
+        padding :'9px',
+        fontSize:'12px',
+        
       },
-      
+           
       
       '.Label': {
         textTransform: 'uppercase',
@@ -136,6 +137,7 @@ function Payment(props) {
             CartCtx={cartCtx}
             addressInfo={props.SelectedAddressId}
           />
+        
         </Elements>
       )}
     </>
