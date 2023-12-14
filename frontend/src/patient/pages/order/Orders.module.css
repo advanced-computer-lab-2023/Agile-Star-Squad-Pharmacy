@@ -27,10 +27,14 @@
 }
 
 th,
-td,
-tr {
+td
+{
   padding: 8px;
   text-align: center;
+}
+
+.order{
+  border-bottom: 0.25px solid var(--text-icons-faded-grey, #AFB8CF);
 }
 
 thead {
@@ -55,3 +59,4 @@ thead {
   background-color: #479db9;
 
 }
+

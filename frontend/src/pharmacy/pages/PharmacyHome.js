@@ -80,6 +80,7 @@ const PharmacyHomePharmacist = () => {
       const response = await fetch(`http://localhost:4000/patients/${userCtx.userId}/cart`, { credentials: "include" });
       const cartJson = await response.json();
       const cart = cartJson.cart;
+      console.log(cart);
       cart.forEach(item => {
         const medicine = medicines.find(medicineItem => medicineItem.id == item.id);
         cartCtx.initItem({ id: item.id, image: medicine.image, name: medicine.name, description: medicine.description, price: medicine.price, quantity: +item.quantity });
