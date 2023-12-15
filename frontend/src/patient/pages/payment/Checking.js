@@ -3,6 +3,7 @@ import React from 'react';
 // import { LogosVisa } from '../../../shared/components/LogosVisa';
 import CartContext from '../cart/Cart';
 import { useContext, useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Elements } from '@stripe/react-stripe-js';
 import './style.css';
 import NavBar from '../../../shared/components/NavBar/NavBar';
@@ -12,6 +13,8 @@ import Payment from './Payment';
 import UserContext from '../../../user-store/user-context';
 import axios from 'axios';
 import AddressForm from './AddressForm';
+import arrow from '../cart/ArrowLeft.png';
+import arrowR from '../cart/ArrowRight.png';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -29,6 +32,16 @@ const Checking = () => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    prevArrow: (
+      <div>
+        <img src={arrow} alt="Left Arrow" />
+      </div>
+    ),
+    nextArrow: (
+      <div>
+        <img src={arrowR} alt="Right Arrow" />
+      </div>
+    ),
   };
   useEffect(() => {
     const fetchAddresses = async () => {
@@ -60,6 +73,11 @@ const Checking = () => {
 
     fetchConfig();
   }, []);
+  const navigate = useNavigate();
+
+  const toPrevious= () => {
+    navigate(-1);
+  };
   return (
     <div>
       <NavBar />
@@ -91,6 +109,13 @@ const Checking = () => {
               </div>
             </div>
             <div className="overlap-3">
+            <div className='backarrow'>
+          <img src={arrow}
+            style={{ width: '20px', height: 'auto' }}
+          />
+          <button className='back' onClick={toPrevious}> Back</button>
+        </div>
+
               <br />
               <h2 className="title">ORDER SUMMARY</h2>
               <div className="carousel-container">
@@ -98,24 +123,25 @@ const Checking = () => {
                 <Slider {...settings}>
                   {cartCtx.items.map((item, index) => (
                     <div key={index}>
-                      <p>Item {index+1} of {cartCtx.items.length}</p>
-                      <p>{item.name}</p>
-                      <p>{item.price}</p>
+                      <p id='indexCartItem'>Item {index+1} of {cartCtx.items.length}</p>
+                      <p id='nameCartItem'>{item.name}</p>
+                      <p id='priceCartItem'>${item.price}</p>
                       <img
                         src={item.image}
                         alt={item.name}
                         style={{
                           alignSelf: 'center',
-                          width: '288px',
-                          height: '301px',
+                          width: '338px',
+                          height: '201px',
                         }}
                       />
                     </div>
                   ))}
                 </Slider>
-                <div className="container" style={{paddingTop:'50px'}}>
-                  <div>Items: {cartCtx.length}</div>
-                  <div>Total: ${cartCtx.total}</div>
+                <div className="container" id='totalss'>
+                  
+                  Total: ${cartCtx.total}
+                  {/* ///need to add package stuff */}
                 </div>
               </div>
               <div></div>

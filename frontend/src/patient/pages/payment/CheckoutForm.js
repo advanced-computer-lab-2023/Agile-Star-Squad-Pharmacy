@@ -1,5 +1,5 @@
 import { PaymentElement } from '@stripe/react-stripe-js';
-import React,{ useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useStripe, useElements } from '@stripe/react-stripe-js';
 import { useNavigate } from 'react-router-dom';
 import './CheckoutForm.css';
@@ -19,10 +19,11 @@ export default function CheckoutForm(props) {
   const [balance, setBalance] = useState(0);
 
   useEffect(() => {
-    fetch(
-      `http://localhost:4000/patients/${userCtx.userId}`, { credentials: "include" }
-    ).then(async response => {
+    fetch(`http://localhost:4000/patients/${userCtx.userId}`, {
+      credentials: 'include',
+    }).then(async (response) => {
       const responseData = await response.json();
+      // console.log(responseData.data.patient.wallet);
       setBalance(+responseData.data.patient.wallet);
     });
   }, []);
@@ -39,7 +40,6 @@ export default function CheckoutForm(props) {
     setIsProcessing(true);
 
     try {
-
       // console.log('//////////////////////////');
       // console.log(props.CartCtx.items);
       const cartItems = cartCtx.items;
@@ -50,7 +50,7 @@ export default function CheckoutForm(props) {
         patientId: userCtx.userId,
         medicineList,
         totalCost: cartCtx.total,
-        address: addressId
+        address: addressId,
       };
       const response = await fetch('http://localhost:4000/orders', {
         method: 'POST',
@@ -58,8 +58,8 @@ export default function CheckoutForm(props) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(paymentIntentData),
-        credentials: "include"
-      })
+        credentials: 'include',
+      });
 
       if (!response.ok) {
         throw new Error('Failed to send data to the server.');
@@ -83,6 +83,10 @@ export default function CheckoutForm(props) {
     e.preventDefault();
     setIsProcessing(true);
     const deduct = cartCtx.total * -1;
+    const response = await fetch(`http://localhost:4000/patients/${userCtx.userId}`)
+    const responseData = await response.json();
+    const currentWallet = responseData.data.patient.wallet;
+   if(currentWallet+deduct<=0){
 
     try {
       const response = await fetch(
@@ -103,7 +107,7 @@ export default function CheckoutForm(props) {
         patientId: userCtx.userId,
         medicineList,
         totalCost: cartCtx.total,
-        address: addressId
+        address: addressId,
       };
       await fetch('http://localhost:4000/orders', {
         method: 'POST',
@@ -111,13 +115,13 @@ export default function CheckoutForm(props) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(paymentIntentData),
-        credentials: "include"
-      })
+        credentials: 'include',
+      });
 
       if (response.ok) {
         // Handle a successful response
         cartCtx.clearCart();
-        navigate("/");
+        navigate('/');
       } else {
         // Handle errors if the server response is not ok
         alert('Failed to update data.');
@@ -125,8 +129,10 @@ export default function CheckoutForm(props) {
     } catch (error) {
       // Handle network errors
       alert('Network error: ' + error.message);
+    }}
+    else{
+      setMessage("Insufficient balance in your wallet.");
     }
-
 
     setIsProcessing(false);
   };
@@ -145,7 +151,7 @@ export default function CheckoutForm(props) {
         patientId: userCtx.userId,
         medicineList,
         totalCost: cartCtx.total,
-        address: addressId
+        address: addressId,
       };
       await fetch('http://localhost:4000/orders', {
         method: 'POST',
@@ -153,19 +159,17 @@ export default function CheckoutForm(props) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(paymentIntentData),
-        credentials: "include"
-      })
+        credentials: 'include',
+      });
       cartCtx.clearCart();
-      navigate("/");
-    } catch (error) {
-    }
-
-  }
+      navigate('/');
+    } catch (error) {}
+  };
   const cardElementOptions = {
     style: {
       base: {
         fontSize: '40px',
-        
+
         color: '#32325d',
         '::placeholder': {
           color: '#aab7c4',
@@ -177,7 +181,6 @@ export default function CheckoutForm(props) {
     },
     // Customize other options here
   };
-
 
   const onSubmit = (e) => {
     switch (useWallet) {
@@ -192,89 +195,106 @@ export default function CheckoutForm(props) {
       default:
         break;
     }
-  }
-
+  };
 
   return (
     <form id="payment-form" onSubmit={onSubmit}>
-        <div style={{display:'flex',marginLeft:'25px',paddingBottom:'14px',justifyContent:'space-between'}}><span id="title">Payment</span> 
-      <label id='title2' style={{marginTop:'15px',marginLeft:'150px',textDecoration:'none',fontSize:'smaller',color:'white',fontWeight:'300'}}>Balance: {balance} </label></div>
-      
-    
-      <div className='d-flex flex-row justify-content-between'>
-      
-        <div style={{display:'flex',marginLeft:'25px'}}>
-        <div>
-          <input
-            type="radio"
-            className='me-2'
-            name='radio'
-            id="use-wallet"
-            // checked={useWallet}
-            onChange={(e) => setUseWallet(1)}
-          />
-          {/* <label htmlFor="use-wallet">Pay with Wallet</label> */}
-          <img className='hellokitty' src='/wallet.png'  />
+      <div
+        style={{
+          display: 'flex',
+          marginLeft: '25px',
+          paddingBottom: '14px',
+          justifyContent: 'space-between',
+        }}
+      >
+        <span id="title">Payment</span>
+        <label
+          id="title2"
+          style={{
+            marginTop: '15px',
+            marginLeft: '150px',
+            textDecoration: 'none',
+            fontSize: 'smaller',
+            color: 'white',
+            fontWeight: '300',
+          }}
+        >
+          Balance: {balance}{' '}
+        </label>
+      </div>
 
+      <div className="d-flex flex-row justify-content-between">
+        <div style={{ display: 'flex', marginLeft: '65px' }}>
+          <div className='me-3' style={{marginLeft:'0px'}}> 
+           
+            <img className={`hellokitty ${useWallet === 0? 'active' : ''}`} src="/cc.png" onClick={() => setUseWallet(0)}/>
+            
+          </div>
+          <div className='me-3' style={{paddingLeft:'40px'}}>
+           
+            {/* <label htmlFor="use-wallet">Cash on Delivery</label> */}
+            <img className={`hellokitty ${useWallet === 2 ? 'active' : ''}`} src="/cod.png" onClick={() => setUseWallet(2)} />
+          
+          </div>
+          <div className='me-3'style={{paddingLeft:'40px'}} > 
+            
+            <img className={`hellokitty ${useWallet === 1 ? 'active' : ''}`} src="/wallet.png"  onClick={() => setUseWallet(1)}  id='use-wallet'/>
+          
+          </div>
         </div>
-        
       </div>
-      <div>
-        <input
-          type="radio"
-          name='radio'
-          className='me-2'
-          // id="use-wallet"
-          // checked={false}
-          onChange={(e) => setUseWallet(2)}
-        />
-        {/* <label htmlFor="use-wallet">Cash on Delivery</label> */}
-        <img className='hellokitty' src='/cod.png'  />
+      {useWallet == 1 && balance < cartCtx.total && (
+        <div
+          style={{
+            margin: '25px',
+            fontFamily: 'poppins',
+            fontWeight: '400',
+            color: 'rgb(184, 4, 4)',
+          }}
+        >
+          Insufficient funds!
+        </div>
+      )}
 
-      </div>
       <div>
-        <input
-          type="radio"
-          className='me-2'
-          name='radio'
-          // id="use-wallet"
-          checked={useWallet == 0}
-          onChange={(e) => setUseWallet(0)}
-        />
-        
-        <img className='hellokitty' src='/cc.png'  />
-        
+        {useWallet == 0 && (
+          <React.Fragment>
+            <div>
+              <label className="label1">Card Holder Name</label>
+              <br />
+              <input
+                type="text"
+                className="input1"
+                name="radio"
+                placeholder="Enter your Name"
+                // id="use-wallet"
+                checked={useWallet == 0}
+                onChange={(e) => setUseWallet(0)}
+              />
+            </div>
+            <PaymentElement id="payment-element" />
+          </React.Fragment>
+        )}
       </div>
-      </div>
-      {useWallet == 1 && balance < cartCtx.total && <div style={{margin:'25px',fontFamily:'poppins',fontWeight:'400',color:'rgb(184, 4, 4)'}}>
-        Insufficient funds!
-      </div>}
-      
-      <div>{useWallet == 0 && <React.Fragment><div>
-        <label className='label1'>Card Holder Name</label><br/>
-        <input
-          type="text"
-          className='input1'
-          name='radio'
-          placeholder='Name'
-          // id="use-wallet"
-          checked={useWallet == 0}
-          onChange={(e) => setUseWallet(0)}
-        />
-        </div><PaymentElement id="payment-element"   /></React.Fragment>}</div>
-        <div className='buttons' style={{paddingTop:'20px'}}>
-        
-        
-      <button disabled={isProcessing || !stripe || !elements || (useWallet == 1 && balance < cartCtx.total)} id="submit"style={{marginLeft:'25px'}}>
-        <span id="button-text">
-          {isProcessing ? 'Processing ... ' : 'Pay now'}
-        </span>
-      </button>
-      <button onClick={(e)=> handleCancel(e)}>Cancel</button>
-      
-      
-      {/* Show any error or success messages */}
-      {message && <div id="payment-message">{message}</div>}
+      <div className="buttons" style={{ paddingTop: '20px' }}>
+        <button
+          disabled={
+            isProcessing ||
+            !stripe ||
+            !elements ||
+            (useWallet == 1 && balance < cartCtx.total)
+          }
+          id="submit"
+          style={{ marginLeft: '25px' }}
+        >
+          <span id="button-text">
+            {isProcessing ? 'Processing ... ' : 'Pay now'}
+          </span>
+        </button>
+        <button onClick={(e) => handleCancel(e)}>Cancel</button>
+
+        {/* Show any error or success messages */}
+        {message && <div id="payment-message">{message}</div>}
       </div>
     </form>
   );

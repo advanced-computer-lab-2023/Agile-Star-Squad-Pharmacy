@@ -23,6 +23,7 @@ export default function AddressForm(props) {
         .catch((err) => {
           console.error(err);
         });
+        console.log(res.data.data)
       setAddresses(res.data.data.addresses);
       setSelectedAddressId(res.data.data.addresses[0]._id);
     };
@@ -146,7 +147,7 @@ export default function AddressForm(props) {
         type="text"
         className="input1"
         name="radio"
-        placeholder="Name"
+        placeholder="Enter your Name"
         // id="use-wallet"
       />
       <label className="label1">Address</label>
@@ -155,7 +156,7 @@ export default function AddressForm(props) {
         type="text"
         className="input1"
         name="radio"
-        placeholder="Name"
+        placeholder="Enter your Address"
         // id="use-wallet"
       />
       <label className="label1">Mobile Number</label>
@@ -167,6 +168,7 @@ export default function AddressForm(props) {
         placeholder="Enter your mobile number"
         // id="use-wallet"
       />
+      
     </form>
   );
 }

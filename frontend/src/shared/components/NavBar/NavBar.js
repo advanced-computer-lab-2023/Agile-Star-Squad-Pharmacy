@@ -13,7 +13,7 @@ const NavBar = (props) => {
   }, []);
 
   const getWallet = async () => {
-    fetch(`http://localhost:3000/patients/${userCtx.userId}`, {
+    fetch(`http://localhost:4000/patients/${userCtx.userId}`, {
       credentials: 'include',
     }).then(async (response) => {
       const json = await response.json();
@@ -66,9 +66,14 @@ const NavBar = (props) => {
                   Contact a Pharmacist
                 </a>
               </li>
+              <li className="nav-item"style={{paddingLeft:'270px'}}>
+                <p className="nav-link" href="#"style={{color:"black"}}>
+                Wallet : {walletAmount}
+                </p>
+              </li>
             </ul>
           </div>
-
+            
           <div className="d-flex">
           <img id="patient" src={patient} alt='i'/>
             <div class="dropdown">

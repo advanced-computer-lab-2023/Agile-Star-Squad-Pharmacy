@@ -34,6 +34,13 @@
   font-weight: 700;
   line-height: normal;
 }
+.me-3{
+  margin-left: 100px;
+}
+.me-2{
+  background-color: rgba(0, 0, 0, 0.2);
+
+}
 #hi {
   /* display: flex; */
   /* display: flex; */
@@ -127,6 +134,15 @@
   width: 58.806px;
   height: 39.469px;
   flex-shrink: 0;
+  padding: 5px;
+  outline: 1px solid white;
+  border-radius: 5px;
+}
+.hellokitty.active {
+  /* Define highlighted effect styles like shadow, outline, etc. */
+  /* For example: */
+  box-shadow: 0 0 7px #000;
+ 
 }
 
 #messages {

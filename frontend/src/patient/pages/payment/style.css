@@ -8,32 +8,65 @@
   margin-left: 0px;
 }
 
-.p-Grid{
-    background-color: red;
+.p-Grid {
+  background-color: red;
 }
 .carousel-container {
-  width: 288px;
-  height: 301px;
+  width: 338px;
+  height: 201px;
+  padding: 0 -100px;
+
   margin: 0 auto; /* To center align the carousel */
 }
-.slick-dots {
-  /* Change the size of the dots */
-  font-size: 20px;
+#indexCartItem {
+  color: #000;
+  font-family: 'Comfortaa';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+#nameCartItem {
+  color: #737373;
+  font-family: 'Poppins';
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+#priceCartItem {
+  color: #000;
+  font-family: 'Poppins';
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 }
 
-/* Change the size of individual dots */
-.slick-dots li button:before {
-  font-size: 10px; /* Adjust the size of the dots */
-  /* Additional styles if needed */
+.back {
+  background-color: transparent;
+  color: black;
+  font-weight: bold;
+  border: none; /* Remove the default border */
+  border-radius: 10px; /* Apply border-radius to round the corners */
+  font-family: 'manrope', sans-serif;
+  position: absolute;
+  left: 90%;
+  top: 10%;
+  font-size: 16px;
+}
+.backarrow {
+  position: absolute;
+  left: 8%;
+  top: 5%;
 }
 
-#payment-form{
-    margin-left: 638px;
-    width: 638px;
+#payment-form {
+  margin-left: 638px;
+  width: 638px;
 }
-#payment-element{
-    
-    width: 638px;
+#payment-element {
+  width: 638px;
 }
 
 .checkout .div {
@@ -99,4 +132,21 @@
   line-height: normal;
   margin-top: 112px;
   margin-left: 80px;
+}
+#totalss{
+  display: flex;
+padding: 14px 66px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+flex: 1 0 0;
+border-radius: 5px 5px 5px 5px;
+background: #000;
+color: var(--white-100, #FFF);
+font-family: 'Poppins';
+font-size: 22px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+margin-top: 60px;
 }
