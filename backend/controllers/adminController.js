@@ -3,6 +3,7 @@ const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const Request = require('../models/requestModel');
 const Pharmacist = require('../models/pharmacistModel');
+const Order = require('../models/orderModel');
 
 exports.createAdmin = catchAsync(async (req, res, next) => {
   const newAdmin = await Admin.create(req.body);
@@ -137,3 +138,62 @@ exports.rejectRequest = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getTotalSalesForMonth = catchAsync(async (req, res, next) => {
+  try {
+    // Extract the desired month from the request parameters
+    const requestedMonth = req.params.month;
+
+    // Validate the requested month
+    if (!requestedMonth || isNaN(requestedMonth) || requestedMonth < 1 || requestedMonth > 12) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'Invalid month provided. Please provide a valid month (1-12).',
+      });
+    }
+
+    const currentYear = new Date().getFullYear();
+
+    const totalSales = await Order.aggregate([
+      {
+        $addFields: {
+          createdAtDate: {
+            $cond: {
+              if: { $eq: [{ $type: '$issueDate' }, 'date'] }, // Check if it's already a Date object
+              then: '$issueDate',
+              else: { $toDate: '$issueDate' }, // Convert to Date if it's not
+            },
+          },
+        },
+      },
+      {
+        $match: {
+          $expr: {
+            $and: [
+              { $eq: [{ $month: '$createdAtDate' }, parseInt(requestedMonth)] },
+              { $eq: [{ $year: '$createdAtDate' }, currentYear] },
+            ],
+          },
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalSales: { $sum: '$totalCost' },
+        },
+      },
+    ]);
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        totalSales: totalSales.length > 0 ? totalSales[0].totalSales : 0,
+      },
+    });
+  } catch (error) {
+    console.error('Error in getTotalSalesForMonth:', error);
+    res.status(500).json({
+      status: 'error',
+      message: 'Internal Server Error',
+    });
+  }
+});

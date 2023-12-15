@@ -1,0 +1,52 @@
+.bodyN{
+    
+    font-family: "Roboto";
+    font-size: larger;
+    color: #0f172af7;
+    width: auto;
+    margin: 0;
+    background-color: #ea580c;
+}
+
+.container-fluid{
+    height: 56px;
+    
+}
+
+.navbar-brand{
+    font-size: 32px;
+    font-weight: bolder;
+    padding-bottom: 10px;
+    padding-right: 48px;
+    padding-left: 80px;
+}
+#logo{
+    margin-top: 10px;
+}
+.nav-item{
+    padding-right: 48px;
+    color: #0f172af7;
+    font-size: 16px;
+    
+}
+#last{
+    color: #ea580c;
+}
+.btn{
+    font-size: 16px ;
+}
+.btn-group{
+    padding-right: 80px;
+}
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+/* Your custom styles go here */
+/* For example: */
+.bodyN {
+  /* Your existing styles */
+}
+
+/* Customize the dropdown */
+.dropdown-menu {
+  /* Your custom styles for the dropdown menu */
+}

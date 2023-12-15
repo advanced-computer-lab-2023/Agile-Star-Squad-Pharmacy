@@ -1,7 +1,6 @@
 const express = require('express');
 const adminController = require('../controllers/adminController');
 
-
 const router = express.Router();
 
 router
@@ -15,6 +14,9 @@ router
   .post(adminController.acceptRequest)
   .patch(adminController.rejectRequest);
 
+router
+  .route('/totalSales:month')  // Add this route
+  .get(adminController.getTotalSalesForMonth);
 
 router
   .route('/:id')
