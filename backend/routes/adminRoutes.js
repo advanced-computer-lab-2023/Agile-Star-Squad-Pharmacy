@@ -14,9 +14,12 @@ router
   .post(adminController.acceptRequest)
   .patch(adminController.rejectRequest);
 
+  router
+  .route('/totalSalesForDay') // Add this route for weekly sales
+  .get(adminController.getTotalSalesForDay);  
 router
-  .route('/totalSales:month')  // Add this route
-  .get(adminController.getTotalSalesForMonth);
+  .route('/weeklySales') // Add this route for weekly sales
+  .get(adminController.getWeeklySales);  
 
 router
   .route('/:id')

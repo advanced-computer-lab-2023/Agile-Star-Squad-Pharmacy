@@ -1,15 +1,17 @@
+.sales,.requests, .packages, .users, .revenue{
+  flex-shrink: 0;
+  border-radius: 20px;
+  border: 1px solid #F8F9FA;
+  background: var(--white-100, #FFF);
+  box-shadow: 0px 4px 20px 0px rgba(238, 238, 238, 0.50);
+}
 .sales {
     position: absolute;
-    left: 15%; /* Move container to the center horizontally */
+    left: 11%; /* Move container to the center horizontally */
     top: 40%; /* Move container to the center vertically */
     transform: translate(-50%, -50%); /* Center the container */
     width: 255px;
     height: 252px;
-    flex-shrink: 0;
-    border-radius: 20px;
-    border: 1px solid #F8F9FA;
-    background: var(--white-100, #FFF);
-    box-shadow: 0px 4px 20px 0px rgba(238, 238, 238, 0.50);
 }
 .amount{
     color: var(--greys-blue-grey-900, #151D48);
@@ -33,12 +35,12 @@
 }
 .salesTitle{
     color: var(--primary-dark-shade, #05004E);
-font-family: 'Poppins';
-font-size: 20px;
-font-style: normal;
-font-weight: 600;
-line-height: 32px; /* 160% */
-margin-top: 5%;
+    font-family: 'Poppins';
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 32px; /* 160% */
+    margin-top: 5%;
 
 }
 .salesImg{
@@ -58,19 +60,15 @@ margin-top: 5%;
 
 .requests {
   position: absolute;
-  left: 25%;
-  top: 25%;
+  margin-left: 20%;
+  top: 23%;
   width: 443px;
   height: 253.955px;
-  flex-shrink: 0;
-  border-radius: 20px;
-  border: 1px solid #F8F9FA;
-  background: var(--white-100, #FFF);
-  box-shadow: 0px 4px 20px 0px rgba(238, 238, 238, 0.50);
+
 }
 
 
-.ReqTitle {
+.packageTitle,.ReqTitle, .revTitle{
   color: var(--primary-dark-shade, #05004E);
   font-family: 'Poppins';
   font-size: 20px;
@@ -163,15 +161,10 @@ margin-top: 5%;
 
 .packages{
     position: absolute;
-    left: 55%;
-    top:15%;
+    left: 50%;
+    top:23%;
     width: 588px;
      height: 254px;
-     flex-shrink: 0;
-     border-radius: 20px;
-     border: 1px solid #F8F9FA;
-     background: var(--white-100, #FFF);
-     box-shadow: 0px 4px 20px 0px rgba(238, 238, 238, 0.50);
  }
 .packages-section .title{
     position:absolute;
@@ -252,131 +245,144 @@ margin-top: 5%;
   }
     
 
-.users {
-  position: absolute;
-  top: 90%;
-  left: 5%;
-  width: 1325px;
-  height: 579px;
-  flex-shrink: 0;
-}
-.userTitle{
-  color: #96A5B8;
-  font-family: 'Open Sans';
-  font-size: 13px;
+
+  .users {
+    position: absolute;
+    top:100%;
+    left: 5%;
+    width: 1325px;
+    height: 579px;
+    flex-shrink: 0;
+  }
+  .userTitle{
+    color: #96A5B8;
+    font-family: 'Open Sans';
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px; /* 123.077% */
+  }
+  .userDateAdmin{
+    width: 102.713px;
+    height: 17.364px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: 1px solid #0095FF;
+    background: #F0F9FF;
+    color: #0095FF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left:40% ;
+  }
+  
+  
+  
+  .userDate {
+    width: 102.713px;
+    height: 17.364px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: 1px solid #0095FF;
+    background: #F0F9FF;
+    color: #0095FF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 27%;
+  }
+  
+  
+  .userBody{
+    align-items: flex-start;
+  }
+  .userInfo{
+    color: var(--greys-blue-grey-800, #444A6D);
+  
+  /* sm/Regular */
+  font-family: 'Poppins';
+  font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 16px; /* 123.077% */
-}
-.userDateAdmin{
-  width: 102.713px;
-  height: 17.364px;
+  line-height: 20px; /* 142.857% */
+  }
+  .deleteButton{
+    width: 5px;
+  height: 14px;
   flex-shrink: 0;
-  border-radius: 8px;
-  border: 1px solid #0095FF;
-  background: #F0F9FF;
-  color: #0095FF;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left:40% ;
-}
-
-
-
-.userDate {
-  width: 102.713px;
-  height: 17.364px;
-  flex-shrink: 0;
-  border-radius: 8px;
-  border: 1px solid #0095FF;
-  background: #F0F9FF;
-  color: #0095FF;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 27%;
-}
-
-
-.userBody{
-  align-items: flex-start;
-}
-.userInfo{
-  color: var(--greys-blue-grey-800, #444A6D);
-
-/* sm/Regular */
-font-family: 'Poppins';
-font-size: 14px;
-font-style: normal;
-font-weight: 400;
-line-height: 20px; /* 142.857% */
-}
-.deleteButton{
-  width: 5px;
-height: 14px;
-flex-shrink: 0;
-font-family: 'Poppins';
-font-weight: 400;
-border: none;   
-background-color: transparent;
-
-}
-.user-tabs {
-  display: flex;
-  justify-content: space-around;
-  padding: 10px;
-}
-
-.user-tab {
-  padding: 10px;
-  cursor: pointer;
-}
-
-.user-table-container {
-  margin-top: 30px;
-}
-
-.filter {
-  display: flex;
-  align-items: flex-start;
-}
-
-.filterButton {
-  background-color: transparent;
-  border: none;
-  padding: 8px 16px;
-  margin-right: 8px;
-  cursor: pointer;
-  outline: none;
-  color: rgba(5, 0, 78, 0.25);
   font-family: 'Poppins';
-  font-weight: 600;
-  font-size: 20px;
-}
-
-.filterButton.active,
-.filterButton.bold {
-  font-weight: bold;
-  color: #000000;
-}
-
-.logout {
+  font-weight: 400;
+  border: none;   
+  background-color: transparent;
+  
+  }
+  .user-tabs {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+  }
+  
+  .user-tab {
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .user-table-container {
+    margin-top: 30px;
+  }
+  
+  .filter {
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .filterButton {
+    background-color: transparent;
+    border: none;
+    padding: 8px 16px;
+    margin-right: 8px;
+    cursor: pointer;
+    outline: none;
+    color: rgba(5, 0, 78, 0.25);
+    font-family: 'Poppins';
+    font-weight: 600;
+    font-size: 20px;
+  }
+  
+  .filterButton.active,
+  .filterButton.bold {
+    font-weight: bold;
+    color: #000000;
+  }
+  
+  .logout {
+    position: absolute;
+    bottom: 86%;
+    left: 55%;
+  }
+  
+  .d-flex {
+    display: flex;
+  }
+  
+  .spacing {
+   margin-right: 5%;
+  }
+  .borderBottom {
+    border-bottom: 1px solid #ddd; /* Choose your desired border color */
+  }
+  
+  
+.revenue{
   position: absolute;
-  bottom: 86%;
-  left: 55%;
+  top:60%;
+  left: 3%; 
+  width: 719px;
+height: 263.955px;
 }
-
-.d-flex {
-  display: flex;
+.chart{
+  bottom: 1%;
+  position: inherit;
 }
-
-.spacing {
- margin-right: 5%;
-}
-.borderBottom {
-  border-bottom: 1px solid #ddd; /* Choose your desired border color */
-}
-
 
 

@@ -20,6 +20,7 @@ import './App.css';
 import Order from "./patient/pages/order/Order"
 import SignupOptions from './login/pages/SignupOptions';
 import AddAddress from "./patient/pages/AddAddress";
+import RevenueChart from './admin/ManageUsers/components/RevenueChart';
 
 function App() {
   const user = useContext(UserContext);
