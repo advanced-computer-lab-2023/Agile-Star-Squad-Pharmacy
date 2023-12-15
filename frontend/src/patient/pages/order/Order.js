@@ -91,7 +91,7 @@ const Order = () => {
         <h1 className={styles.title}>Orders</h1>
         <div className={styles.tableContainer}>
           <table className={styles.table}>
-            <thead>
+            <thead className={styles.tableHead}>
               <tr>
                 <th>Order ID</th>
                 <th>Medicine Image</th>

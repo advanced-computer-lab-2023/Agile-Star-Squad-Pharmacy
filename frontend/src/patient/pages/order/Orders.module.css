@@ -23,7 +23,12 @@
 
 .table {
   width: 100%;
-  border-spacing: 0;
+  background-color: white;
+  flex: 1;
+  border-radius: 14px;
+  box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.13);
+  overflow: hidden;
+
 }
 
 th,
@@ -37,9 +42,10 @@ td
   border-bottom: 0.25px solid var(--text-icons-faded-grey, #AFB8CF);
 }
 
-thead {
+.tableHead {
   border-radius: 14px 14px 0px 0px;
   background: #96b7c7;
+  overflow: hidden;
 }
 
 .tableContainer{

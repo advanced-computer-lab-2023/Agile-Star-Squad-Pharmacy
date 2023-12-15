@@ -1,11 +1,11 @@
-const Medicine = require("../models/medicineModel");
-const catchAsync = require("../utils/catchAsync");
+const Medicine = require('../models/medicineModel');
+const catchAsync = require('../utils/catchAsync');
 
 exports.getAllMedicines = catchAsync(async (req, res, next) => {
   const medicines = await Medicine.find();
 
   res.status(200).json({
-    status: "success",
+    status: 'success',
     data: {
       medicines,
     },
@@ -27,7 +27,7 @@ exports.getAllMedicines = catchAsync(async (req, res, next) => {
 
 exports.createMedicine = async (req, res) => {
   //add a new Medicine to the database
-  console.log | "henaa";
+  console.log | 'henaa';
   const newMedicine = req.body;
   const addMedicine = new Medicine({
     name: newMedicine.name,
@@ -43,12 +43,15 @@ exports.createMedicine = async (req, res) => {
 };
 
 exports.getMedicine = catchAsync(async (req, res, next) => {
-  const medicine = await Medicine.findById(req.params.id);
+  const medicine = await Medicine.findById(req.params.id, { archived: false });
   const sales = medicine.sales;
   const quantity = medicine.quantity;
-
+  
+  if (medicine.archived === true) {
+    res.status(404).json({ message: 'Medicine not found or archived' });
+  }
   res.status(200).json({
-    status: "success",
+    status: 'success',
     data: {
       sales,
       quantity,
@@ -75,18 +78,16 @@ const filterObj = (obj, ...allowedFields) => {
   return newObj;
 };
 exports.updateMedicine = catchAsync(async (req, res, next) => {
-  const filteredBody = filterObj(req.body, "price", "description");
+  const filteredBody = filterObj(req.body, 'price', 'description');
   let filteredBodyFinal;
-  if(filteredBody.price == ""){
-      filteredBodyFinal = filterObj(req.body, "description");
-    }
-  else   if(filteredBody.description == ""){
-     filteredBodyFinal = filterObj(req.body, "price");
-      }
-  else{
-     filteredBodyFinal = filterObj(req.body, "price", "description");
-      }
-      
+  if (filteredBody.price == '') {
+    filteredBodyFinal = filterObj(req.body, 'description');
+  } else if (filteredBody.description == '') {
+    filteredBodyFinal = filterObj(req.body, 'price');
+  } else {
+    filteredBodyFinal = filterObj(req.body, 'price', 'description');
+  }
+
   const updatedMedicine = await Medicine.findByIdAndUpdate(
     req.params.id,
     filteredBodyFinal,
@@ -95,12 +96,49 @@ exports.updateMedicine = catchAsync(async (req, res, next) => {
       runValidators: true,
     }
   );
-  console.log(updatedMedicine)
+  console.log(updatedMedicine);
 
   res.status(200).json({
-    status: "success",
+    status: 'success',
     data: {
       medicine: updatedMedicine,
+    },
+  });
+});
+
+exports.archiveMedicine = catchAsync(async (req, res, next) => {
+  const medicine = await Medicine.findByIdAndUpdate(
+    req.params.id,
+    { archived: true },
+    { new: true }
+  );
+  if (!medicine) {
+    return res.status(404).json({ message: 'Medicine not found' });
+  }
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      medicine,
+    },
+  });
+});
+
+
+exports.unarchiveMedicine = catchAsync(async (req, res, next) => {
+  const medicine = await Medicine.findByIdAndUpdate(
+    req.params.id,
+    { archived: false },
+    { new: true }
+  );
+  if (!medicine) {
+    return res.status(404).json({ message: 'Medicine not found' });
+  }
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      medicine,
     },
   });
 });

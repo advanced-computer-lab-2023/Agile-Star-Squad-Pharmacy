@@ -33,7 +33,6 @@ const Login = (props) => {
       const { role, userId } = response.data.data;
       console.log('role', role);
       userCtx.login({ role, userId });
-
       navigate('/');
     } catch (err) {
       alert(err.response.data.message);
