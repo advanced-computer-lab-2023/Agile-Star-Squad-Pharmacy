@@ -13,6 +13,7 @@ import insomniaImg from "../../../assets/homepage/insomnia.png";
 import stomachImg from "../../../assets/homepage/kidney.png";
 import lungsImg from "../../../assets/homepage/lungs.png";
 import nutritionImg from "../../../assets/homepage/nutrition.png";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState, useContext } from "react";
 import UserContext from "../../../user-store/user-context";
 import CartContext from "../cart/Cart";
@@ -26,6 +27,7 @@ const Homepage = () => {
     const [allMedicines, setAllMedicine] = useState([]);
     const [medicines, setMedicines] = useState([]);
     const medicineResultsRef = useRef();
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function fetchData() {
@@ -98,8 +100,8 @@ const Homepage = () => {
         setMedicines(() => {
             let medicines = [...allMedicines];
             if (categoryIndex != -1) {
-                medicines = medicines.filter((medicine) => 
-                medicine.medicinalUse == (categoryIndex < 5 ? categories1[categoryIndex].title : categories2[categoryIndex-5].title));
+                medicines = medicines.filter((medicine) =>
+                    medicine.medicinalUse == (categoryIndex < 5 ? categories1[categoryIndex].title : categories2[categoryIndex - 5].title));
             }
             if (searchText !== "") {
                 medicines = medicines.filter((medicine) => medicine.name.includes(searchText));
@@ -169,42 +171,47 @@ const Homepage = () => {
         const addItem = (e) => {
             e.preventDefault();
             cartCtx.addItem({
-              id: medicine.id,
-              image: medicine.image,
-              name: medicine.name,
-              price: medicine.price,
-              description: medicine.description,
-              price: medicine.price,
-              quantity: +medicine.cartQuantity,
+                id: medicine.id,
+                image: medicine.image,
+                name: medicine.name,
+                price: medicine.price,
+                description: medicine.description,
+                price: medicine.price,
+                quantity: +medicine.cartQuantity,
             });
-          };
+        };
 
-        return <div className="col-3 px-4"><div className={classes.medicineContainer}>
-            <div>
-                <div className={classes.medicineImg}><img src={medicine.image} /></div>
-                <div className={classes.medicineTitle}>{medicine.name}</div>
-            </div>
-            <div>
-                <div className={classes.medicinePrice}>{medicine.price} L.E.</div>
-                <div className={classes.medicineDesc1}>Active Ingredient:</div>
-                <div className={classes.medicineDesc2}>{ingredients}</div>
-                <div className="d-flex mt-2">
-                    <div className={`${classes.addToCartButton} me-1`} onClick={addItem}>Add To Cart</div>
-                    <div className={`${classes.viewButton} ms-1`}>View</div>
+        const toMedicineDetails = () => {
+            navigate('/medicine', {medicine});
+        }
+
+        return <div className="col-3 px-4">
+            <div onClick={toMedicineDetails} className={classes.medicineContainer}>
+                <div>
+                    <div className={classes.medicineImg}><img src={medicine.image} /></div>
+                    <div className={classes.medicineTitle}>{medicine.name}</div>
+                </div>
+                <div>
+                    <div className={classes.medicinePrice}>{medicine.price} L.E.</div>
+                    <div className={classes.medicineDesc1}>Active Ingredient:</div>
+                    <div className={classes.medicineDesc2}>{ingredients}</div>
+                    <div className="d-flex mt-2">
+                        <div className={`${classes.addToCartButton} me-1`} onClick={addItem}>Add To Cart</div>
+                        <div className={`${classes.viewButton} ms-1`}>View</div>
+                    </div>
                 </div>
             </div>
-        </div>
         </div>;
     }
 
     const onClickSearch = (event) => {
         if (event == null || event.key == "Enter") {
             setSearchText(sectionSearchText);
-            medicineResultsRef.current.scrollIntoView({behavior:"smooth"});
+            medicineResultsRef.current.scrollIntoView({ behavior: "smooth" });
         }
     }
 
-    
+
 
     return <div>
         <NavBar />
@@ -219,7 +226,7 @@ const Homepage = () => {
                 <div className={classes.searchContainer}>
                     <div className={classes.searchIcon}><img width={30} src={searchIconImg} />
                     </div>
-                    <input className={classes.searchInput} value={sectionSearchText} onChange={(e) => setSectionSearchText(e.target.value)}  onKeyDown={onClickSearch}  placeholder="Search for a drug" />
+                    <input className={classes.searchInput} value={sectionSearchText} onChange={(e) => setSectionSearchText(e.target.value)} onKeyDown={onClickSearch} placeholder="Search for a drug" />
                     <div onClick={() => onClickSearch()} className={classes.searchButton}>Search</div>
                 </div>
             </div>
