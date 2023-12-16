@@ -1,23 +1,6 @@
-import NavBar from "../../../shared/components/NavBar/NavBar";
-import classes from "./Homepage.module.css";
-import sectionRectangleImg from "../../../assets/homepage/sectionRectangle.png";
-import sectionMedicineImg from "../../../assets/homepage/sectionMedicine.png";
-import searchIconImg from "../../../assets/homepage/searchIcon.png";
-import babyImg from "../../../assets/homepage/baby.png";
-import brokenArmImg from "../../../assets/homepage/brokenarm.png";
-import eyeImg from "../../../assets/homepage/eye.png";
-import feverImg from "../../../assets/homepage/fever.png";
-import firstaidImg from "../../../assets/homepage/firstaid.png";
-import headacheImg from "../../../assets/homepage/headache.png";
-import insomniaImg from "../../../assets/homepage/insomnia.png";
-import stomachImg from "../../../assets/homepage/kidney.png";
-import lungsImg from "../../../assets/homepage/lungs.png";
-import nutritionImg from "../../../assets/homepage/nutrition.png";
-import { useEffect, useRef, useState, useContext } from "react";
-import UserContext from "../../../user-store/user-context";
-import CartContext from "../cart/Cart";
+import classes from "./BrowseMedicine.module.css"
 
-const Homepage = () => {
+const BrowseMedicine = () => {
     const userCtx = useContext(UserContext);
     const cartCtx = useContext(CartContext);
     const [categoryIndex, setCategoryIndex] = useState(-1);
@@ -98,8 +81,8 @@ const Homepage = () => {
         setMedicines(() => {
             let medicines = [...allMedicines];
             if (categoryIndex != -1) {
-                medicines = medicines.filter((medicine) => 
-                medicine.medicinalUse == (categoryIndex < 5 ? categories1[categoryIndex].title : categories2[categoryIndex-5].title));
+                medicines = medicines.filter((medicine) =>
+                    medicine.medicinalUse == (categoryIndex < 5 ? categories1[categoryIndex].title : categories2[categoryIndex - 5].title));
             }
             if (searchText !== "") {
                 medicines = medicines.filter((medicine) => medicine.name.includes(searchText));
@@ -169,85 +152,35 @@ const Homepage = () => {
         const addItem = (e) => {
             e.preventDefault();
             cartCtx.addItem({
-              id: medicine.id,
-              image: medicine.image,
-              name: medicine.name,
-              price: medicine.price,
-              description: medicine.description,
-              price: medicine.price,
-              quantity: +medicine.cartQuantity,
+                id: medicine.id,
+                image: medicine.image,
+                name: medicine.name,
+                price: medicine.price,
+                description: medicine.description,
+                price: medicine.price,
+                quantity: +medicine.cartQuantity,
             });
-          };
+        };
+    }
 
-        return <div className="col-3 px-4"><div className={classes.medicineContainer}>
-            <div>
-                <div className={classes.medicineImg}><img src={medicine.image} /></div>
-                <div className={classes.medicineTitle}>{medicine.name}</div>
-            </div>
-            <div>
-                <div className={classes.medicinePrice}>{medicine.price} L.E.</div>
-                <div className={classes.medicineDesc1}>Active Ingredient:</div>
-                <div className={classes.medicineDesc2}>{ingredients}</div>
-                <div className="d-flex mt-2">
-                    <div className={`${classes.addToCartButton} me-1`} onClick={addItem}>Add To Cart</div>
-                    <div className={`${classes.viewButton} ms-1`}>View</div>
-                </div>
-            </div>
+    return <section className={classes.medicineSection}>
+        <div className={classes.medicineSectionTitle}>BROWSE MEDICINE</div>
+        <div className={classes.medicineSearchContainer}>
+            <div className={classes.medicineSearchIcon}><img width={30} src={searchIconImg} /></div>
+            <input className={classes.medicineSearchInput} value={searchText} onChange={(e) => setSearchText(e.target.value)} placeholder="Search" />
         </div>
-        </div>;
-    }
-
-    const onClickSearch = (event) => {
-        if (event == null || event.key == "Enter") {
-            setSearchText(sectionSearchText);
-            medicineResultsRef.current.scrollIntoView({behavior:"smooth"});
-        }
-    }
-
-    
-
-    return <div>
-        <NavBar />
-        <section className={classes.welcomeSection}>
-            <div className={`col-5 ${classes.sectionLeftCol}`}>
-                <div className={classes.sectionTitle}>
-                    We can get your Drug Prescription to You
-                </div>
-                <div className={classes.sectionSubtitle}>
-                    We have all the drugs your doctor prescribed for your health and what's more, we can get it to you.
-                </div>
-                <div className={classes.searchContainer}>
-                    <div className={classes.searchIcon}><img width={30} src={searchIconImg} />
-                    </div>
-                    <input className={classes.searchInput} value={sectionSearchText} onChange={(e) => setSectionSearchText(e.target.value)}  onKeyDown={onClickSearch}  placeholder="Search for a drug" />
-                    <div onClick={() => onClickSearch()} className={classes.searchButton}>Search</div>
-                </div>
-            </div>
-            <div className="col-7 position-relative">
-                <img className={classes.sectionRect} src={sectionRectangleImg} />
-                <img className={classes.sectionMedicineImg} src={sectionMedicineImg} />
-            </div>
-        </section>
-
-        <section className={classes.medicineSection}>
-            <div className={classes.medicineSectionTitle}>BROWSE MEDICINE</div>
-            <div className={classes.medicineSearchContainer}>
-                <div className={classes.medicineSearchIcon}><img width={30} src={searchIconImg} /></div>
-                <input className={classes.medicineSearchInput} value={searchText} onChange={(e) => setSearchText(e.target.value)} placeholder="Search" />
-            </div>
-            {getCategoryTiles()}
-            <div ref={medicineResultsRef} className={classes.divider}>
-                <div style={{ flex: "60%", backgroundColor: "#1BC768", borderRadius: "5px 0 0 5px" }} />
-                <div style={{ flex: "40%", backgroundColor: "#86F1E2", borderRadius: "5px" }} />
-            </div>
-            <div className={classes.resultsContainer}>
-                {medicines.map(medicine => getMedicine(medicine))}
-            </div>
-        </section>
-    </div>
+        {getCategoryTiles()}
+        <div ref={medicineResultsRef} className={classes.divider}>
+            <div style={{ flex: "60%", backgroundColor: "#1BC768", borderRadius: "5px 0 0 5px" }} />
+            <div style={{ flex: "40%", backgroundColor: "#86F1E2", borderRadius: "5px" }} />
+        </div>
+        <div className={classes.resultsContainer}>
+            {medicines.map(medicine => getMedicine(medicine))}
+        </div>
+    </section>
 }
 
-export default Homepage;
+export default BrowseMedicine;
 
 const categories1 = [
     { img: feverImg, title: "Fever", index: 0 },
