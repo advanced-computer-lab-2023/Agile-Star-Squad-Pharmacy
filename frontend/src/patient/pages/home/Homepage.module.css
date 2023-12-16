@@ -1,0 +1,264 @@
+.welcomeSection {
+    font-family: 'Poppins';
+    display: flex;
+    flex-direction: row;
+    background-color: #F3F7FF;
+    height: calc(100vh - 90px);
+}
+
+
+.sectionLeftCol {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 80px;
+}
+
+.sectionTitle {
+    color: #385A58;
+    font-size: 39px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.sectionSubtitle {
+    color: #385A58;
+    font-size: 18px;
+    margin-bottom: 50px;
+}
+
+.searchContainer {
+    display: flex;
+    background-color: white;
+    height: 48px;
+    border-radius: 25px;
+    margin-bottom: 50px;
+}
+
+.searchIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 10px;
+    flex: 10%;
+}
+
+.searchInput {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 10px;
+    flex: 70%;
+    border: none;
+    outline: none;
+}
+
+.searchButton {
+    cursor: pointer;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    background: linear-gradient(270deg, #5BD267 0%, #A4ECC9 100%);
+    flex: 20%;
+    border-radius: 0 25px 25px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.searchButton:hover {
+    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, .1);
+    transition: all 0.2s ease;
+}
+
+.sectionRect {
+    position: absolute;
+    right: 0;
+    height: calc(100vh - 90px);
+}
+
+.sectionMedicineImg {
+    position: absolute;
+    left: -60px;
+    z-index: 5;
+    height: calc(100vh - 90px);
+}
+
+.medicineSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(225, 244, 237, 0.66);
+    padding-block: 60px;
+    padding-inline: 120px;
+}
+
+.medicineSectionTitle {
+    font-size: 48px;
+    font-weight: 500;
+    color: #385A58;
+    margin-bottom: 30px;
+}
+
+.medicineSearchContainer {
+    display: flex;
+    background-color: rgba(217, 217, 217, 0.44);
+    width: 50%;
+    height: 55px;
+    border-radius: 15px;
+    margin-bottom: 40px;
+}
+
+.medicineSearchIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+}
+
+.medicineSearchInput {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    width: 100%;
+}
+
+.categoriesWrapper {
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.categoryTile {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    margin-inline: 20px;
+    height: 130px;
+    width: 130px;
+    padding-top: 22px;
+    padding-bottom: 15px;
+    border-radius: 20px;
+    line-height: 130%;
+    box-shadow: -4px -4px 10px 0px rgba(0, 0, 0, 0.12), 4px 4px 10px 0px rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.categoryTile:hover {
+    transform: scale(1.05);
+    box-shadow: -4px -4px 10px 0px rgba(0, 0, 0, 0.12), 4px 4px 10px 0px rgba(0, 0, 0, 0.25);
+    transition: all 0.2s ease;
+}
+
+.categoryTile.active {
+    border: 3px solid green;
+    padding-top: 20px;
+    padding-bottom: 13px;
+}
+
+.categoryTitle {
+    font-size: 20.5px;
+    color: #463C72;
+    text-align: center;
+}
+
+.divider {
+    display: flex;
+    height: 10px;
+    width: 220px;
+    margin-bottom: 30px;
+    background-color: #86F1E2;
+    border-radius: 5px;
+    color: #1BC768;
+}
+
+.resultsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    padding-inline: 50px;
+    /* text-align: center; */
+}
+
+.medicineContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: white;
+    height: 330px;
+    border-radius: 20px;
+    padding: 20px 16px 15px 16px;
+    box-shadow: -3px -3px 8px 0px rgba(0, 0, 0, 0.12), 3px 3px 8px 0px rgba(0, 0, 0, 0.12);
+    margin-bottom: 30px;
+}
+
+.medicineImg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 110px;
+    border: 1px solid #C3C3C3;
+    border-radius: 12px;
+}
+
+.medicineTitle {
+    font-size: 16px;
+    margin-top: 8px;
+    padding-inline: 4px;
+}
+
+.medicinePrice {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.medicineDesc1 {
+    font-size: 12px;
+    line-height: 16.5px;
+    margin-bottom: 2px;
+}
+
+.medicineDesc2 {
+    font-size: 13px;
+    line-height: 16.5px;
+}
+
+.addToCartButton {
+    cursor: pointer;
+    border-radius: 9px;
+    width: 100%;
+    background: #3182CE;
+    color: white;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: center;
+    padding-block: 6px;
+    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, .1);
+    transition: all 0.2s ease;
+}
+
+.addToCartButton:hover {
+    background: #1d5a92;
+    transition: all 0.2s ease;
+}
+
+.viewButton {
+    cursor: pointer;
+    border-radius: 9px;
+    width: 100%;
+    background: #29873C;
+    color: white;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: center;
+    padding-block: 6px;
+}
+
+.viewButton:hover {
+    background: #1d682c;
+    transition: all 0.2s ease;
+}
