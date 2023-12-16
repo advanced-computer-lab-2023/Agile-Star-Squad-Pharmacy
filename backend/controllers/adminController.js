@@ -137,146 +137,20 @@ exports.rejectRequest = catchAsync(async (req, res, next) => {
     data: null,
   });
 });
-exports.getTotalSalesForDay = catchAsync(async (req, res, next) => {
+exports.getAllOrders = catchAsync(async (req, res, next) => {
   try {
-    const currentDate = new Date();
-    const currentYear = currentDate.getFullYear();
-    const currentMonth = currentDate.getMonth() + 1; // Months are zero-based, so add 1
-
-    const totalSales = await Order.aggregate([
-      {
-        $addFields: {
-          createdAtDate: {
-            $cond: {
-              if: { $eq: [{ $type: '$issueDate' }, 'date'] },
-              then: '$issueDate',
-              else: { $toDate: '$issueDate' },
-            },
-          },
-        },
-      },
-      {
-        $match: {
-          $expr: {
-            $and: [
-              { $eq: [{ $dayOfMonth: '$createdAtDate' }, currentDate.getDate()] },
-              { $eq: [{ $month: '$createdAtDate' }, currentMonth] },
-              { $eq: [{ $year: '$createdAtDate' }, currentYear] },
-            ],
-          },
-        },
-      },
-      {
-        $group: {
-          _id: null,
-          totalSales: { $sum: '$totalCost' },
-        },
-      },
-    ]);
-
+    const orders = await Order.find();
     res.status(200).json({
       status: 'success',
       data: {
-        totalSales: totalSales.length > 0 ? totalSales[0].totalSales : 0,
+        orders,
       },
     });
   } catch (error) {
-    console.error('Error in getTotalSalesForDay:', error);
+    console.error('Error in getAllOrders:', error);
     res.status(500).json({
       status: 'error',
       message: 'Internal Server Error',
     });
   }
 });
-exports.getWeeklySales = catchAsync(async (req, res, next) => {
-  try {
-    // Calculate the start and end dates for the current week
-    const currentDate = new Date();
-    const startOfWeek = new Date(currentDate);
-    startOfWeek.setDate(currentDate.getDate() - currentDate.getDay()); // Start of the current week (Sunday)
-    startOfWeek.setHours(0, 0, 0, 0);
-
-    const endOfWeek = new Date(currentDate);
-    endOfWeek.setDate(currentDate.getDate() - currentDate.getDay() + 6); // End of the current week (Saturday)
-    endOfWeek.setHours(23, 59, 59, 999);
-
-    // Calculate the start and end dates for the previous week
-    const startOfPrevWeek = new Date(startOfWeek);
-    startOfPrevWeek.setDate(startOfWeek.getDate() - 7); // Start of the previous week (Sunday)
-    const endOfPrevWeek = new Date(endOfWeek);
-    endOfPrevWeek.setDate(endOfWeek.getDate() - 7); // End of the previous week (Saturday)
-
-    const currentWeekSales = await getWeeklySalesData(startOfWeek, endOfWeek);
-    const prevWeekSales = await getWeeklySalesData(startOfPrevWeek, endOfPrevWeek);
-
-    res.status(200).json({
-      status: 'success',
-      data: {
-        currentWeekSales,
-        prevWeekSales,
-      },
-    });
-  } catch (error) {
-    console.error('Error in getWeeklySales:', error);
-    res.status(500).json({
-      status: 'error',
-      message: 'Internal Server Error',
-    });
-  }
-});
-
-const getWeeklySalesData = async (startDate, endDate) => {
-  const weeklySales = await Order.aggregate([
-    {
-      $addFields: {
-        createdAtDate: {
-          $cond: {
-            if: { $eq: [{ $type: '$issueDate' }, 'date'] },
-            then: '$issueDate',
-            else: { $toDate: '$issueDate' },
-          },
-        },
-      },
-    },
-    {
-      $match: {
-        $expr: {
-          $and: [
-            { $gte: ['$createdAtDate', startDate] },
-            { $lte: ['$createdAtDate', endDate] },
-          ],
-        },
-      },
-    },
-    {
-      $group: {
-        _id: { $dayOfWeek: '$createdAtDate' }, // Group by day of the week
-        totalSales: { $sum: '$totalCost' },
-      },
-    },
-    {
-      $sort: { '_id': 1 } // Sort by day of the week
-    },
-    {
-      $project: {
-        _id: 0,
-        day: '$_id',
-        totalSales: 1,
-      },
-    },
-  ]);
-
-  // Fill in any missing days with zero sales
-  const filledData = fillMissingDays(weeklySales);
-
-  return filledData;
-};
-
-const fillMissingDays = (weeklySales) => {
-  const filledData = Array.from({ length: 7 }, (_, index) => {
-    const existingData = weeklySales.find((data) => data.day === (index + 1));
-    return existingData || { day: (index + 1), totalSales: 0 };
-  });
-
-  return filledData;
-};

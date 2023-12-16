@@ -15,11 +15,9 @@ router
   .patch(adminController.rejectRequest);
 
   router
-  .route('/totalSalesForDay') // Add this route for weekly sales
-  .get(adminController.getTotalSalesForDay);  
-router
-  .route('/weeklySales') // Add this route for weekly sales
-  .get(adminController.getWeeklySales);  
+  .route('/orders') 
+  .get(adminController.getAllOrders);  
+
 
 router
   .route('/:id')

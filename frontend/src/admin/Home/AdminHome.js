@@ -33,6 +33,114 @@ const AdminHome = (props) => {
   const [isUserTab, setUserTab] = useState(true);
   const [showRequest, setShowRequest] = useState(false);
   const [selectedRow, setSelectedRow] = useState({});
+  const [orders, setOrders] = useState([]);
+  const [salesForDay, setSalesForDay] = useState(0);
+  const [currentWeekSales, setCurrentWeekSales] = useState([]);
+  const [prevWeekSales, setPrevWeekSales] = useState([]);
+
+  // Fetch all orders
+  const fetchAllOrders = async () => {
+    try {
+      const response = await fetch('http://localhost:4000/admins/orders'); 
+      const data = await response.json();
+      const fetchedOrders = data.data.orders;
+      setOrders(fetchedOrders);
+      console.log(fetchedOrders);
+      return fetchedOrders;
+    } catch (error) {
+      console.error('Error fetching orders:', error);
+      throw error;
+    }
+  };
+
+
+// Process orders to get sales for the day
+const calculateSalesForDay = (orders) => {
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+  const currentMonth = currentDate.getMonth() + 1; // Months are zero-based, so add 1
+
+  const salesForDay = orders
+    .filter((order) => {
+      const orderDate = new Date(order.issueDate); // Assuming orders have an issueDate property
+      return (
+        orderDate.getDate() === currentDate.getDate() &&
+        orderDate.getMonth() + 1 === currentMonth &&
+        orderDate.getFullYear() === currentYear
+      );
+    })
+    .reduce((totalSales, order) => totalSales + order.totalCost, 0);
+
+  setSalesForDay(salesForDay);
+  console.log(salesForDay+"totttt");
+  return salesForDay;
+
+};
+
+// Process orders to get weekly sales
+const calculateWeeklySales = (orders) => {
+  const currentDate = new Date();
+  const startOfWeek = new Date(currentDate);
+  startOfWeek.setDate(currentDate.getDate() - currentDate.getDay()); // Start of the current week (Sunday)
+  startOfWeek.setHours(0, 0, 0, 0);
+
+  const endOfWeek = new Date(currentDate);
+  endOfWeek.setDate(currentDate.getDate() - currentDate.getDay() + 6); // End of the current week (Saturday)
+  endOfWeek.setHours(23, 59, 59, 999);
+
+  const startOfPrevWeek = new Date(startOfWeek);
+  startOfPrevWeek.setDate(startOfWeek.getDate() - 7); // Start of the previous week (Sunday)
+  const endOfPrevWeek = new Date(endOfWeek);
+  endOfPrevWeek.setDate(endOfWeek.getDate() - 7); // End of the previous week (Saturday)
+
+  const currentWeekSales = orders
+    .filter((order) => {
+      const orderDate = new Date(order.issueDate); // Assuming orders have an issueDate property
+      return orderDate >= startOfWeek && orderDate <= endOfWeek;
+    })
+    .reduce((weeklySalesData, order) => {
+      const orderDate = new Date(order.issueDate);
+      const dayOfWeek = orderDate.getDay();
+
+      weeklySalesData[dayOfWeek] = (weeklySalesData[dayOfWeek] || 0) + order.totalCost;
+      return weeklySalesData;
+    }, Array.from({ length: 7 }, () => 0));
+
+  const prevWeekSales = orders
+    .filter((order) => {
+      const orderDate = new Date(order.issueDate); // Assuming orders have an issueDate property
+      return orderDate >= startOfPrevWeek && orderDate <= endOfPrevWeek;
+    })
+    .reduce((prevWeekSalesData, order) => {
+      const orderDate = new Date(order.issueDate);
+      const dayOfWeek = orderDate.getDay();
+
+      prevWeekSalesData[dayOfWeek] = (prevWeekSalesData[dayOfWeek] || 0) + order.totalCost;
+      return prevWeekSalesData;
+    }, Array.from({ length: 7 }, () => 0));
+
+  setCurrentWeekSales(currentWeekSales);
+  setPrevWeekSales(prevWeekSales);
+  console.log(prevWeekSales+"  "+currentWeekSales);
+
+  return { currentWeekSales, prevWeekSales };
+};
+
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const fetchedOrders = await fetchAllOrders();
+      const salesForDay = calculateSalesForDay(fetchedOrders);
+      const { currentWeekSales, prevWeekSales } = calculateWeeklySales(fetchedOrders);
+
+      // Do something with salesForDay, currentWeekSales, and prevWeekSales
+    } catch (error) {
+      // Handle errors
+    }
+  };
+
+  fetchData();
+}, []); // Empty dependency array means this effect runs once on mount
 
   
   useEffect(() => {
@@ -85,25 +193,7 @@ const AdminHome = (props) => {
     }
   };
   const [revenueData, setRevenueData] = useState([]);
-  const [weeklySalesData, setWeeklySalesData] = useState({
-    currentWeekSales: [],
-    prevWeekSales: [],
-  });
 
-  useEffect(() => {
-    const fetchWeeklySalesData = async () => {
-      try {
-        const response = await fetch('http://localhost:4000/admins/weeklySales');
-        const data = await response.json();
-        setWeeklySalesData(data.data);
-        console.log(data.data);
-      } catch (error) {
-        console.error('Error fetching weekly sales data:', error);
-      }
-    };
-
-    fetchWeeklySalesData();
-  }, []);
 
   const fetchPendingRequests = async () => {
     try {
@@ -317,24 +407,7 @@ const AdminHome = (props) => {
   };
  
 
-  const fetchTotalSales = async () => {
-    try {
-      const response = await axios.get(`http://localhost:4000/admins/totalSalesForDay`); 
-      const totalSales = response.data.data.totalSales;
-  
-      // Now you can use the 'totalSales' data in your component
-      console.log('Total Sales for the Month:', totalSales );
-      setSales(totalSales);
-    } catch (error) {
-      console.error('Error fetching total sales:', error.message);
-    }
-  };
-  
-  
-  // Call the function when needed, such as when the component mounts
-  useEffect(() => {
-    fetchTotalSales();
-  }, []);
+
 
   const handleRoleButtonClick = (role) => {
     filterUsersByRole(role);
@@ -472,7 +545,7 @@ const handleDeleteClick = (e, username) => {
               className={styles.salesImg}
               id="logo"
             />
-            <div className={styles.amount}>${sales}</div>
+            <div className={styles.amount}>${salesForDay}</div>
       <h4 className={styles.salesText}>Total Sales</h4>
     </section>
     </Container>
@@ -573,9 +646,10 @@ const handleDeleteClick = (e, username) => {
           <h2 className={styles.revTitle}>Total Revenue</h2>
           <div className={styles.chart}>
           <RevenueChart
-        currentWeekSales={weeklySalesData.currentWeekSales}
-        prevWeekSales={weeklySalesData.prevWeekSales}
-      /></div>
+        currentWeekSales={currentWeekSales}
+        prevWeekSales={prevWeekSales}
+      />
+      </div>
           </Container>
           <Container className={styles.users}>
           <div className={styles.filter}>

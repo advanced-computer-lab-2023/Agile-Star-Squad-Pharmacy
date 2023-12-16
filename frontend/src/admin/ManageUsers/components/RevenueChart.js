@@ -1,17 +1,25 @@
 import React from 'react';
-import { VictoryBar, VictoryChart, VictoryAxis, VictoryLabel, VictoryLegend, VictoryLine } from 'victory';
+import { VictoryBar, VictoryChart, VictoryAxis, VictoryLegend, VictoryLine } from 'victory';
 
 const RevenueChart = ({ currentWeekSales, prevWeekSales }) => {
-    const yAxisTicks = [0, 5000, 10000, 15000, 20000, 25000];
+  const yAxisTicks = [0, 5000, 10000, 15000, 20000, 25000];
+  const barWidth = 10; // Adjust the bar width
+  const barOffset = 2.5; // Adjust the offset between the bars
+
+  // Function to transform data to match VictoryBar expectations
+  const transformData = (weekSales, offset) => {
+    return weekSales.map((value, index) => ({ x: index * (barWidth + barOffset) + offset, y: value }));
+  };
+
   return (
     <VictoryChart domainPadding={40} width={600}>
       {/* X-axis (days of the week) */}
       <VictoryAxis
-        tickValues={currentWeekSales.map((data) => data.day)}
+        tickValues={currentWeekSales.map((_, index) => index * (barWidth + barOffset))}
         tickFormat={['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']}
         style={{
-            color: "var(--Primary-200, #7B91B0)",
-            axis: { stroke: 'none' }, // Remove X-axis line
+          color: "grey",
+          axis: { stroke: 'none' }, // Remove X-axis line
           tickLabels: { padding: 5 },
         }}
       />
@@ -22,14 +30,13 @@ const RevenueChart = ({ currentWeekSales, prevWeekSales }) => {
         tickFormat={(x) => `$${x / 1000}k`}
         tickValues={[0, 5000, 10000, 15000, 20000, 25000]}
         style={{
-            axis: { stroke: 'none' }, // Remove X-axis line
+          axis: { stroke: 'none' }, // Remove X-axis line
           tickLabels: { padding: 5 },
         }}
       />
-      
 
-     {/* Faint horizontal grid lines */}
-     {yAxisTicks.map((tick) => (
+      {/* Faint horizontal grid lines */}
+      {yAxisTicks.map((tick) => (
         <VictoryLine
           key={tick}
           data={[{ x: 1, y: tick }]}
@@ -39,10 +46,8 @@ const RevenueChart = ({ currentWeekSales, prevWeekSales }) => {
 
       {/* Bar chart for this week's revenue */}
       <VictoryBar
-        data={currentWeekSales}
-        x={(d) => d.day - 0.3} // Adjust the x-value to shift the bar to the left
-        y="totalSales"
-        barWidth={13}
+        data={transformData(currentWeekSales, 0)}
+        barWidth={barWidth}
         cornerRadius={{ top: 3, bottom: 3 }}
         style={{
           data: { fill: '#0095FF' },
@@ -51,10 +56,8 @@ const RevenueChart = ({ currentWeekSales, prevWeekSales }) => {
 
       {/* Bar chart for last week's revenue */}
       <VictoryBar
-        data={prevWeekSales}
-        x="day"
-        y="totalSales"
-        barWidth={13}
+        data={transformData(prevWeekSales, barOffset)}
+        barWidth={barWidth}
         cornerRadius={{ top: 3, bottom: 3 }}
         style={{
           data: { fill: '#00E096' },
