@@ -99,6 +99,12 @@ const ArchivedMedicines = () => {
     }
   };
 
+  const handleEnter = (event) => {
+    if (event.key == "Enter") {
+      handleSearchMedicineName();
+    }
+  }
+
   return (
     <>
       <div>
@@ -169,6 +175,7 @@ const ArchivedMedicines = () => {
               type="text"
               placeholder="Medicine Name"
               value={medicineName}
+              onKeyDown={handleEnter}
               onChange={handleMedicineNameChange}
             />
           </div>
