@@ -1,0 +1,320 @@
+.mainBackground {
+  background-color: #96B7C7;
+  height: 100vh;
+}
+
+.background {
+  background-color: #96B7C7;
+}
+
+.secondBackground {
+  position: relative;
+  background-color: #FFFFFF;
+  height: 100vh;
+  border-top-left-radius: 62px;
+  border-bottom-left-radius: 62px;
+  align-content: center;
+  font-family: 'Telex', sans-serif;
+}
+
+.customText {
+  position: absolute;
+  line-height: 24px;
+  color: #0F172A;
+  margin-left: 10%;
+  margin-top: 20%;
+}
+
+.slotSelectStyle {
+  position: static !important;
+  margin: 0 !important;
+  height: 100%;
+}
+
+.textBox:placeholder {
+  color: #5C5C5C;
+}
+
+.textBoxContainer {
+  display: flex;
+  margin-bottom: 20px;
+
+}
+
+.textBox {
+  position: relative;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #C4C4C4;
+  width: 261px;
+  margin-right: 41px;
+  margin-bottom: 5px;
+  z-index: 10;
+}
+
+.textBox:focus {
+  border-bottom: 1px solid #000000;
+}
+
+.logo {
+  position: absolute;
+  top: 43px;
+  left: 65px;
+  width: 100px;
+  height: 35px;
+}
+
+.myDropzone {
+  width: 100%;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 28px;
+  color: #9A9EA5;
+}
+
+.thumbsContainer{
+  display: 'flex';
+  flex-direction: 'row';
+  flex-wrap: 'wrap';
+  margin-top: 16;
+};
+
+.formContainer {
+  position: absolute;
+  z-index: 10;
+  /* margin-left: 10%; */
+}
+
+.medicinesImage {
+  position: absolute;
+  bottom: 0;
+  left: 7px;
+  width: 52%;
+  z-index: 1;
+}
+
+.button {
+  width: 558px;
+  height: 50px;
+  background-color: #193842;
+  color: #ffffff;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.p1 {
+  text-align: left;
+  margin-top: -50px;
+  margin-bottom: 2rem;
+  font-size: 36px;
+  letter-spacing: 10%;
+  font-weight: bolder;
+}
+
+.p2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  letter-spacing: -1%;
+  size: 20px;
+}
+
+.dobContainer{
+  display: flex;
+  margin-right: 50px;
+}
+
+.daySelect {
+  max-height: 40px;
+  max-width: 80px;
+  margin-right: 10px;
+  display: inline-block;
+}
+
+#dobYear {
+  margin-top: 5px;
+}
+
+input.numField::-webkit-outer-spin-button,
+input.numField::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+.dropzoneTitle {
+  font-size: 16px;
+  margin-top: 15px;
+  text-align: start;
+  margin-left: 10px;
+}
+
+.myDropzone {
+  background-color: #F8F8FF;
+  width: 100%;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 28px;
+  color: #0F0F0F;
+  border: 1px dashed #96B7C7;
+  border-radius: 12px;
+  /* margin-top: 10px; */
+  height: 150px;
+  padding-top: 25px;
+  padding-bottom: 15px;
+  padding-inline: 10px;
+  cursor: pointer;
+}
+
+.dropzoneSubtitle {
+  color: #676767;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 10px;
+}
+
+.myDropzone aside {
+  justify-content: center;
+}
+
+.dropzoneDivider {
+  width: 100%;
+  margin-bottom: 34px;
+}
+
+
+input[type=number].numField {
+  .container {
+    position: absolute;
+    height: 48vh;
+    width: 80vh;
+    background-color: #ffffff;
+    border-radius: 33px;
+    font-size: 17px;
+    color: #6B6B6B;
+    line-height: 150%;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    margin-left: -50%;
+    margin-top: 20%;
+  }
+
+  .buttonsDiv {
+    position: absolute;
+    bottom: -570%;
+  }
+}
+
+.buttonsDiv {
+  position: absolute;
+  bottom: -570%;
+}
+
+.container {
+  position: absolute;
+  height: 48vh;
+  width: 80vh;
+  background-color: #ffffff;
+  border-radius: 33px;
+  font-size: 17px;
+  color: #6B6B6B;
+  line-height: 150%;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  margin-left: -50%;
+  margin-top: 20%;
+
+}
+
+.buttonsDiv {
+  position: absolute;
+  bottom: -570%;
+}
+
+
+.containerleft {
+  background-color: #ffffff;
+  border-radius: 35px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 60px;
+}
+
+.containerRight {
+  /* position: absolute; */
+  /* height: 48vh; */
+  width: 30vh;
+  background-color: #ffffff;
+  border-radius: 33px;
+  font-size: 17px;
+  color: #6B6B6B;
+  line-height: 150%;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  margin-left: 111%;
+  margin-top: 20%;
+}
+
+.twoContainers {
+  display: flex;
+}
+
+.dateTimeContainer {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.12);
+}
+
+
+
+.timeContainer {
+  width: 100%;
+  margin-block: 10px;
+  padding-left: 15px;
+}
+
+.timeContainer p {
+  font-size: 12px;
+  margin-bottom: 4px;
+  line-height: 12px;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.addButton {
+  display: flex;
+  justify-content: end;
+  margin-top: 12px;
+  margin-right: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #193842;
+}
+
+.addButton:hover {
+  color: #092933;
+}
+
+.slotSection {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: end;
+}
+
+.rightContainer {
+  margin-top: 93px;
+  height: 442px;
+  width: 100%;
+  overflow-y: auto;
+  background-color: #ffffff;
+  border-radius: 35px;
+  padding-top: 35px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+}
