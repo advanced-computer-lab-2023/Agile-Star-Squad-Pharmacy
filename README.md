@@ -79,9 +79,7 @@ The Pharmacy Website is a comprehensive web application designed for both pharma
 
 5. **Viewing Orders**: To view your current and past orders, go to the "My Orders" page. Here, you can also track the status of your orders.
 
-6. **Pharmacist Directory**: To view a list of all available pharmacists, navigate to the "Pharmacists" page. You can view detailed profiles of each pharmacist, including their specialization and experience.
-
-7. **Prescription Management**: If you're a patient, you can upload and manage your digital prescriptions by going to the "My Prescriptions" page. Here, you can also view the status of your prescriptions.
+6. **Prescription Management**: If you're a patient, you can upload and manage your digital prescriptions by going to the "My Prescriptions" page. Here, you can also view the status of your prescriptions.
 
 <a name="contribution"></a>
 
