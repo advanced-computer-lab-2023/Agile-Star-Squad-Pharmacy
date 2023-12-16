@@ -7,25 +7,43 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import NavBar from '../../shared/components/NavBar/NavBar';
 import img from "./medicine.png";
-
+import tick from "./tick.png";
+import cart from "./cartMazen.png";
+import line from "./line.png";
 
 const MedicineDetails = (props) => {
     return (
-        <div style={{height:"100vh"}}>
+        <div style={{ height: "100vh" }}>
             <NavBar />
-        
-        <div style= {{display: "flex", flexDirection: "row", alignItems: "center", height:"80vh",marginTop:'18px'}}>
-            <div className='col-5 d-flex justify-content-center align-items-center '>
-            <img src={img} alt="Medicine Image" />
+
+            <div style={{ display: "flex", flexDirection: "row", alignItems: "center", height: "80vh" }}>
+                <div className='col-5 d-flex justify-content-center align-items-center'>
+                    <img src={img} alt="Medicine Image" />
+                </div>
+                <div className='col-1 d-flex flex-column justify-content-start align-items-start'></div>
+                <div className='col-3 d-flex flex-column justify-content-start align-items-start'>
+                    <div style={{ marginTop: "-20%", fontWeight: "600", fontSize: "20px", display: "flex", flexDirection: "column", alignItems: "center" }}>
+                        Medicine Name ya dala3 dalla3
+                        <div style={{ color: '#00B517', fontSize: '16px' ,marginLeft:"-65%"}} className='row-4 d-flex flex-row'>
+                            <img src={tick} alt="Tick" /> In Stock
+                        </div>
+                    </div>
+                    <div style={{ marginTop: "35%", marginBottom: "6%", color: "#505050", fontSize: "16px" }}>Price: 200 L.E.</div>
+
+                    <img src={line} alt="line" style={{ marginBottom: "9%" }} />
+                    <div style={{ color: "#505050", marginBottom: "14%", fontSize: "16px" }}>Type: ARCTICMONKEYS</div>
+                    <div style={{ color: "#505050", fontSize: "16px" }}>Medicinal Use: ARCTICMONKEYSUSE</div>
+                    <img src={line} alt="line" style={{}} />
+                </div>
+
+                <div className='col-2 d-flex flex-column'>
+                    <button style={{ marginTop: "-90%", width: "185px", height: "49px", color: "white", backgroundColor: "#3182CE", borderRadius: "9px" }}>
+                        <img src={cart} alt="cart" style={{ marginRight: "10%", marginBottom: "2%" }} />Add to Cart
+                    </button>
+                </div>
             </div>
-            
         </div>
-        </div>
-
-
-
-
-
-    )
+    );
 }
+
 export default MedicineDetails;
