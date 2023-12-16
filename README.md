@@ -40,11 +40,10 @@ The Pharmacy Website is a comprehensive web application designed for both pharma
 - Detailed view of each product.
 - Update product information as needed.
 
-### 2. Order Placement and Tracking:
+### 2. Order Placement:
 
 - Customers can place orders for their required medications.
 - View and manage current and past orders.
-- Track the status of placed orders.
 
 ### 3. Pharmacist Directory:
 
@@ -60,10 +59,6 @@ The Pharmacy Website is a comprehensive web application designed for both pharma
 
 - Secure login system for customers and pharmacists.
 - Role-based access control to protect sensitive information.
-
-### 6. Responsive Design:
-
-- The website is designed to be fully responsive, providing an optimal viewing experience across a wide range of devices.
 
 <a name="usage"></a>
 
