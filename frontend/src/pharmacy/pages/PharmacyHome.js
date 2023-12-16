@@ -52,21 +52,24 @@ const PharmacyHomePharmacist = () => {
               sales: m.sales,
               cartQuantity: 1,
               quantity: m.quantity,
+              archived: m.archived,
             };
           })
         );
-        fetchCart(Medicine.map((m) => {
-          return {
-            id: m._id,
-            name: m.name,
-            image: m.image,
-            description: m.description,
-            price: m.price,
-            sales: m.sales,
-            cartQuantity: 1,
-            quantity: m.quantity,
-          };
-        }));
+        fetchCart(
+          Medicine.map((m) => {
+            return {
+              id: m._id,
+              name: m.name,
+              image: m.image,
+              description: m.description,
+              price: m.price,
+              sales: m.sales,
+              cartQuantity: 1,
+              quantity: m.quantity,
+            };
+          })
+        );
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -76,17 +79,29 @@ const PharmacyHomePharmacist = () => {
   }, []);
 
   const fetchCart = async (medicines) => {
-    if (cartCtx.length == 0) {
-      const response = await fetch(`http://localhost:4000/patients/${userCtx.userId}/cart`, { credentials: "include" });
+    if (cartCtx.length == 0 && userCtx.role === 'patient') {
+      const response = await fetch(
+        `http://localhost:4000/patients/${userCtx.userId}/cart`,
+        { credentials: 'include' }
+      );
       const cartJson = await response.json();
       const cart = cartJson.cart;
-      console.log(cart);
-      cart.forEach(item => {
-        const medicine = medicines.find(medicineItem => medicineItem.id == item.id);
-        cartCtx.initItem({ id: item.id, image: medicine.image, name: medicine.name, description: medicine.description, price: medicine.price, quantity: +item.quantity });
+      console.log(response);
+      cart.forEach((item) => {
+        const medicine = medicines.find(
+          (medicineItem) => medicineItem.id == item.id
+        );
+        cartCtx.initItem({
+          id: item.id,
+          image: medicine.image,
+          name: medicine.name,
+          description: medicine.description,
+          price: medicine.price,
+          quantity: +item.quantity,
+        });
       });
     }
-  }
+  };
 
   const medicinalUseOptions = []; // fill options based on medicinalUse enum
   for (const use of medicinalUseEnum) {
@@ -138,7 +153,6 @@ const PharmacyHomePharmacist = () => {
       requestOptions
     );
     const medicineJson = await updatedMedicine.json();
-
     let newMedicine = await medicineJson.data.medicine;
     newMedicine = { ...newMedicine, id: newMedicine._id };
     const allMedicines = [];
@@ -187,6 +201,10 @@ const PharmacyHomePharmacist = () => {
     navigate('/cart');
   };
 
+  const goToArchivedMedicinesPage = () => {
+    navigate('/archivedMedicines');
+  };
+
   const cartCtx = useContext(CartContext);
 
   // const [quantity, setQuantity] = useState(1);
@@ -219,15 +237,12 @@ const PharmacyHomePharmacist = () => {
       price: medicine.price,
       quantity: +medicine.cartQuantity,
     });
-    alert('Medicine added to cart successfully!')
-
-    // call to the backend to add an item
   };
 
   const logout = () => {
     userCtx.logout();
-    navigate("/");
-  }
+    navigate('/');
+  };
   const goToOrdersHandler = () => {
     navigate(`/order`);
   };
@@ -242,8 +257,8 @@ const PharmacyHomePharmacist = () => {
 
   return (
     <React.Fragment>
-      <NavBar/>
-      <br/>
+      <NavBar />
+      <br />
       <form onSubmit={onSubmitHandler}>
         <input
           type="text"
@@ -267,58 +282,68 @@ const PharmacyHomePharmacist = () => {
         ) : null}
         <hr />
         {userCtx.role == 'pharmacist' ? (
-          <button onClick={addNewMedicineHandler}>ADD MEDICINE</button>
+          <div>
+            <button onClick={addNewMedicineHandler}>ADD MEDICINE</button>
+            <button onClick={goToArchivedMedicinesPage}>
+              Archived Medicines
+            </button>
+          </div>
         ) : null}
         <button onClick={logout}>logout</button>
         <button onClick={changePasswordHandler}>change password</button>
       </form>
-      {filteredList.map((item, index) => (
-        <div key={item.id} style={borderStyle}>
-          <img
-            src={item.image}
-            alt={item.description}
-            style={{ width: '500px', height: 'auto' }}
-          />
-          <p>Name: {item.name}</p>
-          <p>Description: {item.description}</p>
-          <p>Price: {item.price}</p>
+      {filteredList.map((item, index) =>
+        // Check if the medicine is not archived before rendering
+        !item.archived ? (
+          <div key={item.id} style={borderStyle}>
+            <img
+              src={item.image}
+              alt={item.description}
+              style={{ width: '500px', height: 'auto' }}
+            />
+            <p>Name: {item.name}</p>
+            <p>Description: {item.description}</p>
+            <p>Price: {item.price}</p>
 
-          {userCtx.role == 'patient' ? (
-            <div>
-              <input
-                type="number"
-                id={item.id}
-                value={item.cartQuantity}
-                onChange={onChange}
-                min="1"
-                label="Amount"
-              />
+            {userCtx.role === 'patient' ? (
+              <div>
+                <input
+                  type="number"
+                  id={item.id}
+                  value={item.cartQuantity}
+                  onChange={onChange}
+                  min="1"
+                  label="Amount"
+                />
 
-              <button onClick={(e) => addItem(item, e)} type="submit">
-                + Add
-              </button>
-            </div>
-          ) : null}
+                <button onClick={(e) => addItem(item, e)} type="submit">
+                  + Add
+                </button>
+              </div>
+            ) : null}
 
-          {userCtx.role == 'pharmacist' ? (
-            <React.Fragment>
-              <p>Sales: {item.sales}</p>
-              <p>Quantity: {item.quantity}</p>
-              <hr />
-              <form onSubmit={(event) => editHandler(event, item.id)}>
-                <label>New Price</label>
-                <input type="text" onChange={newPriceTextFieldHandler} />
-
-                <label>New Description</label>
-                <input type="text" onChange={newDescriptionTextFieldHandler} />
+            {userCtx.role === 'pharmacist' ? (
+              <React.Fragment>
+                <p>Sales: {item.sales}</p>
+                <p>Quantity: {item.quantity}</p>
                 <hr />
-                <button type="submit">Edit</button>
-              </form>
-            </React.Fragment>
-          ) : null}
-        </div>
-      ))}
-      
+                <form onSubmit={(event) => editHandler(event, item.id)}>
+                  <label>New Price</label>
+                  <input type="text" onChange={newPriceTextFieldHandler} />
+
+                  <label>New Description</label>
+                  <input
+                    type="text"
+                    onChange={newDescriptionTextFieldHandler}
+                  />
+                  <hr />
+                  <button type="submit">Edit</button>
+                </form>
+              </React.Fragment>
+            ) : null}
+          </div>
+        ) : null
+      )}
     </React.Fragment>
   );
 };

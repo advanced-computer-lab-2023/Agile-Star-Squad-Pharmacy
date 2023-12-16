@@ -36,6 +36,20 @@ const medicineSchema = new mongoose.Schema({
     required: [true, "Please provide a list for the medicinal use."],
     minLength: 1,
   },
+  archived: {
+    type: Boolean,
+    default: false,
+  },
+  activeIngredient: 
+    {
+      type: "String"
+    },
+    isOtc: {
+      type: Boolean,
+      default: false
+    }
+  
+  
 });
 // tourSchema.virtual('familyMembers', {
 //   ref: 'Family',

@@ -12,7 +12,16 @@ router
 router
   .route('/:id')
   .patch(middleware.pharmacistAuth, medicineController.updateMedicine)
-  .get(middleware.pharmacistAuth, medicineController.getMedicine);
+  .get(middleware.pharmacistAuth, medicineController.getMedicine)
+  .delete(middleware.pharmacistAuth);
+
+router
+  .route('/archive/:id')
+  .patch(middleware.pharmacistAuth, medicineController.archiveMedicine);
+
+router
+  .route('/unarchive/:id')
+  .patch(middleware.pharmacistAuth, medicineController.unarchiveMedicine);
 
 module.exports = router;
 ///
