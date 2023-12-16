@@ -161,6 +161,22 @@ const BrowseMedicine = () => {
                 quantity: +medicine.cartQuantity,
             });
         };
+        return <div className="col-3 px-4"><div className={classes.medicineContainer}>
+            <div>
+                <div className={classes.medicineImg}><img src={medicine.image} /></div>
+                <div className={classes.medicineTitle}>{medicine.name}</div>
+            </div>
+            <div>
+                <div className={classes.medicinePrice}>{medicine.price} L.E.</div>
+                <div className={classes.medicineDesc1}>Active Ingredient:</div>
+                <div className={classes.medicineDesc2}>{ingredients}</div>
+                <div className="d-flex mt-2">
+                    <div className={`${classes.addToCartButton} me-1`} onClick={addItem}>Add To Cart</div>
+                    <div className={`${classes.viewButton} ms-1`}>View</div>
+                </div>
+            </div>
+        </div>
+        </div>;
     }
 
     return <section className={classes.medicineSection}>
