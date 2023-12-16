@@ -20,6 +20,7 @@ import './App.css';
 import Order from "./patient/pages/order/Order"
 import SignupOptions from './login/pages/SignupOptions';
 import AddAddress from "./patient/pages/AddAddress";
+import MedicineDetails from './patient/pages/MedicineDetails';
 
 function App() {
   const user = useContext(UserContext);
@@ -36,6 +37,7 @@ function App() {
             <Route path="/order" element={<Order />} exact />
             <Route path="/address/add" element={<AddAddress />} exact />
             <Route path="changePassword" element={<ChangePassword />} exact />
+            {/* <Route path="/medicinedetails" element={<MedicineDetails />} exact /> */}
             <Route path="*" element={<Navigate to="/pharmacy/home" />} />{' '}
           </Routes>
         </CartContextProvider>
@@ -61,7 +63,7 @@ function App() {
     } else {
       return (
         <Routes>
-          <Route path="/" element={<Login />} exact />
+          <Route path="/" element={<MedicineDetails />} exact />
           <Route path="/resetPassword" element={<ResetPassword />} exact />
           <Route path="signupOptions" element={<SignupOptions />} exact />
           <Route
