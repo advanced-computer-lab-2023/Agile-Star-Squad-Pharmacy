@@ -40,6 +40,16 @@ const medicineSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  activeIngredient: 
+    {
+      type: "String"
+    },
+    isOtc: {
+      type: Boolean,
+      default: false
+    }
+  
+  
 });
 // tourSchema.virtual('familyMembers', {
 //   ref: 'Family',
