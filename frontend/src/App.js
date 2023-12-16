@@ -37,7 +37,7 @@ function App() {
             <Route path="/order" element={<Order />} exact />
             <Route path="/address/add" element={<AddAddress />} exact />
             <Route path="changePassword" element={<ChangePassword />} exact />
-            {/* <Route path="/medicinedetails" element={<MedicineDetails />} exact /> */}
+            <Route path="/medicine" element={<MedicineDetails />} exact />
             <Route path="*" element={<Navigate to="/pharmacy/home" />} />{' '}
           </Routes>
         </CartContextProvider>
