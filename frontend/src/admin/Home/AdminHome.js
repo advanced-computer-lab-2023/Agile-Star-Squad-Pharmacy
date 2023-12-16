@@ -35,8 +35,11 @@ const AdminHome = (props) => {
   const [selectedRow, setSelectedRow] = useState({});
   const [orders, setOrders] = useState([]);
   const [salesForDay, setSalesForDay] = useState(0);
+  const [salesForYesterday, setSalesForYesterday] = useState(0);
   const [currentWeekSales, setCurrentWeekSales] = useState([]);
   const [prevWeekSales, setPrevWeekSales] = useState([]);
+  const [percentageChange, setPercentageChange] = useState(0);
+  const [changeSign, setChangeSign] = useState('');
 
   // Fetch all orders
   const fetchAllOrders = async () => {
@@ -54,28 +57,76 @@ const AdminHome = (props) => {
   };
 
 
-// Process orders to get sales for the day
-const calculateSalesForDay = (orders) => {
+// Process orders to get sales for the day and yesterday
+const calculateSalesForDayAndYesterday = (orders) => {
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
   const currentMonth = currentDate.getMonth() + 1; // Months are zero-based, so add 1
+  const currentDay = currentDate.getDate();
 
-  const salesForDay = orders
+  // Calculate sales for today
+  const salesForToday = orders
     .filter((order) => {
       const orderDate = new Date(order.issueDate); // Assuming orders have an issueDate property
       return (
-        orderDate.getDate() === currentDate.getDate() &&
+        orderDate.getDate() === currentDay &&
         orderDate.getMonth() + 1 === currentMonth &&
         orderDate.getFullYear() === currentYear
       );
     })
     .reduce((totalSales, order) => totalSales + order.totalCost, 0);
 
-  setSalesForDay(salesForDay);
-  console.log(salesForDay+"totttt");
-  return salesForDay;
+  // Calculate sales for yesterday
+  const yesterday = new Date(currentDate);
+  yesterday.setDate(currentDay - 1);
+  const salesForYesterday = orders
+    .filter((order) => {
+      const orderDate = new Date(order.issueDate);
+      return (
+        orderDate.getDate() === yesterday.getDate() &&
+        orderDate.getMonth() + 1 === yesterday.getMonth() + 1 &&
+        orderDate.getFullYear() === yesterday.getFullYear()
+      );
+    })
+    .reduce((totalSales, order) => totalSales + order.totalCost, 0);
 
+  // Calculate percentage change
+  const percentageChange = ((salesForToday - salesForYesterday) / salesForYesterday) * 100;
+
+  // Determine the sign for the percentage change
+  const changeSign = percentageChange > 0 ? '+' : percentageChange < 0 ? '-' : '';
+
+  setSalesForDay(salesForToday);
+  setSalesForYesterday(salesForYesterday);
+
+  return { salesForToday, salesForYesterday, percentageChange, changeSign };
 };
+
+
+useEffect(() => {
+  const fetchOrders = async () => {
+    const fetchedOrders = await fetchAllOrders();
+    calculateSalesForDayAndYesterday(fetchedOrders);
+  };
+
+  fetchOrders();
+}, []);
+useEffect(() => {
+  // Fetch orders and calculate sales for the day and yesterday
+  const fetchOrders = async () => {
+    const fetchedOrders = await fetchAllOrders(); // Assuming you have fetchAllOrders function
+    const {
+      percentageChange: calculatedPercentageChange,
+      changeSign: calculatedChangeSign,
+    } = calculateSalesForDayAndYesterday(fetchedOrders);
+    
+    // Update state variables
+    setPercentageChange(calculatedPercentageChange);
+    setChangeSign(calculatedChangeSign);
+  };
+
+  fetchOrders();
+}, []);
 
 // Process orders to get weekly sales
 const calculateWeeklySales = (orders) => {
@@ -130,7 +181,6 @@ useEffect(() => {
   const fetchData = async () => {
     try {
       const fetchedOrders = await fetchAllOrders();
-      const salesForDay = calculateSalesForDay(fetchedOrders);
       const { currentWeekSales, prevWeekSales } = calculateWeeklySales(fetchedOrders);
 
       // Do something with salesForDay, currentWeekSales, and prevWeekSales
@@ -144,25 +194,14 @@ useEffect(() => {
 
   
   useEffect(() => {
-    fetchPatients();
-    fetchPharmacists();
-    fetchAdmins();
-  }, []);
-  const refreshUserData = () => {
-    setUsers([]);
-    fetchPatients();
-    fetchPharmacists();
-    fetchAdmins();
-  };
-
- 
-
-
-  useEffect(() => {
     const fetchData = async () => {
       // Fetch data here
       try {
+        await fetchPatients();
+        await fetchPharmacists();
+        await fetchAdmins();
         await fetchPendingRequests();
+        await fetchPackages();
 
         // Set dataLoaded to true after fetching all data
         setDataLoaded(true);
@@ -185,7 +224,7 @@ useEffect(() => {
 
   const fetchPackages = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/packages/');
+      const response = await axios.get('http://localhost:3000/packages/');
       const packagesData = response.data; // Assuming the packages are directly in the data property
       setPackages(packagesData);
     } catch (error) {
@@ -439,7 +478,7 @@ useEffect(() => {
 
 
     
-  const fetchPatients = () => {
+  const fetchPatients = async() => {
     fetch('http://localhost:4000/patients/')
       .then(async (response) => {
         const json = await response.json();
@@ -463,7 +502,7 @@ useEffect(() => {
       });
   };
   
-  const fetchPharmacists = () => {
+  const fetchPharmacists = async () => {
     fetch('http://localhost:4000/pharmacist/')
       .then(async (response) => {
         const json = await response.json();
@@ -487,7 +526,7 @@ useEffect(() => {
       });
   };
   
-  const fetchAdmins = () => {
+  const fetchAdmins = async () => {
     fetch('http://localhost:4000/admins/')
       .then(async (response) => {
         const json = await response.json();
@@ -547,6 +586,13 @@ const handleDeleteClick = (e, username) => {
             />
             <div className={styles.amount}>${salesForDay}</div>
       <h4 className={styles.salesText}>Total Sales</h4>
+      <h4 className={styles.yesterdaySales}>
+        {percentageChange !== null && changeSign !== null && (
+          <>
+            {`${changeSign}${Math.abs(percentageChange).toFixed(2)}% from yesterday`}
+          </>
+        )}
+      </h4>
     </section>
     </Container>
     <Container className={styles.requests}>
@@ -610,9 +656,9 @@ const handleDeleteClick = (e, username) => {
 </Container>
 <Container className={styles.packages}>
             <div className={styles.edit}>
-              <button className={styles.editButton} onClick={editHandler}>
+              {/* <button className={styles.editButton} onClick={editHandler}>
                 More
-              </button>
+              </button> */}
             </div>
             <h2 className={styles.packageTitle}>Packages</h2>
             <div className="container">
@@ -776,14 +822,14 @@ const handleDeleteClick = (e, username) => {
           
 
      
-      <Link to="/admin/manage">
+      {/* <Link to="/admin/manage">
         <button>Manage Users</button>
       </Link>
       <Link to="/pharmacy/home">
         <button>Go to Pharmacy</button>
       </Link>
       <button onClick={logout}>Logout</button>
-      <button onClick={changePasswordHandler}>change password</button>
+      <button onClick={changePasswordHandler}>change password</button> */}
     </div>
   );
 };

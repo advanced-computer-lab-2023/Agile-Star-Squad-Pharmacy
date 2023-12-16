@@ -7,7 +7,7 @@
 }
 .sales {
     position: absolute;
-    left: 11%; /* Move container to the center horizontally */
+    left: 13%; /* Move container to the center horizontally */
     top: 40%; /* Move container to the center vertically */
     transform: translate(-50%, -50%); /* Center the container */
     width: 255px;
@@ -60,7 +60,7 @@
 
 .requests {
   position: absolute;
-  margin-left: 20%;
+  margin-left: 23%;
   top: 23%;
   width: 443px;
   height: 253.955px;
@@ -77,6 +77,9 @@
   line-height: 32px;
   margin-bottom: 4%;
   margin-top: 2%;
+}
+.revTitle{
+  margin-top: 1%;
 }
 
 .bold {
@@ -161,7 +164,7 @@
 
 .packages{
     position: absolute;
-    left: 50%;
+    left: 55%;
     top:23%;
     width: 588px;
      height: 254px;
@@ -376,13 +379,22 @@
 .revenue{
   position: absolute;
   top:60%;
-  left: 3%; 
-  width: 719px;
-height: 263.955px;
+  left: 5%; 
+  width: 1100px;
+height: 280.955px;
 }
 .chart{
-  bottom: 1%;
   position: inherit;
+  bottom: 5%;
+  left: 7%;
+}
+.yesterdaySales{
+  color: var(--Primary-800, #4079ED);
+font-family: 'Poppins';
+font-size: 12px;
+font-weight: 500;
+line-height: 16px; 
+margin-left: 5%;
 }
 
 

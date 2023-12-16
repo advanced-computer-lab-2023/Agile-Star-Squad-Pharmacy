@@ -3,8 +3,8 @@ import { VictoryBar, VictoryChart, VictoryAxis, VictoryLegend, VictoryLine } fro
 
 const RevenueChart = ({ currentWeekSales, prevWeekSales }) => {
   const yAxisTicks = [0, 5000, 10000, 15000, 20000, 25000];
-  const barWidth = 10; // Adjust the bar width
-  const barOffset = 2.5; // Adjust the offset between the bars
+  const barWidth = 15; // Adjust the bar width
+  const barOffset = 4; // Adjust the offset between the bars
 
   // Function to transform data to match VictoryBar expectations
   const transformData = (weekSales, offset) => {
@@ -12,7 +12,7 @@ const RevenueChart = ({ currentWeekSales, prevWeekSales }) => {
   };
 
   return (
-    <VictoryChart domainPadding={40} width={600}>
+    <VictoryChart domainPadding={40} width={900}>
       {/* X-axis (days of the week) */}
       <VictoryAxis
         tickValues={currentWeekSales.map((_, index) => index * (barWidth + barOffset))}
@@ -31,7 +31,7 @@ const RevenueChart = ({ currentWeekSales, prevWeekSales }) => {
         tickValues={[0, 5000, 10000, 15000, 20000, 25000]}
         style={{
           axis: { stroke: 'none' }, // Remove X-axis line
-          tickLabels: { padding: 5 },
+          tickLabels: { padding: 20 },
         }}
       />
 
