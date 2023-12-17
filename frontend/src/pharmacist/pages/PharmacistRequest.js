@@ -21,7 +21,6 @@ const PharmacistRequestForm = () => {
     hourlyRate: '',
     affiliation: '',
     educationalBackground: '',
-    speciality: '',
   });
   const [idImageForm, setIdImage] = useState([]);
   const [pharmacyLicenseForm, setLicenseImage] = useState([]);
@@ -107,7 +106,6 @@ const PharmacistRequestForm = () => {
       "hourlyRate": formData.hourlyRate,
       "affiliation": formData.affiliation,
       "educationalBackground": formData.educationalBackground,
-      "speciality": formData.speciality,
       "idImage": idDownloadUrl,
       "medicalLicense": licenseDownloadUrl,
       "medicalDegree": degreeDownloadUrl
@@ -149,7 +147,6 @@ const PharmacistRequestForm = () => {
     hourlyRate,
     affiliation,
     educationalBackground,
-    speciality,
   } = formData;
   const { idImage } = idImageForm;
   const { pharmacyLicense } = pharmacyLicenseForm;
@@ -218,29 +215,6 @@ const PharmacistRequestForm = () => {
                     />
                   </div>
                 </div>
-                <div className={classes.textBoxContainer}>
-
-                  <div>
-                    <input
-                      type="text"
-                      name="hourlyRate"
-                      value={hourlyRate}
-                      onChange={handleInputChange}
-                      placeholder='Hourly Rate'
-                      className={classes.textBox}
-                    />
-                  </div>
-                  <div>
-                    <input
-                      type="text"
-                      name="speciality"
-                      value={speciality}
-                      onChange={handleInputChange}
-                      placeholder='Speciality'
-                      className={classes.textBox}
-                    />
-                  </div>
-                </div>
                 <div className={classes.textBoxContainer}><div>
                   <input
                     type="text"
@@ -262,6 +236,21 @@ const PharmacistRequestForm = () => {
                     />
                   </div>
                 </div>
+                <div className={classes.textBoxContainer}>
+
+                  <div>
+                    <input
+                      type="text"
+                      name="hourlyRate"
+                      value={hourlyRate}
+                      onChange={handleInputChange}
+                      placeholder='Hourly Rate'
+                      className={classes.textBox}
+                    />
+                  </div>
+
+                </div>
+
 
                 <div className="d-flex justify-content-betweem w100">
 
@@ -287,15 +276,15 @@ const PharmacistRequestForm = () => {
 
                   <div className='col-3 px-2'>
                     <div className={classes.dropzoneTitle}>Personal ID</div>
-                    <MyDropzone files={idImageForm} setFiles={setIdImage} maxFiles={1} toast={(s) => { }} />
+                    <MyDropzone files={idImageForm} setFiles={setIdImage} onChange={onIdImageChange} maxFiles={1} toast={(s) => { }} />
                   </div>
                   <div className='col-3 px-2'>
                     <div className={classes.dropzoneTitle}>Pharmacy Degree</div>
-                    <MyDropzone files={pharmacyDegreeForm} setFiles={setDegreeImage} maxFiles={1} toast={(s) => { }} />
+                    <MyDropzone files={pharmacyDegreeForm} setFiles={setDegreeImage} onChange={onMedicalDegreeChange} maxFiles={1} toast={(s) => { }} />
                   </div>
                   <div className='col-3 px-2'>
                     <div className={classes.dropzoneTitle}>Pharmacy License</div>
-                    <MyDropzone files={pharmacyLicenseForm} setFiles={setLicenseImage} maxFiles={1} toast={(s) => { }} />
+                    <MyDropzone files={pharmacyLicenseForm} setFiles={setLicenseImage} onChange={onMedicalLicenseChange} maxFiles={1} toast={(s) => { }} />
                   </div>
                 </div>
                 <button className={classes.button} type="submit">Request Registration</button>
@@ -313,6 +302,7 @@ export default PharmacistRequestForm;
 const MyDropzone = (props) => {
   const files = props.files;
   const setFiles = props.setFiles;
+  
   const onDrop = useCallback((acceptedFiles) => {
     if (files.length + acceptedFiles.length > props.maxFiles) {
       props.toast(`Upload a maximum of ${props.maxFiles} files`);
