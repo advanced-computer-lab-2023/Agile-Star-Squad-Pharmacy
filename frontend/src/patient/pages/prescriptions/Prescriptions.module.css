@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&family=Roboto+Flex:opsz,wght@8..144,400;8..144,500;8..144,600;8..144,700&display=swap');
+
+.wrapper {
+    font-family: 'Roboto Flex';
+    margin-inline: 50px;
+    margin-block: 30px;
+    -webkit-user-select: none; 
+    -ms-user-select: none; 
+    user-select: none; 
+}
+
+.header {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-align: start;
+}
+
+.tableWrapper {
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
+    padding: 24px;
+    padding-bottom: 40px;
+    background: #F7F9FB;
+    box-shadow: 0px 4px 29px 0px rgba(0, 0, 0, 0.25);
+    height: calc(100vh - 200px);
+}
+
+.tableOptions {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: rgba(0,0,0, 0.4);
+}
+
+.option {
+    margin-right: 1rem;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+}
+
+.optionEnabled {
+    color: black;
+    font-weight: 600;
+    margin-right: 1rem;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+}
+
+.calendarContainer {
+    position: absolute;
+    top: 30px;
+    left: -140px;
+    z-index: 10;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px 0px rgba(29, 22, 23, 0.4);
+}
+
+.calendar {
+    border: none;
+    border-radius: 15px;
+    border-bottom: 1px solid darkgray;
+}
+
+.filledButton {
+    cursor: pointer;
+    margin-right: 1rem;
+    color: #00b0b9;
+    background-color: #CFEDEA;
+    border-radius: 7px;
+    padding-inline: 7.5px;
+    padding-block: 2px;
+    opacity: 0.5;
+    transition: all 0.2s ease-in-out;
+}
+
+.filledEnabled {
+    font-weight: 500;
+    color: #00b0b9;
+    opacity: 1;
+    background-color: #CFEDEA;
+    transition: all 0.2s ease-in-out;
+}
+
+.unfilledButton {
+    cursor: pointer;
+    margin-right: 1rem;
+    color: #F07167;
+    background-color: #FFE9E2;
+    border-radius: 7px;
+    padding-inline: 7.5px;
+    padding-block: 2px;
+    opacity: 0.5;
+    transition: all 0.2s ease-in-out;
+}
+
+.unfilledEnabled {
+    font-weight: 500;
+    color: #F07167;
+    background-color: #FFE9E2;
+    opacity: 1;
+    transition: all 0.2s ease-in-out;
+}
+
+.downloadButton {
+    cursor: not-allowed;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    padding-inline: 10px;
+    padding-block: 2px;
+    transition: all 0.2s ease-in-out;
+}
+
+.downloadEnabled {
+    cursor: pointer;
+    background-color: #3182CE;
+    color: white;
+    transition: all 0.2s ease-in-out;
+}
+
+.table {
+    background-color: white;
+    flex: 1;
+    margin-inline: 20px;
+    border-radius: 14px;
+    box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.13);
+}
+
+.tableHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #96B7C7;
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    height: 40px;
+    border-radius: 14px 14px 0 0;
+    padding-left: 38px;
+    padding-right: 30px;
+}
+
+.tableRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: black;
+    font-size: 14px;
+    padding-block: 1px;
+    padding-right: 30px;
+    border-bottom: 1px solid #E7E7E7;
+    cursor: pointer;
+}
+
+.tableRow:hover {
+    background-color: rgb(246, 246, 246);
+}
+
+.statusPill {
+    font-size: 10px;
+    padding-block: 4.5px;
+    border-radius: 9px;
+}
+
+.statusFilled {
+    color: #00AFB9;
+    background-color: #CFEDEA;
+}
+.statusUnfilled {
+    color: #F07167;
+    background-color: #FFE9E2;
+}
