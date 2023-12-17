@@ -558,7 +558,9 @@ const handleDeleteClick = (e, username) => {
   // Call the deleteUser function or your logic for deletion
   deleteUser(username);
 };
-
+const handleSalesClick = () =>{
+  navigate('/SalesReport');
+}
 
   
   const deleteUser = (username) => {
@@ -581,7 +583,7 @@ const handleDeleteClick = (e, username) => {
     <div>
       <AdminNavBar/>
     <Container className={styles.sales} >
-    <h2 className={styles.salesTitle}>Sales Report</h2>
+    <h2 className={styles.salesTitle} onClick={handleSalesClick}>Sales Report</h2>
     <section className={styles.salesSec}>
     <img
               src={sale}

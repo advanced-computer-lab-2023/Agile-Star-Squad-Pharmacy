@@ -28,6 +28,7 @@ import NavBar from './shared/components/NavBar/NavBar';
 import MedicineDetails from './patient/pages/MedicineDetails';
 import Homepage from './patient/pages/home/Homepage';
 import RevenueChart from './admin/ManageUsers/components/RevenueChart';
+import SalesReport from './admin/pages/SalesReport';
 
 function App() {
   const user = useContext(UserContext);
@@ -76,6 +77,7 @@ function App() {
           <Route path="/admin/home" element={<AdminHome />} exact />
           <Route path="/admin/manage" element={<ManageUsersPage />} exact />
           <Route path="changePassword" element={<ChangePassword />} exact />
+          <Route path="/SalesReport" element={<SalesReport/>} exact/>
           <Route path="*" element={<Navigate to="/admin/home" />} />{' '}
         </Routes>
       );
