@@ -41,6 +41,13 @@ const AdminHome = (props) => {
   const [percentageChange, setPercentageChange] = useState(0);
   const [changeSign, setChangeSign] = useState('');
 
+  useEffect(() => {
+    // If data has been loaded, simulate a click on the "Patients" button
+    if (setUsers) {
+      handleRoleButtonClick('patient');
+    }
+  }, [users]);
+
   // Fetch all orders
   const fetchAllOrders = async () => {
     try {
@@ -587,11 +594,12 @@ const handleDeleteClick = (e, username) => {
             <div className={styles.amount}>${salesForDay}</div>
       <h4 className={styles.salesText}>Total Sales</h4>
       <h4 className={styles.yesterdaySales}>
-        {percentageChange !== null && changeSign !== null && (
-          <>
-            {`${changeSign}${Math.abs(percentageChange).toFixed(2)}% from yesterday`}
-          </>
-        )}
+      {percentageChange !== null && changeSign !== null && (
+  <>
+    {`${changeSign}${isNaN(percentageChange) ? '+0' : Math.abs(percentageChange).toFixed(2)}% from yesterday`}
+  </>
+)}
+
       </h4>
     </section>
     </Container>

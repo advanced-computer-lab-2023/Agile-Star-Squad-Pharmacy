@@ -4,14 +4,18 @@ import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../logo.png';
 import UserContext from '../../../user-store/user-context';
 
+
 const AdminNavBar = (props) => {
   const navigate = useNavigate();
-  const userLogout = useContext(UserContext).logout;
-  
-  const logout = () => {
-    userLogout();
+  const userCtx = useContext(UserContext);
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const logout = async () => {
+    await userCtx.logout();
     navigate('/');
   };
+
 
   const changePasswordHandler = () => {
     navigate('/changePassword');
@@ -50,22 +54,17 @@ const AdminNavBar = (props) => {
           
           </div>
           <div className="d-flex mx-4">
-            <div className="btn-group">
-              <a href="#" className="btn btn-white btn-bold" onClick={logout}>
-                Logout
-              </a>
-              <Link to="/changePassword" style={{ all: 'unset' }}>
-                <a href="#" className="btn btn-white btn-bold">
+            <div className="btn-group ">
+            
+             
+              <a href="#" className="btn btn-white" onClick={changePasswordHandler}>
                   Change Password
                 </a>
-              </Link>
-              <Link to={'/admin/account'}>
-                <a href="#" className="btn btn-white" id="last">
-                  Account
+                <a href="#" className="btn btn-white" id="last" onClick={logout}>
+                  Logout
                 </a>
-              </Link>
+              
             </div>
-
           </div>
         </div>
       </nav>
