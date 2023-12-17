@@ -23,6 +23,7 @@ import SignupOptions from './login/pages/SignupOptions';
 import AddAddress from "./patient/pages/AddAddress";
 import MedicineDetails from './patient/pages/MedicineDetails';
 import Homepage from './patient/pages/home/Homepage';
+import RevenueChart from './admin/ManageUsers/components/RevenueChart';
 
 function App() {
   const user = useContext(UserContext);
