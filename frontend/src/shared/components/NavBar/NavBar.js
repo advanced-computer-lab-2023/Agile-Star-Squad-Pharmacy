@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import UserContext from '../../../user-store/user-context';
 
 const NavBar = (props) => {
-  const [walletAmount, setWalletAmount] = useState('');
+  const [walletAmount, setWalletAmount] = useState(0);
   const userCtx = useContext(UserContext);
 
   useEffect(() => {
@@ -75,7 +75,9 @@ const NavBar = (props) => {
           </div>
             
           <div className="d-flex">
+          <Link to="/patient/account" style={{ all: 'unset' }}>
           <img id="patient" src={patient} alt='i'/>
+          </Link>
             <div class="dropdown">
               <button
                 class="btn btn-secondary dropdown-toggle"

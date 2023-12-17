@@ -4,11 +4,12 @@ const catchAsync = require('../utils/catchAsync');
 
 exports.addAddress = async (req, res, next) => {
     try {
-        const { street, city, country } = req.body;
+        const { street, city, country ,district} = req.body;
         const newAddress = await Address.create({
             street,
             city,
             country,
+            district,
             patient: req.params.patientId
         });
         res.status(200).json({

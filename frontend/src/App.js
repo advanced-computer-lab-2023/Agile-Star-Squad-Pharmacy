@@ -8,6 +8,7 @@ import LandingPage from './shared/pages/LandingPage';
 import PharmacyHome from './pharmacy/pages/PharmacyHome';
 import AddMedicineForm from './pharmacist/pages/AddMedicine';
 import PatientRegisterForm from './patient/pages/PatientRegister';
+import PatientAccountSettings from './patient/AccountSettings/Account'
 import PharmacistRequest from './pharmacist/pages/PharmacistRequest';
 import AdminHome from './admin/Home/AdminHome';
 import ManageUsersPage from './admin/ManageUsers/ManageUsersPage';
@@ -37,6 +38,11 @@ function App() {
             <Route path="/payment/AddingInfo" element={<AddingInfo />} exact />
             <Route path="/payment/temp" element={<Checking />} exact />
             <Route path="/order" element={<Order />} exact />
+            <Route
+            path="/patient/account"
+            element={<PatientAccountSettings />}
+            exact
+          />
             <Route path="/address/add" element={<AddAddress />} exact />
             <Route path="changePassword" element={<ChangePassword />} exact />
             <Route path="*" element={<Navigate to="/pharmacy/home" />} />{' '}

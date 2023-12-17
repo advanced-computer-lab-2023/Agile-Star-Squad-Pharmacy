@@ -1,18 +1,17 @@
 import React, { useState, useContext, useEffect } from 'react';
-
 import { useNavigate } from 'react-router-dom';
 import './CheckoutForm.css';
 import UserContext from '../../../user-store/user-context';
 import CartContext from '../cart/Cart';
 import axios from 'axios';
 
- 
-
 export default function AddressForm(props) {
   const userCtx = useContext(UserContext);
+
   const patientId = userCtx.userId;
   const addressId = props.addressInfo;
   const [addresses, setAddresses] = useState([]);
+  const [address, setAddress] = useState();
   const [selectedAddressId, setSelectedAddressId] = useState(null);
   useEffect(() => {
     const fetchAddresses = async () => {
@@ -23,91 +22,25 @@ export default function AddressForm(props) {
         .catch((err) => {
           console.error(err);
         });
-        console.log(res.data.data)
       setAddresses(res.data.data.addresses);
       setSelectedAddressId(res.data.data.addresses[0]._id);
     };
     fetchAddresses();
-  }, []);
+  }, [selectedAddressId]);
   const handleAddressSelect = (addressId) => {
     setSelectedAddressId(addressId);
+    setAddress(addresses.filter)
   };
- 
+  
 
-
-  //   const handleSubmit = async (e) => {
-  //     e.preventDefault();
-  //     setMessage('');
-  //     if (!stripe || !elements) {
-  //       // Stripe.js has not yet loaded.
-  //       // Make sure to disable form submission until Stripe.js has loaded.
-  //       return;
-  //     }
-
-  //     setIsProcessing(true);
-
-  //     try {
-  //       // console.log('//////////////////////////');
-  //       // console.log(props.CartCtx.items);
-  //       const cartItems = cartCtx.items;
-  //       const medicineList = cartItems.map((item) => {
-  //         return { medicineId: item.id, count: item.quantity };
-  //       });
-  //       let paymentIntentData = {
-  //         patientId: userCtx.userId,
-  //         medicineList,
-  //         totalCost: cartCtx.total,
-  //         address: addressId,
-  //       };
-  //       const response = await fetch('http://localhost:4000/orders', {
-  //         method: 'POST',
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //         },
-  //         body: JSON.stringify(paymentIntentData),
-  //         credentials: 'include',
-  //       });
-
-  //       if (!response.ok) {
-  //         throw new Error('Failed to send data to the server.');
-  //       }
-
-  //       setMessage('Payment successful!');
-  //       cartCtx.clearCart();
-  //       const { error } = await stripe.confirmPayment({
-  //         elements,
-  //         confirmParams: {
-  //           return_url: 'http://localhost:3000/order',
-  //         },
-  //       });
-  //     } catch (error) {
-  //       setMessage('Failed to process payment.');
-  //     }
-  //     setIsProcessing(false);
-  //   };
-
-  //   const onSubmit = (e) => {
-  //     switch (useWallet) {
-  //       case 0:
-  //         handleSubmit(e);
-  //         break;
-  //       case 1:
-  //         handleWallet(e);
-  //         break;
-  //       case 2:
-  //         handleCOD();
-  //       default:
-  //         break;
-  //     }
-  //   };
+     
 
   return (
     <form
-      id="address-form"
+      id="payment-form"
       style={{ width: '700px', marginLeft: '650px', paddingLeft: '20px' }}
     >
-         
-      <div
+     <div
         style={{
           display: 'flex',
           marginLeft: '25px',
@@ -115,29 +48,29 @@ export default function AddressForm(props) {
           justifyContent: 'space-between',
         }}
       >
-        
-        <span id="title">Shipping</span>
+        <span id="title">Address</span>
       </div>
-      <select className='input1'>
-              <option  value="" disabled selected>
+     
+      <select className='input1' onChange={(e)=>handleAddressSelect(e.target.value)}>
+              <option   value="">
                 Select an Address
               </option>
               {addresses.map((address) => (
                 <option
                   key={address._id}
-                 
+                  value={selectedAddressId}
                 >
-                  <div>{address.country} - {address.city} - {address.street}</div>
-                  <div>
-                    <strong>       (Country:</strong> {address.country}  
-                  </div>
-                  <div>
-                    <strong>       City:</strong> {address.city}  
-                  </div>
-                  <div>
+                
+                  <p>
+                    <strong>       Country:</strong> {address.country}  
+                  </p>
+                  <p>
+                    <strong> --- City:</strong> {address.city}  
+                  </p>
+                  <p>
                     
-                    <strong>       Street:</strong> {address.street}) 
-                  </div>
+                    <strong> --- Street:</strong> {address.street}
+                  </p>
                 </option>
               ))}
             </select>
@@ -148,15 +81,35 @@ export default function AddressForm(props) {
         className="input1"
         name="radio"
         placeholder="Enter your Name"
+
         // id="use-wallet"
       />
-      <label className="label1">Address</label>
+      <label className="label1">Street</label>
       <br />
       <input
         type="text"
         className="input1"
         name="radio"
-        placeholder="Enter your Address"
+        placeholder="Enter your Street"
+        
+        // id="use-wallet"
+      />
+      <label className="label1">City</label>
+      <br />
+      <select
+        type="text"
+        className="input1"
+        name="radio"
+        placeholder="Select your City"
+        // id="use-wallet"
+      />
+      <label className="label1">District</label>
+      <br />
+      <select
+        type="text"
+        className="input1"
+        name="radio"
+        placeholder="Select your City"
         // id="use-wallet"
       />
       <label className="label1">Mobile Number</label>
@@ -168,7 +121,6 @@ export default function AddressForm(props) {
         placeholder="Enter your mobile number"
         // id="use-wallet"
       />
-      
     </form>
   );
 }

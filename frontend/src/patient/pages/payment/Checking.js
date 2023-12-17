@@ -5,6 +5,7 @@ import CartContext from '../cart/Cart';
 import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Elements } from '@stripe/react-stripe-js';
+import { useStripe, useElements } from '@stripe/react-stripe-js';
 import './style.css';
 import NavBar from '../../../shared/components/NavBar/NavBar';
 import Card from '../../../shared/components/Card/Card';
@@ -22,6 +23,7 @@ import 'slick-carousel/slick/slick-theme.css';
 const Checking = () => {
   const userCtx = useContext(UserContext);
   const cartCtx = useContext(CartContext);
+  
   const patientId = userCtx.userId;
   const [stripePromise, setStripePromise] = useState(null);
   const [addresses, setAddresses] = useState([]);
@@ -78,6 +80,58 @@ const Checking = () => {
   const toPrevious= () => {
     navigate(-1);
   };
+  const appearance = {
+    theme: 'stripe',
+
+    variables: {
+      colorPrimary: '#0570de',
+      colorBackground: 'rgba',
+      colorText: 'black',
+      colorDanger: '#df1b41',
+      fontFamily: 'Poppins',
+      spacingUnit: '2px',
+      borderRadius: '4px',
+      fontLineHeight: 'normal',
+      spacingUnit: '5px',
+      colorTextPlaceholder: 'rgba(255, 255, 255, 0.7)',
+      
+    },
+  
+    rules: {
+      '.DropdownItem --highlight':{
+        backgroundColor:'black'
+      },
+      '.Input': {
+        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+        borderBottomColor: 'black',
+        borderBottomWidth: '2px',
+        borderTopWidth: '0px',
+        borderLeftWidth: '0px',
+        borderRightWidth: '0px',
+        boxShadow:'none',
+        width:'larger',
+        color:'white',
+        outline:'black',
+        height: '32px',
+        padding :'9px',
+        fontSize:'12px',
+        
+      },
+           
+      
+      '.Label': {
+        textTransform: 'uppercase',
+        color: 'black',
+        fontFamily: 'Poppins',
+        fontSize: '16px',
+        fontWeight: '400',
+        lineHeight: 'normal',
+      },
+      
+
+      // See all supported class names and selector syntax below
+    },
+  };
   return (
     <div>
       <NavBar />
@@ -98,7 +152,9 @@ const Checking = () => {
                   >
                     Purchase Details
                   </span>
-                  <AddressForm />
+                
+      {/* <AddressForm /> */}
+    
                   <Elements stripe={stripePromise}>
                     <Payment
                       CartCtx={cartCtx}
@@ -109,7 +165,7 @@ const Checking = () => {
               </div>
             </div>
             <div className="overlap-3">
-            <div className='backarrow'>
+            <div className='backarrow'style={{marginBottom:'20px'}}>
           <img src={arrow}
             style={{ width: '20px', height: 'auto' }}
           />
