@@ -46,7 +46,7 @@ exports.getMedicine = catchAsync(async (req, res, next) => {
   const medicine = await Medicine.findById(req.params.id, { archived: false });
   const sales = medicine.sales;
   const quantity = medicine.quantity;
-  
+
   if (medicine.archived === true) {
     res.status(404).json({ message: 'Medicine not found or archived' });
   }
@@ -78,16 +78,24 @@ const filterObj = (obj, ...allowedFields) => {
   return newObj;
 };
 exports.updateMedicine = catchAsync(async (req, res, next) => {
-  const filteredBody = filterObj(req.body, 'price', 'description');
-  let filteredBodyFinal;
-  if (filteredBody.price == '') {
-    filteredBodyFinal = filterObj(req.body, 'description');
-  } else if (filteredBody.description == '') {
-    filteredBodyFinal = filterObj(req.body, 'price');
-  } else {
-    filteredBodyFinal = filterObj(req.body, 'price', 'description');
-  }
+  const filteredBody = filterObj(
+    req.body,
+    'name',
+    'activeIngredients',
+    'price',
+    'sales',
+    'quantity',
+    'image'
+  );
 
+  let filteredBodyFinal = {};
+  Object.keys(filteredBody).forEach((key) => {
+    if (filteredBody[key] !== '') {
+      filteredBodyFinal[key] = filteredBody[key];
+    }
+  });
+
+  // Update the medicine with the filtered body
   const updatedMedicine = await Medicine.findByIdAndUpdate(
     req.params.id,
     filteredBodyFinal,
@@ -96,8 +104,7 @@ exports.updateMedicine = catchAsync(async (req, res, next) => {
       runValidators: true,
     }
   );
-  console.log(updatedMedicine);
-
+  // Respond with the updated medicine
   res.status(200).json({
     status: 'success',
     data: {
@@ -123,7 +130,6 @@ exports.archiveMedicine = catchAsync(async (req, res, next) => {
     },
   });
 });
-
 
 exports.unarchiveMedicine = catchAsync(async (req, res, next) => {
   const medicine = await Medicine.findByIdAndUpdate(
