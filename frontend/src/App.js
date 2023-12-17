@@ -7,6 +7,7 @@ import ResetPassword from './login/pages/ResetPassword';
 import LandingPage from './shared/pages/LandingPage';
 import PharmacyHome from './pharmacy/pages/PharmacyHome';
 import AddMedicineForm from './pharmacist/pages/AddMedicine';
+import EditMedicineForm from './pharmacist/pages/EditMedicine';
 import PatientRegisterForm from './patient/pages/PatientRegister';
 import PharmacistRequest from './pharmacist/pages/PharmacistRequest';
 import AdminHome from './admin/Home/AdminHome';
@@ -20,8 +21,10 @@ import './App.css';
 import Order from './patient/pages/order/Order';
 import ArchivedMedicines from './medicines/ArchivedMedicines';
 import SignupOptions from './login/pages/SignupOptions';
-import AddAddress from './patient/pages/AddAddress';
+import AddAddress from "./patient/pages/AddAddress";
+import MedicineDetails from './patient/pages/MedicineDetails';
 import Homepage from './patient/pages/home/Homepage';
+import RevenueChart from './admin/ManageUsers/components/RevenueChart';
 
 function App() {
   const user = useContext(UserContext);
@@ -38,6 +41,7 @@ function App() {
             <Route path="/order" element={<Order />} exact />
             <Route path="/address/add" element={<AddAddress />} exact />
             <Route path="changePassword" element={<ChangePassword />} exact />
+            <Route path="/medicine" element={<MedicineDetails />} exact />
             <Route path="*" element={<Navigate to="/pharmacy/home" />} />{' '}
           </Routes>
         </CartContextProvider>
@@ -47,6 +51,7 @@ function App() {
         <Routes>
           <Route path="/pharmacy/home" element={<PharmacyHome />} exact />
           <Route path="/medicine/add" element={<AddMedicineForm />} exact />
+          <Route path="/medicine/edit" element={<EditMedicineForm />} exact />
           <Route path="changePassword" element={<ChangePassword />} exact />
           <Route
             path="/archivedMedicines"
