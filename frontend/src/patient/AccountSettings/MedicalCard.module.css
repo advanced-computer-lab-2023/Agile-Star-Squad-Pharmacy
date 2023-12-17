@@ -1,0 +1,117 @@
+
+.sideCardTitle {
+    color: #101828;
+    font-family: 'Poppins';
+    font-size: 18px;
+    font-weight: 600;
+    text-align: start;
+}
+
+.tabs {
+    display: flex;
+    justify-content: start;
+    margin-top: 20px;
+}
+
+.tabText {
+    font-family: 'Poppins';
+    font-size: 16px;
+    color: #778293;
+    cursor: pointer;
+    margin-inline: 10px;
+}
+
+.tabText:hover {
+    color: #525861;
+    transition: all .3s ease-in-out;
+}
+
+.tabText hr {
+    border: 1.5px solid #96B3FE;
+    opacity: 100%;
+}
+
+.activeTab {
+    background: var(--Primary, linear-gradient(274deg, #92A3FD 0%, #9DCEFF 124.45%));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+    transition: all .2s ease-in-out;
+}
+
+.activeTab:hover{
+    font-weight: 700!important;
+}
+
+.myDropzone {
+    background-color: #F8F8FF;
+    width: 100%;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 28px;
+    color: #0F0F0F;
+    border: 1px dashed #96B7C7;
+    border-radius: 12px;
+    margin-top: 10px;
+    padding-top: 25px;
+    padding-bottom: 15px;
+    cursor: pointer;
+}
+
+.dropzoneSubtitle {
+    color: #676767;
+    font-size: 10px;
+    font-weight: 400;
+}
+
+.myDropzone aside {
+    justify-content: center;
+}
+
+.dropzoneDivider {
+    width: 100%;
+    margin-bottom: 34px;
+}
+
+.noFiles {
+    font-size: 12px;
+    color: #676767;
+    height: 50px;
+    margin-top: 8px;
+}
+
+.uploadButton {
+    /* width: 120px; */
+    background-color: #3182ce;
+    color: white;
+    padding-block: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 30px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+}
+
+.uploadButton:hover {
+    background-color: #266bac;
+}
+
+.uploadButton:disabled {
+    cursor: not-allowed;
+    background-color: #a2a2a2;
+}
+
+.deleteButton {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.deleteButton:hover {
+    transform: scale(1.2);
+}

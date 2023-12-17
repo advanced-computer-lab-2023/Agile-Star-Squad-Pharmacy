@@ -1,0 +1,187 @@
+
+.sideCardTitle {
+    color: #101828;
+    font-family: 'Poppins';
+    font-size: 18px;
+    font-weight: 600;
+    text-align: start;
+}
+
+.tabs {
+    display: flex;
+    justify-content: start;
+    margin-top: 20px;
+}
+
+.tabText {
+    font-family: 'Poppins';
+    font-size: 16px;
+    color: #778293;
+    cursor: pointer;
+    margin-inline: 10px;
+}
+
+.tabText:hover {
+    color: #525861;
+    transition: all .3s ease-in-out;
+}
+
+.tabText hr {
+    border: 1.5px solid #96B3FE;
+    opacity: 100%;
+}
+
+.activeTab {
+    background: var(--Primary, linear-gradient(274deg, #92A3FD 0%, #9DCEFF 124.45%));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+    transition: all .2s ease-in-out;
+}
+
+.activeTab:hover{
+    font-weight: 700!important;
+}
+
+.wrapper {
+    overflow-y: scroll;
+    overflow-x: visible;
+    padding: 30px;
+    margin: -30px -30px 0 -30px ;
+}
+
+.memberContainer {
+    position: relative;
+    z-index: 3;
+    background-color: white;
+    font-family: 'Poppins';
+    display: flex;
+    flex-direction: row;
+    border-radius: 20px;
+    padding-block: 10px;
+    padding-inline: 18px;
+    margin-bottom: 15px;
+    box-shadow: 0px 10px 40px 0px rgba(29, 22, 23, 0.07);
+    overflow: visible;
+}
+
+.memberContainer:nth-child(1) {
+    animation: slideFade 0.5s ease forwards;
+    opacity: 0.4;
+    transform: translateY(50px);
+  }
+  
+  .memberContainer:nth-child(2) {
+    animation: slideFade 0.8s ease forwards;
+    opacity: 0.4;
+    transform: translateY(50px);
+  }
+  
+  .memberContainer:nth-child(3) {
+    animation: slideFade 1.1s ease forwards;
+    opacity: 0.4;
+    transform: translateY(50px);
+  }
+
+  .memberContainer:nth-child(4) {
+    animation: slideFade 1.3s ease forwards;
+    opacity: 0.4;
+    transform: translateY(50px);
+  }
+  
+  .memberContainer:nth-child(5) {
+    animation: slideFade 1.5s ease forwards;
+    opacity: 0.4;
+    transform: translateY(50px);
+  }
+
+@keyframes slideFade {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+}
+
+.memberName {
+    color: #1D1617;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: start;
+}
+
+.memberDescription {
+    color: #7B6F72;
+    font-size: 12px;
+    text-align: start;
+}
+
+.deleteButton {
+    display: flex;
+    flex: 1;
+    justify-content: end;
+    margin-block: auto;
+    height: 100%;
+    cursor: pointer;
+}
+
+.formWrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
+    overflow-x: visible;
+}
+
+.formTitle {
+    color: #101828;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    text-align: start;
+}
+
+.formWrapper input {
+    width: 100%;
+    margin-inline: 20px;
+    border: none;
+    border-bottom: 1px solid #C4C4C4;
+}
+
+.formWrapper input:focus {
+    outline: none;
+    border-bottom: 1px solid #464646;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.inputRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+
+.addButton {
+    width: 50%;
+    background: linear-gradient(274deg, rgba(25,56,66, 1) 0%, rgba(157,206,255, 1) 124.45%);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 50px;
+    opacity: 85%;
+    cursor: pointer;
+    padding-block: 10px;
+    margin-bottom: 15px;
+    transition: all .2s ease-in-out;
+    border: none;
+}
+
+.addButton:hover {
+    opacity: 100%;
+}

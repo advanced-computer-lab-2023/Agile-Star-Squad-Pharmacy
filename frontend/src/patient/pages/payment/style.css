@@ -1,0 +1,152 @@
+.checkout {
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%; /* Fill the entire width of the screen */
+  height: 150vh; /* Fill the entire height of the screen */
+  margin-left: 0px;
+}
+
+.p-Grid {
+  background-color: red;
+}
+.carousel-container {
+  width: 338px;
+  height: 201px;
+  padding: 0 -100px;
+
+  margin: 0 auto; /* To center align the carousel */
+}
+#indexCartItem {
+  color: #000;
+  font-family: 'Comfortaa';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+#nameCartItem {
+  color: #737373;
+  font-family: 'Poppins';
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+#priceCartItem {
+  color: #000;
+  font-family: 'Poppins';
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.back {
+  background-color: transparent;
+  color: black;
+  font-weight: bold;
+  border: none; /* Remove the default border */
+  border-radius: 10px; /* Apply border-radius to round the corners */
+  font-family: 'manrope', sans-serif;
+  position: absolute;
+  left: 90%;
+  top: 10%;
+  font-size: 16px;
+}
+.backarrow {
+  position: absolute;
+  left: 8%;
+  top: 4%;
+}
+
+#payment-form {
+  margin-left: 638px;
+  width: 638px;
+}
+#payment-element {
+  width: 638px;
+}
+
+.checkout .div {
+  background-color: #ffffff;
+  height: 100%; /* Fill the entire height of the screen */
+  overflow: hidden;
+  position: relative;
+  width: 100%; /* Fill the entire width of the screen */
+}
+
+.checkout .overlap-2 {
+  background-image: url(https://cdn.animaapp.com/projects/6536ca3087fc067bdeed2d5e/releases/656d37045c84f45c768146e6/img/mask-group.png);
+  background-size: cover; /* Ensure the background covers the entire container */
+  height: 150vh; /* Fill the entire height of the container */
+  position: relative;
+}
+
+.checkout .overlap {
+  background-color: #ffffff;
+  box-shadow: 0px 4px 38px #00000040;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 1240px;
+}
+
+.checkout .overlap-group {
+  /* Remove fixed height */
+  /* height: 1024px; */
+
+  height: auto; /* Let it adjust based on content */
+  left: 0;
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+
+.checkout .overlap-3 {
+  background-image: url(https://cdn.animaapp.com/projects/6536ca3087fc067bdeed2d5e/releases/656d37045c84f45c768146e6/img/vector.svg);
+  background-size: 100% 100%;
+  height: 150vh;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 628px;
+}
+
+.checkout .overlap-group-3 {
+  height: 33px;
+  left: 0;
+  position: absolute;
+  top: 32px;
+  width: 270px;
+}
+.title {
+  color: #000;
+
+  font-family: 'Poppins';
+  font-size: 33px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-top: 112px;
+  margin-left: 80px;
+}
+#totalss{
+  display: flex;
+padding: 14px 66px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+flex: 1 0 0;
+border-radius: 5px 5px 5px 5px;
+background: #000;
+color: var(--white-100, #FFF);
+font-family: 'Poppins';
+font-size: 22px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+margin-top: 60px;
+}

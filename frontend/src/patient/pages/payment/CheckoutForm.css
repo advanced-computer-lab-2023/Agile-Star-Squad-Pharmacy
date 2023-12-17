@@ -1,19 +1,170 @@
 #payment-form {
-   
-    padding: 40px;
-   
-  }
-  #payment-element{
-    padding: 20px;
-  }
-  
-  #messages {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New";
-    display: none; /* hide initially, then show once the first message arrives */
-    background-color: #0a253c;
-    color: #00d924;
-    padding: 20px;
-    margin: 20px 0;
-    border-radius: var(--radius);
-    font-size: 0.7em;
-  }
+  padding: 30px;
+  width: 700px;
+}
+#payment-element {
+  padding: 20px;
+  padding-top: 0px;
+  height: smaller;
+  border-radius: 10px;
+  border-color: #000;
+}
+.buttons {
+  align-items: right;
+  width: 638px;
+  margin-left: 300px;
+}
+#payment-messaage {
+  font-family: 'poppins';
+  font-weight: 100;
+}
+.buttons button {
+  /* display: flex; */
+  padding: 8px 41px;
+  opacity: 0.9;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  border-radius: 5px 5px 5px 5px;
+  background: var(--white-100, #fff);
+  color: #000;
+  font-family: 'Poppins';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+.me-3{
+  margin-left: 100px;
+}
+.me-2{
+  background-color: rgba(0, 0, 0, 0.2);
+
+}
+#hi {
+  /* display: flex; */
+  /* display: flex; */
+  padding: 14px 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex: 1 0 0;
+  border-radius: 5px 5px 5px 5px;
+  background: #000;
+  color: var(--white-100, #fff);
+  font-family: 'Poppins';
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-left: 24px;
+  padding-top: -10px;
+  width: 600px;
+}
+.input1 {
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  border: 1px solid #e6e6e6;
+  box-shadow: none;
+  border-bottom-color: black;
+  border-bottom-width: 2px;
+  border-top-width: 0px;
+  border-left-width: 0px;
+  border-right-width: 0px;
+  display: block;
+  color: inherit;
+  width: 600px;
+  height: 32px;
+  margin-left: 20px;
+  /* margin-top: 100px; */
+  padding-left: 15px;
+  padding-bottom: -20px;
+  color: white;
+  font-family: 'poppins';
+  font-size: 12px;
+}
+#Field-countryInput {
+  background-color: #000;
+}
+
+::placeholder {
+  color: white;
+  opacity: 50%;
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.label1 {
+  color: #000;
+
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-transform: uppercase;
+  margin-left: 24px;
+  margin-bottom: -130px;
+  padding-bottom: 4px;
+  padding-top: 14px;
+}
+#title,
+#title2 {
+  color: #000;
+
+  font-family: 'Poppins';
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-decoration: underline;
+}
+#title2 {
+  margin-top: '15px';
+  margin-left: '145px';
+  text-decoration: 'none';
+  font-size: 'smaller';
+  color: 'white';
+  font-weight: 300;
+}
+.hellokitty {
+  width: 58.806px;
+  height: 39.469px;
+  flex-shrink: 0;
+  padding: 5px;
+  outline: 3px solid black;
+  border-radius: 5px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.hellokitty.active {
+  /* Define highlighted effect styles like shadow, outline, etc. */
+  /* For example: */
+  box-shadow: 0 0 10px 2px white;
+  transform: scale(1.2);
+  transition: all 0.2s ease;
+ 
+}
+.choicePayment {
+  font-family: 'Inter';
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  padding: 0px 0px 0px 10px;
+  margin-bottom: 15px;
+}
+
+#messages {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New';
+  display: none; /* hide initially, then show once the first message arrives */
+  background-color: #0a253c;
+  color: #00d924;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: var(--radius);
+  font-size: 0.7em;
+}

@@ -9,6 +9,7 @@ import PharmacyHome from './pharmacy/pages/PharmacyHome';
 import AddMedicineForm from './pharmacist/pages/AddMedicine';
 import EditMedicineForm from './pharmacist/pages/EditMedicine';
 import PatientRegisterForm from './patient/pages/PatientRegister';
+import PatientAccountSettings from './patient/AccountSettings/Account'
 import PharmacistRequest from './pharmacist/pages/PharmacistRequest';
 import AdminHome from './admin/Home/AdminHome';
 import ManageUsersPage from './admin/ManageUsers/ManageUsersPage';
@@ -22,6 +23,8 @@ import Order from './patient/pages/order/Order';
 import ArchivedMedicines from './medicines/ArchivedMedicines';
 import SignupOptions from './login/pages/SignupOptions';
 import AddAddress from "./patient/pages/AddAddress";
+import Checking from './patient/pages/payment/Checking';
+import NavBar from './shared/components/NavBar/NavBar';
 import MedicineDetails from './patient/pages/MedicineDetails';
 import Homepage from './patient/pages/home/Homepage';
 import RevenueChart from './admin/ManageUsers/components/RevenueChart';
@@ -38,7 +41,13 @@ function App() {
             <Route path="/pharmacy/home" element={<Homepage />} exact />
             <Route path="/cart" element={<CartPage />} exact />
             <Route path="/payment/AddingInfo" element={<AddingInfo />} exact />
+            <Route path="/payment/temp" element={<Checking />} exact />
             <Route path="/order" element={<Order />} exact />
+            <Route
+            path="/patient/account"
+            element={<PatientAccountSettings />}
+            exact
+          />
             <Route path="/address/add" element={<AddAddress />} exact />
             <Route path="changePassword" element={<ChangePassword />} exact />
             <Route path="/medicine" element={<MedicineDetails />} exact />
@@ -117,6 +126,37 @@ function App() {
 
   return (
     <div className="App">
+      <CartContextProvider>
+        <BrowserRouter>
+          <Routes>
+            {/* <Route path="/" element={<NavBar />} exact /> */}
+            <Route path="/pharmacy/home" element={<PharmacyHome />} exact />
+            <Route
+              path="/pharmacist/register"
+              element={<PharmacistRequest />}
+              exact
+            />
+            <Route
+              path="/patient/register"
+              element={<PatientRegisterForm />}
+              exact
+            />
+            <Route
+              path="./pharmacy/pages/PharmacyHome"
+              element={<PharmacyHome />}
+              exact
+            />
+            <Route path="/patient/pages/Cart" element={<CartPage />} exact />
+            <Route path="/order" element={<Order />} exact />
+            <Route path="/pay" element={<AddingInfo />} exact />
+            <Route path="/medicine/add" element={<AddMedicineForm />} exact />
+            <Route path="/admin/home" element={<AdminHome />} exact />
+            <Route path="/admin/manage" element={<ManageUsersPage />} exact />
+            {/*redirect to landing page if wrong url*/}
+            <Route path="*" element={<Navigate to="/" />} />{' '}
+          </Routes>
+        </BrowserRouter>
+      </CartContextProvider>
       <BrowserRouter>{getUserRoutes()}</BrowserRouter>
     </div>
   );

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import UserContext from '../../../user-store/user-context';
 
 const NavBar = (props) => {
-  const [walletAmount, setWalletAmount] = useState('');
+  const [walletAmount, setWalletAmount] = useState(0);
   const userCtx = useContext(UserContext);
 
   useEffect(() => {
@@ -13,7 +13,7 @@ const NavBar = (props) => {
   }, []);
 
   const getWallet = async () => {
-    fetch(`http://localhost:3000/patients/${userCtx.userId}`, {
+    fetch(`http://localhost:4000/patients/${userCtx.userId}`, {
       credentials: 'include',
     }).then(async (response) => {
       const json = await response.json();
@@ -66,11 +66,18 @@ const NavBar = (props) => {
                   Contact a Pharmacist
                 </a>
               </li>
+              <li className="nav-item"style={{paddingLeft:'270px'}}>
+                <p className="nav-link" href="#"style={{color:"black"}}>
+                Wallet : {walletAmount}
+                </p>
+              </li>
             </ul>
           </div>
-
+            
           <div className="d-flex">
+          <Link to="/patient/account" style={{ all: 'unset' }}>
           <img id="patient" src={patient} alt='i'/>
+          </Link>
             <div class="dropdown">
               <button
                 class="btn btn-secondary dropdown-toggle"

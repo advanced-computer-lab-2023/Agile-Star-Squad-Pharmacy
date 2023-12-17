@@ -3,11 +3,15 @@ const mongoose = require('mongoose');
 const addressSchema = new mongoose.Schema({
     country: {
         type: String,
-        required: true
+        default:'Egypt'
     },
     city: {
         type: String,
         required: true
+    },
+    ditrict: {
+        type: String,
+       // required: true
     },
     street: {
         type: String,

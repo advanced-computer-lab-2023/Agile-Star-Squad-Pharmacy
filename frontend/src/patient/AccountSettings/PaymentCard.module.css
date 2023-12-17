@@ -1,0 +1,67 @@
+.sideCardTitle {
+    color: #101828;
+    font-family: 'Poppins';
+    font-size: 18px;
+    font-weight: 600;
+    text-align: start;
+}
+
+.inputLabel {
+    color: #718096;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: start;
+    margin-top: 18px;
+    margin-bottom: 15px;
+}
+
+.input {
+    height: 50px;
+    background-color: #E2E8F0;
+    border: none;
+    border-radius: 5px;
+    text-align: start;
+    outline: none;
+    padding-left: 10px;
+    
+}
+.input ::placeholder {
+    font-size: 22px;
+    padding: -5px;
+    color: #000;
+}
+
+.deleteButton {
+    width: 120px;
+    background-color: white;
+    color: #ED3443;
+    padding-block: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    border: 1px solid #ED3443;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+}
+
+.deleteButton:hover {
+    background-color: #ED3443;
+    color: white;
+}
+
+.saveButton {
+    width: 120px;
+    background-color: #3182ce;
+    color: white;
+    padding-block: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+}
+
+.saveButton:hover {
+    background-color: #266bac;
+}
