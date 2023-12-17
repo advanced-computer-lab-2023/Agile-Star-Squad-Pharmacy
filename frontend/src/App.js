@@ -20,7 +20,8 @@ import './App.css';
 import Order from './patient/pages/order/Order';
 import ArchivedMedicines from './medicines/ArchivedMedicines';
 import SignupOptions from './login/pages/SignupOptions';
-import AddAddress from './patient/pages/AddAddress';
+import AddAddress from "./patient/pages/AddAddress";
+import MedicineDetails from './patient/pages/MedicineDetails';
 import Homepage from './patient/pages/home/Homepage';
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
             <Route path="/order" element={<Order />} exact />
             <Route path="/address/add" element={<AddAddress />} exact />
             <Route path="changePassword" element={<ChangePassword />} exact />
+            <Route path="/medicine" element={<MedicineDetails />} exact />
             <Route path="*" element={<Navigate to="/pharmacy/home" />} />{' '}
           </Routes>
         </CartContextProvider>
