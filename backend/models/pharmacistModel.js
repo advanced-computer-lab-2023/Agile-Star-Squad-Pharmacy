@@ -28,6 +28,7 @@ const pharmacistSchema = new mongoose.Schema(
       minLength: 8,
     },
     dateOfBirth: Date,
+    creationDate: Date,
     hourlyRate: {
       type: Number,
       required: [true, 'Please provide an hourly rate'],

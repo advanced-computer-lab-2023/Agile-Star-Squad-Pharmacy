@@ -15,6 +15,7 @@ const adminSchema = new mongoose.Schema({
     select: false,
     minLength: 8,
   },
+  creationDate: Date,
 });
 
 const Admin = mongoose.model('Admin', adminSchema);

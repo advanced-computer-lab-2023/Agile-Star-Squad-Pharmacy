@@ -3,6 +3,7 @@ const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const Request = require('../models/requestModel');
 const Pharmacist = require('../models/pharmacistModel');
+const Order = require('../models/orderModel');
 
 exports.createAdmin = catchAsync(async (req, res, next) => {
   const newAdmin = await Admin.create(req.body);
@@ -136,4 +137,20 @@ exports.rejectRequest = catchAsync(async (req, res, next) => {
     data: null,
   });
 });
-
+exports.getAllOrders = catchAsync(async (req, res, next) => {
+  try {
+    const orders = await Order.find();
+    res.status(200).json({
+      status: 'success',
+      data: {
+        orders,
+      },
+    });
+  } catch (error) {
+    console.error('Error in getAllOrders:', error);
+    res.status(500).json({
+      status: 'error',
+      message: 'Internal Server Error',
+    });
+  }
+});
