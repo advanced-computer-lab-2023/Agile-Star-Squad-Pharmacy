@@ -83,7 +83,6 @@ exports.updatePharmacist = catchAsync(async (req, res, next) => {
 // });
 
 exports.pharmacistSignup = catchAsync(async (req, res, next) => {
-  console.log("eehhhhhhhhhh");
   try {
     // Check if the username or email already exist in the 'requests' collection
     const existingRequest = await Request.findOne({

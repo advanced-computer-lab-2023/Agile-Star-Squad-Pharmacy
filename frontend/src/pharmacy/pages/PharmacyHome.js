@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import CartContext from '../../patient/pages/cart/Cart';
 import UserContext from '../../user-store/user-context';
 import NavBar from '../../shared/components/NavBar/NavBar';
+import axios from 'axios';
 
 const PharmacyHomePharmacist = () => {
   const userCtx = useContext(UserContext);
@@ -48,6 +49,7 @@ const PharmacyHomePharmacist = () => {
               name: m.name,
               image: m.image,
               description: m.description,
+              activeIngredient: m.activeIngredient,
               price: m.price,
               sales: m.sales,
               cartQuantity: 1,
@@ -141,43 +143,9 @@ const PharmacyHomePharmacist = () => {
         })
     );
   };
-  const editHandler = async (event, id) => {
-    event.preventDefault();
-    const requestOptions = {
-      method: 'PATCH',
-      headers: { 'Content-type': 'application/json; charset=UTF-8' },
-      body: JSON.stringify({ price: newPrice, description: newDescription }),
-    };
-    const updatedMedicine = await fetch(
-      `http://localhost:4000/medicine/${id}`,
-      requestOptions
-    );
-    const medicineJson = await updatedMedicine.json();
-    let newMedicine = await medicineJson.data.medicine;
-    newMedicine = { ...newMedicine, id: newMedicine._id };
-    const allMedicines = [];
-    const filteredMedicines = [];
-
-    for (const medicine of filteredList) {
-      if (medicine.id === id) {
-        allMedicines.push(newMedicine);
-      } else {
-        allMedicines.push(medicine);
-      }
-    }
-
-    for (const medicine of filteredList) {
-      if (medicine.id === id) {
-        filteredMedicines.push(newMedicine);
-      } else {
-        filteredMedicines.push(medicine);
-      }
-    }
-
-    setMedicineList(allMedicines);
-    setFilteredList(filteredMedicines);
+  const editHandler = async (medicine) => {
+    navigate('/medicine/edit', { state: { medicine } });
   };
-
   const newPriceTextFieldHandler = (event) => {
     setNewPrice(event.target.value);
   };
@@ -259,7 +227,6 @@ const PharmacyHomePharmacist = () => {
     <React.Fragment>
       <NavBar />
       <br />
-      <form onSubmit={onSubmitHandler}>
         <input
           type="text"
           id="textInput"
@@ -272,7 +239,7 @@ const PharmacyHomePharmacist = () => {
           <option value="">any</option>
           {medicinalUseOptions}
         </select>
-        <button type="submit">SUBMIT</button>
+        <button onClick={onSubmitHandler} type="submit">SUBMIT</button>
         {userCtx.role == 'patient' ? (
           <>
             <button onClick={redirectToCartPage}>My Cart</button>
@@ -291,7 +258,6 @@ const PharmacyHomePharmacist = () => {
         ) : null}
         <button onClick={logout}>logout</button>
         <button onClick={changePasswordHandler}>change password</button>
-      </form>
       {filteredList.map((item, index) =>
         // Check if the medicine is not archived before rendering
         !item.archived ? (
@@ -327,18 +293,9 @@ const PharmacyHomePharmacist = () => {
                 <p>Sales: {item.sales}</p>
                 <p>Quantity: {item.quantity}</p>
                 <hr />
-                <form onSubmit={(event) => editHandler(event, item.id)}>
-                  <label>New Price</label>
-                  <input type="text" onChange={newPriceTextFieldHandler} />
-
-                  <label>New Description</label>
-                  <input
-                    type="text"
-                    onChange={newDescriptionTextFieldHandler}
-                  />
-                  <hr />
-                  <button type="submit">Edit</button>
-                </form>
+                <button onClick={() => editHandler(item)} type="submit">
+                  Edit
+                </button>
               </React.Fragment>
             ) : null}
           </div>

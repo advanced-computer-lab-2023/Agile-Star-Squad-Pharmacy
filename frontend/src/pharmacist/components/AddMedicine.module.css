@@ -1,0 +1,171 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Roboto+Flex:opsz,wght@8..144,400;8..144,500;8..144,600;8..144,700&display=swap');
+
+
+.addMedicineText{
+    color: var(--white-100, #FFF);
+    font-family: Poppins;
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.titleContainer{
+    margin: -1rem;
+    margin-bottom: 20px;
+    height: 77px;
+    padding-left: 27px;
+    padding-top: 21px;
+    border-radius: 26px 26px 0px 0px;
+    background-color: #6ED294;
+}
+
+.label {
+    font-family: 'Poppins', Helvetica;
+    color: #242426;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    display: block;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.input[type="text"], input[type="email"], input[type="number"] {
+    width: 100%;
+    font-size: 14px;
+    padding: 8px;
+    margin-bottom: 20px;
+    background-color: white;
+    border: 1px solid #E2E4E5;
+    border-radius: 4px;
+    outline: none;
+}
+
+.inlineContainer {
+    display: flex;
+    gap: 10px; 
+  }
+  
+  .inlineItem {
+    flex: 1;
+  }
+.input:hover {
+    border-color: hsl(0, 0%, 70%);
+}
+
+.input:focus {
+    border-color: hsl(0, 0%, 50%);
+} 
+
+.imageAndChangeContainer {
+    text-align: center;
+    display: flex;
+    align-items: center; /* Vertical alignment */
+    gap: 25px;
+  }
+  
+  .imageContainer {
+    width: 252px;
+    height: 123px;
+    flex-shrink: 0;
+    background: #D9D9D9;
+    margin-right: 10px; /* Optional: Add margin for spacing between image and button */
+  }
+  .imageContainer2{
+    border-style: dotted;
+    align-items: center;
+    width: 252px;
+    height: 123px;
+    border-radius: var(--12, 12px);
+    border: 1px dashed #96B7C7;
+    background: #F8F8FF;
+    cursor: pointer;
+  }
+  
+  .changeButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-style: none;
+    width: 90px;
+    height:30px;
+    flex-shrink: 0;
+    border-radius: 5px;
+    background: #3182CE;
+    color: white;
+    font-family: Mulish;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+  }
+
+  .saveButtonContainer {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .saveButtonContainer2 {
+    margin-right: 40px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: end;
+  }
+  .archiveButton{
+    width: 94px;
+    height: 36px;
+    flex-shrink: 0;
+    background-color: white;
+    border-radius: 11px ;
+    border-color: #ED3443;
+    color: #ED3443;
+    font-family: Poppins;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+  }
+
+  .saveButton{
+    width: 94px;
+    height: 36px;
+    flex-shrink: 0;
+    background-color: #6ED294;
+    border-radius: 11px ;
+    border-style: none;
+    color: var(--white-100, #FFF);
+    font-family: Poppins;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+}
+.saveButton:hover{
+    background-color: #289853;
+}
+.archiveButton:hover{
+    background-color: #ED3443;
+    color:white;
+}
+
+.dragAndDrop{
+    color: #0F0F0F;
+    text-align: center;
+    font-family: Mulish;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+}
+
+.supportedFormats{
+    color: #676767;
+    text-align: center;
+    font-family: Mulish;
+    font-size: 8px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px; /* 257.143% */
+    }

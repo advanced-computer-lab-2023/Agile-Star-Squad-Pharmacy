@@ -7,6 +7,7 @@ import ResetPassword from './login/pages/ResetPassword';
 import LandingPage from './shared/pages/LandingPage';
 import PharmacyHome from './pharmacy/pages/PharmacyHome';
 import AddMedicineForm from './pharmacist/pages/AddMedicine';
+import EditMedicineForm from './pharmacist/pages/EditMedicine';
 import PatientRegisterForm from './patient/pages/PatientRegister';
 import PharmacistRequest from './pharmacist/pages/PharmacistRequest';
 import AdminHome from './admin/Home/AdminHome';
@@ -51,6 +52,7 @@ function App() {
         <Routes>
           <Route path="/pharmacy/home" element={<PharmacyHome />} exact />
           <Route path="/medicine/add" element={<AddMedicineForm />} exact />
+          <Route path="/medicine/edit" element={<EditMedicineForm />} exact />
           <Route path="changePassword" element={<ChangePassword />} exact />
           <Route
             path="/archivedMedicines"
