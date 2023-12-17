@@ -182,7 +182,7 @@ const Homepage = () => {
         };
 
         const toMedicineDetails = () => {
-            navigate('/medicine', {medicine});
+            navigate('/medicine', {state: medicine});
         }
 
         return <div className="col-3 px-4">

@@ -70,7 +70,7 @@ function App() {
     } else {
       return (
         <Routes>
-          <Route path="/" element={<MedicineDetails />} exact />
+          <Route path="/" element={<LandingPage />} exact />
           <Route path="/resetPassword" element={<ResetPassword />} exact />
           <Route path="signupOptions" element={<SignupOptions />} exact />
           <Route
