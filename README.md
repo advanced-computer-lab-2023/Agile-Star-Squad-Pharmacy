@@ -101,7 +101,49 @@ We welcome contributions from the community. Please ensure that your pull reques
 
 ## Credits
 
-<div>
-<a href="https://github.com/youssef-mostafa25">
-  <img src="https://github.com/youssef-mostafa25.png" width="100" height="100" alt="Your Name" style="border-radius: 50%;">
+<div style="display: flex;">
+
+  <a href="https://github.com/youssef-mostafa25" style="margin-right: 20px;">
+    <img src="https://github.com/youssef-mostafa25.png" width="100" height="100" alt="Youssef Hossam" style="border-radius: 50%;">
+  </a>
+
+  <a href="https://github.com/shampooeyes" style="margin-right: 20px;">
+  <img src="https://avatars.githubusercontent.com/u/73359211?s=400&u=ed28dd86a82ce49bc138e8a1d24ffa3bf609646d&v=4" width="100" height="100" alt="Kareem El Kadery" style="border-radius: 50%;"/>
+
+  <a href="https://github.com/Habibaelkabbany" style="margin-right: 20px;">
+  <img src="https://github.com/Habibaelkabbany.png" width="100" height="100" alt="Habiba El Kabbany" style="border-radius: 50%;">
+  </a>
+
+
+<a href="https://github.com/Assem-Mohamed" style="margin-right: 20px;">
+  <img src="https://github.com/Assem-Mohamed.png" width="100" height="100" alt="Assem Mohamed" style="border-radius: 50%;">
+  </a >
+  
+  <a href="https://github.com/mariiamemad" style="margin-right: 20px;">
+  <img src="https://github.com/mariiamemad.png" width="100" height="100" alt="Mariam Emad" style="border-radius: 50%;">
+  </a >
+</div>
+
+<div style="display: flex;">
+
+  <a href="https://github.com/Lasheen2001" style="margin-right: 20px;">
+  <img src="https://github.com/Lasheen2001.png" width="100" height="100" alt="Ahmed Lasheen" style="border-radius: 50%;">
+  </a >
+
+  <a href="https://github.com/BigMizo" style="margin-right: 20px;">
+  <img src="https://github.com/BigMizo.png" width="100" height="100" alt="Ahmed Lasheen" style="border-radius: 50%;">
+  </a >
+      
+  <a href="https://github.com/mariaamashraaf" style="margin-right: 20px;">
+  <img src="https://github.com/mariaamashraaf.png" width="100" height="100" alt="Ahmed Lasheen" style="border-radius: 50%;">
+  </a >
+
+  <a href="https://github.com/Ahmedmedhat220" style="margin-right: 20px;">
+  <img src="https://github.com/Ahmedmedhat220.png" width="100" height="100" alt="Ahmed Lasheen" style="border-radius: 50%;">
+  </a >
+
+  <a href="https://github.com/AhmedMosad0" style="margin-right: 20px;">
+  <img src="https://github.com/AhmedMosad0.png" width="100" height="100" alt="Ahmed Lasheen" style="border-radius: 50%;">
+  </a >
+
 </div>
