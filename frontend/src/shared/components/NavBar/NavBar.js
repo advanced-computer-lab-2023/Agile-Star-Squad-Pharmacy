@@ -66,9 +66,11 @@ const NavBar = (props) => {
             {userCtx.role === 'patient' && (
               <ul className="navbar-nav">
                 <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="#">
-                    Refill Presciption
-                  </a>
+                  <Link to="/prescriptions" style={{ all: 'unset' }}>
+                    <a className="nav-link" aria-current="page" href="#">
+                      Presciption
+                    </a>
+                  </Link>
                 </li>
                 <li className="nav-item">
                   <Link to="/healthPackages" style={{ all: 'unset' }}>

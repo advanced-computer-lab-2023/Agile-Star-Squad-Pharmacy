@@ -291,6 +291,15 @@ const Prescriptions = () => {
             </div>
             <div style={{ flex: 1 }}></div>
             <div
+              onClick={() => {}}
+              className={`${classes.downloadButton} ${
+                selectedPrescriptions.length != 0 ? classes.downloadEnabled : ''
+              }`}
+              style={{ marginRight: '10px' }}
+            >
+              Add to Cart
+            </div>
+            <div
               onClick={downloadPrescriptions}
               className={`${classes.downloadButton} ${
                 selectedPrescriptions.length != 0 ? classes.downloadEnabled : ''
