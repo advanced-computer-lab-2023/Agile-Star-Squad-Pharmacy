@@ -22,6 +22,7 @@ import PaymentCard from './PaymentCard';
 import MedicalCard from './MedicalCard';
 import AboutUs from './AboutUs'
 import ShippmentCard from './ShippmentCard';
+import AccountDetailsCard from './AccountDetailsCard';
 
 const PatientAccountSettings = (props) => {
   const patient = useContext(UserContext);
@@ -280,6 +281,7 @@ const PatientAccountSettings = (props) => {
         />
       </SettingsContainer>
       {/* {index == 1 && <FamilyCard members={familyMembers} setMembers={setFamilyMembers} />} */}
+      {index == 0 && <AccountDetailsCard />}
       {index == 2 && <MedicalCard />}
       {index == 3 && <PaymentCard />}
       {index == 4 && <ShippmentCard />}
