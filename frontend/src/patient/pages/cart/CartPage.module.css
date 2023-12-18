@@ -1,17 +1,25 @@
-.cartpage {
+.cartContainer {
   background-image: url('./backgroundImage.png');
   background-size: cover;
-
   background-position: center;
+  background-repeat: no-repeat;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+
+.cartpage {
   display: flex;
   background-repeat: no-repeat;
   width: 100vw;
-  height: 100vh;
+  height: auto;
   /* overflow: hidden; */
 }
 .backgroundsvg {
   position: absolute;
-  height: 100vh;
+  height: auto;
   overflow: visible;
   left: -20%;
   width: 100%;
@@ -22,7 +30,7 @@
   z-index: 3;
 }
 .cartItem {
-  height: 430px;
+  height: 350px;
   overflow-y: auto;
   width: 500px;
   padding-bottom: 10px;
@@ -80,7 +88,7 @@
   margin-top: 10px;
 }
 .check {
-  border-radius: 0px 5px 5px 0px;
+  border-radius: 5px 5px 5px 5px;
   background: var(--white-100, #fff);
   box-shadow: 6px 6px 33px 0px rgba(0, 0, 0, 0.25);
   display: flex;

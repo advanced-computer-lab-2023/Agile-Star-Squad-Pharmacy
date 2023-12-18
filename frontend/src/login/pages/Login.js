@@ -8,7 +8,7 @@ import Button from '../components/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import UserContext from '../../user-store/user-context';
-import { Link } from "react-router-dom"
+import { Link } from 'react-router-dom';
 
 const Login = (props) => {
   const userCtx = useContext(UserContext);
@@ -30,6 +30,7 @@ const Login = (props) => {
         `http://localhost:4000/auth/${username}/${password}`,
         { withCredentials: true }
       );
+      console.log(response);
       const { role, userId } = response.data.data;
       console.log('role', role);
       userCtx.login({ role, userId });
@@ -42,9 +43,11 @@ const Login = (props) => {
   return (
     <div className="container-fluid" style={{ backgroundColor: '#96B7C7' }}>
       <div className="row" style={{ backgroundColor: '#96B7C7' }}>
-        <div className="col-md-7" >
-          <div className={styles.logo}>
-            <img src={logo} alt="logo" />
+        <div className="col-md-7">
+          <div className={styles.logoContainer}>
+            <Link to={'/admin/home'} className="navbar-brand">
+              Pharma
+            </Link>
           </div>
           <img className={styles.stethoscope} src={img} alt="login" />
         </div>
@@ -78,8 +81,8 @@ const Login = (props) => {
               <p>
                 Don't have an account?{' '}
                 <a className={styles.signupLink} href="#">
-                <Link to="/signupOptions">Sign Up Now</Link>
-              </a>
+                  <Link to="/signupOptions">Sign Up Now</Link>
+                </a>
               </p>
             </div>
           </div>

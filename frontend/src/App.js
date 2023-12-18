@@ -7,7 +7,9 @@ import ResetPassword from './login/pages/ResetPassword';
 import LandingPage from './shared/pages/LandingPage';
 import PharmacyHome from './pharmacy/pages/PharmacyHome';
 import AddMedicineForm from './pharmacist/pages/AddMedicine';
+import EditMedicineForm from './pharmacist/pages/EditMedicine';
 import PatientRegisterForm from './patient/pages/PatientRegister';
+import PatientAccountSettings from './patient/AccountSettings/Account'
 import PharmacistRequest from './pharmacist/pages/PharmacistRequest';
 import AdminHome from './admin/Home/AdminHome';
 import ManageUsersPage from './admin/ManageUsers/ManageUsersPage';
@@ -20,8 +22,13 @@ import './App.css';
 import Order from './patient/pages/order/Order';
 import ArchivedMedicines from './medicines/ArchivedMedicines';
 import SignupOptions from './login/pages/SignupOptions';
-import AddAddress from './patient/pages/AddAddress';
-import Prescriptions from './patient/pages/prescriptions/Prescriptions';
+import AddAddress from "./patient/pages/AddAddress";
+import Checking from './patient/pages/payment/Checking';
+import NavBar from './shared/components/NavBar/NavBar';
+import MedicineDetails from './patient/pages/MedicineDetails';
+import Homepage from './patient/pages/home/Homepage';
+import RevenueChart from './admin/ManageUsers/components/RevenueChart';
+import SalesReport from './admin/pages/SalesReport';
 
 function App() {
   const user = useContext(UserContext);
@@ -32,13 +39,19 @@ function App() {
       return (
         <CartContextProvider>
           <Routes>
-            <Route path="/pharmacy/home" element={<PharmacyHome />} exact />
-            <Route path="/prescriptions" element={<Prescriptions />} exact />
+            <Route path="/pharmacy/home" element={<Homepage />} exact />
             <Route path="/cart" element={<CartPage />} exact />
             <Route path="/payment/AddingInfo" element={<AddingInfo />} exact />
+            <Route path="/payment/temp" element={<Checking />} exact />
             <Route path="/order" element={<Order />} exact />
+            <Route
+              path="/patient/account"
+              element={<PatientAccountSettings />}
+              exact
+            />
             <Route path="/address/add" element={<AddAddress />} exact />
             <Route path="changePassword" element={<ChangePassword />} exact />
+            <Route path="/medicine" element={<MedicineDetails />} exact />
             <Route path="*" element={<Navigate to="/pharmacy/home" />} />{' '}
           </Routes>
         </CartContextProvider>
@@ -48,6 +61,7 @@ function App() {
         <Routes>
           <Route path="/pharmacy/home" element={<PharmacyHome />} exact />
           <Route path="/medicine/add" element={<AddMedicineForm />} exact />
+          <Route path="/medicine/edit" element={<EditMedicineForm />} exact />
           <Route path="changePassword" element={<ChangePassword />} exact />
           <Route
             path="/archivedMedicines"
@@ -62,7 +76,8 @@ function App() {
         <Routes>
           <Route path="/admin/home" element={<AdminHome />} exact />
           <Route path="/admin/manage" element={<ManageUsersPage />} exact />
-          <Route path="changePassword" element={<ChangePassword />} exact />
+          <Route path="/changePassword" element={<ChangePassword />} exact />
+          <Route path="/SalesReport" element={<SalesReport />} exact />
           <Route path="*" element={<Navigate to="/admin/home" />} />{' '}
         </Routes>
       );
@@ -113,7 +128,9 @@ function App() {
 
   return (
     <div className="App">
-      <BrowserRouter>{getUserRoutes()}</BrowserRouter>
+      <CartContextProvider>
+        <BrowserRouter>{getUserRoutes()}</BrowserRouter>
+      </CartContextProvider>
     </div>
   );
 }

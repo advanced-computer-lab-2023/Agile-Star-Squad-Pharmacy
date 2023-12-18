@@ -10,24 +10,27 @@
 
 .modal {
   position: absolute;
-  overflow-y: scroll;
-  top: 10vh;
+  top: 5vh;
+  bottom: 5vh;
   left: 5%;
   width: 90%;
   background-color: white;
   padding: 1rem;
-  border-radius: 14px;
+  border-radius: 26px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   z-index: 20;
   animation: slide-down 300ms ease-out forwards;
 }
+
 
 @media (min-width: 768px) {
   .modal {
     width: 40rem;
     left: calc(50% - 20rem);
   }
+
 }
+
 
 @keyframes slide-down {
   from {

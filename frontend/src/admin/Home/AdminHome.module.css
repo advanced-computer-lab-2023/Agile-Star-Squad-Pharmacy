@@ -1,0 +1,541 @@
+.sales,.requests, .packages, .users, .revenue, .addAdmin{
+  flex-shrink: 0;
+  border-radius: 20px;
+  border: 1px solid #F8F9FA;
+  background: var(--white-100, #FFF);
+  box-shadow: 0px 4px 20px 0px rgba(238, 238, 238, 0.50);
+}
+.sales {
+    position: absolute;
+    left: 13%; /* Move container to the center horizontally */
+    top: 40%; /* Move container to the center vertically */
+    transform: translate(-50%, -50%); /* Center the container */
+    width: 255px;
+    height: 252px;
+}
+.amount{
+    color: var(--greys-blue-grey-900, #151D48);
+    font-family: 'Poppins';
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 32px; /* 133.333% */
+    margin-top: 5%;
+    margin-left: 5%;
+}
+
+.salesSec {
+    width: 195px;
+    height: 163px;
+    flex-shrink: 0;
+    border-radius: var(--16, 16px);
+    background: #FFE2E5;
+    margin: auto; /* Add margin auto to center the section */
+    margin-top: 5%;
+}
+.salesTitle{
+    color: var(--primary-dark-shade, #05004E);
+    font-family: 'Poppins';
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 32px; /* 160% */
+    margin-top: 5%;
+
+}
+.salesImg{
+    margin-top: 5%;
+    margin-left: 5%;
+}
+.salesText{
+    color: #425166;
+    font-family: 'Poppins';
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px; /* 150% */
+    margin-top: 7%;
+    margin-left: 6%;
+}
+
+.requests {
+  position: absolute;
+  margin-left: 23%;
+  top: 23%;
+  width: 443px;
+  height: 253.955px;
+
+}
+
+
+.packageTitle,.ReqTitle, .revTitle{
+  color: var(--primary-dark-shade, #05004E);
+  font-family: 'Poppins';
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 32px;
+  margin-bottom: 4%;
+  margin-top: 2%;
+}
+.revTitle{
+  margin-top: 1%;
+}
+
+.bold {
+  color: #000;
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-align: left; /* Align text to the left */
+}
+
+.container {
+  position: relative; /* Change to relative positioning */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.req {
+  width: 22px;
+  height: var(--24, 24px);
+  transform: rotate(-0.945deg);
+  flex-shrink: 0;
+}
+
+.rejectReq {
+  margin-left: 5%;
+}
+
+.acceptReq {
+  padding-right: 5%;
+}
+
+
+.acc,
+.rej {
+  width: 25px;
+  height: 25px;
+  flex-shrink: 0;
+  border-radius: var(--8, 8px);
+  margin-left: 5px; /* Add margin between icons */
+  margin-right: 5px; /* Add margin between icons */
+}
+
+
+.acc {
+  border: 1px solid #C4E8BE;
+}
+
+.rej {
+  border: 1px solid #FD9292;
+  padding-right: 5%;
+}
+
+.acc:hover,
+.rej:hover {
+  cursor: pointer;
+  filter: brightness(1.2);
+}
+
+.small {
+  color: var(--grayscale-placeholder, #888);
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-family: "Source Sans Pro";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  text-align: left; /* Align text to the left */
+}
+
+/* Additional styles to align the entire content to the left */
+.row {
+  display: flex;
+  justify-content: space-between; /* Use space-between to align icons at each end */
+  align-items: center; /* Vertically center the content */
+  margin-bottom: 10px; /* Add margin between rows */
+}
+
+
+
+.packages{
+    position: absolute;
+    left: 55%;
+    top:23%;
+    width: 588px;
+     height: 254px;
+ }
+.packages-section .title{
+    position:absolute;
+    right: 83%;
+}
+
+.custom-table {
+    margin-top: 20px; /* Adjust the margin to give space below the title */
+    border-collapse: collapse; /* Remove the default cell spacing and padding */
+    align-items: flex-start;
+  }
+  
+  .custom-row {
+    color: #3366cc; /* Change the font color for each row */
+    font-family: 'Arial', sans-serif; /* Change the font family for each row */
+  }
+  
+  .custom-row:hover {
+    background-color: #f5f5f5; /* Change the background color on hover */
+  }
+  
+  .custom-table th,
+  .custom-table td {
+    border: none; /* Remove borders for table cells */
+    padding: 8px; /* Add padding to cells for better readability */
+  }  
+  /* Add these styles to your CSS file or use inline styles in the React component */
+
+.edit {
+    text-align: center;
+    margin-bottom: 10px; /* Add margin to separate the button from the table */
+  }
+  
+  .editButton {
+    position:absolute;
+    left:90%;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 12px;
+    letter-spacing: 0.112px;
+    background: var(--Primary, linear-gradient(274deg, #92A3FD 0%, #9DCEFF 124.45%));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    border: none;   
+  }
+  table .packages-section .packageTitles {
+    color: orange;
+    /* other styles */
+}
+
+
+  .packageTitles{
+    color: #C77223;
+    font-family: 'Open Sans';
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */
+  }
+  .custom-table tbody tr.custom-row {
+    background-color: transparent;
+    color: var(--greys-blue-grey-800, #444A6D);
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+  }
+  .custom-table tbody tr.custom-row:nth-child(even) {
+    background-color: white;
+  }
+  
+  .custom-table tbody tr.custom-row:nth-child(odd) {
+    background-color: white;
+  }
+    
+
+
+  .users {
+    position: absolute;
+    top:100%;
+    left: 5%;
+    width: 1325px;
+    height: 579px;
+    flex-shrink: 0;
+  }
+  .userTitle{
+    color: #96A5B8;
+    font-family: 'Open Sans';
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px; /* 123.077% */
+  }
+  .userDateAdmin{
+    width: 102.713px;
+    height: 17.364px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: 1px solid #0095FF;
+    background: #F0F9FF;
+    color: #0095FF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left:40% ;
+  }
+  
+  
+  
+  .userDate {
+    width: 102.713px;
+    height: 17.364px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: 1px solid #0095FF;
+    background: #F0F9FF;
+    color: #0095FF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 27%;
+  }
+  
+  
+  .userBody{
+    align-items: flex-start;
+  }
+  .userInfo{
+    color: var(--greys-blue-grey-800, #444A6D);
+  
+  /* sm/Regular */
+  font-family: 'Poppins';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 142.857% */
+  }
+  .deleteButton{
+    width: 5px;
+  height: 14px;
+  flex-shrink: 0;
+  font-family: 'Poppins';
+  font-weight: 400;
+  border: none;   
+  background-color: transparent;
+  
+  }
+  .user-tabs {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+  }
+  
+  .user-tab {
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .user-table-container {
+    margin-top: 30px;
+  }
+  
+  .filter {
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .filterButton {
+    background-color: transparent;
+    border: none;
+    padding: 8px 16px;
+    margin-right: 8px;
+    cursor: pointer;
+    outline: none;
+    color: rgba(5, 0, 78, 0.25);
+    font-family: 'Poppins';
+    font-weight: 600;
+    font-size: 20px;
+  }
+  
+  .filterButton.active,
+  .filterButton.bold {
+    font-weight: bold;
+    color: #000000;
+  }
+  
+  .logout {
+    position: absolute;
+    bottom: 86%;
+    left: 55%;
+  }
+  
+  .d-flex {
+    display: flex;
+  }
+  
+  .spacing {
+   margin-right: 5%;
+  }
+  .borderBottom {
+    border-bottom: 1px solid #ddd; /* Choose your desired border color */
+  }
+  
+  
+.revenue{
+  position: absolute;
+  top:60%;
+  left: 5%; 
+  width: 1100px;
+height: 280.955px;
+}
+.chart{
+  position: inherit;
+  bottom: 5%;
+  left: 7%;
+}
+.yesterdaySales{
+  color: var(--Primary-800, #4079ED);
+font-family: 'Poppins';
+font-size: 12px;
+font-weight: 500;
+line-height: 16px; 
+margin-left: 5%;
+}
+.rev, .profit{
+  display: inline-flex;
+padding: 16.339px 28.834px 26.473px 13.456px;
+flex-direction: column;
+align-items: flex-start;
+gap: 33.639px;
+border-radius: 15.378px;
+border: 0.961px solid var(--Stroke-3, #E2E8F0);
+background: var(--white-100, #FFF);
+width: 30%;
+margin-top: 2%;
+height:140px;
+
+}
+.rev{
+  margin-left: 5%;
+  margin-right: 5%;
+
+}
+.profit{
+  margin-right: 30%;
+}
+.cur{
+  color: #000;
+  font-family: 'SF Pro Display';
+  font-size: 23.067px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 100%; /* 23.067px */
+  
+}
+.prev{
+  color: #000;
+  font-family: 'SF Pro Display';
+  font-size: 13.456px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 100%; /* 13.456px */
+  position: absolute;
+  margin-top: 6%;
+}
+.salesT{
+  color: var(--Text-900, #0F172A);
+font-family: 'Poppins';
+font-size: 13.456px;
+font-style: normal;
+font-weight: 600;
+line-height: 100%; /* 13.456px */
+margin-top: 2%;
+}
+.parentContainer {
+  display: flex;
+  gap: 20px; /* Adjust the gap as needed */
+}
+
+
+
+.yearly {
+  width: 721px;
+  height: 271px;
+  flex-shrink: 0;
+  border-radius: 13.273px;
+  border: 0.83px solid var(--Stroke-3, #E2E8F0);
+  background: var(--white-100, #FFF);
+  box-shadow: 0px 0.83px 1.659px 0px rgba(0, 0, 0, 0.05);
+  margin-top: 2%;
+  margin-left: 3%;
+  margin-right: 2%;
+}
+
+.recentOrders {
+  display: flex;
+  width: 500.596px;
+  height: 344.278px;
+  padding: 20.74px 16.592px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 19.91px;
+  flex-shrink: 0;
+  border-radius: 13.273px;
+border: 0.83px solid var(--Stroke-3, #E2E8F0);
+background: var(--white-100, #FFF);
+box-shadow: 0px 0.83px 1.659px 0px rgba(0, 0, 0, 0.05);
+margin-top: 2%;
+margin-left: 0%;
+max-height: 400px; /* Adjust the height according to your design */
+overflow-y: auto;
+}
+.recentOrders::-webkit-scrollbar {
+  width: 4px; /* For Chrome, Safari, and Opera */
+}
+.medicineImage{
+  display: flex;
+width: 39.82px;
+height: 39.82px;
+justify-content: center;
+align-items: center;
+gap: 13.624px;
+flex-shrink: 0;
+}
+.ordersT{
+  margin-top: -5%;
+  color: var(--Text-900, #0F172A);
+font-family: 'SF Pro Display';
+font-size: 11.614px;
+font-style: normal;
+font-weight: 400;
+line-height: 100%; /* 11.614px */
+}
+.addAdmin{
+  position: absolute;
+  top:65%;
+  left: 78%; 
+  width: 300px;
+  height: 200.955px;
+
+}
+.adminButton{
+  color: var(--primary-dark-shade, #05004E);
+  font-family: 'Poppins';
+  font-size: 29px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  position: relative;
+  top:40%;
+  left:18%;
+  border-color: transparent;
+  background-color: white;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Set a high z-index value to ensure it appears above other content */
+}
+

@@ -28,6 +28,7 @@ const pharmacistSchema = new mongoose.Schema(
       minLength: 8,
     },
     dateOfBirth: Date,
+    creationDate: { type: Date, default: Date.now },
     hourlyRate: {
       type: Number,
       required: [true, 'Please provide an hourly rate'],
@@ -40,6 +41,12 @@ const pharmacistSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Please provide an edcational background'],
     },
+    chats: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Chat'
+      }
+    ],
     // patients: [
     //   {
     //     type: mongoose.Schema.ObjectId,

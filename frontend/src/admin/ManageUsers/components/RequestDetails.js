@@ -63,7 +63,8 @@ const RequestDetails = (props) => {
     }
 
     return ReactDOM.createPortal(
-        <Modal exit={props.exit}>
+        <Modal exit={props.exit} >
+            <div style={{overflow: 'auto' ,maxHeight: '85vh'}}>
             <div>
                 <span><h4>Username</h4></span>
                 <span>{props.data['username']}</span>
@@ -116,7 +117,8 @@ const RequestDetails = (props) => {
                     <img src={props.data['pharmacyDegree']} alt="Pharmacist Degree" />
                 )}
             </div>
-            {status.toLowerCase() === 'pending' && <ActionButtons onReject={onReject} onAccept={onAccept} />}
+           {status.toLowerCase() === 'pending' && <ActionButtons onReject={onReject} onAccept={onAccept} />}
+           </div>
         </Modal>, document.getElementById("backdrop-root")
     );
 }
@@ -124,11 +126,11 @@ const RequestDetails = (props) => {
 const ActionButtons = (props) => {
     return (
         <div className="d-flex justify-content-end mt-5">
-            <button className="formButtons formDeleteButton" onClick={props.onReject}>Reject</button>
+            {/* <button className="formButtons formDeleteButton" onClick={props.onReject}>Reject</button>
             <button className="formButtons" onClick={props.onAccept}>
                 {!props.isLoading && <span>Accept</span>}
                 {props.isLoading && <div className="loader" />}
-            </button>
+            </button> */}
         </div>
     );
 };
