@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './CheckoutForm.css';
+import styles from './CheckoutForm.module.css';
 import UserContext from '../../../user-store/user-context';
 import CartContext from '../cart/Cart';
 import axios from 'axios';
@@ -48,10 +48,10 @@ export default function AddressForm(props) {
           justifyContent: 'space-between',
         }}
       >
-        <span id="title">Address</span>
+        <span className={styles.title}>Address</span>
       </div>
      
-      <select className='input1' onChange={(e)=>handleAddressSelect(e.target.value)}>
+      <select className={styles.input1} onChange={(e)=>handleAddressSelect(e.target.value)}>
               <option   value="">
                 Select an Address
               </option>
@@ -74,49 +74,49 @@ export default function AddressForm(props) {
                 </option>
               ))}
             </select>
-      <label className="label1">Name</label>
+      <label className={styles.label1}>Name</label>
       <br />
       <input
         type="text"
-        className="input1"
+        className={styles.input1}
         name="radio"
         placeholder="Enter your Name"
 
         // id="use-wallet"
       />
-      <label className="label1">Street</label>
+      <label className={styles.label1}>Street</label>
       <br />
       <input
         type="text"
-        className="input1"
+        className={styles.input1}
         name="radio"
         placeholder="Enter your Street"
         
         // id="use-wallet"
       />
-      <label className="label1">City</label>
+      <label className={styles.label1}>City</label>
       <br />
       <select
         type="text"
-        className="input1"
+        className={styles.input1}
         name="radio"
         placeholder="Select your City"
         // id="use-wallet"
       />
-      <label className="label1">District</label>
+      <label className={styles.label1}>District</label>
       <br />
       <select
         type="text"
-        className="input1"
+        className={styles.input1}
         name="radio"
         placeholder="Select your City"
         // id="use-wallet"
       />
-      <label className="label1">Mobile Number</label>
+      <label className={styles.label1}>Mobile Number</label>
       <br />
       <input
         type="tel"
-        className="input1"
+        className={styles.input1}
         name="number"
         placeholder="Enter your mobile number"
         // id="use-wallet"

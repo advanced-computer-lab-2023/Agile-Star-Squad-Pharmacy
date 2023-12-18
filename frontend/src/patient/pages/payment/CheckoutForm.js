@@ -2,9 +2,10 @@ import { PaymentElement } from '@stripe/react-stripe-js';
 import React, { useState, useContext, useEffect } from 'react';
 import { useStripe, useElements } from '@stripe/react-stripe-js';
 import { useNavigate } from 'react-router-dom';
-import './CheckoutForm.css';
+import styles from './CheckoutForm.module.css';
 import UserContext from '../../../user-store/user-context';
 import CartContext from '../cart/Cart';
+import './AddingInfo.css'
 import axios from 'axios';
 
 const citiesInEgypt = [
@@ -31,6 +32,7 @@ export default function CheckoutForm(props) {
   const [message, setMessage] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
   const [useWallet, setUseWallet] = useState(0);
+  const [useSave, setUseSave] = useState(false);
   const addressId = props.addressInfo;
   const [balance, setBalance] = useState(0);
   const [addresses, setAddresses] = useState([]);
@@ -81,6 +83,28 @@ export default function CheckoutForm(props) {
     
   };
 
+  
+  // const onAdd = async () => {
+      
+  //   const { country, city, street } = formData;
+  //   if (country && city && street) {
+  //     const requestOptions = {
+  //       method: 'POST',
+  //       headers: { 'Content-type': 'application/json; charset=UTF-8' },
+  //       body: JSON.stringify(formData),
+  //       credentials: 'include',
+  //     };
+  //     fetch(
+  //       `http://localhost:4000/address/${patientId}/`,
+  //       requestOptions,
+  //     );
+  //     alert('Address added successfully');
+  //     navigate(-1);
+  //   } else {
+  //     alert('Please fill in all required fields');
+  //   }
+  // };
+
   useEffect(() => {
     fetch(`http://localhost:4000/patients/${userCtx.userId}`, {
       credentials: 'include',
@@ -107,14 +131,16 @@ export default function CheckoutForm(props) {
       // console.log(props.CartCtx.items);
       const cartItems = cartCtx.items;
       const medicineList = cartItems.map((item) => {
-        return { medicineId: item.id, count: item.quantity };
+        return { medicineId: item.id, count: item.quantity ,price:item.price,profit:item.price*0.9 };
       });
+      console.log("///////")
       let paymentIntentData = {
         patientId: userCtx.userId,
         medicineList,
         totalCost: cartCtx.total,
         address: addressId,
       };
+      
       const response = await fetch('http://localhost:4000/orders', {
         method: 'POST',
         headers: {
@@ -123,17 +149,17 @@ export default function CheckoutForm(props) {
         body: JSON.stringify(paymentIntentData),
         credentials: 'include',
       });
-
+      console.log(addressId)
       if (!response.ok) {
         throw new Error('Failed to send data to the server.');
       }
-
+      alert("Payment Successful")
       setMessage('Payment successful!');
       cartCtx.clearCart();
       const { error } = await stripe.confirmPayment({
         elements,
         confirmParams: {
-          return_url: 'http://localhost:3000/order',
+          return_url: navigate('/'),
         },
       });
     } catch (error) {
@@ -151,7 +177,9 @@ export default function CheckoutForm(props) {
     );
     const responseData = await response.json();
     const currentWallet = responseData.data.patient.wallet;
-    if (currentWallet + deduct <= 0) {
+    // console.log("wallet" ,currentWallet +deduct )
+    if (currentWallet + deduct >= 0) {
+      
       try {
         const response = await fetch(
           `http://localhost:4000/patients/${userCtx.userId}/wallet`,
@@ -165,7 +193,7 @@ export default function CheckoutForm(props) {
 
         const cartItems = cartCtx.items;
         const medicineList = cartItems.map((item) => {
-          return { medicineId: item.id, count: item.quantity };
+          return { medicineId: item.id, count: item.quantity,price:item.price,profit:item.price*0.9  };
         });
         let paymentIntentData = {
           patientId: userCtx.userId,
@@ -184,6 +212,7 @@ export default function CheckoutForm(props) {
 
         if (response.ok) {
           // Handle a successful response
+          alert("Payment Successful");
           cartCtx.clearCart();
           navigate('/');
         } else {
@@ -209,7 +238,7 @@ export default function CheckoutForm(props) {
     try {
       const cartItems = cartCtx.items;
       const medicineList = cartItems.map((item) => {
-        return { medicineId: item.id, count: item.quantity };
+        return { medicineId: item.id, count: item.quantity,price:item.price,profit:item.price*0.9  };
       });
       let paymentIntentData = {
         patientId: userCtx.userId,
@@ -225,6 +254,7 @@ export default function CheckoutForm(props) {
         body: JSON.stringify(paymentIntentData),
         credentials: 'include',
       });
+      alert("Order Successful");
       cartCtx.clearCart();
       navigate('/');
     } catch (error) {}
@@ -256,16 +286,16 @@ export default function CheckoutForm(props) {
             justifyContent: 'space-between',
           }}
         >
-          <span id="title">Address</span>
+          <span className={styles.title}>Address</span>
         </div>
 
         <select
-          className="input1"
+          className={styles.input1}
           onChange={(e) => handleAddressSelect(e.target.value)}
         >
-          <option value="">Select an Address</option>
+          <option value="" style={{color:'black'}}>Select an Address</option>
           {addresses.map((address) => (
-            <option key={address._id} value={selectedAddressId}>
+            <option style={{color:'black'}} key={address._id} value={selectedAddressId}>
               <p>
                 <strong> Country:</strong> {address.country}
               </p>
@@ -278,22 +308,22 @@ export default function CheckoutForm(props) {
             </option>
           ))}
         </select>
-        <label className="label1">Name</label>
+        <label className={styles.label1}>Name</label>
         <br />
         <input
           type="text"
-          className="input1"
+          className={styles.input1}
           name="radio"
           placeholder="Enter your Name"
 
           // id="use-wallet"
         />
         
-        <label className="label1"> City:</label>
-      <select  className="input1" value={selectedCity} onChange={handleCityChange}>
-        <option value="">Select a city</option>
+        <label className={styles.label1}> City:</label>
+      <select  className={styles.input1} value={selectedCity} onChange={handleCityChange} required>
+        <option value="" style={{color:'black'}}>Select a city</option>
         {citiesInEgypt.map((cityObj, index) => (
-          <option key={index} value={cityObj.city}>
+          <option key={index} value={cityObj.city} style={{color:'black'}}>
             {cityObj.city}
           </option>
         ))}
@@ -301,35 +331,36 @@ export default function CheckoutForm(props) {
         
          {selectedCity && (
         <div>
-          <label className="label1">District:</label>
-          <select  className="input1" value={selectedDistrict} onChange={handleDistrictChange}>
-            <option value="">Select a district</option>
+          <label className={styles.label1}>District:</label>
+          <select  className={styles.input1} value={selectedDistrict} onChange={handleDistrictChange}>
+            <option value="" style={{color:'black'}}>Select a district</option>
             {citiesInEgypt
               .find((cityObj) => cityObj.city === selectedCity)
               .districts.map((district, index) => (
-                <option key={index} value={district}>
+                <option key={index} value={district}style={{color:'black'}}>
                   {district}
                 </option>
               ))}
           </select>
         </div>
       )}
-        <label className="label1">Street</label>
+        <label className={styles.label1}>Street</label>
         <br />
         <input
           type="text"
-          className="input1"
+          className={styles.input1}
           name="radio"
           placeholder="Enter your Street"
                 value={selectedStreet}
                 onChange={(e) => setSelectedStreet(e.target.value)}
           // id="use-wallet"
+          required
         />
-        <label className="label1">Mobile Number</label>
+        <label className={styles.label1}>Mobile Number</label>
         <br />
         <input
           type="tel"
-          className="input1"
+          className={styles.input1}
           name="number"
           placeholder="Enter your mobile number"
           // id="use-wallet"
@@ -339,11 +370,11 @@ export default function CheckoutForm(props) {
         type="checkbox"
         // id="use-wallet"
         class="form-check-input mt-0"
-        checked={useWallet}
-        onChange={(e) => setUseWallet(e.target.checked)}
+        checked={useSave}
+        onChange={(e) => setUseSave(e.target.checked)}
         
       />
-      <label htmlFor="use-wallet" className="choicePayment" >Save Address</label>
+      <label htmlFor="use-wallet" className={styles.choicePayment} >Save Address</label>
       </div>
       </div>
       <div
@@ -354,9 +385,9 @@ export default function CheckoutForm(props) {
           justifyContent: 'space-between',
         }}
       >
-        <span id="title">Payment</span>
+        <span className={styles.title}>Payment</span>
         <label
-          id="title2"
+          className={styles.title2}
           style={{
             marginTop: '15px',
             marginLeft: '150px',
@@ -372,14 +403,14 @@ export default function CheckoutForm(props) {
 
       <div className="d-flex flex-row justify-content-between">
         <div style={{ display: 'flex', marginLeft: '65px' }}>
-          <div className="me-3" style={{ marginLeft: '0px' }}>
+          <div className={styles.me3} style={{ marginLeft: '0px' }}>
             <img
               className={`hellokitty ${useWallet === 0 ? 'active' : ''}`}
               src="/cc.png"
               onClick={() => setUseWallet(0)}
             />
           </div>
-          <div className="me-3" style={{ paddingLeft: '40px' }}>
+          <div className={styles.me3} style={{ paddingLeft: '40px' }}>
             {/* <label htmlFor="use-wallet">Cash on Delivery</label> */}
             <img
               className={`hellokitty ${useWallet === 2 ? 'active' : ''}`}
@@ -387,7 +418,7 @@ export default function CheckoutForm(props) {
               onClick={() => setUseWallet(2)}
             />
           </div>
-          <div className="me-3" style={{ paddingLeft: '40px' }}>
+          <div className={styles.me3} style={{ paddingLeft: '40px' }}>
             <img
               className={`hellokitty ${useWallet === 1 ? 'active' : ''}`}
               src="/wallet.png"
@@ -414,11 +445,11 @@ export default function CheckoutForm(props) {
         {useWallet == 0 && (
           <React.Fragment>
             <div>
-              <label className="label1">Card Holder Name</label>
+              <label className={styles.label1}>Card Holder Name</label>
               <br />
               <input
                 type="text"
-                className="input1"
+                className={styles.input1}
                 name="radio"
                 placeholder="Enter your Name"
                 // id="use-wallet"
@@ -430,7 +461,7 @@ export default function CheckoutForm(props) {
           </React.Fragment>
         )}
       </div>
-      <div className="buttons" style={{ paddingTop: '20px' }}>
+      <div className={styles.buttons} style={{ paddingTop: '20px' }}>
         <button
           disabled={
             isProcessing ||

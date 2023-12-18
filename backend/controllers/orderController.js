@@ -77,18 +77,22 @@ const changeOrderStatus = async (req, res) => {
 const addOrder = async (req, res) => {
   try {
     const { patientId, medicineList, totalCost, address } = req.body;
-    console.log(req.body);
+    
     const patient = await Patient.findById(patientId);
   console.log("hal tasma3ony");
+  console.log("hal tasma3ony");
     if (!patient) {
+      
       return res.status(404).json({ message: 'Patient not found' });
     }
+   
     const order = new Order({
       patient: patientId,
       medicineList,
       totalCost,
       address,
     });
+    
     await order.save();
     patient.orders.push(order._id);
     await patient.save();
