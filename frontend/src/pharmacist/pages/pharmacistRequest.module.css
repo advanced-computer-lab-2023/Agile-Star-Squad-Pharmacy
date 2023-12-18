@@ -18,10 +18,11 @@
 }
 
 .customText {
-  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   line-height: 24px;
   color: #0F172A;
-  margin-left: 10%;
   margin-top: 20%;
 }
 
@@ -31,7 +32,7 @@
   height: 100%;
 }
 
-.textBox:placeholder {
+.textBox::placeholder {
   color: #5C5C5C;
 }
 
@@ -64,12 +65,22 @@
   height: 35px;
 }
 
+
 .myDropzone {
+  background-color: #F8F8FF;
   width: 100%;
-  font-weight: 400;
-  font-size: 14px;
+  font-weight: 600;
+  font-size: 12px;
   line-height: 28px;
-  color: #9A9EA5;
+  color: #0F0F0F;
+  border: 1px dashed #96B7C7;
+  border-radius: 12px;
+  /* margin-top: 10px; */
+  height: 150px;
+  padding-top: 25px;
+  padding-bottom: 15px;
+  padding-inline: 10px;
+  cursor: pointer;
 }
 
 .thumbsContainer{
@@ -87,7 +98,7 @@
 
 .medicinesImage {
   position: absolute;
-  bottom: 0;
+  bottom: 40px;
   left: 7px;
   width: 52%;
   z-index: 1;
@@ -144,6 +155,7 @@ input.numField::-webkit-inner-spin-button {
 }
 
 
+
 .dropzoneTitle {
   font-size: 16px;
   margin-top: 15px;
@@ -171,6 +183,7 @@ input.numField::-webkit-inner-spin-button {
 .dropzoneSubtitle {
   color: #676767;
   font-size: 10px;
+  text-align: center;
   font-weight: 400;
   line-height: 10px;
 }
@@ -178,12 +191,6 @@ input.numField::-webkit-inner-spin-button {
 .myDropzone aside {
   justify-content: center;
 }
-
-.dropzoneDivider {
-  width: 100%;
-  margin-bottom: 34px;
-}
-
 
 input[type=number].numField {
   .container {
