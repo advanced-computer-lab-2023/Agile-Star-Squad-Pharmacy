@@ -132,7 +132,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             {/* <Route path="/" element={<NavBar />} exact /> */}
-            <Route path="/pharmacy/home" element={<PharmacyHome />} exact />
+            {/* <Route path="/pharmacy/home" element={<Homepage />} exact /> */}
             <Route
               path="/pharmacist/register"
               element={<PharmacistRequest />}

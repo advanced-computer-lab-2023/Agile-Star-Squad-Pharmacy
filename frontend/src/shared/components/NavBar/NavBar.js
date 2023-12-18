@@ -20,6 +20,7 @@ const NavBar = (props) => {
       }
     );
     const json = await response.json();
+    console.log(json);
     setWalletAmount(json.data.patient.wallet);
   };
 

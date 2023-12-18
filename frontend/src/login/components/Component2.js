@@ -4,6 +4,8 @@ import styles from './login.module.css';
 import InputField from './InputField/InputField';
 import Button from './Button/Button';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+
 
 function Component2({ setTab3, email }) {
   const navigate = useNavigate();
@@ -66,53 +68,64 @@ function Component2({ setTab3, email }) {
   };
 
   return (
-    <div className="col-md-7" id={styles.rightCol}>
-      <div className={styles.title2}>
-        <p>
-          <strong>NEW CREDENTIALS</strong>
-        </p>
-      </div>
-      <div className={styles.p1}>
-        <ul className={styles.rules}>
-          <strong>
-            <li>Password must be at least 8 characters long.</li>
-            <li>Password must contain at least one upper case.</li>
-            <li>One lower case letter.</li>
-            <li>
-              Password must contain at least one number or special character
-            </li>
-          </strong>
-        </ul>
-      </div>
-      <InputField
-        style={{ width: '500px', height: '28px' }}
-        type="password"
-        placeholder="New Password"
-        value={newPassword}
-        onChange={handleNewPassword}
-      />
-      <InputField
-        style={{ width: '500px', height: '28px' }}
-        type="password"
-        placeholder="Re-type Password"
-        value={retypePassword}
-        onChange={handleRetypePassword}
-      />
-      <div className={styles.component2Buttons}>
-        <Button
-          style={{ width: '300px', height: '40.541px', marginTop: '-40px' }}
-          onClick={handleSubmit}
-          name="Submit"
-        />
-        <Button
-          style={{
-            backgroundColor: 'white',
-            color: '#193842',
-            borderStyle: 'none',
-          }}
-          onClick={handleEmailCancel}
-          name="Cancel"
-        />
+    <div className="container-fluid" style={{ backgroundColor: '#96B7C7' }}>
+      <div className="row" style={{ backgroundColor: '#96B7C7' }}>
+        <div className="col-md-5">
+          <div className={styles.logoContainer}>
+            <Link to={'/admin/home'} className="navbar-brand">
+              Pharma
+            </Link>
+          </div>
+        </div>
+        <div className="col-md-7" id={styles.rightCol}>
+          <div className={styles.title2}>
+            <p>
+              <strong>NEW CREDENTIALS</strong>
+            </p>
+          </div>
+          <div className={styles.p1}>
+            <ul className={styles.rules}>
+              <strong>
+                <li>Password must be at least 8 characters long.</li>
+                <li>Password must contain at least one upper case.</li>
+                <li>One lower case letter.</li>
+                <li>
+                  Password must contain at least one number or special character
+                </li>
+              </strong>
+            </ul>
+          </div>
+          <InputField
+            style={{ width: '500px', height: '28px' }}
+            type="password"
+            placeholder="New Password"
+            value={newPassword}
+            onChange={handleNewPassword}
+          />
+          <InputField
+            style={{ width: '500px', height: '28px' }}
+            type="password"
+            placeholder="Re-type Password"
+            value={retypePassword}
+            onChange={handleRetypePassword}
+          />
+          <div className={styles.component2Buttons}>
+            <Button
+              style={{ width: '300px', height: '40.541px', marginTop: '-40px' }}
+              onClick={handleSubmit}
+              name="Submit"
+            />
+            <Button
+              style={{
+                backgroundColor: 'white',
+                color: '#193842',
+                borderStyle: 'none',
+              }}
+              onClick={handleEmailCancel}
+              name="Cancel"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
