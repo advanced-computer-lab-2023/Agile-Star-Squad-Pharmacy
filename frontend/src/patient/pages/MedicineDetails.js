@@ -16,6 +16,7 @@ import CartContext from './cart/Cart';
 const MedicineDetails = (props) => {
   const [allMedicines, setAllMedicine] = useState([]);
   const [relatedMedicines, setRelatedMedicines] = useState([]);
+  const user = useContext(UserContext);
   const cartCtx = useContext(CartContext);
   const location = useLocation();
   const stateData = location.state;
@@ -128,17 +129,18 @@ const MedicineDetails = (props) => {
             }}
           >
             {stateData.name}
-            <div
-              style={{
-                color: stockColor,
-                fontSize: '16px',
-                marginLeft: '-10%',
-              }}
-              className="row-4 d-flex flex-row"
-            >
-              <img src={stateData.quantity !== 0 ? tick : cross} />{' '}
-              {stateData.quantity !== 0 ? 'In Stock' : 'Not available'}
-            </div>
+            {user.role == "patient" &&
+              <div
+                style={{
+                  color: stockColor,
+                  fontSize: '16px',
+                  marginLeft: '-10%',
+                }}
+                className="row-4 d-flex flex-row"
+              >
+                <img src={stateData.quantity !== 0 ? tick : cross} />{' '}
+                {stateData.quantity !== 0 ? 'In Stock' : 'Not available'}
+              </div>}
           </div>
           <div
             style={{
@@ -160,6 +162,14 @@ const MedicineDetails = (props) => {
           <div style={{ color: '#505050', fontSize: '16px' }}>
             Medicinal Use: {stateData.medicinalUse}
           </div>
+          {user.role == "pharmacist" && (
+            <div style={{ color: '#505050', fontSize: '16px' }}>
+              Sales: {stateData.sales}
+              <br />
+              Quantity: {stateData.quantity}
+            </div>
+          )}
+
           <img src={line} alt="line" style={{}} />
           <div style={{ fontWeight: '500' }}>
             Other Medicines With Simillar Active Ingredients:
@@ -177,28 +187,28 @@ const MedicineDetails = (props) => {
             ))}
           </div>
         </div>
-
-        <div className="col-2 d-flex flex-column">
-          <button
-            style={{
-              marginTop: '-80%',
-              width: '185px',
-              height: '49px',
-              color: stateData.quantity !== 0 ? 'white' : 'black',
-              backgroundColor: stateData.quantity !== 0 ? '#3182CE' : 'grey',
-              borderRadius: '9px',
-            }}
-            onClick={addItem}
-            disabled={stateData.quantity !== 0 ? false : true}
-          >
-            <img
-              src={cart}
-              alt="cart"
-              style={{ marginRight: '10%', marginBottom: '2%' }}
-            />
-            Add to Cart
-          </button>
-        </div>
+        {user.role == "patient" &&
+          <div className="col-2 d-flex flex-column">
+            <button
+              style={{
+                marginTop: '-80%',
+                width: '185px',
+                height: '49px',
+                color: stateData.quantity !== 0 ? 'white' : 'black',
+                backgroundColor: stateData.quantity !== 0 ? '#3182CE' : 'grey',
+                borderRadius: '9px',
+              }}
+              onClick={addItem}
+              disabled={stateData.quantity !== 0 ? false : true}
+            >
+              <img
+                src={cart}
+                alt="cart"
+                style={{ marginRight: '10%', marginBottom: '2%' }}
+              />
+              Add to Cart
+            </button>
+          </div>}
       </div>
     </div>
   );
