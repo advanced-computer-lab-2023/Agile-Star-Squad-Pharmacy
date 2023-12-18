@@ -66,7 +66,7 @@ const Homepage = () => {
                             quantity: m.quantity,
                             medicinalUse: m.medicinalUse,
                             archived: m.archived,
-                            activeIngredients: m.activeIngredients
+                            activeIngredient: m.activeIngredient
                         };
                     })
                 );
@@ -163,10 +163,10 @@ const Homepage = () => {
     }
 
     const getMedicine = (medicine) => {
-        let ingredients = medicine.activeIngredients;
-        if (ingredients != null) {
-            ingredients = ingredients.join(', ')
-        }
+        let ingredients = medicine.activeIngredient;
+        // if (ingredients != null) {
+        //     ingredients = ingredients.join(', ')
+        // }
 
         const addItem = (e) => {
             e.preventDefault();

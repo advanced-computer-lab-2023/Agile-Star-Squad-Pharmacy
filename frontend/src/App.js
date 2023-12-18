@@ -45,10 +45,10 @@ function App() {
             <Route path="/payment/temp" element={<Checking />} exact />
             <Route path="/order" element={<Order />} exact />
             <Route
-            path="/patient/account"
-            element={<PatientAccountSettings />}
-            exact
-          />
+              path="/patient/account"
+              element={<PatientAccountSettings />}
+              exact
+            />
             <Route path="/address/add" element={<AddAddress />} exact />
             <Route path="changePassword" element={<ChangePassword />} exact />
             <Route path="/medicine" element={<MedicineDetails />} exact />
@@ -76,8 +76,8 @@ function App() {
         <Routes>
           <Route path="/admin/home" element={<AdminHome />} exact />
           <Route path="/admin/manage" element={<ManageUsersPage />} exact />
-          <Route path="changePassword" element={<ChangePassword />} exact />
-          <Route path="/SalesReport" element={<SalesReport/>} exact/>
+          <Route path="/changePassword" element={<ChangePassword />} exact />
+          <Route path="/SalesReport" element={<SalesReport />} exact />
           <Route path="*" element={<Navigate to="/admin/home" />} />{' '}
         </Routes>
       );
@@ -129,37 +129,8 @@ function App() {
   return (
     <div className="App">
       <CartContextProvider>
-        <BrowserRouter>
-          <Routes>
-            {/* <Route path="/" element={<NavBar />} exact /> */}
-            <Route path="/pharmacy/home" element={<PharmacyHome />} exact />
-            <Route
-              path="/pharmacist/register"
-              element={<PharmacistRequest />}
-              exact
-            />
-            <Route
-              path="/patient/register"
-              element={<PatientRegisterForm />}
-              exact
-            />
-            <Route
-              path="./pharmacy/pages/PharmacyHome"
-              element={<PharmacyHome />}
-              exact
-            />
-            <Route path="/patient/pages/Cart" element={<CartPage />} exact />
-            <Route path="/order" element={<Order />} exact />
-            <Route path="/pay" element={<AddingInfo />} exact />
-            <Route path="/medicine/add" element={<AddMedicineForm />} exact />
-            <Route path="/admin/home" element={<AdminHome />} exact />
-            <Route path="/admin/manage" element={<ManageUsersPage />} exact />
-            {/*redirect to landing page if wrong url*/}
-            <Route path="*" element={<Navigate to="/" />} />{' '}
-          </Routes>
-        </BrowserRouter>
+        <BrowserRouter>{getUserRoutes()}</BrowserRouter>
       </CartContextProvider>
-      <BrowserRouter>{getUserRoutes()}</BrowserRouter>
     </div>
   );
 }

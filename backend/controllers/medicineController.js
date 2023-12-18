@@ -58,18 +58,9 @@ exports.getMedicine = catchAsync(async (req, res, next) => {
     },
   });
 });
-// exports.getMedicine = catchAsync(async (req, res, next) => {
-//   const medicine = await Medicine.findById(req.params.id);
-//   const selectFields = 'quantity';
 
-//   res.status(200).json({
-//     status: 'success',
-//     data: {
-//         medicine.quantity,
-//         medicine.sales,
-//     },
-//   });
-// });
+
+
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
   Object.keys(obj).forEach((el) => {
