@@ -14,6 +14,7 @@ const NavBar = (props) => {
   }, []);
 
   const getWallet = async () => {
+    if (userCtx.role == "patient"){
     const response = await fetch(
       `http://localhost:4000/patients/${userCtx.userId}`,
       {
@@ -22,6 +23,18 @@ const NavBar = (props) => {
     );
     const json = await response.json();
     setWalletAmount(json.data.patient.wallet);
+    }
+    if (userCtx.role == "pharmacist"){
+      const response = await fetch(
+        `http://localhost:4000/pharmacist/${userCtx.userId}`,
+        {
+          credentials: 'include',
+        }
+      );
+      const json = await response.json();
+      console.log(json.data);
+      setWalletAmount(json.data.pharmacist.wallet);
+      }
   };
 
   const logout = async () => {
@@ -82,10 +95,17 @@ const NavBar = (props) => {
                     Contact a Pharmacist
                   </a>
                 </li>
+                <li className="nav-item">
+                  <Link to="/order" style={{ all: 'unset' }}>
+                    <a className="nav-link " href="#">
+                      View Orders
+                    </a>
+                  </Link>
+                </li>
                 <li className="nav-item" style={{ paddingLeft: '170px' }}>
-                  <a className="nav-link" href="#">
+                  <p className="nav-link" href="#">
                     Wallet : {walletAmount}
-                  </a>
+                  </p>
                 </li>
                 <li className="nav-item">
                   <Link to="/cart" style={{ all: 'unset' }}>

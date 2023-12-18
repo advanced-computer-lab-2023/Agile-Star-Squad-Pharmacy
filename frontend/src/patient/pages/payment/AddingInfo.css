@@ -1,7 +1,36 @@
+#payment-form {
+    padding: 30px;
+    width: 700px;
+  }
+  #payment-element {
+    padding: 20px;
+    padding-top: 0px;
+    height: smaller;
+    border-radius: 10px;
+    border-color: #000;
+  }
+  #payment-form {
+    margin-left: 638px;
+    width: 638px;
+  }
+  #payment-element {
+    width: 638px;
+  }
+  #payment-messaage {
+    font-family: 'poppins';
+    font-weight: 100;
+  }
 .row{
     justify-content: space-between;
     
 }
+.carousel-container {
+    width: 338px;
+    height: 201px;
+    padding: 0 -100px;
+  
+    margin: 0 auto; /* To center align the carousel */
+  }
 
 #card2{
     flex: 0 0 66%;
@@ -14,3 +43,38 @@
     top:50%;
     position: absolute;
 }
+#totalss{
+    display: flex;
+  padding: 14px 66px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex: 1 0 0;
+  border-radius: 5px 5px 5px 5px;
+  background: #000;
+  color: var(--white-100, #FFF);
+  font-family: 'Poppins';
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-top: 60px;
+  }
+  .hellokitty {
+    width: 58.806px;
+    height: 39.469px;
+    flex-shrink: 0;
+    padding: 5px;
+    outline: 3px solid black;
+    border-radius: 5px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+  .hellokitty.active {
+    /* Define highlighted effect styles like shadow, outline, etc. */
+    /* For example: */
+    box-shadow: 0 0 10px 2px white;
+    transform: scale(1.2);
+    transition: all 0.2s ease;
+   
+  }
