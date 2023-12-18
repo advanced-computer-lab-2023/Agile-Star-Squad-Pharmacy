@@ -1,19 +1,17 @@
 import React from 'react';
-// import { FontistoAmerican } from '../../../shared/components/FontistoAmerican';
-// import { LogosVisa } from '../../../shared/components/LogosVisa';
 import CartContext from '../cart/Cart';
 import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Elements } from '@stripe/react-stripe-js';
 import { useStripe, useElements } from '@stripe/react-stripe-js';
-import './style.css';
+import styles from './style.module.css';
 import NavBar from '../../../shared/components/NavBar/NavBar';
 import Card from '../../../shared/components/Card/Card';
 import { loadStripe } from '@stripe/stripe-js';
 import Payment from './Payment';
 import UserContext from '../../../user-store/user-context';
 import axios from 'axios';
-import AddressForm from './AddressForm';
+import './AddingInfo.css';
 import arrow from '../cart/ArrowLeft.png';
 import arrowR from '../cart/ArrowRight.png';
 import Slider from 'react-slick';
@@ -23,7 +21,7 @@ import 'slick-carousel/slick/slick-theme.css';
 const Checking = () => {
   const userCtx = useContext(UserContext);
   const cartCtx = useContext(CartContext);
-  
+
   const patientId = userCtx.userId;
   const [stripePromise, setStripePromise] = useState(null);
   const [addresses, setAddresses] = useState([]);
@@ -77,7 +75,7 @@ const Checking = () => {
   }, []);
   const navigate = useNavigate();
 
-  const toPrevious= () => {
+  const toPrevious = () => {
     navigate(-1);
   };
   const appearance = {
@@ -94,12 +92,11 @@ const Checking = () => {
       fontLineHeight: 'normal',
       spacingUnit: '5px',
       colorTextPlaceholder: 'rgba(255, 255, 255, 0.7)',
-      
     },
-  
+
     rules: {
-      '.DropdownItem --highlight':{
-        backgroundColor:'black'
+      '.DropdownItem --highlight': {
+        backgroundColor: 'black',
       },
       '.Input': {
         backgroundColor: 'rgba(0, 0, 0, 0.2)',
@@ -108,17 +105,15 @@ const Checking = () => {
         borderTopWidth: '0px',
         borderLeftWidth: '0px',
         borderRightWidth: '0px',
-        boxShadow:'none',
-        width:'larger',
-        color:'white',
-        outline:'black',
+        boxShadow: 'none',
+        width: 'larger',
+        color: 'white',
+        outline: 'black',
         height: '32px',
-        padding :'9px',
-        fontSize:'12px',
-        
+        padding: '9px',
+        fontSize: '12px',
       },
-           
-      
+
       '.Label': {
         textTransform: 'uppercase',
         color: 'black',
@@ -127,7 +122,6 @@ const Checking = () => {
         fontWeight: '400',
         lineHeight: 'normal',
       },
-      
 
       // See all supported class names and selector syntax below
     },
@@ -135,14 +129,14 @@ const Checking = () => {
   return (
     <div>
       <NavBar />
-      <div className="checkout">
-        <div className="div">
-          <div className="overlap-group">
-            <div className="overlap-2">
+      <div className={styles.checkout}>
+        <div className={styles.div}>
+          <div className={styles.overlapGroup}>
+            <div className={styles.overlap2}>
               <div className="container" style={{ marginLeft: '50px' }}>
                 <div style={{ paddingTop: '50px' }}>
                   <span
-                    id="title"
+                    className={styles.title}
                     style={{
                       color: 'white',
                       textDecoration: 'none',
@@ -152,9 +146,9 @@ const Checking = () => {
                   >
                     Purchase Details
                   </span>
-                
-      {/* <AddressForm /> */}
-    
+
+                  {/* <AddressForm /> */}
+
                   <Elements stripe={stripePromise}>
                     <Payment
                       CartCtx={cartCtx}
@@ -164,24 +158,30 @@ const Checking = () => {
                 </div>
               </div>
             </div>
-            <div className="overlap-3">
-            <div className='backarrow'style={{marginBottom:'20px'}}>
-          <img src={arrow}
-            style={{ width: '20px', height: 'auto' }}
-          />
-          <button className='back' onClick={toPrevious}> Back</button>
-        </div>
+            <div className={styles.overlap3}>
+              <div
+                className={styles.backarrow}
+                style={{ marginBottom: '20px' }}
+              >
+                <img src={arrow} style={{ width: '20px', height: 'auto' }} />
+                <button className={styles.back} onClick={toPrevious}>
+                  {' '}
+                  Back
+                </button>
+              </div>
 
               <br />
-              <h2 className="title">ORDER SUMMARY</h2>
+              <h2 className={styles.title}>ORDER SUMMARY</h2>
               <div className="carousel-container">
                 <br />
                 <Slider {...settings}>
                   {cartCtx.items.map((item, index) => (
                     <div key={index}>
-                      <p id='indexCartItem'>Item {index+1} of {cartCtx.items.length}</p>
-                      <p id='nameCartItem'>{item.name}</p>
-                      <p id='priceCartItem'>${item.price}</p>
+                      <p className={styles.indexCartItem}>
+                        Item {index + 1} of {cartCtx.items.length}
+                      </p>
+                      <p className={styles.nameCartItem}>{item.name}</p>
+                      <p className={styles.priceCartItem}>${item.price}</p>
                       <img
                         src={item.image}
                         alt={item.name}
@@ -194,8 +194,7 @@ const Checking = () => {
                     </div>
                   ))}
                 </Slider>
-                <div className="container" id='totalss'>
-                  
+                <div className="container" id="totalss">
                   Total: ${cartCtx.total}
                   {/* ///need to add package stuff */}
                 </div>
