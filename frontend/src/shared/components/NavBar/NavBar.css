@@ -21,8 +21,8 @@
 }
 
 .navbar-brand {
-  padding-left: 80px;
-  width: 100px;
+  padding-left: 50px;
+  width: 120px;
   height: 31px;
   flex-shrink: 0;
   color: rgba(60, 90, 11, 0.61);
