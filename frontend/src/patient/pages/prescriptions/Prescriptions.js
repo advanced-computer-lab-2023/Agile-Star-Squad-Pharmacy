@@ -7,6 +7,7 @@ import PrescriptionTile from './PrescriptionTile';
 import Calendar from 'react-calendar';
 import Select from 'react-select';
 import UserContext from '../../../user-store/user-context';
+import axios from 'axios';
 
 const Prescriptions = () => {
   const dummy_presc = [
@@ -55,48 +56,60 @@ const Prescriptions = () => {
   const pdfRef = useRef(null);
 
   useEffect(() => {
-    const fetchPrescriptions = () => {
-      fetch(
-        `http://localhost:3000/patients/${userCtx.userId}/prescriptions`
-      ).then(async (response) => {
-        const json = await response.json();
-        const prescriptionsJson = json.data.prescriptions;
-        const prescDoctors = new Set();
-        setPrescriptions((_) => {
-          const prescriptions = [];
-          prescriptionsJson.forEach((prescription) => {
-            prescDoctors.add(prescription.doctorName);
-            prescription.items.forEach((item) => {
-              prescriptions.push({
-                id: prescription.id,
-                date: formatDate(new Date(prescription.dateOfCreation)),
-                status: prescription.status,
-                doctor: prescription.doctorName,
-                ...item,
+    const fetchPrescriptions = async () => {
+      let username;
+      let prescriptionsJson;
+      const prescDoctors = new Set();
+      await axios
+        .get(`http://localhost:4000/patients/${userCtx.userId}`)
+        .then((response) => {
+          username = response.data.data.patient.username;
+          fetch(
+            `http://localhost:3000/patients/prescriptions/${username}`
+          ).then(async (response) => {
+            if (!response.ok) {
+              console.log('error', response);
+              return;
+            }
+            const json = await response.json();
+            prescriptionsJson = json.data.prescriptions;
+            setPrescriptions((_) => {
+              const prescriptions = [];
+              prescriptionsJson.forEach((prescription) => {
+                prescDoctors.add(prescription.doctorName);
+                prescription.items.forEach((item) => {
+                  prescriptions.push({
+                    id: prescription.id,
+                    date: formatDate(new Date(prescription.dateOfCreation)),
+                    status: prescription.status,
+                    doctor: prescription.doctorName,
+                    ...item,
+                  });
+                });
               });
+              return prescriptions;
+            });
+            setFilteredPrescriptions((_) => {
+              const prescriptions = [];
+              console.log('prescriptionsJson', prescriptionsJson);
+              prescriptionsJson.forEach((prescription) => {
+                prescription.items.forEach((item) => {
+                  prescriptions.push({
+                    id: prescription.id,
+                    date: formatDate(new Date(prescription.dateOfCreation)),
+                    status: prescription.status,
+                    doctor: prescription.doctorName,
+                    ...item,
+                  });
+                });
+              });
+              return prescriptions;
             });
           });
-          return prescriptions;
+          setTimeout(() => {
+            setPrescriptionDoctors(Array.from(prescDoctors));
+          }, 10);
         });
-        setFilteredPrescriptions((_) => {
-          const prescriptions = [];
-          prescriptionsJson.forEach((prescription) => {
-            prescription.items.forEach((item) => {
-              prescriptions.push({
-                id: prescription.id,
-                date: formatDate(new Date(prescription.dateOfCreation)),
-                status: prescription.status,
-                doctor: prescription.doctorName,
-                ...item,
-              });
-            });
-          });
-          return prescriptions;
-        });
-        setTimeout(() => {
-          setPrescriptionDoctors(Array.from(prescDoctors));
-        }, 10);
-      });
     };
     fetchPrescriptions();
   }, []);
