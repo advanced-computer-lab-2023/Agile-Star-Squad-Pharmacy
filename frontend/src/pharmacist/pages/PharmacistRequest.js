@@ -5,7 +5,7 @@ import storage from '../../index';
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import classes from './pharmacistRequest.module.css';
 import logo from './logo.png';
-import Medicines from './Medicines.png';
+import Medicines from '../../assets/homepage/sectionMedicine.png';
 import Select from 'react-select';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -75,27 +75,28 @@ const PharmacistRequestForm = () => {
     let idDownloadUrl;
     let licenseDownloadUrl;
     let degreeDownloadUrl;
-
+    
     if (idImageForm !== "") {
-      const idImageRef = ref(storage, `${idImageForm.name}`);
-      await uploadBytesResumable(idImageRef, idImageForm).then(async (snapshot) => {
+      const idImageRef = ref(storage, `${idImageForm[0].name}`);
+      await uploadBytesResumable(idImageRef, idImageForm[0]).then(async (snapshot) => {
         idDownloadUrl = await getDownloadURL(snapshot.ref);
       });
     }
 
     if (pharmacyLicenseForm !== "") {
-      const pharmacyLicenseRef = ref(storage, `${pharmacyLicenseForm.name}`);
-      await uploadBytesResumable(pharmacyLicenseRef, pharmacyLicenseForm).then(async (snapshot) => {
+      const pharmacyLicenseRef = ref(storage, `${pharmacyLicenseForm[0].name}`);
+      await uploadBytesResumable(pharmacyLicenseRef, pharmacyLicenseForm[0]).then(async (snapshot) => {
         licenseDownloadUrl = await getDownloadURL(snapshot.ref)
       });
     }
 
     if (pharmacyDegreeForm !== "") {
-      const pharmacyDegreeRef = ref(storage, `${pharmacyDegreeForm.name}`);
-      await uploadBytesResumable(pharmacyDegreeRef, pharmacyDegreeForm).then(async (snapshot) => {
+      const pharmacyDegreeRef = ref(storage, `${pharmacyDegreeForm[0].name}`);
+      await uploadBytesResumable(pharmacyDegreeRef, pharmacyDegreeForm[0]).then(async (snapshot) => {
         degreeDownloadUrl = await getDownloadURL(snapshot.ref)
       });
     }
+    console.log(idDownloadUrl)
 
     const data = {
       "username": formData.username,
@@ -107,8 +108,8 @@ const PharmacistRequestForm = () => {
       "affiliation": formData.affiliation,
       "educationalBackground": formData.educationalBackground,
       "idImage": idDownloadUrl,
-      "medicalLicense": licenseDownloadUrl,
-      "medicalDegree": degreeDownloadUrl
+      "pharmacyLicense": licenseDownloadUrl,
+      "pharmacyDegree": degreeDownloadUrl
     }
 
     try {
@@ -119,7 +120,7 @@ const PharmacistRequestForm = () => {
         credentials: 'include',
       };
       const response = await fetch(
-        'http://localhost:4000/pharmacists',
+        'http://localhost:4000/pharmacist',
         requestOptions
       );
 
@@ -131,7 +132,7 @@ const PharmacistRequestForm = () => {
         // Handle errors if the server response is not ok
         const responseData = await response.json();
         alert(responseData.message);
-        navigate('/');
+        // navigate('/');
       }
     } catch (error) {
       // Handle network errors
@@ -274,15 +275,15 @@ const PharmacistRequestForm = () => {
                 </div>
                 <div className='d-flex justify-content-between mb-3' style={{ marginLeft: '-55px' }}>
 
-                  <div className='col-3 px-2'>
+                  <div className='col-4 px-2'>
                     <div className={classes.dropzoneTitle}>Personal ID</div>
                     <MyDropzone files={idImageForm} setFiles={setIdImage} onChange={onIdImageChange} maxFiles={1} toast={(s) => { }} />
                   </div>
-                  <div className='col-3 px-2'>
+                  <div className='col-4 px-2'>
                     <div className={classes.dropzoneTitle}>Pharmacy Degree</div>
                     <MyDropzone files={pharmacyDegreeForm} setFiles={setDegreeImage} onChange={onMedicalDegreeChange} maxFiles={1} toast={(s) => { }} />
                   </div>
-                  <div className='col-3 px-2'>
+                  <div className='col-4 px-2'>
                     <div className={classes.dropzoneTitle}>Pharmacy License</div>
                     <MyDropzone files={pharmacyLicenseForm} setFiles={setLicenseImage} onChange={onMedicalLicenseChange} maxFiles={1} toast={(s) => { }} />
                   </div>
@@ -302,7 +303,6 @@ export default PharmacistRequestForm;
 const MyDropzone = (props) => {
   const files = props.files;
   const setFiles = props.setFiles;
-  
   const onDrop = useCallback((acceptedFiles) => {
     if (files.length + acceptedFiles.length > props.maxFiles) {
       props.toast(`Upload a maximum of ${props.maxFiles} files`);
@@ -350,19 +350,21 @@ const MyDropzone = (props) => {
         }}
       >
         {({ getRootProps, getInputProps }) => (
-          <section className='h-100'>
-            <div className='h-100' {...getRootProps()}>
+          <section className="h-100">
+            <div className="h-100" {...getRootProps()}>
               <input {...getInputProps()} />
-              {files.length > 0 && <aside style={thumbsContainer}>
-                {thumbs}
-              </aside>}
-              {files.length == 0 && <div>
-                <img height={50} src={uploadImg} />
-                <div className="mt-3">Drag & drop files or Browse</div>
-                <div className={classes.dropzoneSubtitle}>
-                  Supported formats: JPEG, PNG, PDF
+              {files.length > 0 && (
+                <aside style={thumbsContainer}>{thumbs}</aside>
+              )}
+              {files.length == 0 && (
+                <div className='d-flex flex-column align-items-center'>
+                  <img height={50} src={uploadImg} />
+                  <div className="mt-3">Drag & drop files or Browse</div>
+                  <div className={classes.dropzoneSubtitle}>
+                    Supported formats: JPEG, PNG, PDF
+                  </div>
                 </div>
-              </div>}
+              )}
             </div>
           </section>
         )}
@@ -403,6 +405,7 @@ const thumbsContainer = {
   height: '100%',
   marginTop: 8,
 };
+
 
 
 

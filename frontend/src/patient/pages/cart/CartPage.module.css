@@ -1,7 +1,16 @@
-.cartpage {
+.cartContainer {
   background-image: url('./backgroundImage.png');
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+
+.cartpage {
   display: flex;
   background-repeat: no-repeat;
   width: 100vw;

@@ -9,6 +9,7 @@
 }
 
 .bigContainer {
+    text-align: center;
     font-family: 'Poppins';
     width: 50%;
     height: 70%;
@@ -22,8 +23,8 @@
 }
 
 .leftSmallContainer{
-    width: 30%;
-    height: 30%;
+    width: 35%;
+    height: 35%;
     background-color: white;
     border: 0.5px #d5e0d5 solid;
     border-radius: 15px;
@@ -39,8 +40,8 @@
 }
 
 .rightSmallContainer{
-    width: 30%;
-    height: 30%;
+    width: 35%;
+    height: 35%;
     background-color: white;
     border: 0.5px #d5e0d5 solid;
     border-radius: 15px;
