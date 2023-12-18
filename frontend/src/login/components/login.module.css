@@ -134,3 +134,15 @@
     text-align: center;
     margin-left: -100px;
 }
+
+.navbar-brand {
+    font-size: 32px;
+    font-weight: bolder;
+    padding-bottom: 10px;
+    padding-right: 48px;
+    padding-left: 80px;
+  }
+
+  .logoContainer{
+    margin-top: 4%;
+  }

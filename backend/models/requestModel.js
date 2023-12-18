@@ -28,7 +28,8 @@ const requestSchema = new mongoose.Schema(
             minLength: 8,
         },
         dateOfBirth: Date,
-        creationDate: Date,
+        creationDate:
+        { type: Date, default:Date.now},
         hourlyRate: {
             type: Number,
             required: [true, 'Please provide an hourly rate'],

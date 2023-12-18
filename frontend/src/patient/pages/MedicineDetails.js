@@ -13,9 +13,6 @@ import line from './line.png';
 import cross from './cross.png';
 import CartContext from './cart/Cart';
 
-
-
-
 const MedicineDetails = (props) => {
   const [allMedicines, setAllMedicine] = useState([]);
   const [relatedMedicines, setRelatedMedicines] = useState([]);
@@ -25,9 +22,6 @@ const MedicineDetails = (props) => {
   const navigate = useNavigate();
   // console.log(location);
   const stockColor = stateData.quantity !== 0 ? '#00B517' : '#ff0000';
-
-
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,20 +54,20 @@ const MedicineDetails = (props) => {
     fetchData();
   }, []);
 
- useEffect(() => {
-  filterRelatedMedicines();
-}, [allMedicines, location.state]);
+  useEffect(() => {
+    filterRelatedMedicines();
+  }, [allMedicines, location.state]);
 
-const filterRelatedMedicines = () => {
-  if (stateData && stateData.activeIngredient) {
-    const filteredMedicines = allMedicines.filter(
-      (medicine) =>
-        medicine.activeIngredient === stateData.activeIngredient &&
-        medicine.id !== stateData.id
-    );
-    setRelatedMedicines(filteredMedicines);
-  }
-};
+  const filterRelatedMedicines = () => {
+    if (stateData && stateData.activeIngredient) {
+      const filteredMedicines = allMedicines.filter(
+        (medicine) =>
+          medicine.activeIngredient === stateData.activeIngredient &&
+          medicine.id !== stateData.id
+      );
+      setRelatedMedicines(filteredMedicines);
+    }
+  };
 
   /////////////////////////////
   const addItem = (e) => {
@@ -100,14 +94,23 @@ const filterRelatedMedicines = () => {
 
       <div
         style={{
+          marginTop: '2%',
           display: 'flex',
-          flexDirection: 'row',
           alignItems: 'center',
-          height: '80vh',
+          height: 'auto',
         }}
       >
         <div className="col-5 d-flex justify-content-center align-items-center">
-          <img src={stateData.image} alt="Medicine Image" />
+          <img
+            src={stateData.image}
+            alt="Medicine Image"
+            style={{
+              maxWidth: '100%',
+              maxHeight: '300px',
+              width: 'auto',
+              height: 'auto',
+            }}
+          />
         </div>
         <div className="col-1 d-flex flex-column justify-content-start align-items-start"></div>
         <div

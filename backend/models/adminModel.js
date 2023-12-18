@@ -15,6 +15,13 @@ const adminSchema = new mongoose.Schema({
     select: false,
     minLength: 8,
   },
+  email: {
+    type: String,
+    required: [true, 'Please provide your email'],
+    unique: true,
+    lowercase: true,
+    validate: [validator.isEmail, 'Please provide a valid email.'],
+  },
   creationDate:
   { type: Date, default:Date.now},
 });

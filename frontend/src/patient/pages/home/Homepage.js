@@ -196,7 +196,6 @@ const Homepage = () => {
                     <div className={classes.medicineDesc1}>Active Ingredient:</div>
                     <div className={classes.medicineDesc2}>{ingredients}</div>
                     <div className="d-flex mt-2">
-                        <div className={`${classes.addToCartButton} me-1`} onClick={addItem}>Add To Cart</div>
                         <div className={`${classes.viewButton} ms-1`}>View</div>
                     </div>
                 </div>
@@ -205,11 +204,12 @@ const Homepage = () => {
     }
 
     const onClickSearch = (event) => {
-        if (event == null || event.key == "Enter") {
+        if (event == null || event.key === "Enter") {
             setSearchText(sectionSearchText);
+            filterMedicine();
             medicineResultsRef.current.scrollIntoView({ behavior: "smooth" });
         }
-    }
+    };
 
 
 

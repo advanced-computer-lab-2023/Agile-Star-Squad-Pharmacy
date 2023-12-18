@@ -14,13 +14,15 @@
   height: 110%;
 }
 .navbar-collapse {
+  display: flex;
+  text-align: center;
   padding-top: 15px;
   padding-left: 190px;
 }
 
 .navbar-brand {
-  padding-left: 80px;
-  width: 196px;
+  padding-left: 50px;
+  width: 120px;
   height: 31px;
   flex-shrink: 0;
   color: rgba(60, 90, 11, 0.61);
@@ -48,14 +50,6 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-}
-#dropdownMenuButton1 {
-  color: black;
-  background-color: white;
-  border-color: white;
-  border-radius: 0%;
-  font-size: 30px;
-  padding-top: 20px;
 }
 #last {
   color: #ea580c;
