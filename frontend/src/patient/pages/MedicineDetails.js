@@ -13,14 +13,21 @@ import line from './line.png';
 import cross from './cross.png';
 import CartContext from './cart/Cart';
 
+
+
+
 const MedicineDetails = (props) => {
   const [allMedicines, setAllMedicine] = useState([]);
   const [relatedMedicines, setRelatedMedicines] = useState([]);
   const cartCtx = useContext(CartContext);
   const location = useLocation();
   const stateData = location.state;
+  const navigate = useNavigate();
   // console.log(location);
   const stockColor = stateData.quantity !== 0 ? '#00B517' : '#ff0000';
+
+
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,20 +60,20 @@ const MedicineDetails = (props) => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    filterRelatedMedicines();
-  }, [allMedicines]);
+ useEffect(() => {
+  filterRelatedMedicines();
+}, [allMedicines, location.state]);
 
-  const filterRelatedMedicines = () => {
-    if (stateData.activeIngredient) {
-      const filteredMedicines = allMedicines.filter(
-        (medicine) =>
-          medicine.activeIngredient === stateData.activeIngredient &&
-          medicine.id !== stateData.id
-      );
-      setRelatedMedicines(filteredMedicines);
-    }
-  };
+const filterRelatedMedicines = () => {
+  if (stateData && stateData.activeIngredient) {
+    const filteredMedicines = allMedicines.filter(
+      (medicine) =>
+        medicine.activeIngredient === stateData.activeIngredient &&
+        medicine.id !== stateData.id
+    );
+    setRelatedMedicines(filteredMedicines);
+  }
+};
 
   /////////////////////////////
   const addItem = (e) => {
@@ -81,6 +88,10 @@ const MedicineDetails = (props) => {
       price: stateData.price,
       quantity: +stateData.cartQuantity,
     });
+  };
+
+  const toMedicineDetails = (medicine) => {
+    navigate('/medicine', { state: medicine });
   };
 
   return (
@@ -158,6 +169,7 @@ const MedicineDetails = (props) => {
                 alt={medicine.name}
                 style={{ cursor: 'pointer' }}
                 width={'80px'}
+                onClick={() => toMedicineDetails(medicine)}
               />
             ))}
           </div>
