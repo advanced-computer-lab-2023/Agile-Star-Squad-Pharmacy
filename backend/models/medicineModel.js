@@ -48,8 +48,6 @@ const medicineSchema = new mongoose.Schema({
       type: Boolean,
       default: false
     }
-  
-  
 });
 // tourSchema.virtual('familyMembers', {
 //   ref: 'Family',
