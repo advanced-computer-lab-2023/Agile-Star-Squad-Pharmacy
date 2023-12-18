@@ -425,7 +425,7 @@ height:140px;
   font-style: normal;
   font-weight: 700;
   line-height: 100%; /* 23.067px */
-  position: inherit;
+  
 }
 .prev{
   color: #000;
@@ -434,6 +434,8 @@ height:140px;
   font-style: normal;
   font-weight: 400;
   line-height: 100%; /* 13.456px */
+  position: absolute;
+  margin-top: 6%;
 }
 .salesT{
   color: var(--Text-900, #0F172A);

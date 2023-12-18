@@ -12,6 +12,7 @@ import check from '../check.png';
 import RevenueChart from '../ManageUsers/components/RevenueChart';
 import UserDetails from '../ManageUsers/components/UserDetails';
 import AdminForm from '../ManageUsers/components/AdminForm';
+import RequestDetails from '../ManageUsers/components/RequestDetails';
 
 const AdminHome = (props) => {
   const navigate = useNavigate();
@@ -33,7 +34,6 @@ const AdminHome = (props) => {
   const [dataLoaded, setDataLoaded] = useState(false);
   const [isUserTab, setUserTab] = useState(true);
   const [showRequest, setShowRequest] = useState(false);
-  const [selectedRow, setSelectedRow] = useState({});
   const [orders, setOrders] = useState([]);
   const [salesForDay, setSalesForDay] = useState(0);
   const [salesForYesterday, setSalesForYesterday] = useState(0);
@@ -41,6 +41,7 @@ const AdminHome = (props) => {
   const [prevWeekSales, setPrevWeekSales] = useState([]);
   const [percentageChange, setPercentageChange] = useState(0);
   const [changeSign, setChangeSign] = useState('');
+  const [showRequestDetails, setShowRequestDetails] = useState(false);
 
   useEffect(() => {
     // If data has been loaded, simulate a click on the "Patients" button
@@ -262,6 +263,7 @@ useEffect(() => {
         educationalBackground: request['educationalBackground'],
         status: request['status'],
         idImage: request['idImage'],
+        creationDate: request['creationDate'],
         pharmacyLicense: request['pharmacyLicense'],
         pharmacyDegree: request['pharmacyDegree'],
       })));
@@ -351,29 +353,27 @@ useEffect(() => {
           alert('Network error: ' + error.message);
       }
   }
-  const showDetails = (request) => {
-    if (request && request.id) {
-      setSelectedRequest(request);
-    } else {
-      console.error('Invalid or undefined request object:', request);
-    }
-  };
+ 
 
   const editHandler = () => {
     // Navigate to the "Packages Page" when the "Edit" button is clicked
     navigate('/packages');
   };
 
-  const closeModal = () => {
-    setSelectedRequest(null);
-  };
+ 
 
-  const showRequestModal = (request) => {
-    setSelectedRequest(request);
-  };
+
 
   const showUserModal = (user) => {
     setSelectedUser(user);
+    // Scroll to the top of the page
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth', // You can adjust the behavior as needed
+    });
+  };
+  const showRequestModal = (request) => {
+    setSelectedRequest(request);
     // Scroll to the top of the page
     window.scrollTo({
       top: 0,
@@ -596,7 +596,7 @@ const handleSalesClick = () =>{
     setShowAdminForm(false);
   };
   
-
+ console.log(selectedRequest+"reqqq");
 
   return (
     <div>
@@ -632,7 +632,7 @@ const handleSalesClick = () =>{
       <table className="table table-hover">
         <tbody>
           {requests.map((request) => (
-            <tr key={request.id} onClick={() => showDetails(request)}>
+            <tr key={request.id}className={styles.customRow} onClick={() => showRequestModal(request)} >
               <td className={styles.req}>
                 <img src={req} alt="req" />
               </td>
@@ -852,10 +852,19 @@ const handleSalesClick = () =>{
           onDelete={deleteUser}
         />
       )}
-        {showUser && <UserDetails data={selectedUser} exit={exitUserModal} onDelete={deleteUser} />}
+      {selectedRequest &&(
+        <RequestDetails
+        data={selectedRequest}
+        exit={exitRequestModal}
+        />
+      )}
+        
         {showAdminForm && (
         <AdminForm exit={exitAdminModal} refresh={fetchAdmins} />
       )}
+      
+       
+      
 
      
       {/* <Link to="/admin/manage">
