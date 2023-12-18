@@ -39,6 +39,8 @@ const PharmacyHomePharmacist = () => {
               id: m._id,
               cartQuantity: 1,
               ...m,
+              price: m.price,
+              profit: m.price*0.8
             };
           })
         );
