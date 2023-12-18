@@ -129,6 +129,35 @@ function App() {
   return (
     <div className="App">
       <CartContextProvider>
+        <BrowserRouter>
+          <Routes>
+            {/* <Route path="/" element={<NavBar />} exact /> */}
+            {/* <Route path="/pharmacy/home" element={<Homepage />} exact /> */}
+            <Route
+              path="/pharmacist/register"
+              element={<PharmacistRequest />}
+              exact
+            />
+            <Route
+              path="/patient/register"
+              element={<PatientRegisterForm />}
+              exact
+            />
+            <Route
+              path="./pharmacy/pages/PharmacyHome"
+              element={<PharmacyHome />}
+              exact
+            />
+            <Route path="/patient/pages/Cart" element={<CartPage />} exact />
+            <Route path="/order" element={<Order />} exact />
+            <Route path="/pay" element={<AddingInfo />} exact />
+            <Route path="/medicine/add" element={<AddMedicineForm />} exact />
+            <Route path="/admin/home" element={<AdminHome />} exact />
+            <Route path="/admin/manage" element={<ManageUsersPage />} exact />
+            {/*redirect to landing page if wrong url*/}
+            <Route path="*" element={<Navigate to="/" />} />{' '}
+          </Routes>
+        </BrowserRouter>
         <BrowserRouter>{getUserRoutes()}</BrowserRouter>
       </CartContextProvider>
     </div>

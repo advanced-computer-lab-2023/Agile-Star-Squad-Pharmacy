@@ -4,7 +4,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../logo.png';
 import UserContext from '../../../user-store/user-context';
 
-
 const AdminNavBar = (props) => {
   const navigate = useNavigate();
   const userCtx = useContext(UserContext);
@@ -16,29 +15,18 @@ const AdminNavBar = (props) => {
     navigate('/');
   };
 
-
   const changePasswordHandler = () => {
     navigate('/changePassword');
   };
- 
-
 
   return (
     <div className="bodyN">
       <nav className="navbar navbar-expand-lg navbar-light bg-light d-flex">
         <div className="container-fluid">
           <Link to={'/admin/home'} className="navbar-brand">
-            <img
-              src={logo}
-              alt=""
-              width="30"
-              height="24"
-              className="d-inline-block align-text-top"
-              id="logo"
-            />
-            clinic
+            Pharma
           </Link>
-          
+
           <button
             className="navbar-toggler"
             type="button"
@@ -50,20 +38,19 @@ const AdminNavBar = (props) => {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
-          
-          </div>
+          <div className="collapse navbar-collapse" id="navbarNav"></div>
           <div className="d-flex mx-4">
             <div className="btn-group ">
-            
-             
-              <a href="#" className="btn btn-white" onClick={changePasswordHandler}>
-                  Change Password
-                </a>
-                <a href="#" className="btn btn-white" id="last" onClick={logout}>
-                  Logout
-                </a>
-              
+              <a
+                href="#"
+                className="btn btn-white"
+                onClick={changePasswordHandler}
+              >
+                Change Password
+              </a>
+              <a href="#" className="btn btn-white" id="last" onClick={logout}>
+                Logout
+              </a>
             </div>
           </div>
         </div>

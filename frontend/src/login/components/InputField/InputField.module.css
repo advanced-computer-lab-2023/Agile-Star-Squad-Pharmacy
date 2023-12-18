@@ -4,6 +4,10 @@
   border-bottom: 1px solid #a0a0a0; 
   outline: none; 
 }
+.inputField::placeholder{
+  color: black;
+  font-size: large;
+}
 .container{
   display: flex;
   justify-content: center;

@@ -44,8 +44,10 @@ const Login = (props) => {
     <div className="container-fluid" style={{ backgroundColor: '#96B7C7' }}>
       <div className="row" style={{ backgroundColor: '#96B7C7' }}>
         <div className="col-md-7">
-          <div className={styles.logo}>
-            <img src={logo} alt="logo" />
+          <div className={styles.logoContainer}>
+            <Link to={'/admin/home'} className="navbar-brand">
+              Pharma
+            </Link>
           </div>
           <img className={styles.stethoscope} src={img} alt="login" />
         </div>

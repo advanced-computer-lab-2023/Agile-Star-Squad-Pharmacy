@@ -1,4 +1,5 @@
 import classes from "./BrowseMedicine.module.css"
+import {useRef,useContext,useState, useEffect} from 'react';
 
 const BrowseMedicine = () => {
     const userCtx = useContext(UserContext);
@@ -182,7 +183,7 @@ const BrowseMedicine = () => {
     return <section className={classes.medicineSection}>
         <div className={classes.medicineSectionTitle}>BROWSE MEDICINE</div>
         <div className={classes.medicineSearchContainer}>
-            <div className={classes.medicineSearchIcon}><img width={30} src={searchIconImg} /></div>
+            <div className={classes.medicineSearchIcon}><img width={30} src={searchIconImg} alt=''/></div>
             <input className={classes.medicineSearchInput} value={searchText} onChange={(e) => setSearchText(e.target.value)} placeholder="Search" />
         </div>
         {getCategoryTiles()}

@@ -18,9 +18,6 @@ const ResetPassword = () => {
       <div className="container-fluid">
         <div className="row">
           <div className="col-md-5">
-            <div className={styles.logo}>
-              <img src={logo} alt="logo" />
-            </div>
             <img className={styles.bandage} src={img} alt="login" />
           </div>
           {!tab && (<Component0 setTab={setTab} setEmail2={setEmail} />)}

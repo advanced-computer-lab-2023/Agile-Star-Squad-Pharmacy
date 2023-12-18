@@ -1,15 +1,16 @@
 import React, { useContext, useState, useEffect } from 'react';
 import './NavBar.css';
 import patient from '../../../patient.png';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import UserContext from '../../../user-store/user-context';
 
 const NavBar = (props) => {
+  const navigate = useNavigate();
   const [walletAmount, setWalletAmount] = useState(0);
   const userCtx = useContext(UserContext);
 
   useEffect(() => {
-    if (userCtx.role === 'paient') getWallet();
+    getWallet();
   }, []);
 
   const getWallet = async () => {
@@ -21,6 +22,14 @@ const NavBar = (props) => {
     );
     const json = await response.json();
     setWalletAmount(json.data.patient.wallet);
+  };
+
+  const logout = async () => {
+    await userCtx.logout();
+    navigate('/');
+  };
+  const viewCart = () => {
+    navigate('/cart');
   };
 
   return (
@@ -71,47 +80,26 @@ const NavBar = (props) => {
                   </a>
                 </li>
                 <li className="nav-item" style={{ paddingLeft: '270px' }}>
-                  <a className="nav-link" href="#" style={{ color: 'black' }}>
+                  <a className="nav-link" href="#" style={{ all: 'unset' }}>
                     Wallet : {walletAmount}
                   </a>
                 </li>
+                <li className="nav-item">
+                  <Link to="/cart" style={{ all: 'unset' }}>
+                    <a className="nav-link" href="#" onClick={viewCart}>
+                      View Cart
+                    </a>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/" style={{ all: 'unset' }}>
+                    <a className="nav-link" id="last" href="#" onClick={logout}>
+                      Logout
+                    </a>
+                  </Link>
+                </li>
               </ul>
             )}
-          </div>
-
-          <div className="d-flex">
-            <Link to="/patient/account" style={{ all: 'unset' }}>
-              <img id="patient" src={patient} alt="i" />
-            </Link>
-            <div class="dropdown">
-              <button
-                class="btn btn-secondary dropdown-toggle"
-                type="button"
-                id="dropdownMenuButton1"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              ></button>
-              <ul
-                class="dropdown-menu dropdown-menu-end"
-                aria-labelledby="dropdownMenuButton1"
-              >
-                <li>
-                  <a class="dropdown-item" href="#">
-                    Action
-                  </a>
-                </li>
-                <li>
-                  <a class="dropdown-item" href="#">
-                    Another action
-                  </a>
-                </li>
-                <li>
-                  <a class="dropdown-item" href="#">
-                    Something else here
-                  </a>
-                </li>
-              </ul>
-            </div>
           </div>
         </div>
       </nav>
