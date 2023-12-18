@@ -1,4 +1,5 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
+import ReactDOM from "react-dom";
 import Dropzone from 'react-dropzone';
 import medicinalUseEnum from '../../shared/util/MedicinalUseEnum';
 import Modal from '../../shared/components/Modal/Modal';
@@ -9,15 +10,28 @@ import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import storage from '../..';
 import Select from 'react-select'
 
-const AddMedicine = () => {
-  const [name, setName] = useState('');
+const AddMedicine = (props) => {
+  const [name, setName] = useState();
   const [ingredients, setIngredients] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState(0);
   const [quantity, setQuantity] = useState(0);
   const [sales, setSales] = useState(0);
   const [files, setFiles] = useState([]);
+  const [imageUrl, setImageUrl] = useState("");
   const [medicinalUse, setMedicinalUse] = useState("");
+
+  useEffect(() => {
+    if (props.medicine != null) {
+      const medicine = props.medicine;
+      setName(medicine.name);
+      setDescription(medicine.description);
+      setPrice(medicine.price);
+      setQuantity(medicine.quantity);
+      setSales(medicine.profit);
+      setImageUrl(medicine.image);
+    }
+  }, []);
 
   const handleNameChange = (event) => {
     setName(event.target.value);
@@ -30,11 +44,6 @@ const AddMedicine = () => {
   const handleDescriptionChange = (event) => {
     setDescription(event.target.value);
   }
-  // const handleDescriptionChange = (event) => {
-  //   this.setState({
-  //     description: event.target.value,
-  //   });
-  // };
 
   const handlePriceChange = (event) => {
     setPrice(event.target.value);
@@ -83,83 +92,84 @@ const AddMedicine = () => {
       });
   };
 
-  return <Modal>
-    <div className={styles.titleContainer}>
-      <h2 className={styles.addMedicineText}>Add Medicine</h2>
-    </div>
-    <div>
-      <label className={styles.label}>Medicine Name</label>
-      <input
-        className={styles.input}
-        type="text"
-        onChange={handleNameChange}
-        required
-      />
-    </div>
-    <div>
-      <label className={styles.label}>Description &nbsp;</label>
-      <input
-        className={styles.input}
-        type="text"
-        onChange={handleDescriptionChange}
-        required
-      />
-    </div>
-    <div>
-      <label className={styles.label}>Active Ingredients &nbsp;</label>
-      <input
-        className={styles.input}
-        type="text"
-        onChange={handleActiveIngredientsChange}
-        required
-      />
-    </div>
-    <div className={styles.inlineContainer}>
-      <div className={styles.inlineItem}>
-        <label className={styles.label}>Sale Price</label>
+  return ReactDOM.createPortal(
+    <Modal exit={props.exit}>
+      <div className={styles.titleContainer}>
+        <h2 className={styles.addMedicineText}>Add Medicine</h2>
+      </div>
+      <div>
+        <label className={styles.label}>Medicine Name</label>
         <input
           className={styles.input}
           type="text"
-          onChange={handlePriceChange}
+          onChange={handleNameChange}
           required
         />
       </div>
-      <div className={styles.inlineItem}>
-        <label className={styles.label}>Profit (L.E.)</label>
+      <div>
+        <label className={styles.label}>Description &nbsp;</label>
         <input
           className={styles.input}
           type="text"
-          onChange={handleSalesChange}
+          onChange={handleDescriptionChange}
           required
         />
       </div>
-      <div className={styles.inlineItem}>
-        <label className={styles.label}>Quantity</label>
+      <div>
+        <label className={styles.label}>Active Ingredients &nbsp;</label>
         <input
           className={styles.input}
           type="text"
-          onChange={handleQuantityChange}
+          onChange={handleActiveIngredientsChange}
           required
         />
       </div>
-    </div>
-    <label>Medicinal Use</label>
-    <Select
-    className='mb-3 mt-1'
-      value={medicinalUse}
-      styles={customStyles}
-      options={medicinalUses}
-      onChange={(value) => setMedicinalUse(value)}
-      required />
-    <label className={styles.label}>Image</label>
-    <MyDropzone files={files} setFiles={setFiles} maxFiles={1} />
-    <div className={styles.saveButtonContainer2}>
-      <button onClick={handleSave} className={styles.saveButton}>
-        SAVE
-      </button>
-    </div>
-  </Modal>
-    ;
+      <div className={styles.inlineContainer}>
+        <div className={styles.inlineItem}>
+          <label className={styles.label}>Sale Price</label>
+          <input
+            className={styles.input}
+            type="text"
+            onChange={handlePriceChange}
+            required
+          />
+        </div>
+        <div className={styles.inlineItem}>
+          <label className={styles.label}>Profit (L.E.)</label>
+          <input
+            className={styles.input}
+            type="text"
+            onChange={handleSalesChange}
+            required
+          />
+        </div>
+        <div className={styles.inlineItem}>
+          <label className={styles.label}>Quantity</label>
+          <input
+            className={styles.input}
+            type="text"
+            onChange={handleQuantityChange}
+            required
+          />
+        </div>
+      </div>
+      <label>Medicinal Use</label>
+      <Select
+        className='mb-3 mt-1'
+        value={medicinalUse}
+        styles={customStyles}
+        options={medicinalUses}
+        onChange={(value) => setMedicinalUse(value)}
+        required />
+      <label className={styles.label}>Image</label>
+      <MyDropzone files={files} setFiles={setFiles} maxFiles={1} />
+      <div className={styles.saveButtonContainer2}>
+        <button onClick={handleSave} className={styles.saveButton}>
+          SAVE
+        </button>
+      </div>
+    </Modal>
+    , document.getElementById("backdrop-root"));
 };
 
 export default AddMedicine;

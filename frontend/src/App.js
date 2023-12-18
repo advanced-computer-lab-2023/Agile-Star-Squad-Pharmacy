@@ -60,7 +60,6 @@ function App() {
       return (
         <Routes>
           <Route path="/pharmacy/home" element={<PharmacyHome />} exact />
-          <Route path="/medicine/add" element={<AddMedicineForm />} exact />
           <Route path="/medicine/edit" element={<EditMedicineForm />} exact />
           <Route path="changePassword" element={<ChangePassword />} exact />
           <Route

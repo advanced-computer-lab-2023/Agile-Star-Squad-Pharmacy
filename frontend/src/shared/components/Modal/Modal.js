@@ -2,11 +2,10 @@ import classes from './Modal.module.css';
 
 const Modal = (props) => {
   return (
-    <>
-      
+    <div>
       <div className={classes.backdrop} onClick={props.exit}></div>
-      <div className={classes.modal}><div className={classes.header}></div>{props.children}</div>
-    </>
+      <div className={classes.modal}>{props.children}</div>
+    </div>
   );
 };
 
