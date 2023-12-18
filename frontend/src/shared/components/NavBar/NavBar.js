@@ -83,9 +83,9 @@ const NavBar = (props) => {
                   </a>
                 </li>
                 <li className="nav-item" style={{ paddingLeft: '170px' }}>
-                  <a className="nav-link" href="#">
+                  <p className="nav-link" href="#">
                     Wallet : {walletAmount}
-                  </a>
+                  </p>
                 </li>
                 <li className="nav-item">
                   <Link to="/cart" style={{ all: 'unset' }}>
