@@ -49,7 +49,7 @@ const SignupOptions = () => {
                 className={`${classes.rightSmallContainer} ${isPharmacistSelected ? classes.selected : ''}`}
                 onClick={handlePharmacistClick}>
                 <p className={classes.textStyle}>
-                    I am a pharmacsit, and I am happy to help
+                    I am a pharmacist, and I am happy to help
                 </p>
 
             </div>
