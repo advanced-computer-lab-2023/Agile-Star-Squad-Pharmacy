@@ -128,12 +128,12 @@ exports.pharmacistSignup = catchAsync(async (req, res, next) => {
 
 
 exports.getPharmacist = catchAsync(async (req, res, next) => {
-  const Pharmacist = await Pharmacist.findById(req.params.id);
+  const pharmacist = await Pharmacist.findById(req.params.id);
 
   res.status(200).json({
     status: 'success',
     data: {
-      Pharmacist,
+      pharmacist,
     },
   });
 });

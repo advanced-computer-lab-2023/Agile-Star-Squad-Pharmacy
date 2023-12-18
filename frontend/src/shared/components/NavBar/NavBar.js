@@ -14,6 +14,7 @@ const NavBar = (props) => {
   }, []);
 
   const getWallet = async () => {
+    if (userCtx.role == "patient"){
     const response = await fetch(
       `http://localhost:4000/patients/${userCtx.userId}`,
       {
@@ -22,6 +23,18 @@ const NavBar = (props) => {
     );
     const json = await response.json();
     setWalletAmount(json.data.patient.wallet);
+    }
+    if (userCtx.role == "pharmacist"){
+      const response = await fetch(
+        `http://localhost:4000/pharmacist/${userCtx.userId}`,
+        {
+          credentials: 'include',
+        }
+      );
+      const json = await response.json();
+      console.log(json.data);
+      setWalletAmount(json.data.pharmacist.wallet);
+      }
   };
 
   const logout = async () => {
