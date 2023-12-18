@@ -11,6 +11,7 @@ import x from '../X.png';
 import check from '../check.png';
 import RevenueChart from '../ManageUsers/components/RevenueChart';
 import UserDetails from '../ManageUsers/components/UserDetails';
+import AdminForm from '../ManageUsers/components/AdminForm';
 
 const AdminHome = (props) => {
   const navigate = useNavigate();
@@ -500,6 +501,7 @@ useEffect(() => {
               email: patient['email'],
               dateOfBirth: patient['dateOfBirth'],
               gender: patient['gender'],
+              creationDate: patient['creationDate'],
               mobileNumber: patient['mobileNumber'],
               emergencyNumber: patient['emergencyNumber'],
               role: 'Patient',
@@ -525,6 +527,7 @@ useEffect(() => {
               dateOfBirth: pharmacist['dateOfBirth'],
               hourlyRate: pharmacist['hourlyRate'],
               affiliation: pharmacist['affiliation'],
+              creationDate: pharmacist['creationDate'],
               educationalBackground: pharmacist['educationalBackground'],
               role: 'Pharmacist',
             };
@@ -544,6 +547,7 @@ useEffect(() => {
             return {
               id: admin['_id'],
               username: admin['username'],
+              creationDate: admin['creationDate'],
               name: '-',
               mobileNumber: '-',
               role: 'Admin',
@@ -576,6 +580,21 @@ const handleSalesClick = () =>{
     }
     setUsers(users.filter((val) => val.username !== username));
   };
+  const toggleAddForm = () => {
+    setShowAdminForm((prevShowAddForm) => !prevShowAddForm);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth', // You can adjust the behavior as needed
+    });
+  };
+  
+ 
+  const handleAdminClick = () => {
+    setShowAdminForm(true);
+  }
+  const exitAdminModal = () => {
+    setShowAdminForm(false);
+  };
   
 
 
@@ -598,7 +617,8 @@ const handleSalesClick = () =>{
       <h4 className={styles.yesterdaySales}>
       {percentageChange !== null && changeSign !== null && (
   <>
-    {`${changeSign}${isNaN(percentageChange) ? '+0' : Math.abs(percentageChange).toFixed(2)}% from yesterday`}
+   {`${changeSign}${isNaN(percentageChange) ? '+0' : percentageChange >= 100 ? '100' : Math.abs(percentageChange).toFixed(2)}% from yesterday`}
+
   </>
 )}
 
@@ -745,8 +765,8 @@ const handleSalesClick = () =>{
           {activeRole === 'pharmacist' && (
             <>
               <th className={styles.userTitle}>Name</th>
-              <th className={styles.userTitle}>Speciality</th>
               <th className={styles.userTitle}>Affiliation</th>
+              <th className={styles.userTitle}>Email</th>
               <th className={styles.userTitle}>Member Since</th>
               {/* Add more doctor-specific columns as needed */}
             </>
@@ -821,6 +841,10 @@ const handleSalesClick = () =>{
   </div>
   </div>
           </Container>
+          <Container className={styles.addAdmin}>
+            <button className={styles.adminButton} onClick={toggleAddForm}>Add Admin</button>
+
+          </Container>
           {selectedUser && (
         <UserDetails
           data={selectedUser}
@@ -829,7 +853,9 @@ const handleSalesClick = () =>{
         />
       )}
         {showUser && <UserDetails data={selectedUser} exit={exitUserModal} onDelete={deleteUser} />}
-          
+        {showAdminForm && (
+        <AdminForm exit={exitAdminModal} refresh={fetchAdmins} />
+      )}
 
      
       {/* <Link to="/admin/manage">

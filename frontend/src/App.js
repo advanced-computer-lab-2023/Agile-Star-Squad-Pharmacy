@@ -45,10 +45,10 @@ function App() {
             <Route path="/payment/temp" element={<Checking />} exact />
             <Route path="/order" element={<Order />} exact />
             <Route
-            path="/patient/account"
-            element={<PatientAccountSettings />}
-            exact
-          />
+              path="/patient/account"
+              element={<PatientAccountSettings />}
+              exact
+            />
             <Route path="/address/add" element={<AddAddress />} exact />
             <Route path="changePassword" element={<ChangePassword />} exact />
             <Route path="/medicine" element={<MedicineDetails />} exact />
@@ -76,8 +76,8 @@ function App() {
         <Routes>
           <Route path="/admin/home" element={<AdminHome />} exact />
           <Route path="/admin/manage" element={<ManageUsersPage />} exact />
-          <Route path="changePassword" element={<ChangePassword />} exact />
-          <Route path="/SalesReport" element={<SalesReport/>} exact/>
+          <Route path="/changePassword" element={<ChangePassword />} exact />
+          <Route path="/SalesReport" element={<SalesReport />} exact />
           <Route path="*" element={<Navigate to="/admin/home" />} />{' '}
         </Routes>
       );
@@ -159,7 +159,6 @@ function App() {
           </Routes>
         </BrowserRouter>
       </CartContextProvider>
-      <BrowserRouter>{getUserRoutes()}</BrowserRouter>
     </div>
   );
 }

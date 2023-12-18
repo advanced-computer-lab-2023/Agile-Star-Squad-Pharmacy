@@ -22,7 +22,8 @@ const adminSchema = new mongoose.Schema({
     lowercase: true,
     validate: [validator.isEmail, 'Please provide a valid email.'],
   },
-  creationDate: Date,
+  creationDate:
+  { type: Date, default:Date.now},
 });
 
 const Admin = mongoose.model('Admin', adminSchema);

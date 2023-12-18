@@ -28,7 +28,7 @@ const patientSchema = new mongoose.Schema({
     minLength: 8,
   },
   dateOfBirth: Date,
-  creationDate: Date,
+  creationDate: { type: Date, default: Date.now },
   gender: {
     type: String,
     enum: ['male', 'female'],
@@ -65,6 +65,14 @@ const patientSchema = new mongoose.Schema({
       },
     },
   ],
+  
+  chats: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Chat'
+    }
+  ],
+
   cart: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -86,6 +94,7 @@ const patientSchema = new mongoose.Schema({
     default:0,
 
   }
+  
 });
 
 const Patient = mongoose.model('Patient', patientSchema);

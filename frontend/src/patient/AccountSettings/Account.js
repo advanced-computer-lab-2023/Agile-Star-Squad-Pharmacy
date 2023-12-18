@@ -81,20 +81,17 @@ const PatientAccountSettings = (props) => {
   //   });
   // };
 
-  // const fetchPackage = async () => {
-  //   fetch(`http://localhost:3000/patients/${patient.userId}`, {
-  //     credentials: 'include',
-  //   }).then(async (response) => {
-  //     const json = await response.json();
-  //     console.log(json.data);
-  //     setsubscriptionDate(json.data.patient.subscriptionDate);
-  //     setexpiringDate(json.data.patient.expiringDate);
-  //     setMedicalRecords(json.data.patient.medicalRecord);
-  //     setPackage(json.data.patient.package);
-  //     setCurrentPatient(json.data.patient);
-  //     setcancellationDate(json.data.patient.cancellationDate);
-  //   });
-  // };
+  const fetchPackage = async () => {
+    fetch(`http://localhost:4000/patients/${patient.userId}`, {
+      credentials: 'include',
+    }).then(async (response) => {
+      const json = await response.json();
+      console.log(json.data);
+     
+      setCurrentPatient(json.data.patient);
+      setcancellationDate(json.data.patient.creationDate);
+    });
+  };
 
   const handeleUnsubscribeButtonclick = async () => {
     try {
@@ -166,9 +163,9 @@ const PatientAccountSettings = (props) => {
     }
   };
 
-  // useEffect(() => {
-  //   fetchPackage();
-  // }, []);
+  useEffect(() => {
+    fetchPackage();
+  }, []);
 
   const deleteImage = (e, url) => {
     e.preventDefault();
@@ -210,6 +207,8 @@ const PatientAccountSettings = (props) => {
     navigate('/patient/family');
   };
 
+ 
+
   const { healthRecordInput } = healthRecord;
   return (
     <body className={classes.pageWrapper}>
@@ -217,7 +216,7 @@ const PatientAccountSettings = (props) => {
       <Greeting
         name={currentPatient.name}
         imageUrl={patient1}
-        // joinedDate={currentPatient.creationDate}
+        joinedDate={currentPatient.creationDate}
       />
       <SettingsContainer title={'Settings'}>
         <SettingsTile
