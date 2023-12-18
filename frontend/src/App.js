@@ -158,6 +158,7 @@ function App() {
             <Route path="*" element={<Navigate to="/" />} />{' '}
           </Routes>
         </BrowserRouter>
+        <BrowserRouter>{getUserRoutes()}</BrowserRouter>
       </CartContextProvider>
     </div>
   );

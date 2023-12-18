@@ -53,6 +53,9 @@
     border: none;
     outline: none;
 }
+.searchInput::placeholder{
+    color: black;
+}
 
 .searchButton {
     cursor: pointer;
@@ -123,6 +126,10 @@
     outline: none;
     border: none;
     width: 100%;
+}
+
+.medicineSearchInput::placeholder{
+    color: black;
 }
 
 .categoriesWrapper {

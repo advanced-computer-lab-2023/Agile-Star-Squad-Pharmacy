@@ -205,11 +205,12 @@ const Homepage = () => {
     }
 
     const onClickSearch = (event) => {
-        if (event == null || event.key == "Enter") {
+        if (event == null || event.key === "Enter") {
             setSearchText(sectionSearchText);
+            filterMedicine();
             medicineResultsRef.current.scrollIntoView({ behavior: "smooth" });
         }
-    }
+    };
 
 
 
