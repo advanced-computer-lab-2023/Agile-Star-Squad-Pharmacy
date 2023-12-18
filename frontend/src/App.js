@@ -138,11 +138,11 @@ function App() {
               element={<PharmacistRequest />}
               exact
             />
-            <Route
+            {/* <Route
               path="/patient/register"
               element={<PatientRegisterForm />}
               exact
-            />
+            /> */}
             <Route
               path="./pharmacy/pages/PharmacyHome"
               element={<PharmacyHome />}
