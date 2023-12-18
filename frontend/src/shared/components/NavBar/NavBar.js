@@ -32,6 +32,9 @@ const NavBar = (props) => {
     navigate('/cart');
   };
 
+  const redirectToAccountSettings = () => {
+    navigate('/patient/account');
+  };
   return (
     <div className="bodyN">
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -79,8 +82,8 @@ const NavBar = (props) => {
                     Contact a Pharmacist
                   </a>
                 </li>
-                <li className="nav-item" style={{ paddingLeft: '270px' }}>
-                  <a className="nav-link" href="#" style={{ all: 'unset' }}>
+                <li className="nav-item" style={{ paddingLeft: '170px' }}>
+                  <a className="nav-link" href="#">
                     Wallet : {walletAmount}
                   </a>
                 </li>
@@ -88,6 +91,17 @@ const NavBar = (props) => {
                   <Link to="/cart" style={{ all: 'unset' }}>
                     <a className="nav-link" href="#" onClick={viewCart}>
                       View Cart
+                    </a>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="//patient/account" style={{ all: 'unset' }}>
+                    <a
+                      className="nav-link "
+                      href="#"
+                      onClick={redirectToAccountSettings}
+                    >
+                      Account
                     </a>
                   </Link>
                 </li>

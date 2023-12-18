@@ -1,5 +1,17 @@
 import classes from "./BrowseMedicine.module.css"
 import {useRef,useContext,useState, useEffect} from 'react';
+import babyImg from "../../../assets/homepage/baby.png";
+import brokenArmImg from "../../../assets/homepage/brokenarm.png";
+import eyeImg from "../../../assets/homepage/eye.png";
+import feverImg from "../../../assets/homepage/fever.png";
+import firstaidImg from "../../../assets/homepage/firstaid.png";
+import headacheImg from "../../../assets/homepage/headache.png";
+import insomniaImg from "../../../assets/homepage/insomnia.png";
+import stomachImg from "../../../assets/homepage/kidney.png";
+import lungsImg from "../../../assets/homepage/lungs.png";
+import nutritionImg from "../../../assets/homepage/nutrition.png";
+import CartContext from './Cart';
+import UserContext from "../../../user-store/user-context";
 
 const BrowseMedicine = () => {
     const userCtx = useContext(UserContext);
@@ -172,7 +184,6 @@ const BrowseMedicine = () => {
                 <div className={classes.medicineDesc1}>Active Ingredient:</div>
                 <div className={classes.medicineDesc2}>{ingredients}</div>
                 <div className="d-flex mt-2">
-                    <div className={`${classes.addToCartButton} me-1`} onClick={addItem}>Add To Cart</div>
                     <div className={`${classes.viewButton} ms-1`}>View</div>
                 </div>
             </div>
@@ -183,7 +194,7 @@ const BrowseMedicine = () => {
     return <section className={classes.medicineSection}>
         <div className={classes.medicineSectionTitle}>BROWSE MEDICINE</div>
         <div className={classes.medicineSearchContainer}>
-            <div className={classes.medicineSearchIcon}><img width={30} src={searchIconImg} alt=''/></div>
+            <div className={classes.medicineSearchIcon}><img width={30}  alt=''/></div>
             <input className={classes.medicineSearchInput} value={searchText} onChange={(e) => setSearchText(e.target.value)} placeholder="Search" />
         </div>
         {getCategoryTiles()}
