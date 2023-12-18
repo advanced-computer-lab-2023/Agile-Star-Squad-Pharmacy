@@ -193,7 +193,7 @@ export default function CheckoutForm(props) {
 
         const cartItems = cartCtx.items;
         const medicineList = cartItems.map((item) => {
-          return { medicineId: item.id, count: item.quantity };
+          return { medicineId: item.id, count: item.quantity,price:item.price,profit:item.price*0.9  };
         });
         let paymentIntentData = {
           patientId: userCtx.userId,
@@ -238,7 +238,7 @@ export default function CheckoutForm(props) {
     try {
       const cartItems = cartCtx.items;
       const medicineList = cartItems.map((item) => {
-        return { medicineId: item.id, count: item.quantity };
+        return { medicineId: item.id, count: item.quantity,price:item.price,profit:item.price*0.9  };
       });
       let paymentIntentData = {
         patientId: userCtx.userId,
@@ -254,7 +254,7 @@ export default function CheckoutForm(props) {
         body: JSON.stringify(paymentIntentData),
         credentials: 'include',
       });
-
+      alert("Order Successful");
       cartCtx.clearCart();
       navigate('/');
     } catch (error) {}
