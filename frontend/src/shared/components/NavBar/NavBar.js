@@ -82,6 +82,13 @@ const NavBar = (props) => {
                     Contact a Pharmacist
                   </a>
                 </li>
+                <li className="nav-item">
+                  <Link to="/order" style={{ all: 'unset' }}>
+                    <a className="nav-link " href="#">
+                      View Orders
+                    </a>
+                  </Link>
+                </li>
                 <li className="nav-item" style={{ paddingLeft: '170px' }}>
                   <p className="nav-link" href="#">
                     Wallet : {walletAmount}
