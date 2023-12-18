@@ -9,16 +9,18 @@ const NavBar = (props) => {
   const userCtx = useContext(UserContext);
 
   useEffect(() => {
-    getWallet();
+    if (userCtx.role === 'paient') getWallet();
   }, []);
 
   const getWallet = async () => {
-    fetch(`http://localhost:4000/patients/${userCtx.userId}`, {
-      credentials: 'include',
-    }).then(async (response) => {
-      const json = await response.json();
-      setWalletAmount(json.data.patient.wallet);
-    });
+    const response = await fetch(
+      `http://localhost:4000/patients/${userCtx.userId}`,
+      {
+        credentials: 'include',
+      }
+    );
+    const json = await response.json();
+    setWalletAmount(json.data.patient.wallet);
   };
 
   return (
@@ -47,37 +49,40 @@ const NavBar = (props) => {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
+
           <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <a className="nav-link" aria-current="page" href="#">
-                  Refill Presciption
-                </a>
-              </li>
-              <li className="nav-item">
-                <Link to="/healthPackages" style={{ all: 'unset' }}>
-                  <a className="nav-link " href="#">
-                    Buy Medicine
+            {userCtx.role === 'patient' && (
+              <ul className="navbar-nav">
+                <li className="nav-item">
+                  <a className="nav-link" aria-current="page" href="#">
+                    Refill Presciption
                   </a>
-                </Link>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Contact a Pharmacist
-                </a>
-              </li>
-              <li className="nav-item"style={{paddingLeft:'270px'}}>
-                <p className="nav-link" href="#"style={{color:"black"}}>
-                Wallet : {walletAmount}
-                </p>
-              </li>
-            </ul>
+                </li>
+                <li className="nav-item">
+                  <Link to="/healthPackages" style={{ all: 'unset' }}>
+                    <a className="nav-link " href="#">
+                      Buy Medicine
+                    </a>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="#">
+                    Contact a Pharmacist
+                  </a>
+                </li>
+                <li className="nav-item" style={{ paddingLeft: '270px' }}>
+                  <a className="nav-link" href="#" style={{ color: 'black' }}>
+                    Wallet : {walletAmount}
+                  </a>
+                </li>
+              </ul>
+            )}
           </div>
-            
+
           <div className="d-flex">
-          <Link to="/patient/account" style={{ all: 'unset' }}>
-          <img id="patient" src={patient} alt='i'/>
-          </Link>
+            <Link to="/patient/account" style={{ all: 'unset' }}>
+              <img id="patient" src={patient} alt="i" />
+            </Link>
             <div class="dropdown">
               <button
                 class="btn btn-secondary dropdown-toggle"
@@ -85,11 +90,11 @@ const NavBar = (props) => {
                 id="dropdownMenuButton1"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
-                
+              ></button>
+              <ul
+                class="dropdown-menu dropdown-menu-end"
+                aria-labelledby="dropdownMenuButton1"
               >
-               
-              </button>
-              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
                 <li>
                   <a class="dropdown-item" href="#">
                     Action
