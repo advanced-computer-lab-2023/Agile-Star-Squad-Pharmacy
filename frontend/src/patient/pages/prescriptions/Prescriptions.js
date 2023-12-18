@@ -169,6 +169,7 @@ const Prescriptions = () => {
   };
 
   const downloadPrescriptions = () => {
+    console.log(selectedPrescriptions);
     if (selectedPrescriptions.length == 0) return;
 
     const doc = new jsPDF({
