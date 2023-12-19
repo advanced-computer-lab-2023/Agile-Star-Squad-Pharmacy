@@ -113,7 +113,7 @@ const Homepage = () => {
             // Add conditions to filter based on "archived" and "isOtc" if role is patient
             if (userCtx.role === 'patient') {
                 medicines = medicines.filter((medicine) => {
-                    medicine.isOtc; // replace with actual property name
+                    //medicine.isOtc; // replace with actual property name
                     return !medicine.archived && medicine.isOtc;
                 });
             }
