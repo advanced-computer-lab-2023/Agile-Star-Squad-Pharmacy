@@ -2,12 +2,17 @@ import React, { useState } from 'react';
 import { setUserRole } from '../../shared/DummyUsers';
 import { useNavigate, Link } from 'react-router-dom';
 import classes from './patientRegister.module.css';
-import logo from './logo.png';
 import medicines from './Medicines.png';
 import Select from 'react-select';
+import { useEffect } from 'react';
 
 const PatientRegisterForm = () => {
+  const [userRole, setUserRole] = useState('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log('User role after setting:', userRole);
+  }, [userRole]);
 
   const [formData, setFormData] = useState({
     username: '',
@@ -20,6 +25,7 @@ const PatientRegisterForm = () => {
     emergencyContact: {
       fullName: '',
       phoneNumber: '',
+      relation: '',
     },
   });
 
@@ -142,11 +148,9 @@ const PatientRegisterForm = () => {
       emergencyContact: {
         fullName: formData.emergencyContact.fullName,
         phoneNumber: formData.emergencyContact.phoneNumber,
+        relation: formData.emergencyContact.relation,
       },
     };
-    console.log('-------------------');
-    console.log(dobMonth);
-    console.log(data);
 
     try {
       const response = await fetch('http://localhost:4000/patients', {
@@ -157,8 +161,9 @@ const PatientRegisterForm = () => {
 
       if (response.ok) {
         // Handle a successful response
+        alert('Registration Successful!');
         setUserRole('patient');
-        navigate('/patient/home');
+        navigate('/pharmacy/home');
       } else {
         // Handle errors if the server response is not ok
         alert('Registration Failed!');
@@ -308,6 +313,15 @@ const PatientRegisterForm = () => {
                       name="emergencyContact.phoneNumber"
                       placeholder="Phone Number"
                       value={formData.emergencyContact.phoneNumber}
+                      onChange={handleInputChange}
+                      required
+                    />
+                    <input
+                      className={classes.textBox}
+                      type="text"
+                      name="emergencyContact.relation"
+                      placeholder="Relation"
+                      value={formData.emergencyContact.relation}
                       onChange={handleInputChange}
                       required
                     />
