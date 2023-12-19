@@ -8,6 +8,7 @@ import Calendar from 'react-calendar';
 import Select from 'react-select';
 import UserContext from '../../../user-store/user-context';
 import axios from 'axios';
+import CartContext from '../cart/Cart';
 
 const Prescriptions = () => {
   const dummy_presc = [
@@ -41,6 +42,7 @@ const Prescriptions = () => {
   ];
 
   const userCtx = useContext(UserContext);
+  const cartCtx = useContext(CartContext);
   const [filterIndex, setFilterIndex] = useState(0);
   const [selectedPrescriptions, setSelectedPrescriptions] = useState([]);
   const [showCalendar, setShowCalendar] = useState(false);
@@ -53,7 +55,15 @@ const Prescriptions = () => {
   const [filteredPrescriptions, setFilteredPrescriptions] = useState([]);
   const [prescriptionDoctors, setPrescriptionDoctors] = useState([]);
 
+  const [medicine, setMedicine] = useState(null);
+
   const pdfRef = useRef(null);
+
+  const fetchMedicine = async () => {
+    axios.get(`http://localhost:4000/medicine`).then((response) => {
+      setMedicine(response.data.data.medicines);
+    });
+  };
 
   useEffect(() => {
     const fetchPrescriptions = async () => {
@@ -75,6 +85,7 @@ const Prescriptions = () => {
             prescriptionsJson = json.data.prescriptions;
             setPrescriptions((_) => {
               const prescriptions = [];
+              console.log(prescriptionsJson);
               prescriptionsJson.forEach((prescription) => {
                 prescDoctors.add(prescription.doctorName);
                 prescription.items.forEach((item) => {
@@ -91,7 +102,6 @@ const Prescriptions = () => {
             });
             setFilteredPrescriptions((_) => {
               const prescriptions = [];
-              console.log('prescriptionsJson', prescriptionsJson);
               prescriptionsJson.forEach((prescription) => {
                 prescription.items.forEach((item) => {
                   prescriptions.push({
@@ -112,6 +122,7 @@ const Prescriptions = () => {
         });
     };
     fetchPrescriptions();
+    fetchMedicine();
   }, []);
 
   useEffect(() => {
@@ -223,6 +234,27 @@ const Prescriptions = () => {
     setPickedDoctor(option['label']);
   };
 
+  const addToCartHandler = () => {
+    if (selectedPrescriptions.length == 0) return;
+    selectedPrescriptions.forEach((presc) => {
+      medicine.forEach((medicine) => {
+        if (presc.name === medicine.name) {
+          cartCtx.addItem({
+            id: medicine._id,
+            image: medicine.image,
+            name: medicine.name,
+            price: medicine.price,
+            description: medicine.description,
+            price: medicine.price,
+            quantity: 1,
+          });
+        }
+      });
+    });
+
+    alert('Medicine added to cart successfully');
+  };
+
   return (
     <div style={{ height: '100vh', overflow: 'hidden' }}>
       <NavBar />
@@ -291,7 +323,7 @@ const Prescriptions = () => {
             </div>
             <div style={{ flex: 1 }}></div>
             <div
-              onClick={() => {}}
+              onClick={addToCartHandler}
               className={`${classes.downloadButton} ${
                 selectedPrescriptions.length != 0 ? classes.downloadEnabled : ''
               }`}
