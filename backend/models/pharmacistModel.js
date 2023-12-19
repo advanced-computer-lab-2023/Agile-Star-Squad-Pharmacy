@@ -44,8 +44,14 @@ const pharmacistSchema = new mongoose.Schema(
     chats: [
       {
         type: mongoose.Schema.ObjectId,
-        ref: 'Chat'
-      }
+        ref: 'Chat',
+      },
+    ],
+    notifications: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Notification',
+      },
     ],
     // patients: [
     //   {

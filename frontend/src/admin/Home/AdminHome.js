@@ -374,16 +374,19 @@ useEffect(() => {
   };
   const showRequestModal = (request) => {
     setSelectedRequest(request);
-    // Scroll to the top of the page
+    setShowRequest(true);
+    // Additional logic as needed
     window.scrollTo({
       top: 0,
       behavior: 'smooth', // You can adjust the behavior as needed
     });
   };
-
+  
   const exitRequestModal = () => {
-    setSelectedRequest(null);
+    setSelectedRequest(null); 
+    setShowRequest(false);
   };
+  
 
   const exitUserModal = () => {
     setSelectedUser(null);
@@ -872,12 +875,13 @@ const handleSalesClick = () =>{
           onDelete={deleteUser}
         />
       )}
-      {selectedRequest &&(
+      {showRequest &&(
         <RequestDetails
         data={selectedRequest}
         exit={exitRequestModal}
         />
-      )}{showAdminForm &&(
+      )}
+      {showAdminForm &&(
         <div className={styles.overlay}>
         <AdminForm exit={exitAdminModal} refresh={fetchAdmins} onSubmitSuccess={handleFormSubmitSuccess} />
         </div>
