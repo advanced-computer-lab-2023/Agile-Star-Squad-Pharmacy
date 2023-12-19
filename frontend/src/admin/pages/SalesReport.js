@@ -421,6 +421,7 @@ const SalesReport = () => {
         className={styles.inputField}
           type="text"
           id="medicineName"
+          placeholder="search"
           value={medicineFilter}
           onChange={(e) => setMedicineFilter(e.target.value)}
         />
