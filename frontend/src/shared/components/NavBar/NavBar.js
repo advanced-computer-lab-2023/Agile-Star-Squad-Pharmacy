@@ -47,24 +47,16 @@ const NavBar = (props) => {
 
   const redirectToAccountSettings = () => {
     if (userCtx.role == "patient")
-    navigate('/patient/account');
+      navigate('/patient/account');
     else if (userCtx.role == "pharmacist")
-    navigate('/pharmacist/account');
+      navigate('/pharmacist/account');
   };
-  
+
   return (
     <div className="bodyN">
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container-fluid">
           <Link to={'/pharmacy/home'} className="navbar-brand">
-            {/* <img
-              src={logo}
-              alt=""
-              width="30"
-              height="24"
-              className="d-inline-block align-text-top"
-              id="logo"
-            /> */}
             PHARMA
           </Link>
           <button
@@ -80,7 +72,7 @@ const NavBar = (props) => {
           </button>
           {/* //Prescriptions Medicine Chat with a Pharmacist ..... Wallet Orders Account */}
           <div className="collapse navbar-collapse" id="navbarNav">
-            
+
             {userCtx.role === 'patient' && (
               <ul className="navbar-nav">
                 <li className="nav-item">
@@ -100,7 +92,7 @@ const NavBar = (props) => {
                     Chat with a Pharmacist
                   </a>
                 </li>
-               
+
                 <li className="nav-item" style={{ paddingLeft: '110px' }}>
                   <p className="nav-link" href="#">
                     Wallet : {walletAmount}
@@ -132,30 +124,38 @@ const NavBar = (props) => {
                   </Link>
                 </li>
               </ul>
-            )} 
+            )}
             {/* Medicine Sales Report Chat .... Wallet Account */}
             {userCtx.role === 'pharmacist' && (
               <ul className="navbar-nav">
                 <li className="nav-item">
-                <Link to="/pharmacy/home" style={{ all: 'unset' }}>
-                  <a className="nav-link" aria-current="page" href="#">
-                    All Medicines
-                  </a>
+                  <Link to="/pharmacy/home" style={{ all: 'unset' }}>
+                    <a className="nav-link" aria-current="page" href="#">
+                      All Medicines
+                    </a>
                   </Link>
                 </li>
                 <li className="nav-item">
-                  {/* <Link to="/SalesReport" style={{ all: 'unset' }}> */}
-                    <a className="nav-link " href="#">
-                      Sales Report
-                    </a>
-                  {/* </Link> */}
+                  <Link to="/SalesReport" style={{ all: 'unset' }}>
+                  <a className="nav-link " href="#">
+                    Sales Report
+                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="#">
                     Chat
                   </a>
                 </li>
-               
+                <li className="nav-item">
+                  <Link to="/archivedMedicines" style={{ all: 'unset' }}>
+                    <a className="nav-link" aria-current="page" href="#">
+                      Archived
+                    </a>
+                  </Link>
+                </li>
+
+
                 <li className="nav-item" style={{ paddingLeft: '380px' }}>
                   <p className="nav-link" href="#">
                     Wallet : {walletAmount}
@@ -163,13 +163,13 @@ const NavBar = (props) => {
                 </li>
                 <li className="nav-item">
                   {/* <Link to="//patient/account" style={{ all: 'unset' }}> */}
-                    <a
-                      className="nav-link "
-                      href="#"
-                      // onClick={redirectToAccountSettings}
-                    >
-                      Account
-                    </a>
+                  <a
+                    className="nav-link "
+                    href="#"
+                  // onClick={redirectToAccountSettings}
+                  >
+                    Account
+                  </a>
                   {/* </Link> */}
                 </li>
               </ul>

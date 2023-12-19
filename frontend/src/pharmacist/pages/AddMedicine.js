@@ -9,6 +9,12 @@ import uploadImg from "../../assets/patientAccount/upload.png"
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import storage from '../..';
 import Select from 'react-select'
+// import { toastMe } from '../../shared/util/functions';
+import {toast} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { toastMeSuccess } from '../../shared/util/functions';
+
+
 
 const AddMedicine = (props) => {
   const [name, setName] = useState();
@@ -99,15 +105,16 @@ const AddMedicine = (props) => {
       data["image"] = downloadUrl;
     }
 
+    let toastMsg;
     if (!isAdd) {
       await axios
         .patch(`http://localhost:4000/medicine/${props.medicine.id}`, data, {
           withCredentials: true,
         })
-        .then(() => alert('Medicine updated successfully'))
         .catch((err) => {
           console.error(err);
         });
+        toastMsg = "Updated medicine successfully";
     } else {
       const response = await axios
         .post(
@@ -121,12 +128,13 @@ const AddMedicine = (props) => {
         .catch((err) => {
           console.error(err);
         });
+        toastMsg = "Added medicine successfully";
     }
     if (data.image == null) {
       data.image = files[0].name;
     }
+    toastMeSuccess(toastMsg);
     props.exit(data);
-
 
   };
 
