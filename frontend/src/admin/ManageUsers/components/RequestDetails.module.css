@@ -12,22 +12,22 @@
     overflow-y: auto;
 }
 .topBorder {
-    margin: -1rem;
-    margin-bottom: 20px;
-    height: 77px;
-    padding-left: 27px;
-    padding-top: 21px;
-    border-radius: 26px 26px 0px 0px;
-    background-color: #EA580C;
-  } 
+  margin: -1rem;
+  margin-bottom: 20px;
+  height: 77px;
+  padding-left: 27px;
+  padding-top: 21px;
+  border-radius: 26px 26px 0px 0px;
+  background-color: #EA580C;
+} 
 .doctor {
   color: var(--white-100, #ffffff);
   font-family: 'Poppins';
   font-size: 26px;
   font-weight: 500;
   position: inherit;
-  bottom: 10%;
-  right: 0%;
+  bottom: 90%;
+  right: 55%;
   z-index: 2; /* Set the z-index to bring it above other elements */
 }
 .userTitle{
@@ -47,18 +47,27 @@
   font-weight: 400;
   line-height: 20px;
 }
-
-.headers{
+.headersPers, .headersDoc, .headersProf{
   color: #242731;
-font-family: 'Poppins';
-font-size: 20px;
-font-style: normal;
-font-weight: 600;
-line-height: 28px; /* 140% */
-text-align: justify;
-margin-top: 0%;
+  font-family: 'Poppins';
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 28px; /* 140% */
+  text-align: justify;
 }
-
+.headersPers{
+  margin-top: -7%;
+  margin-bottom: 4%;
+}
+.headersDoc{
+ margin-bottom: 2%;
+  margin-top: 3%;
+}
+.headersProf{
+ 
+  margin-top: 3%;
+}
 
 .smallText{
     color: #333;
@@ -69,8 +78,9 @@ margin-top: 0%;
 .fieldGroup {
     display: flex;
     flex-wrap: wrap;
-    gap: 16px; /* Adjust the gap as needed */
+    gap: 35px; /* Adjust the gap as needed */
     margin-bottom: 2%;
+    text-align: center;
   }
   .images{
     display: flex;
@@ -116,8 +126,9 @@ margin-top: 0%;
     /* Make the form controls fill the available width */
     width: 250px;
     outline: none;
-    background-color: #FFF;
+    background-color: rgba(165, 165, 165, 0.44);
     background-clip: padding-box;
+    border-radius: 25px;
     border: none; 
   }
   
@@ -134,7 +145,7 @@ margin-top: 0%;
   .reject{
     position: inherit;
     left: 77%;
-    margin: 54px 13px 13px 12px;
+    margin: 54px 13px 13px 8px;
     border-radius: 11px;
     width: 94px;
     height: 36px;
@@ -145,9 +156,10 @@ margin-top: 0%;
   .buttonPos{
     margin-bottom: 60%;
     margin-left: 54%;
+    justify-content: space-between;
   }
   .images{
-    margin-left: 5%;
+    margin-left: 7%;
   }
   .spacing{
     margin-left: 5%;
