@@ -7,9 +7,9 @@ import classes from './pharmacistRequest.module.css';
 import logo from './logo.png';
 import Medicines from '../../assets/homepage/sectionMedicine.png';
 import Select from 'react-select';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import uploadImg from "./upload.png"
+import { toastMeError, toastMeSuccess } from '../../shared/util/functions';
 
 const PharmacistRequestForm = () => {
   const [formData, setFormData] = useState({
@@ -29,7 +29,6 @@ const PharmacistRequestForm = () => {
   const [dobDay, setDOBDay] = useState('');
   const [dobMonth, setDOBMonth] = useState('');
   const [dobYear, setDOBYear] = useState('');
-
 
   const navigate = useNavigate();
 
@@ -61,11 +60,11 @@ const PharmacistRequestForm = () => {
     setIdImage(file.target.files[0]);
   }
 
-  const onMedicalLicenseChange = (file) => {
+  const onPharmacyLicenseChange = (file) => {
     setLicenseImage(file.target.files[0]);
   }
 
-  const onMedicalDegreeChange = (file) => {
+  const onPharmacyDegreeChange = (file) => {
     setDegreeImage(file.target.files[0]);
   }
 
@@ -75,7 +74,7 @@ const PharmacistRequestForm = () => {
     let idDownloadUrl;
     let licenseDownloadUrl;
     let degreeDownloadUrl;
-    
+
     if (idImageForm !== "") {
       const idImageRef = ref(storage, `${idImageForm[0].name}`);
       await uploadBytesResumable(idImageRef, idImageForm[0]).then(async (snapshot) => {
@@ -96,14 +95,15 @@ const PharmacistRequestForm = () => {
         degreeDownloadUrl = await getDownloadURL(snapshot.ref)
       });
     }
-    console.log(idDownloadUrl)
+
+    const date = new Date(`${dobYear}-${dobMonth.value}-${dobDay.value}`);
 
     const data = {
       "username": formData.username,
       "name": formData.name,
       "email": formData.email,
       "password": formData.password,
-      "dateOfBirth": new Date(`${dobDay.value}/${dobMonth.value}/${dobYear}`),
+      "dateOfBirth": date,
       "hourlyRate": formData.hourlyRate,
       "affiliation": formData.affiliation,
       "educationalBackground": formData.educationalBackground,
@@ -126,17 +126,17 @@ const PharmacistRequestForm = () => {
 
       if (response.ok) {
         // Handle a successful response
-        alert('Request is pending...');
+        toastMeSuccess("Your request has been sent successfully. Please wait for the admin to approve your request.");
         navigate('/');
       } else {
         // Handle errors if the server response is not ok
         const responseData = await response.json();
-        alert(responseData.message);
+        toastMeError(responseData.message);
         // navigate('/');
       }
     } catch (error) {
       // Handle network errors
-      alert('Network error: ' + error.message);
+      toastMeError('Network error: ' + error.message);
     }
   };
 
@@ -181,6 +181,7 @@ const PharmacistRequestForm = () => {
                       onChange={handleInputChange}
                       placeholder='Username'
                       className={classes.textBox}
+                      required
                     />
                   </div>
                   <div>
@@ -191,6 +192,7 @@ const PharmacistRequestForm = () => {
                       onChange={handleInputChange}
                       placeholder='Full Name'
                       className={classes.textBox}
+                      required
                     />
                   </div>
                 </div>
@@ -203,6 +205,7 @@ const PharmacistRequestForm = () => {
                       onChange={handleInputChange}
                       placeholder='Email Address'
                       className={classes.textBox}
+                      required
                     />
                   </div>
                   <div>
@@ -213,6 +216,7 @@ const PharmacistRequestForm = () => {
                       onChange={handleInputChange}
                       placeholder='Password'
                       className={classes.textBox}
+                      required
                     />
                   </div>
                 </div>
@@ -224,6 +228,7 @@ const PharmacistRequestForm = () => {
                     onChange={handleInputChange}
                     placeholder='Affiliation'
                     className={classes.textBox}
+                    required
                   />
                 </div>
                   <div>
@@ -234,11 +239,11 @@ const PharmacistRequestForm = () => {
                       onChange={handleInputChange}
                       placeholder='Educational Background'
                       className={classes.textBox}
+                      required
                     />
                   </div>
                 </div>
                 <div className={classes.textBoxContainer}>
-
                   <div>
                     <input
                       type="text"
@@ -247,14 +252,11 @@ const PharmacistRequestForm = () => {
                       onChange={handleInputChange}
                       placeholder='Hourly Rate'
                       className={classes.textBox}
+                      required
                     />
                   </div>
-
                 </div>
-
-
                 <div className="d-flex justify-content-betweem w100">
-
                   <Select
                     className={classes.daySelect}
                     value={day}
@@ -281,11 +283,11 @@ const PharmacistRequestForm = () => {
                   </div>
                   <div className='col-4 px-2'>
                     <div className={classes.dropzoneTitle}>Pharmacy Degree</div>
-                    <MyDropzone files={pharmacyDegreeForm} setFiles={setDegreeImage} onChange={onMedicalDegreeChange} maxFiles={1} toast={(s) => { }} />
+                    <MyDropzone files={pharmacyDegreeForm} setFiles={setDegreeImage} onChange={onPharmacyDegreeChange} maxFiles={1} toast={(s) => { }} />
                   </div>
                   <div className='col-4 px-2'>
                     <div className={classes.dropzoneTitle}>Pharmacy License</div>
-                    <MyDropzone files={pharmacyLicenseForm} setFiles={setLicenseImage} onChange={onMedicalLicenseChange} maxFiles={1} toast={(s) => { }} />
+                    <MyDropzone files={pharmacyLicenseForm} setFiles={setLicenseImage} onChange={onPharmacyLicenseChange} maxFiles={1} toast={(s) => { }} />
                   </div>
                 </div>
                 <button className={classes.button} type="submit">Request Registration</button>
@@ -357,7 +359,8 @@ const MyDropzone = (props) => {
                 <aside style={thumbsContainer}>{thumbs}</aside>
               )}
               {files.length == 0 && (
-                <div className='d-flex flex-column align-items-center'>
+                <div
+                 className='d-flex flex-column align-items-center'>
                   <img height={50} src={uploadImg} />
                   <div className="mt-3">Drag & drop files or Browse</div>
                   <div className={classes.dropzoneSubtitle}>
@@ -405,9 +408,6 @@ const thumbsContainer = {
   height: '100%',
   marginTop: 8,
 };
-
-
-
 
 const customStyles = {
   control: (provided, state) => ({
