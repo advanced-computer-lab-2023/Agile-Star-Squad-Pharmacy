@@ -47,9 +47,10 @@ const CartPage = (props) => {
         <div className={classes.cartpage}>
           <div className="col-5">
             <div className={classes.backarrow}>
-              <img src={arrow} style={{ width: '20px', height: 'auto' }} />
+              
               <button className={classes.back} onClick={toPrevious}>
                 {' '}
+                <img src={arrow} style={{ width: '20px', height: 'auto' }} />
                 Back
               </button>
             </div>
