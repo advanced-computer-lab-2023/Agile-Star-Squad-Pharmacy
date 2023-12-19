@@ -136,11 +136,11 @@ const NavBar = (props) => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  {/* <Link to="/SalesReport" style={{ all: 'unset' }}> */}
+                  <Link to="/SalesReport" style={{ all: 'unset' }}>
                   <a className="nav-link " href="#">
                     Sales Report
                   </a>
-                  {/* </Link> */}
+                  </Link>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="#">
