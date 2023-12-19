@@ -112,11 +112,12 @@ const Homepage = () => {
             }
             // Add conditions to filter based on "archived" and "isOtc" if role is patient
 
-            medicines = medicines.filter((medicine) => {
-                //medicine.isOtc; // replace with actual property name
-                return !medicine.archived;
-            });
-
+            if (userCtx.role === 'patient' || userCtx.role === 'pharmacist') {
+                medicines = medicines.filter((medicine) => {
+                    //medicine.isOtc; // replace with actual property name
+                    return !medicine.archived;
+                });
+            }
             if (userCtx.role === 'patient') {
                 medicines = medicines.filter((medicine) => {
                     //medicine.isOtc; // replace with actual property name

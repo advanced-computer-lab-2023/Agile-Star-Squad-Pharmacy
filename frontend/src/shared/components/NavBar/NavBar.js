@@ -52,28 +52,25 @@ const NavBar = (props) => {
       navigate('/pharmacist/account');
   };
 
+  const changePasswordHandler = () => {
+    navigate('/changePassword');
+  };
+
+  const medicinesRedirect = () => {
+    navigate('/pharmacy/home');
+  }
+
   return (
     <div className="bodyN">
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <div className="container-fluid">
-          <Link to={'/pharmacy/home'} className="navbar-brand">
-            PHARMA
-          </Link>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          {/* //Prescriptions Medicine Chat with a Pharmacist ..... Wallet Orders Account */}
-          <div className="collapse navbar-collapse" id="navbarNav">
 
-            {userCtx.role === 'patient' && (
+
+      {userCtx.role === 'patient' && (
+        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+          <div className="container-fluid">
+            <Link to={'/pharmacy/home'} className="navbar-brand">
+              PHARMA
+            </Link>
+            <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav">
                 <li className="nav-item">
                   <a className="nav-link" aria-current="page" href="#">
@@ -126,9 +123,19 @@ const NavBar = (props) => {
                   </Link>
                 </li>
               </ul>
-            )}
-            {/* Medicine Sales Report Chat .... Wallet Account */}
-            {userCtx.role === 'pharmacist' && (
+            </div>
+          </div>
+        </nav>
+
+      )}
+      {/* Medicine Sales Report Chat .... Wallet Account */}
+      {userCtx.role === 'pharmacist' && (
+        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+          <div className="container-fluid">
+            <Link to={'/pharmacy/home'} className="navbar-brand">
+              PHARMA
+            </Link>
+            <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav">
                 <li className="nav-item">
                   <Link to="/pharmacy/home" style={{ all: 'unset' }}>
@@ -176,12 +183,47 @@ const NavBar = (props) => {
                   </a>
                   {/* </Link> */}
                 </li>
-              </ul>
-            )}
+              </ul>          </div>
           </div>
-        </div>
-      </nav>
+        </nav>
+      )}
+
+      {userCtx.role === 'admin' && (
+        <nav className="navbar navbar-expand-lg navbar-light bg-light d-flex">
+          <div className="container-fluid">
+            <Link to={'/admin/home'} className="navbar-brand">
+              Pharma
+            </Link>
+
+
+            <div className="collapse navbar-collapse" id="navbarNav"></div>
+            <div className="d-flex mx-4">
+
+              <div className="btn-group">
+                <a
+                  href="#"
+                  className="btn btn-white"
+                  onClick={medicinesRedirect}
+                >
+                  Medicines
+                </a>
+                <a
+                  href="#"
+                  className="btn btn-white"
+                  onClick={changePasswordHandler}
+                >
+                  Change Password
+                </a>
+                <a href="#" className="btn btn-white" id="last" onClick={logout}>
+                  Logout
+                </a>
+              </div>
+            </div>
+          </div>
+        </nav>
+      )}
     </div>
+
   );
 };
 export default NavBar;
