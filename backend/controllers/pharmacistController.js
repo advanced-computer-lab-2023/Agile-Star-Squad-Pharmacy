@@ -126,7 +126,6 @@ exports.pharmacistSignup = catchAsync(async (req, res, next) => {
   }
 });
 
-
 exports.getPharmacist = catchAsync(async (req, res, next) => {
   const pharmacist = await Pharmacist.findById(req.params.id);
 
@@ -134,6 +133,19 @@ exports.getPharmacist = catchAsync(async (req, res, next) => {
     status: 'success',
     data: {
       pharmacist,
+    },
+  });
+});
+
+exports.getMyNotifications = catchAsync(async (req, res, next) => {
+  const pharmacist = await Pharmacist.findById(
+    req.params.pharmacistId
+  ).populate('notifications');
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      notifications: pharmacist.notifications,
     },
   });
 });
