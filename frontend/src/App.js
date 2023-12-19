@@ -44,11 +44,7 @@ function App() {
             <Route path="/payment/AddingInfo" element={<AddingInfo />} exact />
             <Route path="/payment/temp" element={<Checking />} exact />
             <Route path="/order" element={<Order />} exact />
-            <Route
-              path="/patient/account"
-              element={<PatientAccountSettings />}
-              exact
-            />
+            <Route path="/patient/account" element={<PatientAccountSettings />} exact />
             <Route path="/address/add" element={<AddAddress />} exact />
             <Route path="changePassword" element={<ChangePassword />} exact />
             <Route path="/medicine" element={<MedicineDetails />} exact />
@@ -63,6 +59,7 @@ function App() {
             <Route path="/medicine" element={<MedicineDetails />} exact />
           <Route path="/medicine/edit" element={<EditMedicineForm />} exact />
           <Route path="changePassword" element={<ChangePassword />} exact />
+          <Route path="/medicine" element={<MedicineDetails />} exact />
           <Route
             path="/archivedMedicines"
             element={<ArchivedMedicines />}
