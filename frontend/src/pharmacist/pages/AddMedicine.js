@@ -12,7 +12,7 @@ import Select from 'react-select'
 // import { toastMe } from '../../shared/util/functions';
 import {toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import { toastMeSuccess } from '../../shared/util/functions';
+import { toastMeError, toastMeSuccess } from '../../shared/util/functions';
 
 
 
@@ -82,7 +82,7 @@ const AddMedicine = (props) => {
   const handleSave = async () => {
     // Check if any of the required fields is empty
     if (!name || !ingredients || !price || !quantity || !sales || files.length == 0) {
-      alert('Please fill in all the fields before saving.');
+      toastMeError('Please fill in all the fields before saving.');
       return;
     }
     const data = {

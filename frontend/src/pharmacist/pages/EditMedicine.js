@@ -4,6 +4,7 @@ import medicinalUseEnum from '../../shared/util/MedicinalUseEnum';
 import Modal from '../../shared/components/Modal/Modal';
 import styles from '../components/AddMedicine.module.css';
 import axios from 'axios';
+import { toastMeSuccess } from '../../shared/util/functions';
 
 const EditMedicine = () => {
   const location = useLocation();
@@ -44,7 +45,7 @@ const EditMedicine = () => {
       .patch(`http://localhost:4000/medicine/archive/${id}`, {
         withCredentials: true,
       })
-      .then(() => alert('Medicine has been archived'))
+      .then(() => toastMeSuccess('Medicine has been archived'))
       .catch((err) => {
         console.error(err);
       });
@@ -81,7 +82,7 @@ const EditMedicine = () => {
       .patch(`http://localhost:4000/medicine/${id}`, dataToUpdate, {
         withCredentials: true,
       })
-      .then(() => alert('Medicine updated successfully'))
+      .then(() => toastMeSuccess('Medicine updated successfully'))
       .catch((err) => {
         console.error(err);
       });

@@ -4,6 +4,7 @@ import Select from 'react-select';
 import classes from './PaymentCard.module.css';
 import axios from 'axios';
 import UserContext from '../../user-store/user-context';
+import { toastMeSuccess } from '../../shared/util/functions';
 
 const citiesInEgypt = [
   {
@@ -101,7 +102,7 @@ const ShippmentCard = (props) => {
     throw new Error('Failed to send data to the server.');
 
   }
-  alert('Address Added Successfully')
+  toastMeSuccess('Address Added Successfully')
 
   
       

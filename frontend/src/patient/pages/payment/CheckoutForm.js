@@ -7,7 +7,7 @@ import UserContext from '../../../user-store/user-context';
 import CartContext from '../cart/Cart';
 import './AddingInfo.css'
 import axios from 'axios';
-import { toastMeError } from '../../../shared/util/functions';
+import { toastMeError, toastMeSuccess } from '../../../shared/util/functions';
 
 const citiesInEgypt = [
   {
@@ -158,7 +158,7 @@ export default function CheckoutForm(props) {
       if (!response.ok) {
         throw new Error('Failed to send data to the server.');
       }
-      alert("Payment Successful")
+      toastMeSuccess("Payment Successful")
       setMessage('Payment successful!');
       cartCtx.clearCart();
       const { error } = await stripe.confirmPayment({
@@ -220,16 +220,16 @@ export default function CheckoutForm(props) {
         }  else 
         if (response.ok) {
           // Handle a successful response
-          alert("Payment Successful");
+          toastMeSuccess("Payment Successful");
           cartCtx.clearCart();
           navigate('/');
         } else {
           // Handle errors if the server response is not ok
-          alert('Failed to update data.');
+          toastMeError('Failed to update data.');
         }
       } catch (error) {
         // Handle network errors
-        alert('Network error: ' + error.message);
+        toastMeError('Network error: ' + error.message);
       }
     } else {
       setMessage('Insufficient balance in your wallet.');

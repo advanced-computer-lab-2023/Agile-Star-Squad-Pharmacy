@@ -66,16 +66,16 @@ const RequestDetails = (props) => {
 
             if (response.ok) {
                 // Handle a successful response
-                alert('Pharmacist rejected!');
+                toastMeSuccess('Pharmacist rejected!');
                 setStatus('Rejected');
                 props.onStatusChange(props.data['id'], 'Rejected');
             } else {
                 // Handle errors if the server response is not ok
-                alert('Rejecting request Failed!');
+                toastMeError('Rejecting request Failed!');
             }
         } catch (error) {
             // Handle network errors
-            alert('Network error: ' + error.message);
+            toastMeError('Network error: ' + error.message);
         }
     }   
      return (

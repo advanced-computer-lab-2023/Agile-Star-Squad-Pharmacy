@@ -10,6 +10,7 @@ import Select from 'react-select';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import uploadImg from "./upload.png"
+import { toastMeError, toastMeSuccess } from '../../shared/util/functions';
 
 const PharmacistRequestForm = () => {
   const [formData, setFormData] = useState({
@@ -126,17 +127,17 @@ const PharmacistRequestForm = () => {
 
       if (response.ok) {
         // Handle a successful response
-        alert('Request is pending...');
+        toastMeSuccess('Request is pending...');
         navigate('/');
       } else {
         // Handle errors if the server response is not ok
         const responseData = await response.json();
-        alert(responseData.message);
+        toastMeError(responseData.message);
         // navigate('/');
       }
     } catch (error) {
       // Handle network errors
-      alert('Network error: ' + error.message);
+      toastMeError('Network error: ' + error.message);
     }
   };
 
