@@ -2,6 +2,7 @@
 const Order = require('../models/orderModel');
 const Patient = require('../models/patientModel');
 const Medicine = require('../models/medicineModel');
+const Notification = require('../')
 
 // Function to get all orders of a patient by their id
 const getOrdersByPatientId = async (req, res) => {
@@ -96,6 +97,7 @@ const addOrder = async (req, res) => {
       }
       const newQty = medicine.quantity - medicineObj.count;
       await Medicine.findByIdAndUpdate(medicineObj.medicineId, { quantity: newQty })
+    
     }
 
     //  {
