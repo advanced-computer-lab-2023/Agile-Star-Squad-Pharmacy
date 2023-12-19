@@ -320,7 +320,7 @@ useEffect(() => {
               // Handle a successful response
               toastMeSuccess('Pharmacist accepted successfully!');
               setStatus('Accepted');
-              props.onStatusChange(props.id, 'Accepted');
+              // props.onStatusChange(props.id, 'Accepted');
           } else {
             
               // Handle errors if the server response is not ok
@@ -348,7 +348,7 @@ useEffect(() => {
               // Handle a successful response
               toastMeSuccess('Pharmacist rejected!');
               setStatus('Rejected');
-              props.onStatusChange(props.id, 'Rejected');
+              // props.onStatusChange(props.id, 'Rejected');
           } else {
               // Handle errors if the server response is not ok
               toastMeError('Rejecting request Failed!');
@@ -883,7 +883,7 @@ const handleSalesClick = () =>{
       )}
       {showRequest &&(
         <RequestDetails
-        onStatusChange={statusChangeHandler}
+        // onStatusChange={statusChangeHandler}
         data={selectedRequest}
         exit={exitRequestModal}
         />

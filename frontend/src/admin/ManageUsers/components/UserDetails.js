@@ -156,28 +156,28 @@ const UserDetails = (props) => {
               )}
             </div>
 
-            {/* Medical License */}
+            {/* pharmacy License */}
             <div className={styles.spacing}>
-              <span className={styles.smallText}>Medical License</span>
+              <span className={styles.smallText}>Pharmacy License</span>
               <br />
-              {props.data['medicalLicense'] && (
-                props.data['medicalLicense'].includes('pdf') ? (
-                  <a href={props.data['medicalLicense']} target="_blank" rel="noopener noreferrer">Download PDF</a>
+              {props.data['pharmacyLicense'] && (
+                props.data['pharmacyLicense'].includes('pdf') ? (
+                  <a href={props.data['pharmacyLicense']} target="_blank" rel="noopener noreferrer">Download PDF</a>
                 ) : (
-                  <img width={130} src={props.data['medicalLicense']} alt="Medical License" />
+                  <img width={130} src={props.data['pharmacyLicense']} alt="Medical License" />
                 )
               )}
             </div>
 
-            {/* Medical Degree */}
+            {/* pharmacy Degree */}
             <div className={styles.spacing}>
-              <span className={styles.smallText}>Medical Degree</span>
+              <span className={styles.smallText}>Pharmacy Degree</span>
               <br />
-              {props.data['medicalDegree'] && (
-                props.data['medicalDegree'].includes('pdf') ? (
-                  <a href={props.data['medicalDegree']} target="_blank" rel="noopener noreferrer">Download PDF</a>
+              {props.data['pharmacyDegree'] && (
+                props.data['pharmacyDegree'].includes('pdf') ? (
+                  <a href={props.data['pharmacyDegree']} target="_blank" rel="noopener noreferrer">Download PDF</a>
                 ) : (
-                  <img width={130} src={props.data['medicalDegree']} alt="Medical Degree" />
+                  <img width={130} src={props.data['pharmacyDegree']} alt="Medical Degree" />
                 )
               )}
                         </div>
