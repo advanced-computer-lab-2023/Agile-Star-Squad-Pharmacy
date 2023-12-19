@@ -130,8 +130,7 @@ const PharmacistRequestForm = () => {
         navigate('/');
       } else {
         // Handle errors if the server response is not ok
-        const responseData = await response.json();
-        toastMeError(responseData.message);
+        toastMeError("Registeration Failed, please try again.");
         // navigate('/');
       }
     } catch (error) {
