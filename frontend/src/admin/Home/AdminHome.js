@@ -13,6 +13,7 @@ import RevenueChart from '../ManageUsers/components/RevenueChart';
 import UserDetails from '../ManageUsers/components/UserDetails';
 import AdminForm from '../ManageUsers/components/AdminForm';
 import RequestDetails from '../ManageUsers/components/RequestDetails';
+import { toastMeSuccess,toastMeError } from '../../shared/util/functions';
 
 const AdminHome = (props) => {
   const navigate = useNavigate();
@@ -314,16 +315,16 @@ useEffect(() => {
 
           if (response.ok) {
               // Handle a successful response
-              alert('Pharmacist accepted successfully!');
+              toastMeSuccess('Pharmacist accepted successfully!');
               setStatus('Accepted');
               props.onStatusChange(props.id, 'Accepted');
           } else {
               // Handle errors if the server response is not ok
-              alert('Accepting request Failed!');
+              toastMeError('Accepting request Failed!');
           }
       } catch (error) {
           // Handle network errors
-          alert('Network error: ' + error.message);
+          // alert('Network error: ' + error.message);
       }
   }
 
@@ -341,16 +342,16 @@ useEffect(() => {
 
           if (response.ok) {
               // Handle a successful response
-              alert('Pharmacist rejected!');
+              toastMeSuccess('Pharmacist rejected!');
               setStatus('Rejected');
               props.onStatusChange(props.id, 'Rejected');
           } else {
               // Handle errors if the server response is not ok
-              alert('Rejecting request Failed!');
+              toastMeError('Rejecting request Failed!');
           }
       } catch (error) {
           // Handle network errors
-          alert('Network error: ' + error.message);
+          // alert('Network error: ' + error.message);
       }
   }
  
@@ -662,7 +663,7 @@ const handleSalesClick = () =>{
               <td className={styles.bold}>
       {request.name} 
       <div className={styles.small}>
-      {calculateAge(request.dateOfBirth)},   { formatDate(request.creationDate )}
+      {calculateAge(request.dateOfBirth)},  {request.affiliation} { formatDate(request.creationDate )}
 
 
       </div>

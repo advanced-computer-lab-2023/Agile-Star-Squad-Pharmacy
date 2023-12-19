@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Poppins:wght@600&display=swap');
 .addForm{
   width: 764px;
-  height: 695px;
+  height: 665px;
     border-radius: 26px 26px 26px 26px;
     left:28%  ;
     top:5%;
@@ -122,9 +122,9 @@ margin-top: 0%;
   }
   
   .accept{
-    position: absolute;
+    position: inherit;
     left: 77%;
-    margin: 54px 13px 13px 0px;
+    margin: 54px 13px 13px 12px;
     border-radius: 11px;
     width: 94px;
     height: 36px;
@@ -151,7 +151,6 @@ margin-top: 0%;
   }
   .spacing{
     margin-left: 5%;
-    margin-bottom: -5%;
   }
   .overlay {
     position: fixed;

@@ -1,7 +1,7 @@
 import Modal from '../../../shared/components/Modal/Modal';
 import ReactDOM from "react-dom";
 import React from 'react';
-import styles from './RequestDetails.module.css';
+import styles from './UserDetails.module.css';
 
 const UserDetails = (props) => {
   const onDelete = () => {
