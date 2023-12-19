@@ -14,17 +14,17 @@ const NavBar = (props) => {
   }, []);
 
   const getWallet = async () => {
-    if (userCtx.role == "patient"){
-    const response = await fetch(
-      `http://localhost:4000/patients/${userCtx.userId}`,
-      {
-        credentials: 'include',
-      }
-    );
-    const json = await response.json();
-    setWalletAmount(json.data.patient.wallet);
+    if (userCtx.role == "patient") {
+      const response = await fetch(
+        `http://localhost:4000/patients/${userCtx.userId}`,
+        {
+          credentials: 'include',
+        }
+      );
+      const json = await response.json();
+      setWalletAmount(json.data.patient.wallet);
     }
-    if (userCtx.role == "pharmacist"){
+    if (userCtx.role == "pharmacist") {
       const response = await fetch(
         `http://localhost:4000/pharmacist/${userCtx.userId}`,
         {
@@ -34,7 +34,7 @@ const NavBar = (props) => {
       const json = await response.json();
       console.log(json.data);
       setWalletAmount(json.data.pharmacist.wallet);
-      }
+    }
   };
 
   const logout = async () => {
@@ -88,9 +88,11 @@ const NavBar = (props) => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#">
-                    Chat with a Pharmacist
-                  </a>
+                  <Link to="/messages" style={{ all: "unset" }}>
+                    <a className="nav-link" href="#">
+                      Chat with a Pharmacist
+                    </a>
+                  </Link>
                 </li>
 
                 <li className="nav-item" style={{ paddingLeft: '110px' }}>
@@ -137,15 +139,17 @@ const NavBar = (props) => {
                 </li>
                 <li className="nav-item">
                   <Link to="/SalesReport" style={{ all: 'unset' }}>
-                  <a className="nav-link " href="#">
-                    Sales Report
-                  </a>
+                    <a className="nav-link " href="#">
+                      Sales Report
+                    </a>
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#">
-                    Chat
-                  </a>
+                  <Link to="/messages" style={{ all: "unset" }}>
+                    <a className="nav-link" href="#">
+                      Chat
+                    </a>
+                  </Link>
                 </li>
                 <li className="nav-item">
                   <Link to="/archivedMedicines" style={{ all: 'unset' }}>

@@ -65,14 +65,12 @@ const patientSchema = new mongoose.Schema({
       },
     },
   ],
-  
-  chats: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Chat'
-    }
-  ],
 
+  chat: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Chat'
+  }
+  ,
   cart: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -89,12 +87,12 @@ const patientSchema = new mongoose.Schema({
       },
     }
   ],
-  wallet:{
+  wallet: {
     type: Number,
-    default:0,
+    default: 0,
 
   }
-  
+
 });
 
 const Patient = mongoose.model('Patient', patientSchema);

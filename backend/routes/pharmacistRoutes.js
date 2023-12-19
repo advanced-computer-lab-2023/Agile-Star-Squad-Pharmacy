@@ -7,6 +7,10 @@ const router = express.Router({
 });
 
 router
+  .route('/chats')
+  .get(pharmacistController.getChats);
+  
+router
   .route('/')
   .get(pharmacistController.getAllPharmacist)
   .post(pharmacistController.pharmacistSignup);
@@ -16,5 +20,6 @@ router
   .get(pharmacistController.getPharmacist)
   .patch(middleware.pharmacistAuth, pharmacistController.updatePharmacist)
   .delete(pharmacistController.removePharmacist);
+
 
 module.exports = router;

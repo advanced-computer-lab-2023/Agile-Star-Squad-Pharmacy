@@ -1,3 +1,4 @@
+const Chat = require("../models/chatModel");
 const Patient = require("../models/patientModel");
 const catchAsync = require("../utils/catchAsync");
 
@@ -116,6 +117,21 @@ exports.setCart = async (req, res) => {
   try {
     await Patient.findByIdAndUpdate(req.params.id, {kimoCart: req.body.cart});
     res.status(200).json({ message: 'Cart set successfully' });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+exports.getChat = async (req, res) => {
+  try {
+    const patient = await Patient.findById(req.params.id);
+    let chat = patient.chat;
+    if (chat == null) {
+      const chatObj = await Chat.create({patient});
+      await Patient.findByIdAndUpdate(req.params.id, {chat: chatObj._id});
+      chat = chatObj._id;
+    } 
+    res.status(200).json({ chat: chat});
   } catch (error) {
     res.status(400).json({ message: error.message });
   }

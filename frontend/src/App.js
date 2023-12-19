@@ -29,6 +29,8 @@ import MedicineDetails from './patient/pages/MedicineDetails';
 import Homepage from './patient/pages/home/Homepage';
 import RevenueChart from './admin/ManageUsers/components/RevenueChart';
 import SalesReport from './admin/pages/SalesReport';
+import Messages from './patient/pages/messages/Messages';
+import PharmacistMessages from './pharmacist/pages/messages/Messages';
 
 
 function App() {
@@ -45,6 +47,7 @@ function App() {
             <Route path="/payment/AddingInfo" element={<AddingInfo />} exact />
             <Route path="/payment/temp" element={<Checking />} exact />
             <Route path="/order" element={<Order />} exact />
+            <Route path= "/messages" element={<Messages/>} exact />
             <Route path="/patient/account" element={<PatientAccountSettings />} exact />
             <Route path="/address/add" element={<AddAddress />} exact />
             <Route path="changePassword" element={<ChangePassword />} exact />
@@ -61,6 +64,7 @@ function App() {
           <Route path="/medicine/edit" element={<EditMedicineForm />} exact />
           <Route path="changePassword" element={<ChangePassword />} exact />
           <Route path="/medicine" element={<MedicineDetails />} exact />
+          <Route path="/messages" element={<PharmacistMessages />} exact />
           <Route
             path="/archivedMedicines"
             element={<ArchivedMedicines />}
