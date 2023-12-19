@@ -125,7 +125,7 @@
 
 .daySelect {
     max-height: 40px;
-    max-width: 80px;
+    max-width: 150px;
     margin-right: 10px;
     display: inline-block;
 }
@@ -142,6 +142,7 @@ input.numField::-webkit-inner-spin-button {
 
 input[type=number].numField {
     -moz-appearance: textfield;
+    appearance: textfield;
 }
 .navbar-brand {
     font-size: 32px;

@@ -3,6 +3,7 @@ import Card from '../../../shared/components/Card/Card';
 import ReactDOM from "react-dom";
 import { useState } from 'react';
 import styles from './RequestDetails.module.css';
+import { toastMe, toastMeSuccess, toastMeError } from '../../../shared/util/functions';
 
 const RequestDetails = (props) => {
 
@@ -36,16 +37,18 @@ const RequestDetails = (props) => {
 
             if (response.ok) {
                 // Handle a successful response
-                alert('Pharmacist accepted successfully!');
+                // alert('Pharmacist accepted successfully!');
+                toastMeSuccess('Pharmacist accepted successfully!');
                 setStatus('Accepted');
                 props.onStatusChange(props.data['id'], 'Accepted');
             } else {
                 // Handle errors if the server response is not ok
-                alert('Accepting request Failed!');
+                // alert('Accepting request Failed!');
+                toastMeError('Accepting request Failed!');
             }
         } catch (error) {
             // Handle network errors
-            alert('Network error: ' + error.message);
+            // alert('Network error: ' + error.message);
         }
     }
 

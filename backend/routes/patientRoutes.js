@@ -19,6 +19,10 @@ router
   .get(middleware.patientAuth, patientController.getCart)
   .post(middleware.patientAuth, patientController.setCart);
 
+router
+  .route('/:id/chat')
+  .get(middleware.patientAuth, patientController.getChat)
+
   router
   .route('/:patientId/wallet')
   .post(patientController.updateWallet)

@@ -5,6 +5,8 @@ import classes from './patientRegister.module.css';
 import medicines from './Medicines.png';
 import Select from 'react-select';
 import { useEffect } from 'react';
+import { toastMeError } from '../../shared/util/functions';
+import { toastMeSuccess } from '../../shared/util/functions';
 
 const PatientRegisterForm = () => {
   const [userRole, setUserRole] = useState('');
@@ -45,6 +47,7 @@ const PatientRegisterForm = () => {
     placeholder: (provided, state) => ({
       ...provided,
       color: state.isFocused ? '#000' : '#888',
+      paddingRight: '50px',
     }),
     dropdownIndicator: (provided) => ({
       ...provided,
@@ -74,6 +77,7 @@ const PatientRegisterForm = () => {
     singleValue: (provided) => ({
       ...provided,
       fontSize: '14px',
+      paddingRight: '10px',
     }),
     valueContainer: (provided) => ({
       ...provided,
@@ -161,16 +165,16 @@ const PatientRegisterForm = () => {
 
       if (response.ok) {
         // Handle a successful response
-        alert('Registration Successful!');
+        toastMeSuccess("Registeration Successful");
         setUserRole('patient');
         navigate('/pharmacy/home');
       } else {
         // Handle errors if the server response is not ok
-        alert('Registration Failed!');
+        toastMeError("Registeration Failed, Try again!")
       }
     } catch (error) {
       // Handle network errors
-      alert('Network error: ' + error.message);
+      toastMeError('Network Error: ' + error.message);
     }
   };
 

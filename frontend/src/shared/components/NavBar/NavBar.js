@@ -86,9 +86,11 @@ const NavBar = (props) => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#">
-                    Chat with a Pharmacist
-                  </a>
+                  <Link to="/messages" style={{ all: "unset" }}>
+                    <a className="nav-link" href="#">
+                      Chat with a Pharmacist
+                    </a>
+                  </Link>
                 </li>
 
                 <li className="nav-item" style={{ paddingLeft: '110px' }}>
@@ -141,9 +143,11 @@ const NavBar = (props) => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#">
-                    Chat
-                  </a>
+                  <Link to="/messages" style={{ all: "unset" }}>
+                    <a className="nav-link" href="#">
+                      Chat
+                    </a>
+                  </Link>
                 </li>
                 <li className="nav-item">
                   <Link to="/archivedMedicines" style={{ all: 'unset' }}>
