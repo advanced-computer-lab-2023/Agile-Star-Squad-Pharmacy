@@ -64,8 +64,21 @@
   top: 23%;
   width: 443px;
   height: 253.955px;
-
+  overflow-y: auto;
 }
+
+.requests::-webkit-scrollbar {
+  width: 0.01em; /* Set the width of the scrollbar */
+}
+
+.requests::-webkit-scrollbar-thumb {
+  background-color: #ffffff; /* Color of the thumb */
+}
+
+.requests::-webkit-scrollbar-track {
+  background-color: #ffffff; /* Color of the track */
+}
+
 
 
 .packageTitle,.ReqTitle, .revTitle{

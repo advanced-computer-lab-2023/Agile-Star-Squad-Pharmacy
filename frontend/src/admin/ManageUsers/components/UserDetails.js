@@ -1,13 +1,13 @@
 import Modal from '../../../shared/components/Modal/Modal';
 import ReactDOM from "react-dom";
 import React from 'react';
-import styles from './RequestDetails.module.css';
+import styles from './UserDetails.module.css';
 
 const UserDetails = (props) => {
-  const onDelete = () => {
-    props.onDelete(props.data['username']);
-    props.exit();
-  }
+  // const onDelete = () => {
+  //   props.onDelete(props.data['username']);
+  //   props.exit();
+  // }
 
   function formatDate(date) {
     const day = date.getDate().toString().padStart(2, '0');
@@ -34,7 +34,7 @@ const UserDetails = (props) => {
       <React.Fragment>
         <div className={styles.topBorder}></div>
         <div className={styles.userTitle}>Patient Info</div>
-        <div>
+        <div className={styles.nameField}>
           <span><h4>Username</h4></span>
           <span>{props.data['username']}</span>
         </div>
@@ -68,7 +68,7 @@ const UserDetails = (props) => {
             <div className={styles.formControl}>{props.data['mobileNumber']}</div>
           </div>
         </div>
-        <div className={styles.dateField}>
+        <div className={styles.field}>
           <span className={styles.smallText}>Emergency Number</span>
           <div className={styles.formControl}>{props.data['emergencyNumber']}</div>
         </div>
@@ -182,34 +182,7 @@ const UserDetails = (props) => {
               )}
                         </div>
                         </div>
-        {/* <div>
-          <span><h4>Username</h4></span>
-          <span>{props.data['username']}</span>
-        </div>
-        <div>
-          <span><h4>Name</h4></span>
-          <span>{props.data['name']}</span>
-        </div>
-        <div>
-          <span><h4>Email</h4></span>
-          <span>{props.data['email']}</span>
-        </div>
-        <div>
-          <span><h4>Date of Birth</h4></span>
-          <span>{props.data['dateOfBirth']}</span>
-        </div>
-        <div>
-          <span><h4>Hourly Rate</h4></span>
-          <span>{props.data['hourlyRate']}</span>
-        </div>
-        <div>
-          <h4>Affiliation</h4>
-          <span>{props.data['affiliation']}</span>
-        </div>
-        <div>
-          <span><h4>Educational Background</h4></span>
-          <span>{props.data['educationalBackground']}</span>
-        </div> */}
+    
       </React.Fragment>
     );
   }

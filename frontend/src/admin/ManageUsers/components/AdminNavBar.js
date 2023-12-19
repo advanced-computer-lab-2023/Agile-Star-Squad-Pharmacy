@@ -27,7 +27,7 @@ const AdminNavBar = (props) => {
       <nav className="navbar navbar-expand-lg navbar-light bg-light d-flex">
         <div className="container-fluid">
           <Link to={'/admin/home'} className="navbar-brand">
-            Pharma
+            PHARMA
           </Link>
 
 

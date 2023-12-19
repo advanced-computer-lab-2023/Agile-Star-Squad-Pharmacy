@@ -3,6 +3,7 @@ const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const Request = require('../models/requestModel');
 const Patient = require('../models/patientModel');
+const ProfessionalChat = require('../models/professionalChatModel');
 
 exports.getAllPharmacist = catchAsync(async (req, res, next) => {
   const Pharmacists = await Pharmacist.find();
@@ -128,9 +129,7 @@ exports.pharmacistSignup = catchAsync(async (req, res, next) => {
 });
 
 exports.getPharmacist = catchAsync(async (req, res, next) => {
-  console.log("what the actual fuck")
   const pharmacist = await Pharmacist.findById(req.params.id);
-
   res.status(200).json({
     status: 'success',
     data: {
@@ -140,6 +139,7 @@ exports.getPharmacist = catchAsync(async (req, res, next) => {
 });
 
 exports.getChats = catchAsync(async (req, res, next) => {
+  const pharmacist = await Pharmacist.findById(req.params.id);
   const chats = [];
   const patients = await Patient.find();
   for (const patient of patients) {
@@ -151,6 +151,7 @@ exports.getChats = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: 'success',
     chats,
+    doctorChats: pharmacist.chats
   });
 });
 
@@ -165,4 +166,22 @@ exports.getMyNotifications = catchAsync(async (req, res, next) => {
       notifications: pharmacist.notifications,
     },
   });
+});
+
+exports.getProfessionalChat = catchAsync(async (req, res, next) => {
+  const pharmacist = await Pharmacist.findById(req.params.id);
+  console.log(`found pharmacist ${pharmacist.name}`)
+  console.log(req.params.doctorId)
+  console.log(req.params.doctorId.toString())
+  const doctorResult = await fetch(`http://localhost:3000/doctors/${req.params.doctorId.toString()}`);
+  const doctorJson = await doctorResult.json();
+  // console.log(doctorJson);
+  const doctor = doctorJson.data.doctor;
+  const chat = await ProfessionalChat.create({pharmacist, doctor});
+  const addDoctorResponse = await fetch(`http://localhost:3000/doctors/chats/${req.params.doctorId}/${chat._id.toString()}`);
+  console.log(await addDoctorResponse.json())
+  await Pharmacist.findByIdAndUpdate(req.params.id, {chats: [...pharmacist.chats, chat._id]})
+  res.status(200).json({
+    chat
+  })
 });

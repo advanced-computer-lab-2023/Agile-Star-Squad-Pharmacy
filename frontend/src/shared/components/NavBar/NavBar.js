@@ -175,15 +175,18 @@ const NavBar = (props) => {
                   </p>
                 </li>
                 <li className="nav-item">
-                  {/* <Link to="//patient/account" style={{ all: 'unset' }}> */}
-                  <a
-                    className="nav-link "
-                    href="#"
-                    // onClick={redirectToAccountSettings}
-                  >
-                    Account
-                  </a>
-                  {/* </Link> */}
+                <a
+                href="#"
+                className="btn btn-white"
+                onClick={changePasswordHandler}
+              >
+                Change Password
+                </a>
+                </li>
+                <li className="nav-item">
+                <a href="#" className="btn btn-white" id="last" onClick={logout}>
+                Logout
+                 </a>
                 </li>
               </ul>          </div>
           </div>
