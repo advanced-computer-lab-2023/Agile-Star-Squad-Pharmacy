@@ -654,56 +654,61 @@ const handleSalesClick = () =>{
   <div className="container">
     <div className="row">
       <table className="table table-hover">
-        <tbody>
-          {requests.map((request) => (
-            <tr key={request.id}className={styles.customRow} onClick={() => showRequestModal(request)} >
-              <td className={styles.req}>
-                <img src={req} alt="req" />
-              </td>
-              <td className={styles.bold}>
-      {request.name} 
-      <div className={styles.small}>
-      {calculateAge(request.dateOfBirth)},  {request.affiliation} { formatDate(request.creationDate )}
-
-
-      </div>
-    </td>
-              {status.toLowerCase() === 'pending' && (
-                <ActionButtons reject={() => reject(request)} accept={() => accept(request)} />
-              )}
-              <td className={`${styles.rejectReq} ${styles.borderBottom}`}>
-                <img
-                  src={x}
-                  alt="req-rej"
-                  className={styles.rej}
-                  onClick={(e) => {
+            <tbody>
+        {requests.map((request) => (
+          <tr key={request.id} className={styles.customRow} onClick={() => showRequestModal(request)}>
+            <td className={styles.req}>
+              <img src={req} alt="req" />
+            </td>
+            <td className={styles.bold}>
+              {request.name}
+              <div className={styles.small}>
+                {calculateAge(request.dateOfBirth)}, {request.affiliation} {formatDate(request.creationDate)}
+              </div>
+            </td>
+            {status.toLowerCase() === 'pending' && (
+              <ActionButtons reject={() => reject(request)} accept={() => accept(request)} />
+            )}
+            <td className={`${styles.rejectReq} ${styles.borderBottom}`}>
+              <img
+                src={x}
+                alt="req-rej"
+                className={styles.rej}
+                onClick={(e) => {
+                  // Check if the click event originated from the reject button
+                  if (!e.currentTarget.contains(e.target)) {
                     selectedRequest &&
                       selectedRequestRef.current &&
                       selectedRequestRef.current.reject(request);
                     e.stopPropagation(); // Stop event propagation
                     reject(request);
-                  }}
-                />
-              </td>
-              <td className={`${styles.acceptReq} ${styles.borderBottom}`}>
-                <img
-                  src={check}
-                  width="25"
-                  height="25"
-                  alt="req-acc"
-                  className={styles.acc}
-                  onClick={(e) => {
+                  }
+                }}
+              />
+            </td>
+            <td className={`${styles.acceptReq} ${styles.borderBottom}`}>
+              <img
+                src={check}
+                width="25"
+                height="25"
+                alt="req-acc"
+                className={styles.acc}
+                onClick={(e) => {
+                  // Check if the click event originated from the accept button
+                  if (!e.currentTarget.contains(e.target)) {
                     selectedRequest &&
                       selectedRequestRef.current &&
                       selectedRequestRef.current.accept(request);
                     e.stopPropagation(); // Stop event propagation
                     accept(request);
-                  }}
-                />
-              </td>
-            </tr>
-          ))}
-        </tbody>
+                  }
+                }}
+              />
+            </td>
+          </tr>
+        ))}
+      </tbody>
+
       </table>
     </div>
   </div>
@@ -852,14 +857,16 @@ const handleSalesClick = () =>{
         </>
       )}
 
-      <td className={styles.userCell}>
+      {/* The X button is not wrapped in the clickable area */}
+      <td className={styles.userCell} onClick={(e) => e.stopPropagation()}>
         <button className={styles.deleteButton} onClick={(e) => handleDeleteClick(e, user.username)}>
-            X
-          </button>
+          X
+        </button>
       </td>
     </tr>
   ))}
 </tbody>
+
 
   </Table>
   </div>
