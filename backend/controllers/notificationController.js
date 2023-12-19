@@ -1,4 +1,5 @@
 const Notification = require('../models/notificationModel');
+const catchAsync = require('../utils/catchAsync');
 
 exports.getAllNotification = catchAsync(async (req, res, next) => {
   const notifications = await Notification.find();
