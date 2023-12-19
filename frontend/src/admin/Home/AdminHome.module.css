@@ -410,6 +410,18 @@ margin-top: 2%;
 height:140px;
 
 }
+.monthly{
+ 
+  border-radius: 15.378px;
+  border: 0.961px solid var(--Stroke-3, #E2E8F0);
+  background: var(--white-100, #FFF);
+  width: 25%;
+  margin-left: 72%;
+  margin-top: 5%;
+  top: 6%;
+  position: absolute;
+
+}
 .rev{
   margin-left: 5%;
   margin-right: 5%;

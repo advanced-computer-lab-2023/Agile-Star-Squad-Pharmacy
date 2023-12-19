@@ -1,0 +1,210 @@
+ .container {
+    position: relative; /* Change to relative positioning */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }  
+  .revenue{
+    position: absolute;
+    top:60%;
+    left: 5%; 
+    width: 1100px;
+  height: 280.955px;
+  }
+  .chart{
+    position: inherit;
+    bottom: 5%;
+    left: 7%;
+  }
+  .yesterdaySales{
+    color: var(--Primary-800, #4079ED);
+  font-family: 'Poppins';
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px; 
+  margin-left: 5%;
+  }
+  .rev, .profit{
+    display: inline-flex;
+  padding: 16.339px 28.834px 26.473px 13.456px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 33.639px;
+  border-radius: 15.378px;
+  border: 0.961px solid var(--Stroke-3, #E2E8F0);
+  background: var(--white-100, #FFF);
+  width: 30%;
+  margin-top: 2%;
+  height:140px;
+  
+  }
+  .monthly{
+   
+    border-radius: 15.378px;
+    border: 0.961px solid var(--Stroke-3, #E2E8F0);
+    background: var(--white-100, #FFF);
+    width: 25%;
+    margin-left: 72%;
+    margin-top: 5%;
+    top: 6%;
+    position: absolute;
+  
+  }
+  .rev{
+    margin-left: 5%;
+    margin-right: 5%;
+  
+  }
+  .profit{
+    margin-right: 30%;
+  }
+  .cur{
+    color: #000;
+    font-family: 'SF Pro Display';
+    font-size: 23.067px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 100%; /* 23.067px */
+    
+  }
+  .prev{
+    color: #000;
+    font-family: 'SF Pro Display';
+    font-size: 13.456px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 100%; /* 13.456px */
+    position: absolute;
+    margin-top: 6%;
+  }
+  .change{
+    color: var(--Green-500, #22C55E);
+  font-family: 'SF Pro Display';
+  font-size: 13.456px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 100%; /* 13.456px */
+  position: absolute;
+  margin-top: 1%;
+  margin-left: 25%;
+  }
+  .arrow{
+    position: absolute;
+    margin-top: 0.8%;
+  margin-left: 23.5%;
+  }
+  
+  .salesT{
+    color: var(--Text-900, #0F172A);
+  font-family: 'Poppins';
+  font-size: 13.456px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%; /* 13.456px */
+  margin-top: 2%;
+  }
+  .parentContainer {
+    display: flex;
+    gap: 20px; /* Adjust the gap as needed */
+  }
+  
+  
+  
+  .yearly {
+    width: 721px;
+    height: 271px;
+    flex-shrink: 0;
+    border-radius: 13.273px;
+    border: 0.83px solid var(--Stroke-3, #E2E8F0);
+    background: var(--white-100, #FFF);
+    box-shadow: 0px 0.83px 1.659px 0px rgba(0, 0, 0, 0.05);
+    margin-top: 2%;
+    margin-left: 3%;
+    margin-right: 2%;
+  }
+  
+  .recentOrders {
+    display: flex;
+    width: 500.596px;
+    height: 344.278px;
+    padding: 20.74px 16.592px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 19.91px;
+    flex-shrink: 0;
+    border-radius: 13.273px;
+  border: 0.83px solid var(--Stroke-3, #E2E8F0);
+  background: var(--white-100, #FFF);
+  box-shadow: 0px 0.83px 1.659px 0px rgba(0, 0, 0, 0.05);
+  margin-top: 2%;
+  margin-left: 0%;
+  max-height: 400px; /* Adjust the height according to your design */
+  overflow-y: auto;
+  }
+  .recentOrders::-webkit-scrollbar {
+    width: 4px; /* For Chrome, Safari, and Opera */
+  }
+  .medicineImage{
+    display: flex;
+  width: 39.82px;
+  height: 39.82px;
+  justify-content: center;
+  align-items: center;
+  gap: 13.624px;
+  flex-shrink: 0;
+  }
+  .ordersT{
+    margin-top: -5%;
+    color: var(--Text-900, #0F172A);
+  font-family: 'SF Pro Display';
+  font-size: 11.614px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 100%; /* 11.614px */
+  }
+ 
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Set a high z-index value to ensure it appears above other content */
+  }
+  .pickMonth{
+    display: flex;
+    height: 23.228px;
+    padding: 1.659px 9.955px;
+    justify-content: center;
+    align-items: center;
+    gap: 3.318px;
+    border-radius: 6.637px;
+    border: 0.83px solid var(--Stroke-5, #94A3B8);
+    background: var(--white-100, #FFF);
+    height:auto;
+    margin-left: 65%;
+    margin-top: 2%;
+  }
+  .pickMonthOrders{
+    display: flex;
+    height: 23.228px;
+    padding: 1.659px 9.955px;
+    justify-content: center;
+    align-items: center;
+    gap: 3.318px;
+    border-radius: 6.637px;
+    border: 0.83px solid var(--Stroke-5, #94A3B8);
+    background: var(--white-100, #FFF);
+    height:auto;
+    margin-left: 65%;
+    margin-top: -13%;
+  }
+  .arrows{
+    position: absolute;
+    top: 5%;
+    left: 50.5%;
+  }
