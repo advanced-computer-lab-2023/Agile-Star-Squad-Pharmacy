@@ -59,10 +59,10 @@ function App() {
     } else if (user.role === 'pharmacist') {
       return (
         <Routes>
-          <Route path="/pharmacy/home" element={<PharmacyHome />} exact />
-          <Route path="/medicine/add" element={<AddMedicineForm />} exact />
+          <Route path="/pharmacy/home" element={<Homepage />} exact />
           <Route path="/medicine/edit" element={<EditMedicineForm />} exact />
           <Route path="changePassword" element={<ChangePassword />} exact />
+          <Route path="/medicine" element={<MedicineDetails />} exact />
           <Route
             path="/archivedMedicines"
             element={<ArchivedMedicines />}
