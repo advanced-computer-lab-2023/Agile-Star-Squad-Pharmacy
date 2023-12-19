@@ -30,6 +30,15 @@
   right: 0%;
   z-index: 2; /* Set the z-index to bring it above other elements */
 }
+.userTitle{
+    color: var(--white-100, #ffffff);
+  font-family: 'Poppins';
+  font-size: 26px;
+  font-weight: 500;
+  position: inherit;
+  bottom: 90%;
+  right: 65%;
+}
 
 .title{
   color: #242426;
