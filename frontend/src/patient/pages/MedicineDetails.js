@@ -28,7 +28,8 @@ const MedicineDetails = (props) => {
   const [showEdit, setShowEdit] = useState(false);
   const [stateData, setStateData] = useState(location.state);
   const navigate = useNavigate();
-  // console.log(location);
+
+  console.log(stateData);
   const stockColor = stateData.quantity !== 0 ? '#00B517' : '#ff0000';
 
   useEffect(() => {
