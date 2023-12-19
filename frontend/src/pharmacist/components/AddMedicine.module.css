@@ -114,17 +114,24 @@
     display: flex;
     justify-content: end;
   }
+
+  .archiveContainer {
+    position: absolute;
+    top: 25px;
+    right: 160px;
+    display: flex;
+    justify-content: end;
+  }
+
   .archiveButton{
     width: 94px;
     height: 36px;
     flex-shrink: 0;
-    background-color: white;
     border-radius: 11px ;
+    background-color: transparent;
     border-color: #ED3443;
     color: #ED3443;
-    font-family: Poppins;
     font-size: 18px;
-    font-style: normal;
     font-weight: 500;
     line-height: 20px;
   }

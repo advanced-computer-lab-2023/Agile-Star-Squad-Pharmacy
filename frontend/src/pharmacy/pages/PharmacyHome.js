@@ -5,6 +5,7 @@ import CartContext from '../../patient/pages/cart/Cart';
 import UserContext from '../../user-store/user-context';
 import NavBar from '../../shared/components/NavBar/NavBar';
 import axios from 'axios';
+import AddMedicine from '../../pharmacist/pages/AddMedicine';
 
 const PharmacyHomePharmacist = () => {
   const userCtx = useContext(UserContext);
@@ -17,6 +18,7 @@ const PharmacyHomePharmacist = () => {
 
   const [newPrice, setNewPrice] = useState('');
   const [newDescription, setNewDescription] = useState('');
+  const [showAddForm, setShowAddForm] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -164,8 +166,13 @@ const PharmacyHomePharmacist = () => {
   const navigate = useNavigate();
 
   const addNewMedicineHandler = () => {
-    navigate('/medicine/add');
+    setShowAddForm(true);
   };
+
+  const exitAddForm = () => {
+    console.log("exit!")
+    setShowAddForm(false);
+  }
 
   const redirectToCartPage = () => {
     navigate('/cart');
@@ -228,6 +235,7 @@ const PharmacyHomePharmacist = () => {
   return (
     <React.Fragment>
       <NavBar />
+      {showAddForm && <AddMedicine exit={exitAddForm}/>}
       <br />
         <input
           type="text"

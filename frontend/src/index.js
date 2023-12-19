@@ -7,6 +7,7 @@ import { UserContextProvider } from './user-store/user-context';
 
 import { initializeApp } from 'firebase/app';
 import { getStorage } from 'firebase/storage';
+import { ToastContainer } from 'react-toastify';
 
 const firebaseConfig = {
   apiKey: "AIzaSyB_EEjUYhdGRri3Zi2rfSv0r98uPcXnyJg",
@@ -25,6 +26,7 @@ ReactDOM.render(
   <CookiesProvider>
     <UserContextProvider>
       <App />
+      <ToastContainer/>
     </UserContextProvider>
   </CookiesProvider>,
   document.getElementById('root')

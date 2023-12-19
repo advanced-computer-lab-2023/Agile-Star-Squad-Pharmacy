@@ -50,6 +50,8 @@ const Homepage = () => {
                             id: m._id,
                             cartQuantity: 1,
                             ...m,
+                            isOtc: m.isOtc,
+                            archived: m.archived,
                         };
                     })
                 );
@@ -65,6 +67,7 @@ const Homepage = () => {
                             cartQuantity: 1,
                             quantity: m.quantity,
                             medicinalUse: m.medicinalUse,
+                            isOtc: m.isOtc,
                             archived: m.archived,
                             activeIngredient: m.activeIngredient
                         };
@@ -94,21 +97,37 @@ const Homepage = () => {
 
     useEffect(() => {
         filterMedicine();
-    }, [categoryIndex, searchText]);
+    }, [categoryIndex, searchText, allMedicines]);
 
     const filterMedicine = () => {
         setMedicines(() => {
             let medicines = [...allMedicines];
-            if (categoryIndex != -1) {
+            if (categoryIndex !== -1) {
                 medicines = medicines.filter((medicine) =>
-                    medicine.medicinalUse == (categoryIndex < 5 ? categories1[categoryIndex].title : categories2[categoryIndex - 5].title));
+                    medicine.medicinalUse === (categoryIndex < 5 ? categories1[categoryIndex].title : categories2[categoryIndex - 5].title)
+                );
             }
             if (searchText !== "") {
                 medicines = medicines.filter((medicine) => medicine.name.includes(searchText));
             }
+            // Add conditions to filter based on "archived" and "isOtc" if role is patient
+
+            medicines = medicines.filter((medicine) => {
+                //medicine.isOtc; // replace with actual property name
+                return !medicine.archived;
+            });
+
+            if (userCtx.role === 'patient') {
+                medicines = medicines.filter((medicine) => {
+                    //medicine.isOtc; // replace with actual property name
+                    return medicine.isOtc;
+                });
+            }
+
             return medicines;
         });
-    }
+    };
+
 
     const fetchCart = async (medicines) => {
         if (cartCtx.length == 0 && userCtx.role === 'patient') {
@@ -142,6 +161,7 @@ const Homepage = () => {
                 setCategoryIndex(index);
             }
         }
+
         return <div>
             <div className={classes.categoriesWrapper}>
                 {categories1.map(category => {
@@ -182,7 +202,7 @@ const Homepage = () => {
         };
 
         const toMedicineDetails = () => {
-            navigate('/medicine', {state: medicine});
+            navigate('/medicine', { state: medicine });
         }
 
         return <div className="col-3 px-4">

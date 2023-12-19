@@ -12,47 +12,56 @@ import cart from './cartMazen.png';
 import line from './line.png';
 import cross from './cross.png';
 import CartContext from './cart/Cart';
+import AddMedicine from '../../pharmacist/pages/AddMedicine';
+import ConfirmationModal from '../../shared/components/ConfirmationModal/ConfirmationModal';
+import { toastMe, toastMeSuccess } from '../../shared/util/functions';
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const MedicineDetails = (props) => {
-  const [allMedicines, setAllMedicine] = useState([]);
-  const [relatedMedicines, setRelatedMedicines] = useState([]);
+  const user = useContext(UserContext);
   const cartCtx = useContext(CartContext);
   const location = useLocation();
-  const stateData = location.state;
+  const [allMedicines, setAllMedicine] = useState([]);
+  const [relatedMedicines, setRelatedMedicines] = useState([]);
+  const [showEdit, setShowEdit] = useState(false);
+  const [stateData, setStateData] = useState(location.state);
   const navigate = useNavigate();
   // console.log(location);
   const stockColor = stateData.quantity !== 0 ? '#00B517' : '#ff0000';
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('http://localhost:4000/pharmacy', {
-          method: 'GET',
-          headers: { 'Content-type': 'application/json' },
-        });
-
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-
-        const result = await response.json();
-
-        const medicineJson = result.data.Medicine;
-        setAllMedicine(
-          medicineJson.map((m) => {
-            return {
-              id: m._id,
-              cartQuantity: 1,
-              ...m,
-            };
-          })
-        );
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
     fetchData();
   }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch('http://localhost:4000/pharmacy', {
+        method: 'GET',
+        headers: { 'Content-type': 'application/json' },
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const result = await response.json();
+
+      const medicineJson = result.data.Medicine;
+      setAllMedicine(
+        medicineJson.map((m) => {
+          return {
+            id: m._id,
+            cartQuantity: 1,
+            ...m,
+          };
+        })
+      );
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
 
   useEffect(() => {
     filterRelatedMedicines();
@@ -69,9 +78,15 @@ const MedicineDetails = (props) => {
     }
   };
 
+  const exitEditForm = (medicine) => {
+    setShowEdit(false);
+    if (medicine.name != null) {
+      setStateData(medicine)
+    }
+  }
+
   /////////////////////////////
   const addItem = (e) => {
-    alert('Item added Successfully');
     e.preventDefault();
     cartCtx.addItem({
       id: stateData.id,
@@ -82,6 +97,7 @@ const MedicineDetails = (props) => {
       price: stateData.price,
       quantity: +stateData.cartQuantity,
     });
+    toastMeSuccess(`Added ${stateData.name} successfully`)
   };
 
   const toMedicineDetails = (medicine) => {
@@ -90,6 +106,7 @@ const MedicineDetails = (props) => {
 
   return (
     <div style={{ height: '100vh' }}>
+      {showEdit && <AddMedicine medicine={stateData} exit={exitEditForm}/>}
       <NavBar />
 
       <div
@@ -128,17 +145,18 @@ const MedicineDetails = (props) => {
             }}
           >
             {stateData.name}
-            <div
-              style={{
-                color: stockColor,
-                fontSize: '16px',
-                marginLeft: '-10%',
-              }}
-              className="row-4 d-flex flex-row"
-            >
-              <img src={stateData.quantity !== 0 ? tick : cross} />{' '}
-              {stateData.quantity !== 0 ? 'In Stock' : 'Not available'}
-            </div>
+            {user.role == "patient" &&
+              <div
+                style={{
+                  color: stockColor,
+                  fontSize: '16px',
+                  marginLeft: '-10%',
+                }}
+                className="row-4 d-flex flex-row"
+              >
+                <img src={stateData.quantity !== 0 ? tick : cross} /><nbsp />
+                {stateData.quantity !== 0 ? 'In Stock' : 'Out of Stock'}
+              </div>}
           </div>
           <div
             style={{
@@ -160,6 +178,18 @@ const MedicineDetails = (props) => {
           <div style={{ color: '#505050', fontSize: '16px' }}>
             Medicinal Use: {stateData.medicinalUse}
           </div>
+          {user.role == "pharmacist" && (<>
+
+            <div style={{ position: "absolute", top: "120px", right: "60px", background: "#3182CE", borderRadius: "10px", color: "white", padding: "5px 25px", cursor: "pointer", fontWeight: "500" }} onClick={() => setShowEdit(true)}>Edit</div>
+            <div style={{ color: '#505050', fontSize: '16px' }}>
+              Sales: {stateData.sales}
+              <br />
+              Quantity: {stateData.quantity}
+            </div></>
+
+
+          )}
+
           <img src={line} alt="line" style={{}} />
           <div style={{ fontWeight: '500' }}>
             Other Medicines With Simillar Active Ingredients:
@@ -177,28 +207,28 @@ const MedicineDetails = (props) => {
             ))}
           </div>
         </div>
-
-        <div className="col-2 d-flex flex-column">
-          <button
-            style={{
-              marginTop: '-80%',
-              width: '185px',
-              height: '49px',
-              color: stateData.quantity !== 0 ? 'white' : 'black',
-              backgroundColor: stateData.quantity !== 0 ? '#3182CE' : 'grey',
-              borderRadius: '9px',
-            }}
-            onClick={addItem}
-            disabled={stateData.quantity !== 0 ? false : true}
-          >
-            <img
-              src={cart}
-              alt="cart"
-              style={{ marginRight: '10%', marginBottom: '2%' }}
-            />
-            Add to Cart
-          </button>
-        </div>
+        {user.role == "patient" &&
+          <div className="col-2 d-flex flex-column">
+            <button
+              style={{
+                marginTop: '-80%',
+                width: '185px',
+                height: '49px',
+                color: stateData.quantity !== 0 ? 'white' : 'black',
+                backgroundColor: stateData.quantity !== 0 ? '#3182CE' : 'grey',
+                borderRadius: '9px',
+              }}
+              onClick={addItem}
+              disabled={stateData.quantity !== 0 ? false : true}
+            >
+              <img
+                src={cart}
+                alt="cart"
+                style={{ marginRight: '10%', marginBottom: '2%' }}
+              />
+              Add to Cart
+            </button>
+          </div>}
       </div>
     </div>
   );

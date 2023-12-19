@@ -46,7 +46,7 @@ const Login = (props) => {
         <div className="col-md-7">
           <div className={styles.logoContainer}>
             <Link to={'/admin/home'} className="navbar-brand">
-              Pharma
+              PHARMA
             </Link>
           </div>
           <img className={styles.stethoscope} src={img} alt="login" />

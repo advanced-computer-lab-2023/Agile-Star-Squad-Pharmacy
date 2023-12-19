@@ -45,7 +45,7 @@ function Component0({ setTab, setEmail2 }) {
         <div className="col-md-5">
           <div className={styles.logoContainer}>
             <Link to={'/admin/home'} className="navbar-brand">
-              Pharma
+              PHARMA
             </Link>
           </div>
         </div>
