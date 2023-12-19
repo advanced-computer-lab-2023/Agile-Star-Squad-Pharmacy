@@ -80,7 +80,7 @@
     flex-wrap: wrap;
     gap: 35px; /* Adjust the gap as needed */
     margin-bottom: 2%;
-    text-align: center;
+    text-align: justify;
   }
   .images{
     display: flex;
@@ -92,10 +92,10 @@
     max-width: 190px;
   }
   .dateField{
-    flex:  1;
+    flex: 1 1;
     min-width: 150px;
     max-width: 190px;
-    margin-left: 6%;
+    margin-left: 8%;
   }
   .nameField{
     flex:  1;
@@ -126,7 +126,7 @@
     /* Make the form controls fill the available width */
     width: 250px;
     outline: none;
-    background-color: rgba(165, 165, 165, 0.44);
+    /* background-color: rgba(165, 165, 165, 0.44); */
     background-clip: padding-box;
     border-radius: 25px;
     border: none; 

@@ -300,6 +300,7 @@ useEffect(() => {
   
 
   const accept = async (props) => {
+    
       try {
 
           const requestOptions = {
@@ -307,6 +308,7 @@ useEffect(() => {
               headers: { 'Content-type': 'application/json; charset=UTF-8' },
               body: JSON.stringify({ ...props }),
           };
+          
 
           const response = await fetch(
               'http://localhost:4000/admins/requests',
@@ -314,17 +316,19 @@ useEffect(() => {
           );
 
           if (response.ok) {
+            
               // Handle a successful response
               toastMeSuccess('Pharmacist accepted successfully!');
               setStatus('Accepted');
               props.onStatusChange(props.id, 'Accepted');
           } else {
+            
               // Handle errors if the server response is not ok
               toastMeError('Accepting request Failed!');
           }
       } catch (error) {
           // Handle network errors
-          // alert('Network error: ' + error.message);
+          alert('Network error: ' + error.message);
       }
   }
 
@@ -374,8 +378,9 @@ useEffect(() => {
     });
   };
   const showRequestModal = (request) => {
-    setSelectedRequest(request);
+   
     setShowRequest(true);
+    setSelectedRequest(request);  
     // Additional logic as needed
     window.scrollTo({
       top: 0,
@@ -442,7 +447,7 @@ useEffect(() => {
     if (!(date instanceof Date) || isNaN(date)) {
       return "";
     }
-    console.log(date+'qqqqqqqqqqqqqqqq')
+  
   
     const options = { month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
   
@@ -654,65 +659,58 @@ const handleSalesClick = () =>{
   <div className="container">
     <div className="row">
       <table className="table table-hover">
-            <tbody>
-        {requests.map((request) => (
-          <tr key={request.id} className={styles.customRow} onClick={() => showRequestModal(request)}>
-            <td className={styles.req}>
-              <img src={req} alt="req" />
-            </td>
-            <td className={styles.bold}>
-              {request.name}
-              <div className={styles.small}>
-                {calculateAge(request.dateOfBirth)}, {request.affiliation} {formatDate(request.creationDate)}
-              </div>
-            </td>
-            {status.toLowerCase() === 'pending' && (
-              <ActionButtons reject={() => reject(request)} accept={() => accept(request)} />
-            )}
-            <td className={`${styles.rejectReq} ${styles.borderBottom}`}>
-              <img
-                src={x}
-                alt="req-rej"
-                className={styles.rej}
-                onClick={(e) => {
-                  // Check if the click event originated from the reject button
-                  if (!e.currentTarget.contains(e.target)) {
+        <tbody>
+          {requests.map((request) => (
+            <tr key={request.id} className={styles.customRow} onClick={() => showRequestModal(request)}>
+              <td className={styles.req}>
+                <img src={req} alt="req" />
+              </td>
+              <td className={styles.bold}>
+                {request.name}
+                <div className={styles.small}>
+                  {calculateAge(request.dateOfBirth)}, {request.affiliation} {formatDate(request.creationDate)}
+                </div>
+              </td>
+
+              {/* {status.toLowerCase() === 'pending' && (
+                <ActionButtons reject={() => reject(request)} accept={() => accept(request)} />
+              )} */}
+              <td className={`${styles.rejectReq} ${styles.borderBottom}`} onClick={(e) => e.stopPropagation()}>
+                <img
+                  src={x}
+                  alt="req-rej"
+                  className={styles.rej}
+                  onClick={() => {
                     selectedRequest &&
                       selectedRequestRef.current &&
                       selectedRequestRef.current.reject(request);
-                    e.stopPropagation(); // Stop event propagation
                     reject(request);
-                  }
-                }}
-              />
-            </td>
-            <td className={`${styles.acceptReq} ${styles.borderBottom}`}>
-              <img
-                src={check}
-                width="25"
-                height="25"
-                alt="req-acc"
-                className={styles.acc}
-                onClick={(e) => {
-                  // Check if the click event originated from the accept button
-                  if (!e.currentTarget.contains(e.target)) {
+                  }}
+                />
+              </td>
+              <td className={`${styles.acceptReq} ${styles.borderBottom}`} onClick={(e) => e.stopPropagation()}>
+                <img
+                  src={check}
+                  width="25"
+                  height="25"
+                  alt="req-acc"
+                  className={styles.acc}
+                  onClick={() => {
                     selectedRequest &&
                       selectedRequestRef.current &&
                       selectedRequestRef.current.accept(request);
-                    e.stopPropagation(); // Stop event propagation
                     accept(request);
-                  }
-                }}
-              />
-            </td>
-          </tr>
-        ))}
-      </tbody>
-
+                  }}
+                />
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </div>
   </div>
 </Container>
+
 <Container className={styles.packages}>
             <div className={styles.edit}>
               {/* <button className={styles.editButton} onClick={editHandler}>
@@ -885,6 +883,7 @@ const handleSalesClick = () =>{
       )}
       {showRequest &&(
         <RequestDetails
+        onStatusChange={statusChangeHandler}
         data={selectedRequest}
         exit={exitRequestModal}
         />
