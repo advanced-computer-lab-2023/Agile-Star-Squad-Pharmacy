@@ -42,7 +42,8 @@ const CartPage = (props) => {
   };
 
   return (
-    <>
+    <div>
+      <NavBar/>
       <div className={classes.cartContainer}>
         <div className={classes.cartpage}>
           <div className="col-5">
@@ -110,7 +111,7 @@ const CartPage = (props) => {
           <div className="col-2"></div>
         </div>
       </div>
-    </>
+      </div>
   );
 };
 
