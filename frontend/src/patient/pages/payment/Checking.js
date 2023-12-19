@@ -25,7 +25,6 @@ const Checking = () => {
   const patientId = userCtx.userId;
   const [stripePromise, setStripePromise] = useState(null);
   const [addresses, setAddresses] = useState([]);
-  const [selectedAddressId, setSelectedAddressId] = useState(null);
   const settings = {
     dots: true,
     infinite: true,
@@ -53,13 +52,10 @@ const Checking = () => {
           console.error(err);
         });
       setAddresses(res.data.data.addresses);
-      setSelectedAddressId(res.data.data.addresses[0]._id);
     };
     fetchAddresses();
   }, []);
-  const handleAddressSelect = (addressId) => {
-    setSelectedAddressId(addressId);
-  };
+
   useEffect(() => {
     const fetchConfig = async () => {
       try {
@@ -152,7 +148,7 @@ const Checking = () => {
                   <Elements stripe={stripePromise}>
                     <Payment
                       CartCtx={cartCtx}
-                      SelectedAddressId={selectedAddressId}
+                      
                     />
                   </Elements>
                 </div>
