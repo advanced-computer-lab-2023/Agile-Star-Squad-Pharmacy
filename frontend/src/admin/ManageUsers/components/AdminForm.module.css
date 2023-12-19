@@ -1,0 +1,80 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600;400;500&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Poppins:wght@600&display=swap');
+.addForm{
+    width: 584px;
+    height: 380px;
+    flex-shrink: 0;
+    border-radius:   26px ;
+    position: absolute;
+    left: 30%;
+    
+}
+.updateForm{
+  width: 584px;
+  height: 380px;
+  flex-shrink: 0;
+  border-radius:   26px ;
+  
+}
+.topBorder {
+    border-top: solid 73px #6ED294;
+    position: inherit;
+    left: 0%;
+    top: -5%;
+    width: inherit;
+  }
+.title{
+    color: var(--white-100, #ffffff);
+    font-family: 'Poppins';
+    font-size: 26px;
+    font-weight: 500;
+    position: inherit;
+    top: 2%;
+    right: 40%;
+}
+.smallText{
+    color: #333;
+    font-family: 'Open Sans';
+    font-size: 15px;
+    font-weight: 600;
+}
+.fieldGroup {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px; /* Adjust the gap as needed */
+    margin-bottom: 5%;
+  }
+  
+  .field{
+    flex:  1;
+    min-width: 150px;
+    max-width: 190px;
+  }
+  .nameField{
+    flex:  1;
+    min-width: 240px;
+    max-width: 190px;
+  }
+  .form{
+    position: absolute;
+    top:25%;
+  }
+ 
+  
+  .form-control {
+    width: 100%; /* Make the form controls fill the available width */
+    max-width: 150px; /* Set the maximum width to 150px or adjust as needed */
+  }
+  .addButton {
+    position: inherit;
+    top:70%;
+    left: 77%;
+    margin: 54px 13px 13px 12px;
+    border-radius: 11px;
+    background: #6ED294;
+    width: 94px;
+    height: 36px;
+    color: #FFF;
+  }
+ 
+  
