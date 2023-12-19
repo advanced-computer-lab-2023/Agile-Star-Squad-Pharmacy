@@ -20,16 +20,21 @@ const AddMedicine = (props) => {
   const [files, setFiles] = useState([]);
   const [imageUrl, setImageUrl] = useState("");
   const [medicinalUse, setMedicinalUse] = useState("");
+  const isAdd = props.medicine == null;
 
   useEffect(() => {
     if (props.medicine != null) {
+      console.log(props.medicine.name)
       const medicine = props.medicine;
       setName(medicine.name);
       setDescription(medicine.description);
+      setIngredients(medicine.activeIngredient)
       setPrice(medicine.price);
       setQuantity(medicine.quantity);
       setSales(medicine.profit);
+      setMedicinalUse({ label: medicine.medicinalUse })
       setImageUrl(medicine.image);
+      setFiles([{ name: medicine.image, preview: medicine.image }])
     }
   }, []);
 
@@ -56,52 +61,86 @@ const AddMedicine = (props) => {
     setSales(event.target.value);
   };
 
+  const handleArchive = async () => {
+    const id = props.medicine.id;
+    const response = await axios
+      .patch(`http://localhost:4000/medicine/archive/${id}`, {
+        withCredentials: true,
+      })
+      .then(() => props.exit())
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
   const handleSave = async () => {
     // Check if any of the required fields is empty
     if (!name || !ingredients || !price || !quantity || !sales || files.length == 0) {
       alert('Please fill in all the fields before saving.');
       return;
     }
+    const data = {
+      name,
+      activeIngredient: ingredients,
+      description,
+      price,
+      quantity,
+      profit: sales,
+      medicinalUse: medicinalUse.label,
 
-    let downloadUrl;
-    const imageRef = ref(storage, `${files[0].name}`);
-    await uploadBytesResumable(imageRef, files[0]).then(async (snapshot) => {
-      downloadUrl = await getDownloadURL(snapshot.ref);
-    });
+    };
 
-    const response = await axios
-      .post(
-        'http://localhost:4000/medicine',
-        {
-          name,
-          activeIngredient: ingredients,
-          description,
-          price,
-          quantity,
-          sales,
-          medicinalUse: medicinalUse.label,
-          image: downloadUrl
-        },
-        { withCredentials: true }
-      )
-      .then(() => {
-        alert('Medicine added successfully');
-      })
-      .catch((err) => {
-        console.error(err);
+    if (!files[0].name.includes("http")) {
+      let downloadUrl;
+      const imageRef = ref(storage, `${files[0].name}`);
+      await uploadBytesResumable(imageRef, files[0]).then(async (snapshot) => {
+        downloadUrl = await getDownloadURL(snapshot.ref);
       });
+      data["image"] = downloadUrl;
+    }
+
+    if (!isAdd) {
+      await axios
+        .patch(`http://localhost:4000/medicine/${props.medicine.id}`, data, {
+          withCredentials: true,
+        })
+        .then(() => alert('Medicine updated successfully'))
+        .catch((err) => {
+          console.error(err);
+        });
+    } else {
+      const response = await axios
+        .post(
+          'http://localhost:4000/medicine',
+          data,
+          { withCredentials: true }
+        )
+        .then(() => {
+          alert('Medicine added successfully');
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+    if (data.image == null) {
+      data.image = files[0].name;
+    }
+    props.exit(data);
+
+
   };
 
   return ReactDOM.createPortal(
     <Modal exit={props.exit}>
       <div className={styles.titleContainer}>
-        <h2 className={styles.addMedicineText}>Add Medicine</h2>
+        <h2 className={styles.addMedicineText}>{isAdd ? "Add" : "Edit"} Medicine</h2>
       </div>
       <div>
         <label className={styles.label}>Medicine Name</label>
         <input
           className={styles.input}
           type="text"
+          value={name}
           onChange={handleNameChange}
           required
         />
@@ -111,6 +150,7 @@ const AddMedicine = (props) => {
         <input
           className={styles.input}
           type="text"
+          value={description}
           onChange={handleDescriptionChange}
           required
         />
@@ -120,6 +160,7 @@ const AddMedicine = (props) => {
         <input
           className={styles.input}
           type="text"
+          value={ingredients}
           onChange={handleActiveIngredientsChange}
           required
         />
@@ -130,6 +171,7 @@ const AddMedicine = (props) => {
           <input
             className={styles.input}
             type="text"
+            value={price}
             onChange={handlePriceChange}
             required
           />
@@ -139,6 +181,7 @@ const AddMedicine = (props) => {
           <input
             className={styles.input}
             type="text"
+            value={sales}
             onChange={handleSalesChange}
             required
           />
@@ -148,6 +191,7 @@ const AddMedicine = (props) => {
           <input
             className={styles.input}
             type="text"
+            value={quantity}
             onChange={handleQuantityChange}
             required
           />
@@ -163,6 +207,11 @@ const AddMedicine = (props) => {
         required />
       <label className={styles.label}>Image</label>
       <MyDropzone files={files} setFiles={setFiles} maxFiles={1} />
+      <div className={styles.archiveContainer}>
+        <button onClick={handleArchive} className={styles.archiveButton}>
+          ARCHIVE
+        </button>
+      </div>
       <div className={styles.saveButtonContainer2}>
         <button onClick={handleSave} className={styles.saveButton}>
           SAVE
@@ -179,7 +228,7 @@ const MyDropzone = (props) => {
   const files = props.files;
   const setFiles = props.setFiles;
   const onDrop = useCallback((acceptedFiles) => {
-    if (files.length + acceptedFiles.length > props.maxFiles) {
+    if (acceptedFiles.length > props.maxFiles) {
       props.toast(`Upload a maximum of ${props.maxFiles} files`);
       return;
     }
@@ -190,7 +239,6 @@ const MyDropzone = (props) => {
         }),
       );
       setFiles((prevFiles) => [
-        ...prevFiles,
         ...acceptedFiles.map((file) =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
@@ -220,7 +268,7 @@ const MyDropzone = (props) => {
         onDropRejected={rejectFile}
         accept={{
           'image/png': ['png'],
-          'image/jpeg': ['jpg'],
+          'image/jpeg': ['jpeg', 'jpg'],
           'application/pdf': ['pdf'],
         }}
       >

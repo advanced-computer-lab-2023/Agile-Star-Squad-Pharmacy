@@ -12,48 +12,51 @@ import cart from './cartMazen.png';
 import line from './line.png';
 import cross from './cross.png';
 import CartContext from './cart/Cart';
+import AddMedicine from '../../pharmacist/pages/AddMedicine';
 
 const MedicineDetails = (props) => {
-  const [allMedicines, setAllMedicine] = useState([]);
-  const [relatedMedicines, setRelatedMedicines] = useState([]);
   const user = useContext(UserContext);
   const cartCtx = useContext(CartContext);
   const location = useLocation();
-  const stateData = location.state;
+  const [allMedicines, setAllMedicine] = useState([]);
+  const [relatedMedicines, setRelatedMedicines] = useState([]);
+  const [showEdit, setShowEdit] = useState(false);
+  const [stateData, setStateData] = useState(location.state);
   const navigate = useNavigate();
   // console.log(location);
   const stockColor = stateData.quantity !== 0 ? '#00B517' : '#ff0000';
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('http://localhost:4000/pharmacy', {
-          method: 'GET',
-          headers: { 'Content-type': 'application/json' },
-        });
-
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-
-        const result = await response.json();
-
-        const medicineJson = result.data.Medicine;
-        setAllMedicine(
-          medicineJson.map((m) => {
-            return {
-              id: m._id,
-              cartQuantity: 1,
-              ...m,
-            };
-          })
-        );
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
     fetchData();
   }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch('http://localhost:4000/pharmacy', {
+        method: 'GET',
+        headers: { 'Content-type': 'application/json' },
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const result = await response.json();
+
+      const medicineJson = result.data.Medicine;
+      setAllMedicine(
+        medicineJson.map((m) => {
+          return {
+            id: m._id,
+            cartQuantity: 1,
+            ...m,
+          };
+        })
+      );
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
 
   useEffect(() => {
     filterRelatedMedicines();
@@ -69,6 +72,11 @@ const MedicineDetails = (props) => {
       setRelatedMedicines(filteredMedicines);
     }
   };
+
+  const exitEditForm = (medicine) => {
+    setShowEdit(false);
+    setStateData(medicine)
+  }
 
   /////////////////////////////
   const addItem = (e) => {
@@ -91,6 +99,7 @@ const MedicineDetails = (props) => {
 
   return (
     <div style={{ height: '100vh' }}>
+      {showEdit && <AddMedicine medicine={stateData} exit={exitEditForm}/>}
       <NavBar />
 
       <div
@@ -138,8 +147,8 @@ const MedicineDetails = (props) => {
                 }}
                 className="row-4 d-flex flex-row"
               >
-                <img src={stateData.quantity !== 0 ? tick : cross} />{' '}
-                {stateData.quantity !== 0 ? 'In Stock' : 'Not available'}
+                <img src={stateData.quantity !== 0 ? tick : cross} /><nbsp />
+                {stateData.quantity !== 0 ? 'In Stock' : 'Out of Stock'}
               </div>}
           </div>
           <div
@@ -162,12 +171,16 @@ const MedicineDetails = (props) => {
           <div style={{ color: '#505050', fontSize: '16px' }}>
             Medicinal Use: {stateData.medicinalUse}
           </div>
-          {user.role == "pharmacist" && (
+          {user.role == "pharmacist" && (<>
+
+            <div style={{ position: "absolute", top: "120px", right: "60px", background: "#3182CE", borderRadius: "10px", color: "white", padding: "5px 25px", cursor: "pointer", fontWeight: "500" }} onClick={() => setShowEdit(true)}>Edit</div>
             <div style={{ color: '#505050', fontSize: '16px' }}>
               Sales: {stateData.sales}
               <br />
               Quantity: {stateData.quantity}
-            </div>
+            </div></>
+
+
           )}
 
           <img src={line} alt="line" style={{}} />
