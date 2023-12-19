@@ -42,7 +42,6 @@ const Homepage = () => {
                 }
 
                 const result = await response.json();
-                console.log(result);
 
                 const medicineJson = result.data.Medicine;
                 setAllMedicine(
@@ -56,7 +55,6 @@ const Homepage = () => {
                         };
                     })
                 );
-                console.log('All Medicines:', allMedicines);
                 setMedicines(
                     medicineJson.map((m) => {
                         return {
@@ -104,7 +102,6 @@ const Homepage = () => {
     const filterMedicine = () => {
         setMedicines(() => {
             let medicines = [...allMedicines];
-            console.log('Original Medicines:', medicines);
             if (categoryIndex !== -1) {
                 medicines = medicines.filter((medicine) =>
                     medicine.medicinalUse === (categoryIndex < 5 ? categories1[categoryIndex].title : categories2[categoryIndex - 5].title)
@@ -113,15 +110,14 @@ const Homepage = () => {
             if (searchText !== "") {
                 medicines = medicines.filter((medicine) => medicine.name.includes(searchText));
             }
-            // Add conditions to filter based on "archived" and "isOtc"
-            medicines = medicines.filter((medicine) => {
-                const isOtc = medicine.isOtc; // replace with actual property name
-                // console.log('Medicine:', medicine);
-                console.log('isOtc:', isOtc);
-                return !medicine.archived && isOtc;
-            });
+            // Add conditions to filter based on "archived" and "isOtc" if role is patient
+            if (userCtx.role === 'patient') {
+                medicines = medicines.filter((medicine) => {
+                    medicine.isOtc; // replace with actual property name
+                    return !medicine.archived && medicine.isOtc;
+                });
+            }
 
-            console.log('Filtered Medicines:', medicines);
             return medicines;
         });
     };
