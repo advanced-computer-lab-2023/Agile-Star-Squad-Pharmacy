@@ -1,21 +1,12 @@
 const mongoose = require('mongoose');
 
 const notificationSchema = new mongoose.Schema({
-  patient:
-  {
-    type: mongoose.Schema.ObjectId,
-    ref: 'Patient'
-  },
   pharmacist:
   {
     type: mongoose.Schema.ObjectId,
     ref: 'Pharmacist'
   },
   medicineName:
-  {
-    type: String,
-  },
-  patientMessage:
   {
     type: String,
   },
