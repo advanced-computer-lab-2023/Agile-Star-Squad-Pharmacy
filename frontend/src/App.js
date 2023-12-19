@@ -31,7 +31,10 @@ import RevenueChart from './admin/ManageUsers/components/RevenueChart';
 import SalesReport from './admin/pages/SalesReport';
 import Messages from './patient/pages/messages/Messages';
 import PharmacistMessages from './pharmacist/pages/messages/Messages';
+import BrowseMedicine from './patient/pages/BrowseMedicine/BrowseMedicine';
 
+
+import Prescriptions from './patient/pages/prescriptions/Prescriptions';
 
 function App() {
   const user = useContext(UserContext);
@@ -52,6 +55,7 @@ function App() {
             <Route path="/address/add" element={<AddAddress />} exact />
             <Route path="changePassword" element={<ChangePassword />} exact />
             <Route path="/medicine" element={<MedicineDetails />} exact />
+            <Route path="/prescriptions" element={<Prescriptions />} exact />
             <Route path="*" element={<Navigate to="/pharmacy/home" />} />{' '}
           </Routes>
         </CartContextProvider>
@@ -81,6 +85,8 @@ function App() {
           <Route path="/admin/manage" element={<ManageUsersPage />} exact />
           <Route path="/changePassword" element={<ChangePassword />} exact />
           <Route path="/SalesReport" element={<SalesReport />} exact />
+          <Route path="/pharmacy/home/medicine" element={<MedicineDetails />} exact />
+          <Route path="/pharmacy/home" element={<BrowseMedicine />} exact />
           <Route path="*" element={<Navigate to="/admin/home" />} />{' '}
         </Routes>
       );

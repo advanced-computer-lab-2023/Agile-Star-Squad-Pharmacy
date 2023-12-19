@@ -10,18 +10,22 @@ import insomniaImg from "../../../assets/homepage/insomnia.png";
 import stomachImg from "../../../assets/homepage/kidney.png";
 import lungsImg from "../../../assets/homepage/lungs.png";
 import nutritionImg from "../../../assets/homepage/nutrition.png";
-import CartContext from './Cart';
 import UserContext from "../../../user-store/user-context";
+import AdminNavBar from "../../../admin/ManageUsers/components/AdminNavBar";
+import { useNavigate } from "react-router-dom";
+
 
 const BrowseMedicine = () => {
     const userCtx = useContext(UserContext);
-    const cartCtx = useContext(CartContext);
+  //  const cartCtx = useContext(CartContext);
     const [categoryIndex, setCategoryIndex] = useState(-1);
     const [sectionSearchText, setSectionSearchText] = useState("");
     const [searchText, setSearchText] = useState("");
     const [allMedicines, setAllMedicine] = useState([]);
     const [medicines, setMedicines] = useState([]);
     const medicineResultsRef = useRef();
+    const navigate = useNavigate();
+    let medicineState;
 
     useEffect(() => {
         async function fetchData() {
@@ -64,20 +68,20 @@ const BrowseMedicine = () => {
                         };
                     })
                 );
-                fetchCart(
-                    medicineJson.map((m) => {
-                        return {
-                            id: m._id,
-                            name: m.name,
-                            image: m.image,
-                            description: m.description,
-                            price: m.price,
-                            sales: m.sales,
-                            cartQuantity: 1,
-                            quantity: m.quantity,
-                        };
-                    })
-                );
+                // fetchCart(
+                //     medicineJson.map((m) => {
+                //         return {
+                //             id: m._id,
+                //             name: m.name,
+                //             image: m.image,
+                //             description: m.description,
+                //             price: m.price,
+                //             sales: m.sales,
+                //             cartQuantity: 1,
+                //             quantity: m.quantity,
+                //         };
+                //     })
+                // );
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -90,6 +94,7 @@ const BrowseMedicine = () => {
         filterMedicine();
     }, [categoryIndex, searchText]);
 
+    
     const filterMedicine = () => {
         setMedicines(() => {
             let medicines = [...allMedicines];
@@ -104,29 +109,31 @@ const BrowseMedicine = () => {
         });
     }
 
-    const fetchCart = async (medicines) => {
-        if (cartCtx.length == 0 && userCtx.role === 'patient') {
-            const response = await fetch(
-                `http://localhost:4000/patients/${userCtx.userId}/cart`,
-                { credentials: 'include' }
-            );
-            const cartJson = await response.json();
-            const cart = cartJson.cart ?? [];
-            cart.forEach((item) => {
-                const medicine = medicines.find(
-                    (medicineItem) => medicineItem.id == item.id
-                );
-                cartCtx.initItem({
-                    id: item.id,
-                    image: medicine.image,
-                    name: medicine.name,
-                    description: medicine.description,
-                    price: medicine.price,
-                    quantity: +item.quantity,
-                });
-            });
-        }
-    };
+    // const fetchCart = async (medicines) => {
+    //     if (cartCtx.length == 0 && userCtx.role === 'patient') {
+    //         const response = await fetch(
+    //             `http://localhost:4000/patients/${userCtx.userId}/cart`,
+    //             { credentials: 'include' }
+    //         );
+    //         const cartJson = await response.json();
+    //         const cart = cartJson.cart ?? [];
+    //         cart.forEach((item) => {
+    //             const medicine = medicines.find(
+    //                 (medicineItem) => medicineItem.id == item.id
+    //             );
+    //             cartCtx.initItem({
+    //                 id: item.id,
+    //                 image: medicine.image,
+    //                 name: medicine.name,
+    //                 description: medicine.description,
+    //                 price: medicine.price,
+    //                 quantity: +item.quantity,
+    //             });
+    //         });
+    //     }
+    // };
+
+    
 
     const getCategoryTiles = () => {
         const handleSelectCategory = (index) => {
@@ -156,24 +163,33 @@ const BrowseMedicine = () => {
         </div>
     }
 
+
     const getMedicine = (medicine) => {
         let ingredients = medicine.activeIngredients;
         if (ingredients != null) {
             ingredients = ingredients.join(', ')
         }
-
-        const addItem = (e) => {
-            e.preventDefault();
-            cartCtx.addItem({
-                id: medicine.id,
-                image: medicine.image,
-                name: medicine.name,
-                price: medicine.price,
-                description: medicine.description,
-                price: medicine.price,
-                quantity: +medicine.cartQuantity,
-            });
-        };
+        const toMedicineDetails = () => {
+            navigate('/pharmacy/home/medicine', { state: medicine });
+        }
+    
+    
+        // const toMedicineDetails = () => {
+        //     navigate('/medicine', { state: medicine });
+        // }
+    
+        // const addItem = (e) => {
+        //     e.preventDefault();
+        //     cartCtx.addItem({
+        //         id: medicine.id,
+        //         image: medicine.image,
+        //         name: medicine.name,
+        //         price: medicine.price,
+        //         description: medicine.description,
+        //         price: medicine.price,
+        //         quantity: +medicine.cartQuantity,
+        //     });
+        // };
         return <div className="col-3 px-4"><div className={classes.medicineContainer}>
             <div>
                 <div className={classes.medicineImg}><img src={medicine.image} /></div>
@@ -184,14 +200,17 @@ const BrowseMedicine = () => {
                 <div className={classes.medicineDesc1}>Active Ingredient:</div>
                 <div className={classes.medicineDesc2}>{ingredients}</div>
                 <div className="d-flex mt-2">
-                    <div className={`${classes.viewButton} ms-1`}>View</div>
+                    <div className={`${classes.viewButton} ms-1`} onClick={toMedicineDetails}>View</div>
                 </div>
             </div>
         </div>
         </div>;
     }
-
-    return <section className={classes.medicineSection}>
+  
+    return (
+    <div>
+        <AdminNavBar/>
+    <section className={classes.medicineSection}>
         <div className={classes.medicineSectionTitle}>BROWSE MEDICINE</div>
         <div className={classes.medicineSearchContainer}>
             <div className={classes.medicineSearchIcon}><img width={30}  alt=''/></div>
@@ -206,6 +225,8 @@ const BrowseMedicine = () => {
             {medicines.map(medicine => getMedicine(medicine))}
         </div>
     </section>
+    </div>
+    )
 }
 
 export default BrowseMedicine;

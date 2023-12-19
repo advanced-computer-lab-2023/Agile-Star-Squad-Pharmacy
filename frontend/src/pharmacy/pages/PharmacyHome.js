@@ -92,7 +92,6 @@ const PharmacyHomePharmacist = () => {
       );
       const cartJson = await response.json();
       const cart = cartJson.cart;
-      console.log(response);
       cart.forEach((item) => {
         const medicine = medicines.find(
           (medicineItem) => medicineItem.id == item.id

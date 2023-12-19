@@ -1,18 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import YearlySalesChart from '../ManageUsers/components/YearlySalesChart';
-import styles from '../Home/AdminHome.module.css';
+import styles from '../ManageUsers/components/SalesReport.module.css';
 import UserContext from '../../user-store/user-context';
 import AdminNavBar from '../ManageUsers/components/AdminNavBar';
 import arrowUp from '../arrow-up.png';
 import arrowDown from '../arrow-down.png';
+import arrows from '../arrows.png';
 import axios from 'axios';
 import Navbar from '../../shared/components/NavBar/NavBar';
+
 
 const SalesReport = () => {
     const [currentYearSales, setCurrentYearSales] = useState([]);
     const [prevYearSales, setPrevYearSales] = useState([]);
     const [percentageChange, setPercentageChange] = useState(0);
+    const [monthlyProfit, setMonthlyProfit] = useState(0);
+    const [monthlySales, setMonthlySales] = useState(0);
     const [changeSign, setChangeSign] = useState('');
     const [orders, setOrders] = useState([]);
     const [recentOrders, setRecentOrders] = useState([]);
@@ -21,17 +25,15 @@ const SalesReport = () => {
     const totalOrders= recentOrders.length;
     const [pastYearProfit,setPastYearProfit]=useState(0);
     const [curYearProfit,setCurYearProfit]=useState(0);
-    console.log(userCtx.role);
-   
-    
-    
-    const sumSales = (sales) => {
-      // Use reduce to sum up all numbers in the sales array
-      const totalSales = sales.reduce((sum, value) => sum + value, 0);
-      return totalSales;
-    };
+    const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth()); // Initialize with the current month
     const curYearRevenue = Math.round((curYearProfit) * 0.8);
     const pastYearRevenue = Math.round((pastYearProfit) * 0.8); 
+    const [selectedMonthO, setSelectedMonthO] = useState(new Date().getMonth());
+    const [selectedMonthOrders, setSelectedMonthOrders] = useState([]);
+    const [loading, setLoading] = useState(true); // New loading state
+    const [medSales, setMedSales] = useState(0);
+    const [medProfit, setMedProfit] = useState(0);
+
     
    
     
@@ -59,9 +61,8 @@ const SalesReport = () => {
         console.error(err);
       }
     };
+    
 
-
- console.log(orders);
   const getMedicineById = (id) => {
     const medicine = medicines.find((medicine) => medicine._id === id);
     return medicine
@@ -69,51 +70,56 @@ const SalesReport = () => {
       : { name: 'Unknown', image: 'Unknown' };
       
   };
-  const calculateProfit = (orders) => {
-    const currentDate = new Date();
-    const lastYear = currentDate.getFullYear() - 1;
-    const thisYear = currentDate.getFullYear();
   
-    // Filter orders for the past year
-    const pastYearOrders = orders.filter((order) => {
-      const orderYear = new Date(order.issueDate).getFullYear();
-      return orderYear === lastYear;
-    });
-  
-    const curYearOrders = orders.filter((order) => {
-      const orderYear = new Date(order.issueDate).getFullYear();
-      return orderYear === thisYear;
-    });
-  
-    // Calculate total profit for the past year
-    const totalProfitPast = pastYearOrders.reduce((total, order) => {
-      return (
-        total +
-        order.medicineList.reduce((medTotal, medicine) => {
-          // Check if the medicine has profit information
-          const medProfit = medicine.profit !== undefined ? medicine.profit : 0;
-          return medTotal + medProfit * medicine.count;
-        }, 0)
-      );
-    }, 0);
-  
-    // Calculate total profit for the current year
-    const totalProfitCurr = curYearOrders.reduce((total, order) => {
-      return (
-        total +
-        order.medicineList.reduce((medTotal, medicine) => {
-          // Check if the medicine has profit information
-          const medProfit = medicine.profit !== undefined ? medicine.profit : 0;
-          return medTotal + medProfit * medicine.count;
-        }, 0)
-      );
-    }, 0);
-  
-    setCurYearProfit(totalProfitCurr);
-    setPastYearProfit(totalProfitPast);
+  const calculateProfit = async (orders) => {
+    try {
+      const currentDate = new Date();
+      const lastYear = currentDate.getFullYear() - 1;
+      const thisYear = currentDate.getFullYear();
+
+      // Filter orders for the past year
+      const pastYearOrders = orders.filter((order) => {
+        const orderYear = new Date(order.issueDate).getFullYear();
+        return orderYear === lastYear;
+      });
+
+      const curYearOrders = orders.filter((order) => {
+        const orderYear = new Date(order.issueDate).getFullYear();
+        return orderYear === thisYear;
+      });
+
+      // Calculate total profit for the past year
+      const totalProfitPast = pastYearOrders.reduce((total, order) => {
+        return (
+          total +
+          order.medicineList.reduce((medTotal, medicine) => {
+            // Check if the medicine has profit information
+            const medProfit = medicine.profit !== undefined ? medicine.profit : 0;
+            return medTotal + medProfit * medicine.count;
+          }, 0)
+        );
+      }, 0);
+
+      // Calculate total profit for the current year
+      const totalProfitCurr = curYearOrders.reduce((total, order) => {
+        return (
+          total +
+          order.medicineList.reduce((medTotal, medicine) => {
+            // Check if the medicine has profit information
+            const medProfit = medicine.profit !== undefined ? medicine.profit : 0;
+            return medTotal + medProfit * medicine.count;
+          }, 0)
+        );
+      }, 0);
+
+      setCurYearProfit(totalProfitCurr);
+      setPastYearProfit(totalProfitPast);
+    } catch (error) {
+      console.error('Error calculating profit:', error);
+      // Handle error if needed
+    }
   };
-  
-  console.log(curYearProfit+"kkk"+pastYearProfit);
+
   
   const calculatePercentageChange = (previousValue, currentValue) => {
     if (previousValue === 0) {
@@ -134,7 +140,7 @@ const SalesReport = () => {
   const recentOrders = allOrders
     .filter((order) => {
       const issueDate = new Date(order.issueDate);
-      return issueDate >= twoWeeksAgo;
+      return issueDate.getMonth() === selectedMonthO;
     })
     .map((order) => {
       const itemCount = order.medicineList.reduce((total, medicine) => total + medicine.count, 0);
@@ -197,18 +203,127 @@ const SalesReport = () => {
         };
       };
       
-      // ...
+      const calculateSalesAndProfit = async (orders, selectedMonth) => {
+        try {
+          const currentDate = new Date();
+          const thisYear = currentDate.getFullYear();
+    
+          // Filter orders for the selected month and current year
+          const selectedMonthOrders = orders.filter((order) => {
+            const orderMonth = new Date(order.issueDate).getMonth();
+            const orderYear = new Date(order.issueDate).getFullYear();
+            return orderYear === thisYear && orderMonth === selectedMonth;
+          });
+    
+          // Calculate total sales and profit for the selected month and current year
+          const totalSalesSelectedMonth = selectedMonthOrders.reduce(
+            (total, order) => total + order.totalCost,
+            0
+          );
+    
+          const totalProfitSelectedMonth = selectedMonthOrders.reduce((totalProfit, order) => {
+            return (
+              totalProfit +
+              order.medicineList.reduce((medTotal, medicine) => {
+                const medProfit = medicine.profit !== undefined ? medicine.profit : 0;
+                return medTotal + medProfit * medicine.count;
+              }, 0)
+            );
+          }, 0);
+    
+          return {
+            totalSales: totalSalesSelectedMonth,
+            totalProfit: totalProfitSelectedMonth,
+          };
+        } catch (error) {
+          console.error('Error calculating sales and profit:', error);
+          // Handle error if needed
+        }
+      };
+    
       
     
-      useEffect(() => {
-        const fetchData = async () => {
+    
+      const getSalesAndProfitByMedicine = (orders, medicineName) => {
+        try {
+          // Filter orders that contain the specified medicine
+          const filteredOrders = orders.filter((order) =>
+            order.medicineList.some(
+              (medicine) =>
+                getMedicineById(medicine.medicineId).name.toLowerCase() === medicineName.toLowerCase()
+            )
+          );
+      
+          // Calculate total sales and profit for the filtered orders
+          let medSales = 0;
+          let medProfit = 0;
+      
+          if (filteredOrders.length > 0) {
+            medSales = filteredOrders.reduce((total, order) => total + order.totalCost, 0);
+      
+            medProfit = filteredOrders.reduce((totalProfit, order) => {
+              return (
+                totalProfit +
+                order.medicineList.reduce((medTotal, medicine) => {
+                  const medProfit = medicine.profit !== undefined ? medicine.profit : 0;
+                  return medTotal + medProfit * medicine.count;
+                }, 0)
+              );
+            }, 0);
+          }
+      
+          return {
+            medSales,
+            medProfit,
+          };
+        } catch (error) {
+          console.error('Error calculating sales and profit by medicine:', error);
+          // Handle error if needed
+          return {
+            medSales: 0,
+            medProfit: 0,
+          };
+        }
+      };
+      
+    const [medicineFilter, setMedicineFilter] = useState(''); // State to store the medicine name input
+
+    // Function to handle filtering by medicine
+    const handleFilterByMedicine = () => {
+      try {
+        const { medSales, medProfit } = getSalesAndProfitByMedicine(orders, medicineFilter);
+        // Set state variables to display the values in your component
+        setMedSales(medSales);
+        setMedProfit(medProfit);
+        console.log(medProfit+" "+medSales+"tttttttt");
+      } catch (error) {
+        console.error('Error filtering by medicine:', error);
+        // Handle error if needed
+      }
+    };
+
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          setLoading(true);
+    
           const fetchedOrders = await fetchAllOrders();
-          fetchMedicines();
+    
+          // Fetch medicines consistently when the component mounts or when orders change
+          await fetchMedicines();
     
           // Other logic can be placed here if needed
     
           // Calculate profits and update state
-          calculateProfit(fetchedOrders);
+          await calculateProfit(fetchedOrders);
+          const { totalSales, totalProfit } = await calculateSalesAndProfit(
+            fetchedOrders,
+            selectedMonth
+          );
+    
+          // Update state with the calculated values
+          setMonthlySales(totalSales);
+          setMonthlyProfit(totalProfit);
     
           // Calculate sales for this year and last year
           const {
@@ -227,28 +342,61 @@ const SalesReport = () => {
           // Get recent orders and update state
           const recentOrdersData = getRecentOrders(fetchedOrders);
           setRecentOrders(recentOrdersData);
-        };
     
-        fetchData();
-      }, []);
+          setLoading(false);
+        } catch (error) {
+          console.error('Error fetching and processing data:', error);
+          // Handle error if needed
+          setLoading(false);
+        }
+      };
+    
+      fetchData();
+    }, [selectedMonth, orders]); // Include selectedMonth and orders as dependencies
+    
+    // Include this useEffect for fetching medicines consistently
+    useEffect(() => {
+      const fetchMedicinesConsistently = async () => {
+        try {
+          await fetchMedicines();
+        } catch (error) {
+          console.error('Error fetching medicines:', error);
+          // Handle error if needed
+        }
+      };
+    
+      fetchMedicinesConsistently();
+    }, [orders]); 
   
     return(
         <>
         {userCtx.role === 'admin' && <AdminNavBar />}
       {userCtx.role === 'pharmacist' && <Navbar />}
+      {/* {userCtx.role === 'pharmacist' && ( */}
+    
+    {/* )} */}
         <div >
+  
         <Container className={styles.rev}>
         <h2 className={styles.salesT}>Revenue</h2>
-        <h2 className={styles.change}>{revenuePercentageChange} %</h2> 
         <h2 className={styles.cur}>{curYearRevenue}</h2>
         <h4 className={styles.prev}>{pastYearRevenue}  last year  </h4>
-        <img src={arrowUp} className={styles.arrow}></img> 
+        <div className={styles.percents}>
+        <h2 className={styles.change}>{revenuePercentageChange} %</h2>
+        {revenuePercentageChange > 0 ? (
+ <img src={arrowUp} className={styles.arrow}></img>
+) : (
+  <img src={arrowDown} className={styles.arrow}></img>
+)}
+
+</div>
         </Container>
         <Container className={styles.profit}>
         
         <h2 className={styles.salesT}>Profit</h2>
         <h2 className={styles.cur}>{curYearProfit} </h2>
         <h4 className={styles.prev}>{pastYearProfit} last year</h4>
+        <div className={styles.percents}>
         <h2 className={styles.change}>{profitPercentageChange} %</h2>
         {profitPercentageChange > 0 ? (
  <img src={arrowUp} className={styles.arrow}></img>
@@ -256,8 +404,38 @@ const SalesReport = () => {
   <img src={arrowDown} className={styles.arrow}></img>
 )}
 
-        
+</div>
         </Container>
+        <Container className={styles.monthly} >
+          <select className={styles.pickMonth }value={selectedMonth} onChange={(e) => setSelectedMonth(parseInt(e.target.value))}>
+           
+    {Array.from({ length: 12 }, (_, i) => (
+      <option key={i} value={i}>
+        {new Date(0, i).toLocaleDateString('en-US', { month: 'long' })}
+      </option>
+    ))}
+  </select>
+  <label htmlFor="medicineName" className={styles.monthTitle}>Search by month: </label>
+  <label htmlFor="medicineName" className={styles.title}>Search by medicine name: </label>
+        <input
+        className={styles.inputField}
+          type="text"
+          id="medicineName"
+          value={medicineFilter}
+          onChange={(e) => setMedicineFilter(e.target.value)}
+        />
+        <button type="button" className={styles.filterButton} onClick={handleFilterByMedicine}>
+          Filter
+        </button>
+  {/* <img src={arrows} className={styles.arrows}></img> */}
+  <div className={styles.filtering}>
+<h2 className={styles.filters}>Monthly Profit: {monthlyProfit}</h2>
+        <h2 className={styles.filters}>Monthly Sales: {monthlySales}</h2>
+       <h2 className={styles.filters}>Medicine Profit: {medProfit}</h2>
+        <h2 className={styles.filters}>Medicine Sales: {medSales} </h2>
+        </div>
+        </Container>
+        
         <div className={styles.parentContainer}>
         <Container className={styles.yearly}>
           <h2 className={styles.salesT}>Sales in Year</h2>
@@ -269,8 +447,16 @@ const SalesReport = () => {
           </div>
         </Container>
         <Container className={styles.recentOrders}>
-  <h2 className={styles.salesT}>Recent Orders</h2>
+          
+  <h2 className={styles.salesT}>Monthly Orders</h2>
   <h2 className={styles.ordersT}>Total: {totalOrders} orders</h2>
+  <select className={styles.pickMonthOrders }value={selectedMonthO} onChange={(e) => setSelectedMonthO(parseInt(e.target.value))}>
+  {Array.from({ length: 12 }, (_, i) => (
+      <option key={i} value={i}>
+        {new Date(0, i).toLocaleDateString('en-US', { month: 'long' })}
+      </option>
+    ))}
+  </select>
   <table className={styles.orderTable}>
    
   <tbody>

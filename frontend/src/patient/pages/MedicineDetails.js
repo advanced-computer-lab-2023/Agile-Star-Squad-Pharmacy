@@ -28,7 +28,8 @@ const MedicineDetails = (props) => {
   const [showEdit, setShowEdit] = useState(false);
   const [stateData, setStateData] = useState(location.state);
   const navigate = useNavigate();
-  // console.log(location);
+
+  console.log(stateData);
   const stockColor = stateData.quantity !== 0 ? '#00B517' : '#ff0000';
 
   useEffect(() => {
@@ -101,12 +102,14 @@ const MedicineDetails = (props) => {
   };
 
   const toMedicineDetails = (medicine) => {
-    navigate('/medicine', { state: medicine });
+    //navigate('/medicine', { state: medicine });
+    setStateData(medicine);
   };
+
 
   return (
     <div style={{ height: '100vh' }}>
-      {showEdit && <AddMedicine medicine={stateData} exit={exitEditForm}/>}
+      {showEdit && <AddMedicine medicine={stateData} exit={exitEditForm} />}
       <NavBar />
 
       <div
@@ -178,9 +181,11 @@ const MedicineDetails = (props) => {
           <div style={{ color: '#505050', fontSize: '16px' }}>
             Medicinal Use: {stateData.medicinalUse}
           </div>
-          {user.role == "pharmacist" && (<>
 
+          {user.role == "pharmacist" && (<>
             <div style={{ position: "absolute", top: "120px", right: "60px", background: "#3182CE", borderRadius: "10px", color: "white", padding: "5px 25px", cursor: "pointer", fontWeight: "500" }} onClick={() => setShowEdit(true)}>Edit</div>
+          </>)}
+          {user.role == "pharmacist" || user.role == "admin" && (<>
             <div style={{ color: '#505050', fontSize: '16px' }}>
               Sales: {stateData.sales}
               <br />
@@ -190,22 +195,26 @@ const MedicineDetails = (props) => {
 
           )}
 
+
           <img src={line} alt="line" style={{}} />
           <div style={{ fontWeight: '500' }}>
-            Other Medicines With Simillar Active Ingredients:
+            Other Medicines With Similar Active Ingredients:
           </div>
           <div>
             {relatedMedicines.map((medicine) => (
-              <img
-                key={medicine.id}
-                src={medicine.image}
-                alt={medicine.name}
-                style={{ cursor: 'pointer' }}
-                width={'80px'}
-                onClick={() => toMedicineDetails(medicine)}
-              />
+              medicine.isOtc && !medicine.archived ? (
+                <img
+                  key={medicine.id}
+                  src={medicine.image}
+                  alt={medicine.name}
+                  style={{ cursor: 'pointer' }}
+                  width={'80px'}
+                  onClick={() => toMedicineDetails(medicine)}
+                />
+              ) : null
             ))}
           </div>
+
         </div>
         {user.role == "patient" &&
           <div className="col-2 d-flex flex-column">

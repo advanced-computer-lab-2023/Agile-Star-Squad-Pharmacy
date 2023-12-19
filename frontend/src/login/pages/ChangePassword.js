@@ -5,6 +5,8 @@ import InputField from '../components/InputField/InputField';
 import Button from '../components/Button/Button';
 import axios from 'axios';
 import UserContext from '../../user-store/user-context';
+import AdminNavBar from '../../admin/ManageUsers/components/AdminNavBar';
+import NavBar from '../../shared/components/NavBar/NavBar';
 
 function ChangePassword() {
   const userCtx = useContext(UserContext);
@@ -57,7 +59,14 @@ function ChangePassword() {
   };
 
   return (
-    <div className="col-md-7" id={styles.rightCol}>
+    <div>
+       {userCtx.role === "pharmacist" ? (
+      <NavBar/>
+    ) : (
+      <AdminNavBar />
+    )}
+      <div  style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+    <div className="col-md-7" id={styles.rightCol2}>
       <div className={styles.title2}>
         <p>
           <strong>NEW CREDENTIALS</strong>
@@ -105,6 +114,8 @@ function ChangePassword() {
           name="Cancel"
         />
       </div>
+    </div>
+    </div>
     </div>
   );
 }

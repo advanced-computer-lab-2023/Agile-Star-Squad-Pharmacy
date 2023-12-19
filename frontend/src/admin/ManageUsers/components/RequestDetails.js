@@ -3,6 +3,7 @@ import Card from '../../../shared/components/Card/Card';
 import ReactDOM from "react-dom";
 import { useState } from 'react';
 import styles from './RequestDetails.module.css';
+import {  toastMeSuccess, toastMeError } from '../../../shared/util/functions';
 
 const RequestDetails = (props) => {
 
@@ -36,16 +37,18 @@ const RequestDetails = (props) => {
 
             if (response.ok) {
                 // Handle a successful response
-                alert('Pharmacist accepted successfully!');
+                // alert('Pharmacist accepted successfully!');
+                toastMeSuccess('Pharmacist accepted successfully!');
                 setStatus('Accepted');
                 props.onStatusChange(props.data['id'], 'Accepted');
             } else {
                 // Handle errors if the server response is not ok
-                alert('Accepting request Failed!');
+                // alert('Accepting request Failed!');
+                toastMeError('Accepting request Failed!');
             }
         } catch (error) {
             // Handle network errors
-            alert('Network error: ' + error.message);
+            // alert('Network error: ' + error.message);
         }
     }
 
@@ -240,11 +243,13 @@ const RequestDetails = (props) => {
 const ActionButtons = (props) => {
     return (
         <div className="d-flex justify-content-end mt-5">
-            {/* <button className="formButtons formDeleteButton" onClick={props.onReject}>Reject</button>
-            <button className="formButtons" onClick={props.onAccept}>
+           <div  className={styles.buttonPos}>
+            <button className={styles.reject} onClick={props.onReject}>Reject</button>
+            <button className={styles.accept} onClick={props.onAccept}>
                 {!props.isLoading && <span>Accept</span>}
                 {props.isLoading && <div className="loader" />}
-            </button> */}
+            </button>
+        </div>
         </div>
     );
 };

@@ -1,7 +1,7 @@
 import Modal from '../../../shared/components/Modal/Modal';
 import ReactDOM from "react-dom";
 import React from 'react';
-import styles from './RequestDetails.module.css';
+import styles from './UserDetails.module.css';
 
 const UserDetails = (props) => {
   const onDelete = () => {
@@ -217,7 +217,7 @@ const UserDetails = (props) => {
   return ReactDOM.createPortal(
     <Modal exit={props.exit}>
       {userDetails()}
-      <ActionButtons onDelete={onDelete} />
+      {/* <ActionButtons onDelete={onDelete} /> */}
     </Modal>, document.getElementById("backdrop-root")
   );
 }
