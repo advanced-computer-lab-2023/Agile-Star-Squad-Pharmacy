@@ -83,7 +83,7 @@ const NavBar = (props) => {
                 <li className="nav-item">
                   <Link to="/pharmacy/home" style={{ all: 'unset' }}>
                     <a className="nav-link " href="#">
-                      All Medicines
+                      All Medicine
                     </a>
                   </Link>
                 </li>
@@ -133,7 +133,7 @@ const NavBar = (props) => {
                 <li className="nav-item">
                   <Link to="/pharmacy/home" style={{ all: 'unset' }}>
                     <a className="nav-link" aria-current="page" href="#">
-                      All Medicines
+                      All Medicine
                     </a>
                   </Link>
                 </li>
