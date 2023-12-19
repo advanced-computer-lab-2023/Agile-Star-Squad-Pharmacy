@@ -7,6 +7,7 @@ import UserContext from '../../../user-store/user-context';
 import CartContext from '../cart/Cart';
 import './AddingInfo.css'
 import axios from 'axios';
+import { toastMeError } from '../../../shared/util/functions';
 
 const citiesInEgypt = [
   {
@@ -41,9 +42,9 @@ export default function CheckoutForm(props) {
   const [selectedCity, setSelectedCity] = useState('');
   const [selectedDistrict, setSelectedDistrict] = useState('');
   const [selectedStreet, setSelectedStreet] = useState('');
-  
-  
-  
+
+
+
   const handleCityChange = (e) => {
     setSelectedCity(e.target.value);
     setSelectedDistrict('');
@@ -52,7 +53,7 @@ export default function CheckoutForm(props) {
   const handleDistrictChange = (e) => {
     setSelectedDistrict(e.target.value);
   };
-  
+
   useEffect(() => {
     const fetchAddresses = async () => {
       const res = await axios
@@ -69,23 +70,23 @@ export default function CheckoutForm(props) {
   }, [selectedAddressId]);
   const handleAddressSelect = (addressId) => {
     setSelectedAddressId(addressId);
-    if(addressId){
-    const foundAddress =addresses.find((address) => address._id === addressId)
-    setAddress(foundAddress );
-    setSelectedCity(foundAddress.city)
-    setSelectedDistrict(foundAddress.district)
-    setSelectedStreet(foundAddress.street)
-    }else{
+    if (addressId) {
+      const foundAddress = addresses.find((address) => address._id === addressId)
+      setAddress(foundAddress);
+      setSelectedCity(foundAddress.city)
+      setSelectedDistrict(foundAddress.district)
+      setSelectedStreet(foundAddress.street)
+    } else {
       setSelectedCity('')
-    // setSelectedDistrict(foundAddress.district)
-    setSelectedStreet('')
+      // setSelectedDistrict(foundAddress.district)
+      setSelectedStreet('')
     }
-    
+
   };
 
-  
+
   // const onAdd = async () => {
-      
+
   //   const { country, city, street } = formData;
   //   if (country && city && street) {
   //     const requestOptions = {
@@ -131,7 +132,7 @@ export default function CheckoutForm(props) {
       // console.log(props.CartCtx.items);
       const cartItems = cartCtx.items;
       const medicineList = cartItems.map((item) => {
-        return { medicineId: item.id, count: item.quantity ,price:item.price,profit:item.price*0.9 };
+        return { medicineId: item.id, count: item.quantity, price: item.price, profit: item.price * 0.9 };
       });
       console.log("///////")
       let paymentIntentData = {
@@ -140,7 +141,7 @@ export default function CheckoutForm(props) {
         totalCost: cartCtx.total,
         address: addressId,
       };
-      
+
       const response = await fetch('http://localhost:4000/orders', {
         method: 'POST',
         headers: {
@@ -150,6 +151,10 @@ export default function CheckoutForm(props) {
         credentials: 'include',
       });
       console.log(addressId)
+      if (response.status == 400) {
+        toastMeError((await response.json()).message);
+        return;
+      } else
       if (!response.ok) {
         throw new Error('Failed to send data to the server.');
       }
@@ -179,7 +184,7 @@ export default function CheckoutForm(props) {
     const currentWallet = responseData.data.patient.wallet;
     // console.log("wallet" ,currentWallet +deduct )
     if (currentWallet + deduct >= 0) {
-      
+
       try {
         const response = await fetch(
           `http://localhost:4000/patients/${userCtx.userId}/wallet`,
@@ -193,7 +198,7 @@ export default function CheckoutForm(props) {
 
         const cartItems = cartCtx.items;
         const medicineList = cartItems.map((item) => {
-          return { medicineId: item.id, count: item.quantity,price:item.price,profit:item.price*0.9  };
+          return { medicineId: item.id, count: item.quantity, price: item.price, profit: item.price * 0.9 };
         });
         let paymentIntentData = {
           patientId: userCtx.userId,
@@ -209,7 +214,10 @@ export default function CheckoutForm(props) {
           body: JSON.stringify(paymentIntentData),
           credentials: 'include',
         });
-
+        if (response.status == 400) {
+          toastMeError((await response.json()).message);
+          return;
+        }  else 
         if (response.ok) {
           // Handle a successful response
           alert("Payment Successful");
@@ -234,11 +242,12 @@ export default function CheckoutForm(props) {
     navigate(-1);
   };
 
-  const handleCOD = async () => {
+  const handleCOD = async (e) => {
+    e.preventDefault();
     try {
       const cartItems = cartCtx.items;
       const medicineList = cartItems.map((item) => {
-        return { medicineId: item.id, count: item.quantity,price:item.price,profit:item.price*0.9  };
+        return { medicineId: item.id, count: item.quantity, price: item.price, profit: item.price * 0.9 };
       });
       let paymentIntentData = {
         patientId: userCtx.userId,
@@ -246,7 +255,7 @@ export default function CheckoutForm(props) {
         totalCost: cartCtx.total,
         address: addressId,
       };
-      await fetch('http://localhost:4000/orders', {
+      const response = await fetch('http://localhost:4000/orders', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -254,10 +263,15 @@ export default function CheckoutForm(props) {
         body: JSON.stringify(paymentIntentData),
         credentials: 'include',
       });
-      alert("Order Successful");
-      cartCtx.clearCart();
-      navigate('/');
-    } catch (error) {}
+      
+      if (response.status == 400) {
+        toastMeError((await response.json()).message);
+      } else {
+        cartCtx.clearCart();
+        navigate('/');
+      }
+    } catch (error) {
+    }
   };
 
   const onSubmit = (e) => {
@@ -269,7 +283,7 @@ export default function CheckoutForm(props) {
         handleWallet(e);
         break;
       case 2:
-        handleCOD();
+        handleCOD(e);
       default:
         break;
     }
@@ -293,9 +307,9 @@ export default function CheckoutForm(props) {
           className={styles.input1}
           onChange={(e) => handleAddressSelect(e.target.value)}
         >
-          <option value="" style={{color:'black'}}>Select an Address</option>
+          <option value="" style={{ color: 'black' }}>Select an Address</option>
           {addresses.map((address) => (
-            <option style={{color:'black'}} key={address._id} value={selectedAddressId}>
+            <option style={{ color: 'black' }} key={address._id} value={selectedAddressId}>
               <p>
                 <strong> Country:</strong> {address.country}
               </p>
@@ -316,34 +330,34 @@ export default function CheckoutForm(props) {
           name="radio"
           placeholder="Enter your Name"
 
-          // id="use-wallet"
+        // id="use-wallet"
         />
-        
+
         <label className={styles.label1}> City:</label>
-      <select  className={styles.input1} value={selectedCity} onChange={handleCityChange} required>
-        <option value="" style={{color:'black'}}>Select a city</option>
-        {citiesInEgypt.map((cityObj, index) => (
-          <option key={index} value={cityObj.city} style={{color:'black'}}>
-            {cityObj.city}
-          </option>
-        ))}
-      </select>
-        
-         {selectedCity && (
-        <div>
-          <label className={styles.label1}>District:</label>
-          <select  className={styles.input1} value={selectedDistrict} onChange={handleDistrictChange}>
-            <option value="" style={{color:'black'}}>Select a district</option>
-            {citiesInEgypt
-              .find((cityObj) => cityObj.city === selectedCity)
-              .districts.map((district, index) => (
-                <option key={index} value={district}style={{color:'black'}}>
-                  {district}
-                </option>
-              ))}
-          </select>
-        </div>
-      )}
+        <select className={styles.input1} value={selectedCity} onChange={handleCityChange} required>
+          <option value="" style={{ color: 'black' }}>Select a city</option>
+          {citiesInEgypt.map((cityObj, index) => (
+            <option key={index} value={cityObj.city} style={{ color: 'black' }}>
+              {cityObj.city}
+            </option>
+          ))}
+        </select>
+
+        {selectedCity && (
+          <div>
+            <label className={styles.label1}>District:</label>
+            <select className={styles.input1} value={selectedDistrict} onChange={handleDistrictChange}>
+              <option value="" style={{ color: 'black' }}>Select a district</option>
+              {citiesInEgypt
+                .find((cityObj) => cityObj.city === selectedCity)
+                .districts.map((district, index) => (
+                  <option key={index} value={district} style={{ color: 'black' }}>
+                    {district}
+                  </option>
+                ))}
+            </select>
+          </div>
+        )}
         <label className={styles.label1}>Street</label>
         <br />
         <input
@@ -351,8 +365,8 @@ export default function CheckoutForm(props) {
           className={styles.input1}
           name="radio"
           placeholder="Enter your Street"
-                value={selectedStreet}
-                onChange={(e) => setSelectedStreet(e.target.value)}
+          value={selectedStreet}
+          onChange={(e) => setSelectedStreet(e.target.value)}
           // id="use-wallet"
           required
         />
@@ -363,19 +377,19 @@ export default function CheckoutForm(props) {
           className={styles.input1}
           name="number"
           placeholder="Enter your mobile number"
-          // id="use-wallet"
-        />
-         <div style={{padding:'10px 20px',paddingTop:'10px'}}>
-      <input
-        type="checkbox"
         // id="use-wallet"
-        class="form-check-input mt-0"
-        checked={useSave}
-        onChange={(e) => setUseSave(e.target.checked)}
-        
-      />
-      <label htmlFor="use-wallet" className={styles.choicePayment} >Save Address</label>
-      </div>
+        />
+        <div style={{ padding: '10px 20px', paddingTop: '10px' }}>
+          <input
+            type="checkbox"
+            // id="use-wallet"
+            class="form-check-input mt-0"
+            checked={useSave}
+            onChange={(e) => setUseSave(e.target.checked)}
+
+          />
+          <label htmlFor="use-wallet" className={styles.choicePayment} >Save Address</label>
+        </div>
       </div>
       <div
         style={{

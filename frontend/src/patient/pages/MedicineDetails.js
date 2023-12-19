@@ -13,6 +13,11 @@ import line from './line.png';
 import cross from './cross.png';
 import CartContext from './cart/Cart';
 import AddMedicine from '../../pharmacist/pages/AddMedicine';
+import ConfirmationModal from '../../shared/components/ConfirmationModal/ConfirmationModal';
+import { toastMe, toastMeSuccess } from '../../shared/util/functions';
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const MedicineDetails = (props) => {
   const user = useContext(UserContext);
@@ -82,7 +87,6 @@ const MedicineDetails = (props) => {
 
   /////////////////////////////
   const addItem = (e) => {
-    alert('Item added Successfully');
     e.preventDefault();
     cartCtx.addItem({
       id: stateData.id,
@@ -93,6 +97,7 @@ const MedicineDetails = (props) => {
       price: stateData.price,
       quantity: +stateData.cartQuantity,
     });
+    toastMeSuccess(`Added ${stateData.name} successfully`)
   };
 
   const toMedicineDetails = (medicine) => {

@@ -1,6 +1,7 @@
 // Import the necessary models
 const Order = require('../models/orderModel');
 const Patient = require('../models/patientModel');
+const Medicine = require('../models/medicineModel');
 
 // Function to get all orders of a patient by their id
 const getOrdersByPatientId = async (req, res) => {
@@ -77,26 +78,47 @@ const changeOrderStatus = async (req, res) => {
 const addOrder = async (req, res) => {
   try {
     const { patientId, medicineList, totalCost, address } = req.body;
-    
     const patient = await Patient.findById(patientId);
-  console.log("hal tasma3ony");
-  console.log("hal tasma3ony");
     if (!patient) {
-      
       return res.status(404).json({ message: 'Patient not found' });
     }
-   
+    console.log(medicineList);
+    const outOfStockMedicines = [];
+
+    for (const medicineObj of medicineList) {
+      const medicine = await Medicine.findById(medicineObj.medicineId);
+      // maybe add price to revenue and profit to profit
+      if (medicine.quantity == medicineObj.count) {
+        outOfStockMedicines.push(medicine);
+      } else if (medicine.quantity < medicineObj.count) {
+        res.status(400).json({message: `${medicine.name} quantity is larger than stock available`});
+        return;
+      }
+      const newQty = medicine.quantity - medicineObj.count;
+      await Medicine.findByIdAndUpdate(medicineObj.medicineId, { quantity: newQty })
+    }
+
+    //  {
+    //   medicineId: '657e1cb6aa3855f4b9bb89cf',
+    //   count: 1,
+    //   price: 18,
+    //   profit: 16.2
+    // }
+    if (outOfStockMedicines.length > 0) {
+      //send notifications
+    }
+
     const order = new Order({
       patient: patientId,
       medicineList,
       totalCost,
       address,
     });
-    
+
     await order.save();
     patient.orders.push(order._id);
     await patient.save();
-    res.status(201).json({ message: 'Order added successfully', order });
+    res.status(201).json({ message: 'Order added successfully', outOfStockMedicines, order });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
