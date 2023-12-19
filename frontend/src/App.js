@@ -30,6 +30,7 @@ import Homepage from './patient/pages/home/Homepage';
 import RevenueChart from './admin/ManageUsers/components/RevenueChart';
 import SalesReport from './admin/pages/SalesReport';
 
+
 function App() {
   const user = useContext(UserContext);
   const [cookies, setCookie, removeCookie] = useCookies(['jwt']);
@@ -65,6 +66,7 @@ function App() {
             element={<ArchivedMedicines />}
             exact
           />
+          <Route path="/salesReport" element={<SalesReport />} exact />
           <Route path="*" element={<Navigate to="/pharmacy/home" />} />{' '}
         </Routes>
       );
