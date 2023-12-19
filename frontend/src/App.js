@@ -81,6 +81,7 @@ function App() {
           <Route path="/admin/manage" element={<ManageUsersPage />} exact />
           <Route path="/changePassword" element={<ChangePassword />} exact />
           <Route path="/SalesReport" element={<SalesReport />} exact />
+          <Route path="/pharmacy/home" element={<Homepage />} exact />
           <Route path="*" element={<Navigate to="/admin/home" />} />{' '}
         </Routes>
       );
