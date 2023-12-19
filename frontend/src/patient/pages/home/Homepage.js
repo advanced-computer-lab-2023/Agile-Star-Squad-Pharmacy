@@ -42,7 +42,6 @@ const Homepage = () => {
                 }
 
                 const result = await response.json();
-                console.log(result);
 
                 const medicineJson = result.data.Medicine;
                 setAllMedicine(
@@ -56,7 +55,6 @@ const Homepage = () => {
                         };
                     })
                 );
-                console.log('All Medicines:', allMedicines);
                 setMedicines(
                     medicineJson.map((m) => {
                         return {
