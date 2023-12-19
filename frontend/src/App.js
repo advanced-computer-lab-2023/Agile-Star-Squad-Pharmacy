@@ -32,6 +32,7 @@ import SalesReport from './admin/pages/SalesReport';
 import Messages from './patient/pages/messages/Messages';
 import PharmacistMessages from './pharmacist/pages/messages/Messages';
 
+import Prescriptions from './patient/pages/prescriptions/Prescriptions';
 
 function App() {
   const user = useContext(UserContext);
@@ -52,6 +53,7 @@ function App() {
             <Route path="/address/add" element={<AddAddress />} exact />
             <Route path="changePassword" element={<ChangePassword />} exact />
             <Route path="/medicine" element={<MedicineDetails />} exact />
+            <Route path="/prescriptions" element={<Prescriptions />} exact />
             <Route path="*" element={<Navigate to="/pharmacy/home" />} />{' '}
           </Routes>
         </CartContextProvider>

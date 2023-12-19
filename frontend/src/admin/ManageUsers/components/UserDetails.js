@@ -217,7 +217,7 @@ const UserDetails = (props) => {
   return ReactDOM.createPortal(
     <Modal exit={props.exit}>
       {userDetails()}
-      <ActionButtons onDelete={onDelete} />
+      {/* <ActionButtons onDelete={onDelete} /> */}
     </Modal>, document.getElementById("backdrop-root")
   );
 }

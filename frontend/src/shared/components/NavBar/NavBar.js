@@ -3,6 +3,7 @@ import './NavBar.css';
 import patient from '../../../patient.png';
 import { useNavigate, Link } from 'react-router-dom';
 import UserContext from '../../../user-store/user-context';
+import BellDropdown from '../BellDropDown/BellDropDown';
 
 const NavBar = (props) => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const NavBar = (props) => {
   }, []);
 
   const getWallet = async () => {
-    if (userCtx.role == "patient") {
+    if (userCtx.role == 'patient') {
       const response = await fetch(
         `http://localhost:4000/patients/${userCtx.userId}`,
         {
@@ -24,7 +25,7 @@ const NavBar = (props) => {
       const json = await response.json();
       setWalletAmount(json.data.patient.wallet);
     }
-    if (userCtx.role == "pharmacist") {
+    if (userCtx.role == 'pharmacist') {
       const response = await fetch(
         `http://localhost:4000/pharmacist/${userCtx.userId}`,
         {
@@ -46,10 +47,8 @@ const NavBar = (props) => {
   };
 
   const redirectToAccountSettings = () => {
-    if (userCtx.role == "patient")
-      navigate('/patient/account');
-    else if (userCtx.role == "pharmacist")
-      navigate('/pharmacist/account');
+    if (userCtx.role == 'patient') navigate('/patient/account');
+    else if (userCtx.role == 'pharmacist') navigate('/pharmacist/account');
   };
 
   const changePasswordHandler = () => {
@@ -73,19 +72,21 @@ const NavBar = (props) => {
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav">
                 <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="#">
-                    Prescriptions
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <Link to="/pharmacy/home" style={{ all: 'unset' }}>
-                    <a className="nav-link " href="#">
-                      All Medicines
+                  <Link to="/prescriptions" style={{ all: 'unset' }}>
+                    <a className="nav-link" aria-current="page" href="#">
+                      Presciptions
                     </a>
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/messages" style={{ all: "unset" }}>
+                  <Link to="/pharmacy/home" style={{ all: 'unset' }}>
+                    <a className="nav-link " href="#">
+                      All Medicine
+                    </a>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/messages" style={{ all: 'unset' }}>
                     <a className="nav-link" href="#">
                       Chat with a Pharmacist
                     </a>
@@ -140,7 +141,7 @@ const NavBar = (props) => {
                 <li className="nav-item">
                   <Link to="/pharmacy/home" style={{ all: 'unset' }}>
                     <a className="nav-link" aria-current="page" href="#">
-                      All Medicines
+                      All Medicine
                     </a>
                   </Link>
                 </li>
@@ -152,7 +153,7 @@ const NavBar = (props) => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/messages" style={{ all: "unset" }}>
+                  <Link to="/messages" style={{ all: 'unset' }}>
                     <a className="nav-link" href="#">
                       Chat
                     </a>
@@ -165,9 +166,10 @@ const NavBar = (props) => {
                     </a>
                   </Link>
                 </li>
-
-
                 <li className="nav-item" style={{ paddingLeft: '380px' }}>
+                  <BellDropdown />
+                </li>
+                <li className="nav-item">
                   <p className="nav-link" href="#">
                     Wallet : {walletAmount}
                   </p>
@@ -177,7 +179,7 @@ const NavBar = (props) => {
                   <a
                     className="nav-link "
                     href="#"
-                  // onClick={redirectToAccountSettings}
+                    // onClick={redirectToAccountSettings}
                   >
                     Account
                   </a>
