@@ -432,15 +432,19 @@ useEffect(() => {
       };
     }
   };
-  const formatDefaultDate = () => {
-    const currentDate = new Date();
-    const oneDayAgo = new Date(currentDate);
-    oneDayAgo.setDate(oneDayAgo.getDate() - 1);
+
+  const formatDate = (date) => {
+    // Check if date is a valid Date object
+    if (!(date instanceof Date) || isNaN(date)) {
+      return "";
+    }
+    console.log(date+'qqqqqqqqqqqqqqqq')
   
     const options = { month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
-    
-    return oneDayAgo.toLocaleDateString('en-US', options);
+  
+    return date.toLocaleDateString('en-US', options);
   };
+  
   
   
 
@@ -548,6 +552,7 @@ useEffect(() => {
               id: admin['_id'],
               username: admin['username'],
               creationDate: admin['creationDate'],
+              email: admin['email'],
               name: '-',
               mobileNumber: '-',
               role: 'Admin',
@@ -588,13 +593,28 @@ const handleSalesClick = () =>{
     });
   };
   
- 
-  const handleAdminClick = () => {
-    setShowAdminForm(true);
-  }
+  const handleFormSubmitSuccess = () => {
+    setShowAdminForm(false); // Close the form after successful submission
+  };
+  
   const exitAdminModal = () => {
     setShowAdminForm(false);
   };
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      const formElement = document.getElementById('form'); // Replace 'yourFormId' with the actual ID of your form
+      if (formElement && !formElement.contains(event.target)) {
+        setShowAdminForm(false); // Close the form when clicking outside of it
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [setShowAdminForm]);
+
   
  console.log(selectedRequest+"reqqq");
 
@@ -603,7 +623,7 @@ const handleSalesClick = () =>{
       <AdminNavBar/>
     <Container className={styles.sales} >
     <h2 className={styles.salesTitle} onClick={handleSalesClick}>Sales Report</h2>
-    <section className={styles.salesSec}>
+    <section className={styles.salesSec} onClick={handleSalesClick}>
     <img
               src={sale}
               alt=""
@@ -639,7 +659,7 @@ const handleSalesClick = () =>{
               <td className={styles.bold}>
       {request.name} 
       <div className={styles.small}>
-      {calculateAge(request.dateOfBirth)},   { formatDefaultDate(request.creationDate ? new Date(request.creationDate) : undefined)}
+      {calculateAge(request.dateOfBirth)},   { formatDate(request.creationDate )}
 
 
       </div>
@@ -857,10 +877,10 @@ const handleSalesClick = () =>{
         data={selectedRequest}
         exit={exitRequestModal}
         />
-      )}
-        
-        {showAdminForm && (
-        <AdminForm exit={exitAdminModal} refresh={fetchAdmins} />
+      )}{showAdminForm &&(
+        <div className={styles.overlay}>
+        <AdminForm exit={exitAdminModal} refresh={fetchAdmins} onSubmitSuccess={handleFormSubmitSuccess} />
+        </div>
       )}
       
        
