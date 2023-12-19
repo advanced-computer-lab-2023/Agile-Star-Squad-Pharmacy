@@ -87,24 +87,24 @@ const BellDropdown = () => {
                   justifyContent: 'space-between',
                   borderBottom:
                     '0.25px solid var(--text-icons-faded-grey, #464a54)',
+                    fontWeight: 'bold',
                 }}
               >
                 <span>
-                  {userCtx.role === 'patient'
-                    ? notification.patientMessage
-                    : notification.doctorMessage}
+                  {notification.pharmacistMessage}
                 </span>
+                <div style={{textAlign: 'right' ,marginRight: '-35%'}}>
                 <span
                   style={{
                     cursor: 'pointer',
                     color: 'red',
-                    marginRight: '-5px',
                     marginTop: '-7px',
                   }}
                   onClick={() => deleteNotification(notification._id)}
                 >
-                  x
+                  X
                 </span>
+                </div>
                 <hr></hr>
               </li>
             ))}

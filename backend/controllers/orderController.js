@@ -2,7 +2,9 @@
 const Order = require('../models/orderModel');
 const Patient = require('../models/patientModel');
 const Medicine = require('../models/medicineModel');
-const Notification = require('../')
+const Notification = require('../models/notificationsModel');
+const Pharmacist = require('../models/pharmacistModel');
+const sendEmail = require('../utils/email');
 
 // Function to get all orders of a patient by their id
 const getOrdersByPatientId = async (req, res) => {
@@ -79,6 +81,7 @@ const changeOrderStatus = async (req, res) => {
 const addOrder = async (req, res) => {
   try {
     const { patientId, medicineList, totalCost, address } = req.body;
+    const pharmacists = await Pharmacist.find();
     const patient = await Patient.findById(patientId);
     if (!patient) {
       return res.status(404).json({ message: 'Patient not found' });
@@ -92,12 +95,12 @@ const addOrder = async (req, res) => {
       if (medicine.quantity == medicineObj.count) {
         outOfStockMedicines.push(medicine);
       } else if (medicine.quantity < medicineObj.count) {
-        res.status(400).json({message: `${medicine.name} quantity is larger than stock available`});
+        res.status(400).json({ message: `${medicine.name} quantity is larger than stock available` });
         return;
       }
       const newQty = medicine.quantity - medicineObj.count;
       await Medicine.findByIdAndUpdate(medicineObj.medicineId, { quantity: newQty })
-    
+
     }
 
     //  {
@@ -107,7 +110,33 @@ const addOrder = async (req, res) => {
     //   profit: 16.2
     // }
     if (outOfStockMedicines.length > 0) {
-      //send notifications
+      let i;
+      let phMessage;
+      let currentPharmacist;
+      for (i = 0; i < outOfStockMedicines.length; i++) {
+        phMessage = `${outOfStockMedicines[i].name} is out of stock!`
+
+        pharmacists.map(async(pharmacist) => {
+          const newNotification = await Notification.create({ pharmacist: pharmacist, medicineName:outOfStockMedicines[i].name , pharmacistMessage: phMessage });
+
+          pharmacist.notifications.push(newNotification);
+          await pharmacist.save();
+  
+          await pharmacist.save({ validateBeforeSave: false });
+          try {
+            console.log(pharmacist.email)
+            await sendEmail({
+              email: pharmacist.email,
+              subject: 'You Have New Notification!',
+              message: phMessage,
+            });
+          }
+          catch(err){
+            console.log(err);
+          }
+        })
+        
+      }
     }
 
     const order = new Order({

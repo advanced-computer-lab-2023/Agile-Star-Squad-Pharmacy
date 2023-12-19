@@ -4,12 +4,15 @@ import styles from './Orders.module.css';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../../../user-store/user-context';
 import NavBar from '../../../shared/components/NavBar/NavBar';
+import ConfirmationModal from '../../../shared/components/ConfirmationModal/ConfirmationModal';
 
 const Order = () => {
   const user = useContext(UserContext);
   const patientId = user.userId;
   const navigate = useNavigate();
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [orders, setOrders] = useState([]);
+  const [id, setId] = useState('');
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -25,12 +28,14 @@ const Order = () => {
     fetchOrders();
   }, []);
 
-  const handleDelete = async (id) => {
+  const handleCancel = async () => {
+    console.log(id);
     try {
       await axios.delete(`http://localhost:4000/orders/${id}`, {
         withCredentials: true,
       });
       setOrders((prev) => prev.filter((order) => order._id != id));
+      setShowConfirmModal(false);
     } catch (error) {
       console.error(error);
     }
@@ -68,6 +73,15 @@ const Order = () => {
 
   return (
     <>
+      {showConfirmModal && (
+        <ConfirmationModal
+          exit={() => {
+            setShowConfirmModal(false);
+          }}
+          text={'Cancel order'}
+          confirm={handleCancel}
+        />
+      )}
       <div>
         <a className={styles.backArrow} href="/HomePage">
           <svg
@@ -138,9 +152,12 @@ const Order = () => {
                       <td rowSpan={order.medicineList.length}>
                         <button
                           className={styles.button}
-                          onClick={() => handleDelete(order._id)}
+                          onClick={(id) => {
+                            setId(order._id);
+                            setShowConfirmModal(true);
+                          }}
                         >
-                          Delete
+                          Cancel
                         </button>
                       </td>
                     )}

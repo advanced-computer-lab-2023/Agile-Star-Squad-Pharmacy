@@ -3,7 +3,7 @@ import Card from '../../../shared/components/Card/Card';
 import ReactDOM from "react-dom";
 import { useState } from 'react';
 import styles from './RequestDetails.module.css';
-import { toastMe, toastMeSuccess, toastMeError } from '../../../shared/util/functions';
+import {  toastMeSuccess, toastMeError } from '../../../shared/util/functions';
 
 const RequestDetails = (props) => {
 
@@ -243,11 +243,13 @@ const RequestDetails = (props) => {
 const ActionButtons = (props) => {
     return (
         <div className="d-flex justify-content-end mt-5">
-            {/* <button className="formButtons formDeleteButton" onClick={props.onReject}>Reject</button>
-            <button className="formButtons" onClick={props.onAccept}>
+           <div  className={styles.buttonPos}>
+            <button className={styles.reject} onClick={props.onReject}>Reject</button>
+            <button className={styles.accept} onClick={props.onAccept}>
                 {!props.isLoading && <span>Accept</span>}
                 {props.isLoading && <div className="loader" />}
-            </button> */}
+            </button>
+        </div>
         </div>
     );
 };
