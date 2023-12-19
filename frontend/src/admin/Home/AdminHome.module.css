@@ -437,6 +437,23 @@ height:140px;
   position: absolute;
   margin-top: 6%;
 }
+.change{
+  color: var(--Green-500, #22C55E);
+font-family: 'SF Pro Display';
+font-size: 13.456px;
+font-style: normal;
+font-weight: 700;
+line-height: 100%; /* 13.456px */
+position: absolute;
+margin-top: 1%;
+margin-left: 25%;
+}
+.arrow{
+  position: absolute;
+  margin-top: 0.8%;
+margin-left: 23.5%;
+}
+
 .salesT{
   color: var(--Text-900, #0F172A);
 font-family: 'Poppins';
@@ -538,4 +555,3 @@ line-height: 100%; /* 11.614px */
   align-items: center;
   z-index: 1000; /* Set a high z-index value to ensure it appears above other content */
 }
-

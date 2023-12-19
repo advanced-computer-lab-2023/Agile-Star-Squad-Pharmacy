@@ -17,12 +17,12 @@
   display: flex;
   text-align: center;
   padding-top: 15px;
-  padding-left: 190px;
+  padding-left: 70px;
 }
 
 .navbar-brand {
   padding-left: 50px;
-  width: 120px;
+  width: 180px;
   height: 31px;
   flex-shrink: 0;
   color: rgba(60, 90, 11, 0.61);
@@ -50,6 +50,10 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+  /* width: 150px; */
+}
+.nav-link {
+  width: 122px;
 }
 #last {
   color: #ea580c;
