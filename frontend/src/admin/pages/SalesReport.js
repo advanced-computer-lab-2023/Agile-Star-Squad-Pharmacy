@@ -7,6 +7,7 @@ import AdminNavBar from '../ManageUsers/components/AdminNavBar';
 import arrowUp from '../arrow-up.png';
 import arrowDown from '../arrow-down.png';
 import axios from 'axios';
+import Navbar from '../../shared/components/NavBar/NavBar';
 
 const SalesReport = () => {
     const [currentYearSales, setCurrentYearSales] = useState([]);
@@ -20,6 +21,7 @@ const SalesReport = () => {
     const totalOrders= recentOrders.length;
     const [pastYearProfit,setPastYearProfit]=useState(0);
     const [curYearProfit,setCurYearProfit]=useState(0);
+    console.log(userCtx.role);
    
     
     
@@ -49,17 +51,14 @@ const SalesReport = () => {
     
     
 
-    useEffect(() => {
-      const fetchMedicines = async () => {
-        const res = await axios
-          .get(`http://localhost:4000/medicine`, { withCredentials: true })
-          .catch((err) => {
-            console.error(err);
-          });
+    const fetchMedicines = async () => {
+      try {
+        const res = await axios.get(`http://localhost:4000/medicine`, { withCredentials: true });
         setMedicines(res.data.data.medicines);
-      };
-      fetchMedicines();
-    }, []);
+      } catch (err) {
+        console.error(err);
+      }
+    };
 
 
  console.log(orders);
@@ -201,33 +200,42 @@ const SalesReport = () => {
       // ...
       
     
-useEffect(() => {
-    // Fetch orders and calculate sales for this year and last year
-    const fetchOrders = async () => {
-      const fetchedOrders = await fetchAllOrders(); // Assuming you have fetchAllOrders function
-      const {
-        salesForThisYearByMonth,
-        salesForLastYearByMonth,
-        percentageChange: calculatedPercentageChange,
-        changeSign: calculatedChangeSign,
-      } = calculateSalesForYearAndLastYear(fetchedOrders);
-   
-  
-      calculateProfit(orders);
-      setCurrentYearSales(salesForThisYearByMonth);
-      setPrevYearSales(salesForLastYearByMonth);
-      setPercentageChange(calculatedPercentageChange);
-      setChangeSign(calculatedChangeSign);
-      const recentOrders = getRecentOrders(fetchedOrders);
-      setRecentOrders(recentOrders);
-    };
-  
-    fetchOrders();
-  }, []);
+      useEffect(() => {
+        const fetchData = async () => {
+          const fetchedOrders = await fetchAllOrders();
+          fetchMedicines();
+    
+          // Other logic can be placed here if needed
+    
+          // Calculate profits and update state
+          calculateProfit(fetchedOrders);
+    
+          // Calculate sales for this year and last year
+          const {
+            salesForThisYearByMonth,
+            salesForLastYearByMonth,
+            percentageChange: calculatedPercentageChange,
+            changeSign: calculatedChangeSign,
+          } = calculateSalesForYearAndLastYear(fetchedOrders);
+    
+          // Update state with the calculated values
+          setCurrentYearSales(salesForThisYearByMonth);
+          setPrevYearSales(salesForLastYearByMonth);
+          setPercentageChange(calculatedPercentageChange);
+          setChangeSign(calculatedChangeSign);
+    
+          // Get recent orders and update state
+          const recentOrdersData = getRecentOrders(fetchedOrders);
+          setRecentOrders(recentOrdersData);
+        };
+    
+        fetchData();
+      }, []);
   
     return(
         <>
-        <AdminNavBar/>
+        {userCtx.role === 'admin' && <AdminNavBar />}
+      {userCtx.role === 'pharmacist' && <Navbar />}
         <div >
         <Container className={styles.rev}>
         <h2 className={styles.salesT}>Revenue</h2>
