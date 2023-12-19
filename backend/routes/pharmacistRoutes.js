@@ -7,14 +7,19 @@ const router = express.Router({
   mergeParams: true,
 });
 
+
 router
-  .route('/chats')
+  .route('/:id/chats')
   .get(pharmacistController.getChats);
-  
+
+router
+  .route('/:id/:doctorId/chats')
+  .get(pharmacistController.getProfessionalChat);
+
 router
   .route('/')
-  .get(pharmacistController.getAllPharmacist)
-  .post(pharmacistController.pharmacistSignup);
+  .get(middleware.pharmacistAuth, pharmacistController.getAllPharmacist)
+  .post(middleware.pharmacistAuth, pharmacistController.pharmacistSignup);
 
 router
   .route('/:pharmacistId/notifications/:notificationId')
@@ -27,9 +32,11 @@ router
 
 router
   .route('/:id')
-  .get(pharmacistController.getPharmacist)
+  .get(middleware.pharmacistAuth, pharmacistController.getPharmacist)
   .patch(middleware.pharmacistAuth, pharmacistController.updatePharmacist)
-  .delete(pharmacistController.removePharmacist);
+  .delete(middleware.pharmacistAuth, pharmacistController.removePharmacist);
+
+
 
 
 module.exports = router;

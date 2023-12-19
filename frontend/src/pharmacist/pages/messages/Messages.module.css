@@ -4,7 +4,7 @@
 
 .myMessages{
     margin-top: 10px;
-    overflow: auto;
+    overflow: scroll;
 }
 
 .messageCol {
@@ -14,6 +14,19 @@
     padding-inline: 0;
     border-right: 0.25px solid var(--text-icons-faded-grey, #AFB8CF);
     background-color: #f6f6f6;
+}
+
+.tabText {
+    color: #838383;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tabActive {
+    font-size: 18px;
+    color: black;
+    transition: all 0.2s ease;
 }
 
 .searchChat{

@@ -9,7 +9,11 @@ const chatSchema = new mongoose.Schema({
     type: Object
   }],
   lastMessage: {
-    type: Object
+    type: Object,
+    default: {
+      message: "",
+      senderId: "",
+    }
   }
 });
 

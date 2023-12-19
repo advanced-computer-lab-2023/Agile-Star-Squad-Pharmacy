@@ -110,6 +110,7 @@ function App() {
     axios
       .get('http://localhost:4000/auth/me', { withCredentials: true })
       .then((res) => {
+        console.log(res.data.data.id)
         if (res.data.data.user === null) {
           user.login({ role: 'guest', userId: null });
         } else {
