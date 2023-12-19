@@ -24,8 +24,8 @@
   line-height: 16px; 
   margin-left: 5%;
   }
-  .rev, .profit{
-    display: inline-flex;
+  .rev, .profit {
+   
   padding: 16.339px 28.834px 26.473px 13.456px;
   flex-direction: column;
   align-items: flex-start;
@@ -34,30 +34,34 @@
   border: 0.961px solid var(--Stroke-3, #E2E8F0);
   background: var(--white-100, #FFF);
   width: 30%;
-  margin-top: 2%;
+  margin-left: 33%;
+    margin-right: 5%;
   height:140px;
   
+  }
+  .rev{
+    margin-top: 2%;
+   margin-bottom: 2%;
+    position: relative;
+  }
+  .profit{
+    position: relative;
+    
   }
   .monthly{
    
     border-radius: 15.378px;
     border: 0.961px solid var(--Stroke-3, #E2E8F0);
     background: var(--white-100, #FFF);
-    width: 25%;
-    margin-left: 72%;
-    margin-top: 5%;
-    top: 6%;
+    width: 28%;
+    margin-left: 3%;
+    height: 42%;
+    margin-top: 6%;
+    top: 4%;
     position: absolute;
   
   }
-  .rev{
-    margin-left: 5%;
-    margin-right: 5%;
-  
-  }
-  .profit{
-    margin-right: 30%;
-  }
+
   .cur{
     color: #000;
     font-family: 'SF Pro Display';
@@ -85,13 +89,13 @@
   font-weight: 700;
   line-height: 100%; /* 13.456px */
   position: absolute;
-  margin-top: 1%;
-  margin-left: 25%;
+  margin-top: -10%;
+  margin-left: 70%;
   }
   .arrow{
     position: absolute;
-    margin-top: 0.8%;
-  margin-left: 23.5%;
+    margin-top: -10.5%;
+    margin-left: 64%;
   }
   
   .salesT{
@@ -118,28 +122,31 @@
     border: 0.83px solid var(--Stroke-3, #E2E8F0);
     background: var(--white-100, #FFF);
     box-shadow: 0px 0.83px 1.659px 0px rgba(0, 0, 0, 0.05);
-    margin-top: 2%;
-    margin-left: 3%;
+    margin-top: 1%;
+    margin-left: 8%;
     margin-right: 2%;
   }
   
   .recentOrders {
     display: flex;
-    width: 500.596px;
-    height: 344.278px;
+    width: 524.596px;
+    height: 570.278px;
     padding: 20.74px 16.592px;
     flex-direction: column;
     align-items: flex-start;
     gap: 19.91px;
     flex-shrink: 0;
     border-radius: 13.273px;
-  border: 0.83px solid var(--Stroke-3, #E2E8F0);
-  background: var(--white-100, #FFF);
-  box-shadow: 0px 0.83px 1.659px 0px rgba(0, 0, 0, 0.05);
-  margin-top: 2%;
-  margin-left: 0%;
-  max-height: 400px; /* Adjust the height according to your design */
-  overflow-y: auto;
+    border: 0.83px solid var(--Stroke-3, #E2E8F0);
+    background: var(--white-100, #FFF);
+    box-shadow: 0px 0.83px 1.659px 0px rgba(0, 0, 0, 0.05);
+    margin-top: 5%;
+    margin-left: 2%;
+    max-height: 550px;
+    overflow-y: auto;
+    top:5%;
+    position: absolute;
+    left:62%;
   }
   .recentOrders::-webkit-scrollbar {
     width: 4px; /* For Chrome, Safari, and Opera */
@@ -186,8 +193,9 @@
     border: 0.83px solid var(--Stroke-5, #94A3B8);
     background: var(--white-100, #FFF);
     height:auto;
-    margin-left: 65%;
+    margin-left: 57%;
     margin-top: 2%;
+    margin-bottom: 2%;
   }
   .pickMonthOrders{
     display: flex;
@@ -208,3 +216,57 @@
     top: 5%;
     left: 50.5%;
   }
+ .filtering{
+    margin-top: 10%;
+   
+ }
+ .filters{
+    color: var(--Greys-Blue-Grey-800, #444A6D);
+
+    /* sm/Regular */
+    font-family: 'Poppins';
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */
+
+ }
+ .title{
+    color: #000;
+font-family: 'Inter';
+font-size: 15px;
+margin-bottom: 7%;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+ }
+ .monthTitle{
+    color: #000;
+font-family: 'Inter';
+font-size: 15px;
+margin-bottom: 7%;
+font-style: normal;
+top: 5%;
+position: absolute;
+font-weight: 600;
+line-height: normal;
+ }
+.inputField{
+    display: flex;
+width: 151px;
+flex-direction: column;
+align-items: flex-start;
+gap: 8px;
+border-radius: 25px;
+}
+.filterButton{
+    position: inherit;
+    top: 23%;
+    left: 50%;
+    margin: 27px 13px 13px 12px;
+    border-radius: 11px;
+    background: #EA580C;
+    width: 64px;
+    height: 29px;
+    color: #FFF;
+}

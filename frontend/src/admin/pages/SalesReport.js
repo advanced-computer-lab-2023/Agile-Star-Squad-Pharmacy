@@ -10,6 +10,7 @@ import arrows from '../arrows.png';
 import axios from 'axios';
 import Navbar from '../../shared/components/NavBar/NavBar';
 
+
 const SalesReport = () => {
     const [currentYearSales, setCurrentYearSales] = useState([]);
     const [prevYearSales, setPrevYearSales] = useState([]);
@@ -30,6 +31,9 @@ const SalesReport = () => {
     const [selectedMonthO, setSelectedMonthO] = useState(new Date().getMonth());
     const [selectedMonthOrders, setSelectedMonthOrders] = useState([]);
     const [loading, setLoading] = useState(true); // New loading state
+    const [medSales, setMedSales] = useState(0);
+    const [medProfit, setMedProfit] = useState(0);
+
     
    
     
@@ -57,6 +61,7 @@ const SalesReport = () => {
         console.error(err);
       }
     };
+    
 
   const getMedicineById = (id) => {
     const medicine = medicines.find((medicine) => medicine._id === id);
@@ -237,29 +242,89 @@ const SalesReport = () => {
       };
     
       
+    
+    
+      const getSalesAndProfitByMedicine = (orders, medicineName) => {
+        try {
+          // Filter orders that contain the specified medicine
+          const filteredOrders = orders.filter((order) =>
+            order.medicineList.some(
+              (medicine) =>
+                getMedicineById(medicine.medicineId).name.toLowerCase() === medicineName.toLowerCase()
+            )
+          );
       
-    console.log(selectedMonth);
+          // Calculate total sales and profit for the filtered orders
+          let medSales = 0;
+          let medProfit = 0;
+      
+          if (filteredOrders.length > 0) {
+            medSales = filteredOrders.reduce((total, order) => total + order.totalCost, 0);
+      
+            medProfit = filteredOrders.reduce((totalProfit, order) => {
+              return (
+                totalProfit +
+                order.medicineList.reduce((medTotal, medicine) => {
+                  const medProfit = medicine.profit !== undefined ? medicine.profit : 0;
+                  return medTotal + medProfit * medicine.count;
+                }, 0)
+              );
+            }, 0);
+          }
+      
+          return {
+            medSales,
+            medProfit,
+          };
+        } catch (error) {
+          console.error('Error calculating sales and profit by medicine:', error);
+          // Handle error if needed
+          return {
+            medSales: 0,
+            medProfit: 0,
+          };
+        }
+      };
+      
+    const [medicineFilter, setMedicineFilter] = useState(''); // State to store the medicine name input
+
+    // Function to handle filtering by medicine
+    const handleFilterByMedicine = () => {
+      try {
+        const { medSales, medProfit } = getSalesAndProfitByMedicine(orders, medicineFilter);
+        // Set state variables to display the values in your component
+        setMedSales(medSales);
+        setMedProfit(medProfit);
+        console.log(medProfit+" "+medSales+"tttttttt");
+      } catch (error) {
+        console.error('Error filtering by medicine:', error);
+        // Handle error if needed
+      }
+    };
+
     useEffect(() => {
       const fetchData = async () => {
         try {
           setLoading(true);
-  
+    
           const fetchedOrders = await fetchAllOrders();
+    
+          // Fetch medicines consistently when the component mounts or when orders change
           await fetchMedicines();
-  
+    
           // Other logic can be placed here if needed
-  
+    
           // Calculate profits and update state
           await calculateProfit(fetchedOrders);
           const { totalSales, totalProfit } = await calculateSalesAndProfit(
             fetchedOrders,
             selectedMonth
           );
-  
+    
           // Update state with the calculated values
           setMonthlySales(totalSales);
           setMonthlyProfit(totalProfit);
-  
+    
           // Calculate sales for this year and last year
           const {
             salesForThisYearByMonth,
@@ -267,17 +332,17 @@ const SalesReport = () => {
             percentageChange: calculatedPercentageChange,
             changeSign: calculatedChangeSign,
           } = calculateSalesForYearAndLastYear(fetchedOrders);
-  
+    
           // Update state with the calculated values
           setCurrentYearSales(salesForThisYearByMonth);
           setPrevYearSales(salesForLastYearByMonth);
           setPercentageChange(calculatedPercentageChange);
           setChangeSign(calculatedChangeSign);
-  
+    
           // Get recent orders and update state
           const recentOrdersData = getRecentOrders(fetchedOrders);
           setRecentOrders(recentOrdersData);
-  
+    
           setLoading(false);
         } catch (error) {
           console.error('Error fetching and processing data:', error);
@@ -285,28 +350,53 @@ const SalesReport = () => {
           setLoading(false);
         }
       };
-  
+    
       fetchData();
-    }, [selectedMonth]);
+    }, [selectedMonth, orders]); // Include selectedMonth and orders as dependencies
+    
+    // Include this useEffect for fetching medicines consistently
+    useEffect(() => {
+      const fetchMedicinesConsistently = async () => {
+        try {
+          await fetchMedicines();
+        } catch (error) {
+          console.error('Error fetching medicines:', error);
+          // Handle error if needed
+        }
+      };
+    
+      fetchMedicinesConsistently();
+    }, [orders]); 
   
     return(
         <>
         {userCtx.role === 'admin' && <AdminNavBar />}
       {userCtx.role === 'pharmacist' && <Navbar />}
+      {/* {userCtx.role === 'pharmacist' && ( */}
+    
+    {/* )} */}
         <div >
-        
+  
         <Container className={styles.rev}>
         <h2 className={styles.salesT}>Revenue</h2>
-        <h2 className={styles.change}>{revenuePercentageChange} %</h2> 
         <h2 className={styles.cur}>{curYearRevenue}</h2>
         <h4 className={styles.prev}>{pastYearRevenue}  last year  </h4>
-        <img src={arrowUp} className={styles.arrow}></img> 
+        <div className={styles.percents}>
+        <h2 className={styles.change}>{revenuePercentageChange} %</h2>
+        {revenuePercentageChange > 0 ? (
+ <img src={arrowUp} className={styles.arrow}></img>
+) : (
+  <img src={arrowDown} className={styles.arrow}></img>
+)}
+
+</div>
         </Container>
         <Container className={styles.profit}>
         
         <h2 className={styles.salesT}>Profit</h2>
         <h2 className={styles.cur}>{curYearProfit} </h2>
         <h4 className={styles.prev}>{pastYearProfit} last year</h4>
+        <div className={styles.percents}>
         <h2 className={styles.change}>{profitPercentageChange} %</h2>
         {profitPercentageChange > 0 ? (
  <img src={arrowUp} className={styles.arrow}></img>
@@ -314,7 +404,7 @@ const SalesReport = () => {
   <img src={arrowDown} className={styles.arrow}></img>
 )}
 
-        
+</div>
         </Container>
         <Container className={styles.monthly} >
           <select className={styles.pickMonth }value={selectedMonth} onChange={(e) => setSelectedMonth(parseInt(e.target.value))}>
@@ -325,12 +415,25 @@ const SalesReport = () => {
       </option>
     ))}
   </select>
+  <label htmlFor="medicineName" className={styles.monthTitle}>Search by month: </label>
+  <label htmlFor="medicineName" className={styles.title}>Search by medicine name: </label>
+        <input
+        className={styles.inputField}
+          type="text"
+          id="medicineName"
+          value={medicineFilter}
+          onChange={(e) => setMedicineFilter(e.target.value)}
+        />
+        <button type="button" className={styles.filterButton} onClick={handleFilterByMedicine}>
+          Filter
+        </button>
   {/* <img src={arrows} className={styles.arrows}></img> */}
-<h2 className={styles.salesT}>Monthly Profit</h2>
-        <h2 className={styles.cur}>{monthlyProfit} </h2>
-        <h2 className={styles.salesT}>Monthly Sales</h2>
-        <h2 className={styles.cur}>{monthlySales} </h2>
-
+  <div className={styles.filtering}>
+<h2 className={styles.filters}>Monthly Profit: {monthlyProfit}</h2>
+        <h2 className={styles.filters}>Monthly Sales: {monthlySales}</h2>
+       <h2 className={styles.filters}>Medicine Profit: {medProfit}</h2>
+        <h2 className={styles.filters}>Medicine Sales: {medSales} </h2>
+        </div>
         </Container>
         
         <div className={styles.parentContainer}>
