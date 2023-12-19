@@ -75,7 +75,7 @@ const MedicineDetails = (props) => {
 
   const exitEditForm = (medicine) => {
     setShowEdit(false);
-    if (medicine != null) {
+    if (medicine.name != null) {
       setStateData(medicine)
     }
   }
