@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import './AdminNavBar.module.css';
 import { Link, useNavigate } from 'react-router-dom';
-import logo from '../../logo.png';
 import UserContext from '../../../user-store/user-context';
 
 const AdminNavBar = (props) => {
@@ -19,6 +18,10 @@ const AdminNavBar = (props) => {
     navigate('/changePassword');
   };
 
+  const medicinesRedirect = () => { 
+    navigate('/pharmacy/home');
+  }
+
   return (
     <div className="bodyN">
       <nav className="navbar navbar-expand-lg navbar-light bg-light d-flex">
@@ -27,20 +30,18 @@ const AdminNavBar = (props) => {
             Pharma
           </Link>
 
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
+
           <div className="collapse navbar-collapse" id="navbarNav"></div>
           <div className="d-flex mx-4">
-            <div className="btn-group ">
+
+            <div className="btn-group">
+              <a
+                href="#"
+                className="btn btn-white"
+                onClick={medicinesRedirect}
+              >
+                Medicines
+              </a>
               <a
                 href="#"
                 className="btn btn-white"
