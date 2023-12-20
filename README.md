@@ -10,7 +10,7 @@
 6. [ Tests. ](#tests)
 7. [ Usage. ](#usage)
 8. [ Contribution. ](#contribution)
-9. [ Collaborators. ](#collabs)
+9. [ Contributors. ](#collabs)
 10. [ Credits. ](#credits)
 11. [ Licenses. ](#licenses)
 
@@ -322,7 +322,7 @@ We welcome contributions from the community. Please ensure that your pull reques
 
 <a name="collabs"></a>
 
-## Collaborators
+## Contributors
 
 <div style="display: flex;">
 
