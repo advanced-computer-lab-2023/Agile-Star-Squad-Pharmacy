@@ -12,7 +12,7 @@ const patientSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, 'Please provide your name.'],
-    validate: [validator.isAlpha, 'Name must only contain letters'],
+    // validate: [validator.isAlpha, 'Name must only contain letters'],
   },
   email: {
     type: String,
@@ -49,6 +49,7 @@ const patientSchema = new mongoose.Schema({
     },
     relation: {
       type: String,
+      // required: [true, 'Please provide a relation.'],
     },
   },
   orders: [
