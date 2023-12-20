@@ -6,6 +6,7 @@ import Select from 'react-select';
 import classes from './PaymentCard.module.css';
 import axios from 'axios';
 import UserContext from '../../user-store/user-context';
+import { toastMeError, toastMeSuccess } from '../../shared/util/functions';
 
   const AccountDetailsCard = (props) => {
     const navigate = useNavigate();
@@ -53,9 +54,10 @@ const handleSubmit = async (e) => {
             console.log(err);
           });
         console.log(response);
+        toastMeSuccess('Your password has been changed successfully');
         navigate('/');}
         else {
-            alert('Your password does not match the criteria');
+          toastMeError('Your password does not match the criteria');
         }
     
   }

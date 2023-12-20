@@ -6,6 +6,7 @@ import Button from './Button/Button';
 import axios from 'axios';
 import img from '../images/Bandage.png';
 import { Link } from 'react-router-dom';
+import { toastMeError } from '../../shared/util/functions';
 
 function Component0({ setTab, setEmail2 }) {
   const [email, setEmail] = useState('');
@@ -13,7 +14,7 @@ function Component0({ setTab, setEmail2 }) {
 
   const handleRequestLink = async (e) => {
     if (email === '') {
-      return alert('Please provide your email');
+      return toastMeError('Please provide your email');
     }
     try {
       const response = await axios.post(

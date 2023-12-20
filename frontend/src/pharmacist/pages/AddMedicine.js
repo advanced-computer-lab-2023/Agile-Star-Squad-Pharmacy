@@ -83,15 +83,8 @@ const AddMedicine = (props) => {
 
   const handleSave = async () => {
     // Check if any of the required fields is empty
-    if (
-      !name ||
-      !ingredients ||
-      !price ||
-      !quantity ||
-      !sales ||
-      files.length == 0
-    ) {
-      alert('Please fill in all the fields before saving.');
+    if (!name || !ingredients || !price || !quantity || !sales || files.length == 0) {
+      toastMeError('Please fill in all the fields before saving.');
       return;
     }
     const data = {

@@ -98,16 +98,21 @@ const BrowseMedicine = () => {
     const filterMedicine = () => {
         setMedicines(() => {
             let medicines = [...allMedicines];
-            if (categoryIndex != -1) {
+            const lowerSearchText = searchText.toLowerCase(); // Convert search text to lowercase
+    
+            if (categoryIndex !== -1) {
                 medicines = medicines.filter((medicine) =>
-                    medicine.medicinalUse == (categoryIndex < 5 ? categories1[categoryIndex].title : categories2[categoryIndex - 5].title));
+                    medicine.medicinalUse === (categoryIndex < 5 ? categories1[categoryIndex].title : categories2[categoryIndex - 5].title)
+                );
             }
-            if (searchText !== "") {
-                medicines = medicines.filter((medicine) => medicine.name.includes(searchText));
+    
+            if (lowerSearchText !== "") {
+                medicines = medicines.filter((medicine) => medicine.name.toLowerCase().includes(lowerSearchText));
             }
+    
             return medicines;
         });
-    }
+    };
 
     // const fetchCart = async (medicines) => {
     //     if (cartCtx.length == 0 && userCtx.role === 'patient') {
