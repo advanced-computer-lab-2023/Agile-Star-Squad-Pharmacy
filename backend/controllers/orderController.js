@@ -51,7 +51,10 @@ const deleteOrder = async (req, res) => {
     }
     await Order.findByIdAndDelete(id);
     patient.orders.pull(id);
-    patient.wallet=patient.wallet+order.totalCost;
+    if (!order.isCOD){
+      patient.wallet=patient.wallet+order.totalCost;
+    }
+
     await patient.save();
     res.status(200).json({ message: 'Order deleted successfully' });
   } catch (error) {
@@ -80,14 +83,14 @@ const changeOrderStatus = async (req, res) => {
 
 // Function to add an order
 const addOrder = async (req, res) => {
+  console.log(req.body.isCOD);
   try {
-    const { patientId, medicineList, totalCost, address } = req.body;
+    const { patientId, medicineList, totalCost, address, isCOD } = req.body;
     const pharmacists = await Pharmacist.find();
     const patient = await Patient.findById(patientId);
     if (!patient) {
       return res.status(404).json({ message: 'Patient not found' });
     }
-    console.log(medicineList);
     const outOfStockMedicines = [];
 
     for (const medicineObj of medicineList) {
@@ -139,6 +142,7 @@ const addOrder = async (req, res) => {
       medicineList,
       totalCost,
       address,
+      isCOD,
     });
 
     await order.save();

@@ -336,6 +336,7 @@ export default function CheckoutForm(props) {
         medicineList,
         totalCost: cartCtx.total,
         address: addressToUse,
+        isCOD: true,
       };
       const response = await fetch('http://localhost:4000/orders', {
         method: 'POST',

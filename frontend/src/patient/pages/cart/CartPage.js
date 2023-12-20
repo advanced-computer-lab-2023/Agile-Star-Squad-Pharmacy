@@ -40,6 +40,9 @@ const CartPage = (props) => {
   const toPrevious = () => {
     navigate(-1);
   };
+  const toHome = () => {
+    navigate('/patient/home');  
+  }
 
   return (
     <div>
@@ -100,7 +103,7 @@ const CartPage = (props) => {
                 <div className={classes.empty}>
                   <p>
                     Cart seems empty?
-                    <button className={classes.more} onClick={toPrevious}>
+                    <button className={classes.more} onClick={toHome}>
                       Shop more
                     </button>
                   </p>
