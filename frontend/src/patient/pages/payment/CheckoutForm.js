@@ -227,7 +227,7 @@ export default function CheckoutForm(props) {
       });
     } catch (error) {
       console.log("hereeee")
-      setMessage('Failed to process payment.');
+      toastMeError('Failed to process payment.');
     }
     setIsProcessing(false);
   
@@ -297,14 +297,14 @@ export default function CheckoutForm(props) {
           navigate('/');
         } else {
           // Handle errors if the server response is not ok
-          alert('Failed to update data.');
+          toastMeError('Failed to update data.');
         }
       } catch (error) {
         // Handle network errors
-        alert('Network error: ' + error.message);
+        toastMeError('Network error: ' + error.message);
       }
     } else {
-      setMessage('Insufficient balance in your wallet.');
+      toastMeError('Insufficient balance in your wallet.');
     }
 
     setIsProcessing(false);
