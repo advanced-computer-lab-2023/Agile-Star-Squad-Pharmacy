@@ -48,7 +48,8 @@ const ShippmentCard = (props) => {
           console.error(err);
         });
       setAddresses(res.data.data.addresses);
-      setSelectedAddressId(res.data.data.addresses[0]._id);
+      if (addresses.length > 0)
+        setSelectedAddressId(res.data.data.addresses[0]._id);
     };
     fetchAddresses();
   }, [selectedAddressId]);
@@ -70,101 +71,89 @@ const ShippmentCard = (props) => {
     }
   };
 
-  
-
-
-
-  const onSave = async ()  => {
+  const onSave = async () => {
     // add to backend
-    
-  //  let address
-  // e.preventDefault();
-  let paymentIntentData = {
-    country:'Egypt',
-    city:selectedCity,
-    district:selectedDistrict,
-    street:selectedStreet,
-    // patient:userCtx.userId
+
+    //  let address
+    // e.preventDefault();
+    let paymentIntentData = {
+      country: 'Egypt',
+      city: selectedCity,
+      district: selectedDistrict,
+      street: selectedStreet,
+      // patient:userCtx.userId
+    };
+    if (selectedAddressId == null) {
+      const response = await fetch(
+        `http://localhost:4000/address/${userCtx.userId}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(paymentIntentData),
+          credentials: 'include',
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to send data to the server.');
+      }
+      toastMeSuccess('Address Added Successfully');
+    } else {
+      toastMeError('Address already added');
+    }
+
+    //   const { country, city, street } = formData;
+    //   if (country && city && street) {
+    //     const requestOptions = {
+    //       method: 'POST',
+    //       headers: { 'Content-type': 'application/json; charset=UTF-8' },
+    //       body: JSON.stringify(formData),
+    //       credentials: 'include',
+    //     };
+    //     fetch(
+    //       `http://localhost:4000/address/${patientId}/`,
+    //       requestOptions,
+    //     );
+    //     alert('Address added successfully');
+    //     navigate(-1);
+    //   } else {
+    //     alert('Please fill in all required fields');
+    //   }
+    // };
   };
- if(selectedAddressId==null){
-  
-  const response = await fetch(`http://localhost:4000/address/${userCtx.userId}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(paymentIntentData),
-    credentials: 'include',
-  });
+  // axios.post(
+  //   `http://localhost:4000/addresses/${userCtx.userId}`,
+  //   {country:'Egypt',city:selectedCity,district:selectedDistrict,patient:userCtx.userid},
 
-  if (!response.ok) {
-    
-    throw new Error('Failed to send data to the server.');
-
-  }
-  toastMeSuccess('Address Added Successfully')
-
-}
-else{
-  toastMeError("Address already added")
-}
-      
-  //   const { country, city, street } = formData;
-  //   if (country && city && street) {
-  //     const requestOptions = {
-  //       method: 'POST',
-  //       headers: { 'Content-type': 'application/json; charset=UTF-8' },
-  //       body: JSON.stringify(formData),
-  //       credentials: 'include',
-  //     };
-  //     fetch(
-  //       `http://localhost:4000/address/${patientId}/`,
-  //       requestOptions,
-  //     );
-  //     alert('Address added successfully');
-  //     navigate(-1);
-  //   } else {
-  //     alert('Please fill in all required fields');
-  //   }
-  // };
-
-} 
-      // axios.post(
-      //   `http://localhost:4000/addresses/${userCtx.userId}`,
-      //   {country:'Egypt',city:selectedCity,district:selectedDistrict,patient:userCtx.userid},
-        
-      // );
-
-     
+  // );
 
   return (
     <SideCard>
       <div className={classes.sideCardTitle}>Shippment Details</div>
       {/* <div className="d-flex align-items-center mt-3 mx-5 justify-content-between"> */}
-        <div className={classes.inputLabel}>Use saved address</div>
-    
-        <select
-      
-     
-      
-           className={classes.input}
-          onChange={(e) => handleAddressSelect(e.target.value)}
-        >
-          <option value="">Select an Address</option>
-          {addresses.map((address) => (
-            <option key={address._id} value={selectedAddressId}>
-              <p>
-                <strong> Country:</strong> {address.country}
-              </p>
-              <p>
-                <strong> --- City:</strong> {address.city}
-              </p>
-              <p>
-                <strong> --- Street:</strong> {address.street}
-              </p>
-            </option>
-          ))} 
-        </select>
+      <div className={classes.inputLabel}>Use saved address</div>
+
+      <select
+        className={classes.input}
+        onChange={(e) => handleAddressSelect(e.target.value)}
+      >
+        <option value="">Select an Address</option>
+        {addresses.map((address) => (
+          <option key={address._id} value={selectedAddressId}>
+            <p>
+              <strong> Country:</strong> {address.country}
+            </p>
+            <p>
+              <strong> --- City:</strong> {address.city}
+            </p>
+            <p>
+              <strong> --- Street:</strong> {address.street}
+            </p>
+          </option>
+        ))}
+      </select>
       {/* </div> */}
       <div className={classes.inputLabel}> City:</div>
       <select
@@ -200,26 +189,29 @@ else{
         </div>
       )}
       <div className={classes.inputLabel}>Street:</div>
-      
+
       <input
         type="text"
         className={classes.input}
-        
         placeholder="Enter your Street"
         value={selectedStreet}
         onChange={(e) => setSelectedStreet(e.target.value)}
         // id="use-wallet"
       />
-        {/* {!isAdding && (
+      {/* {!isAdding && (
           <button onClick={onDelete} className={classes.deleteButton}>
             Delete
           </button>
         )}
         <div /> */}
-        <div className="d-flex justify-content-between">
-      <button className={classes.saveButton} style={{marginTop:'10px'}} onClick={onSave}>
-        Save
-      </button>
+      <div className="d-flex justify-content-between">
+        <button
+          className={classes.saveButton}
+          style={{ marginTop: '10px' }}
+          onClick={onSave}
+        >
+          Save
+        </button>
       </div>
     </SideCard>
   );
