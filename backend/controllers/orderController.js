@@ -83,7 +83,6 @@ const changeOrderStatus = async (req, res) => {
 
 // Function to add an order
 const addOrder = async (req, res) => {
-  console.log(req.body.isCOD);
   try {
     const { patientId, medicineList, totalCost, address, isCOD } = req.body;
     const pharmacists = await Pharmacist.find();
