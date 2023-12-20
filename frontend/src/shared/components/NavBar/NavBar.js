@@ -65,13 +65,13 @@ const NavBar = (props) => {
 
       {userCtx.role === 'patient' && (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <div className="container-fluid">
+          <div className="">
             <Link to={'/pharmacy/home'} className="navbar-brand">
               PHARMA
             </Link>
             <div className="collapse navbar-collapse" id="navbarNav">
-              <ul className="navbar-nav">
-                <li className="nav-item">
+              <ul className="navbar-nav mt-3 ms-5 ps-5">
+                <li className="nav-item ms-5">
                   <Link to="/prescriptions" style={{ all: 'unset' }}>
                     <a className="nav-link" aria-current="page" href="#">
                       Presciptions
@@ -132,12 +132,12 @@ const NavBar = (props) => {
       {/* Medicine Sales Report Chat .... Wallet Account */}
       {userCtx.role === 'pharmacist' && (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <div className="container-fluid">
+          <div>
             <Link to={'/pharmacy/home'} className="navbar-brand">
               PHARMA
             </Link>
-            <div className="collapse navbar-collapse" id="navbarNav">
-              <ul className="navbar-nav">
+            <div className="collapse navbar-collapse ms-5" id="navbarNav">
+              <ul className="navbar-nav ms-5">
                 <li className="nav-item">
                   <Link to="/pharmacy/home" style={{ all: 'unset' }}>
                     <a className="nav-link" aria-current="page" href="#">
@@ -175,18 +175,18 @@ const NavBar = (props) => {
                   </p>
                 </li>
                 <li className="nav-item">
-                <a
-                href="#"
-                className="btn btn-white"
-                onClick={changePasswordHandler}
-              >
-                Change Password
-                </a>
+                  <a
+                    href="#"
+                    className="btn btn-white"
+                    onClick={changePasswordHandler}
+                  >
+                    Change Password
+                  </a>
                 </li>
                 <li className="nav-item">
-                <a href="#" className="btn btn-white" id="last" onClick={logout}>
-                Logout
-                 </a>
+                  <a href="#" className="btn btn-white" id="last" onClick={logout}>
+                    Logout
+                  </a>
                 </li>
               </ul>          </div>
           </div>
@@ -197,7 +197,7 @@ const NavBar = (props) => {
         <nav className="navbar navbar-expand-lg navbar-light bg-light d-flex">
           <div className="container-fluid">
             <Link to={'/admin/home'} className="navbar-brand">
-              Pharma
+              PHARMA
             </Link>
 
 
@@ -205,6 +205,13 @@ const NavBar = (props) => {
             <div className="d-flex mx-4">
 
               <div className="btn-group">
+                <a
+                  className="btn btn-white"
+                >
+                  <Link to={'/SalesReport'} >
+                    Sales Report
+                  </Link>
+                </a>
                 <a
                   href="#"
                   className="btn btn-white"

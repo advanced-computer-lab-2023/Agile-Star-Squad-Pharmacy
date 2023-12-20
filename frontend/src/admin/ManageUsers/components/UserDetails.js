@@ -138,50 +138,6 @@ const UserDetails = (props) => {
                             </div>
                             </div>
                         </div>
-                        <div className={styles.headers}>Documents</div>
-                        <div className={styles.images}>
-
-                        
-                        
-            {/* ID Image */}
-            <div className={styles.spacing}>
-              <span className={styles.smallText}>ID Image</span>
-              <br />
-              {props.data['idImage'] && (
-                props.data['idImage'].includes('pdf') ? (
-                  <a href={props.data['idImage']} target="_blank" rel="noopener noreferrer">Download PDF</a>
-                ) : (
-                  <img width={130} src={props.data['idImage']} alt="ID Image" />
-                )
-              )}
-            </div>
-
-            {/* pharmacy License */}
-            <div className={styles.spacing}>
-              <span className={styles.smallText}>Pharmacy License</span>
-              <br />
-              {props.data['pharmacyLicense'] && (
-                props.data['pharmacyLicense'].includes('pdf') ? (
-                  <a href={props.data['pharmacyLicense']} target="_blank" rel="noopener noreferrer">Download PDF</a>
-                ) : (
-                  <img width={130} src={props.data['pharmacyLicense']} alt="Medical License" />
-                )
-              )}
-            </div>
-
-            {/* pharmacy Degree */}
-            <div className={styles.spacing}>
-              <span className={styles.smallText}>Pharmacy Degree</span>
-              <br />
-              {props.data['pharmacyDegree'] && (
-                props.data['pharmacyDegree'].includes('pdf') ? (
-                  <a href={props.data['pharmacyDegree']} target="_blank" rel="noopener noreferrer">Download PDF</a>
-                ) : (
-                  <img width={130} src={props.data['pharmacyDegree']} alt="Medical Degree" />
-                )
-              )}
-                        </div>
-                        </div>
     
       </React.Fragment>
     );

@@ -18,7 +18,7 @@ const AdminNavBar = (props) => {
     navigate('/changePassword');
   };
 
-  const medicinesRedirect = () => { 
+  const medicinesRedirect = () => {
     navigate('/pharmacy/home');
   }
 
@@ -35,6 +35,13 @@ const AdminNavBar = (props) => {
           <div className="d-flex mx-4">
 
             <div className="btn-group">
+              <a
+                className="btn btn-white"
+              >
+                <Link to={'/SalesReport'} style={{all: "unset"}}>
+                  Sales Report
+                </Link>
+              </a>
               <a
                 href="#"
                 className="btn btn-white"
