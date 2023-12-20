@@ -166,7 +166,7 @@ const NavBar = (props) => {
                     </a>
                   </Link>
                 </li>
-                <li className="nav-item" style={{ paddingLeft: '380px' }}>
+                <li className="nav-item" style={{ paddingLeft: '7%' }}>
                   <BellDropdown />
                 </li>
                 <li className="nav-item">

@@ -275,6 +275,22 @@
     text-align: center;
     padding-block: 6px;
 }
+.AddButton {
+    cursor: pointer;
+    border-radius: 9px;
+    width: 100%;
+    background: #29873C;
+    color: white;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: center;
+    padding-block: 6px;
+}
+
+.AddButton:hover {
+    background: #1d682c;
+    transition: all 0.2s ease;
+}
 
 .viewButton:hover {
     background: #1d682c;
