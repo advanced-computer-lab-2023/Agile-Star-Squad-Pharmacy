@@ -3,29 +3,22 @@
 ## Table of Contents
 
 1. [ Motivation. ](#motivation)
-2. [ Build Status. ](#build-status)
-3. [ Code Style. ](#code-style)
-4. [ Technologies Used. ](#technology)
-5. [ Features. ](#features)
-6. [ API Refrences. ](#api-ref)
-7. [ Tests. ](#tests)
-8. [ Usage. ](#usage)
-9. [ Contribution. ](#contribution)
-10. [ Collaborators. ](#collabs)
-11. [ Credits. ](#credits)
-12. [ Licenses. ](#licenses)
+2. [ Code Style. ](#code-style)
+3. [ Technologies Used. ](#technology)
+4. [ Features. ](#features)
+5. [ API Refrences. ](#api-ref)
+6. [ Tests. ](#tests)
+7. [ Usage. ](#usage)
+8. [ Contribution. ](#contribution)
+9. [ Collaborators. ](#collabs)
+10. [ Credits. ](#credits)
+11. [ Licenses. ](#licenses)
 
 <a name="motivation"></a>
 
 ## Motivation
 
 The Pharmacy Website is a comprehensive web application designed for both pharmacists and customers. This website provides a user-friendly interface for users to explore, order medications, view available pharmaceutical products, and access detailed information about various drugs and their uses. Whether you're a customer seeking medical supplies or a pharmacist looking to streamline your services, this website is your ultimate platform for efficient pharmaceutical management and access.
-
-<a name="build-status"></a>
-
-## Build Status
-
-<!-- todo -->
 
 <a name="code-style"></a>
 
