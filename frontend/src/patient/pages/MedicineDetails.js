@@ -201,16 +201,17 @@ const MedicineDetails = (props) => {
               </div>
             </>
           )}
-          {user.role == 'pharmacist' ||
-            (user.role == 'admin' && (
-              <>
-                <div style={{ color: '#505050', fontSize: '16px' }}>
-                  Sales: {stateData.sales}
-                  <br />
-                  Quantity: {stateData.quantity}
-                </div>
-              </>
-            ))}
+          
+          {(user.role == 'pharmacist' || user.role == 'admin') && (
+            <>
+              <div style={{ color: '#505050', fontSize: '16px' }}>
+                Sales: {stateData.sales}
+                <br />
+                Quantity: {stateData.quantity}
+              </div>
+            </>
+          )}
+
 
           <img src={line} alt="line" style={{}} />
           <div style={{ fontWeight: '500' }}>
