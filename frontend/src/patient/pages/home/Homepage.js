@@ -102,16 +102,20 @@ const Homepage = () => {
     const filterMedicine = () => {
         setMedicines(() => {
             let medicines = [...allMedicines];
+            const lowerSearchText = searchText.toLowerCase(); // Convert search text to lowercase
+    
             if (categoryIndex !== -1) {
                 medicines = medicines.filter((medicine) =>
                     medicine.medicinalUse === (categoryIndex < 5 ? categories1[categoryIndex].title : categories2[categoryIndex - 5].title)
                 );
             }
             if (searchText !== "") {
-                medicines = medicines.filter((medicine) => medicine.name.includes(searchText));
+                medicines = medicines.filter((medicine) =>
+                    medicine.name.toLowerCase().includes(lowerSearchText)
+                );
             }
             // Add conditions to filter based on "archived" and "isOtc" if role is patient
-
+    
             if (userCtx.role === 'patient' || userCtx.role === 'pharmacist') {
                 medicines = medicines.filter((medicine) => {
                     //medicine.isOtc; // replace with actual property name
@@ -124,11 +128,11 @@ const Homepage = () => {
                     return medicine.isOtc;
                 });
             }
-
+    
             return medicines;
         });
     };
-
+    
 
     const fetchCart = async (medicines) => {
         if (cartCtx.length == 0 && userCtx.role === 'patient') {

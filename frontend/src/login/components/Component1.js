@@ -6,6 +6,7 @@ import Button from './Button/Button';
 import OTP from './OTP/OTP';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { toastMeError, toastMeSuccess } from '../../shared/util/functions';
 
 let otpBackend = 0;
 
@@ -20,7 +21,7 @@ function Component1({ setTab2, email }) {
         if (otpBackend == otp) {
           setTab2(true);
         } else {
-          return alert('Incorrect OTP');
+          return toastMeError('Incorrect OTP');
         }
       });
   };
@@ -36,7 +37,7 @@ function Component1({ setTab2, email }) {
       .catch((err) => {
         alert(err.response.data.message);
       });
-    alert('An OTP has been sent to your email!');
+    toastMeSuccess('An OTP has been sent to your email!');
   };
   return (
     <div className="container-fluid" style={{ backgroundColor: '#96B7C7' }}>

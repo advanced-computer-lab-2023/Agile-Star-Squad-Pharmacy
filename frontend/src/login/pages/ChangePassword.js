@@ -7,6 +7,9 @@ import axios from 'axios';
 import UserContext from '../../user-store/user-context';
 import AdminNavBar from '../../admin/ManageUsers/components/AdminNavBar';
 import NavBar from '../../shared/components/NavBar/NavBar';
+import { toastMeError } from '../../shared/util/functions';
+import { toastMeSuccess } from '../../shared/util/functions';
+
 
 function ChangePassword() {
   const userCtx = useContext(UserContext);
@@ -47,14 +50,17 @@ function ChangePassword() {
           .catch((err) => {
             console.log(err);
           });
+          toastMeSuccess(`Your password has been changed successfully`);
         navigate('/');
       } else {
-        alert('Your password does not match the criteria');
+        toastMeError(`Your password does not match the criteria`);
+        //alert('Your password does not match the criteria');
       }
     } else {
       setNewPassword('');
       setRetypePassword('');
-      alert('Passwords do not match');
+      toastMeError(`Passwords do not match`);
+     // alert('Passwords do not match');
     }
   };
 

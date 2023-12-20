@@ -8,6 +8,7 @@ import CartContext from '../cart/Cart';
 import './AddingInfo.css'
 import axios from 'axios';
 import { toastMeError } from '../../../shared/util/functions';
+import { toastMeSuccess } from '../../../shared/util/functions';
 
 const citiesInEgypt = [
   {
@@ -42,6 +43,7 @@ export default function CheckoutForm(props) {
   const [selectedCity, setSelectedCity] = useState('');
   const [selectedDistrict, setSelectedDistrict] = useState('');
   const [selectedStreet, setSelectedStreet] = useState('');
+  const [savedAddress,setSavedAddress]= useState('')
 
 
 
@@ -63,18 +65,27 @@ export default function CheckoutForm(props) {
         .catch((err) => {
           console.error(err);
         });
+        
       setAddresses(res.data.data.addresses);
-      setSelectedAddressId(res.data.data.addresses[0]._id);
+      
+      
+     
     };
     fetchAddresses();
-  }, [selectedAddressId]);
+  }, []);
+  useEffect(()=>{
+    if(savedAddress)
+      setSelectedAddressId(savedAddress)
+  },[savedAddress])
   const handleAddressSelect = (addressId) => {
+    
     setSelectedAddressId(addressId);
     if (addressId) {
       const foundAddress = addresses.find((address) => address._id === addressId)
       setAddress(foundAddress);
       setSelectedCity(foundAddress.city)
       setSelectedDistrict(foundAddress.district)
+      
       setSelectedStreet(foundAddress.street)
     } else {
       setSelectedCity('')
@@ -84,27 +95,57 @@ export default function CheckoutForm(props) {
 
   };
 
-
-  // const onAdd = async () => {
-
-  //   const { country, city, street } = formData;
-  //   if (country && city && street) {
-  //     const requestOptions = {
-  //       method: 'POST',
-  //       headers: { 'Content-type': 'application/json; charset=UTF-8' },
-  //       body: JSON.stringify(formData),
-  //       credentials: 'include',
-  //     };
-  //     fetch(
-  //       `http://localhost:4000/address/${patientId}/`,
-  //       requestOptions,
-  //     );
-  //     alert('Address added successfully');
-  //     navigate(-1);
-  //   } else {
-  //     alert('Please fill in all required fields');
+  // useEffect(()=>{
+  //   if(savedAddress){
+  //     switch (useWallet) {
+  //       case 0:
+  //         handleSubmit(e);
+  //         break;
+  //       case 1:
+  //         handleWallet(e);
+  //         break;
+  //       case 2:
+  //         handleCOD(e);
+  //       default:
+  //         break;
+  //     }
   //   }
-  // };
+  // },[savedAddress])
+  const addAddress= async()=>{
+    if(selectedAddressId==null||selectedAddressId==''){
+        
+      let paymentIntentData2 = {
+        country:'Egypt',
+        city:selectedCity,
+        district:selectedDistrict,
+        street:selectedStreet,
+        // patient:userCtx.userId
+      };
+     
+      
+      const response = await fetch(`http://localhost:4000/address/${userCtx.userId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(paymentIntentData2),
+        credentials: 'include',
+      });
+      const responseStuff= await response.json();
+      
+      if (!response.ok) {
+        
+        throw new Error('Failed to send data to the server.');
+    
+      }
+      
+      
+      toastMeSuccess('Address Added Successfully')
+      console.log(responseStuff.data.address._id)
+   
+      return responseStuff.data.address._id
+     }
+  }
 
   useEffect(() => {
     fetch(`http://localhost:4000/patients/${userCtx.userId}`, {
@@ -116,6 +157,7 @@ export default function CheckoutForm(props) {
     });
   }, []);
 
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage('');
@@ -126,22 +168,37 @@ export default function CheckoutForm(props) {
     }
 
     setIsProcessing(true);
+  
+     
 
     try {
       // console.log('//////////////////////////');
       // console.log(props.CartCtx.items);
+     
       const cartItems = cartCtx.items;
       const medicineList = cartItems.map((item) => {
         return { medicineId: item.id, count: item.quantity, price: item.price, profit: item.price * 0.9 };
       });
-      console.log("///////")
-      let paymentIntentData = {
+      
+      let addressToUse=null;
+      if(selectedAddressId){
+        addressToUse= selectedAddressId;
+      }
+      else if(savedAddress){
+         addressToUse= savedAddress;
+      }
+      else{
+       addressToUse= await addAddress();
+      }
+     
+      
+       let paymentIntentData = {
         patientId: userCtx.userId,
         medicineList,
         totalCost: cartCtx.total,
-        address: addressId,
+        address: addressToUse,
       };
-
+     
       const response = await fetch('http://localhost:4000/orders', {
         method: 'POST',
         headers: {
@@ -150,15 +207,16 @@ export default function CheckoutForm(props) {
         body: JSON.stringify(paymentIntentData),
         credentials: 'include',
       });
-      console.log(addressId)
+    
       if (response.status == 400) {
         toastMeError((await response.json()).message);
         return;
       } else
       if (!response.ok) {
+      
         throw new Error('Failed to send data to the server.');
       }
-      alert("Payment Successful")
+      toastMeSuccess(`Payment Successful`)
       setMessage('Payment successful!');
       cartCtx.clearCart();
       const { error } = await stripe.confirmPayment({
@@ -168,9 +226,12 @@ export default function CheckoutForm(props) {
         },
       });
     } catch (error) {
-      setMessage('Failed to process payment.');
+      console.log("hereeee")
+      toastMeError('Failed to process payment.');
     }
     setIsProcessing(false);
+  
+  
   };
 
   const handleWallet = async (e) => {
@@ -200,11 +261,22 @@ export default function CheckoutForm(props) {
         const medicineList = cartItems.map((item) => {
           return { medicineId: item.id, count: item.quantity, price: item.price, profit: item.price * 0.9 };
         });
+
+        let addressToUse=null;
+      if(selectedAddressId){
+        addressToUse= selectedAddressId;
+      }
+      else if(savedAddress){
+         addressToUse= savedAddress;
+      }
+      else{
+       addressToUse= await addAddress();
+      }
         let paymentIntentData = {
           patientId: userCtx.userId,
           medicineList,
           totalCost: cartCtx.total,
-          address: addressId,
+          address: addressToUse,
         };
         await fetch('http://localhost:4000/orders', {
           method: 'POST',
@@ -220,19 +292,19 @@ export default function CheckoutForm(props) {
         }  else 
         if (response.ok) {
           // Handle a successful response
-          alert("Payment Successful");
+          toastMeSuccess(`Payment Successful`)
           cartCtx.clearCart();
           navigate('/');
         } else {
           // Handle errors if the server response is not ok
-          alert('Failed to update data.');
+          toastMeError('Failed to update data.');
         }
       } catch (error) {
         // Handle network errors
-        alert('Network error: ' + error.message);
+        toastMeError('Network error: ' + error.message);
       }
     } else {
-      setMessage('Insufficient balance in your wallet.');
+      toastMeError('Insufficient balance in your wallet.');
     }
 
     setIsProcessing(false);
@@ -249,11 +321,21 @@ export default function CheckoutForm(props) {
       const medicineList = cartItems.map((item) => {
         return { medicineId: item.id, count: item.quantity, price: item.price, profit: item.price * 0.9 };
       });
+      let addressToUse=null;
+      if(selectedAddressId){
+        addressToUse= selectedAddressId;
+      }
+      else if(savedAddress){
+         addressToUse= savedAddress;
+      }
+      else{
+       addressToUse= await addAddress();
+      }
       let paymentIntentData = {
         patientId: userCtx.userId,
         medicineList,
         totalCost: cartCtx.total,
-        address: addressId,
+        address: addressToUse,
       };
       const response = await fetch('http://localhost:4000/orders', {
         method: 'POST',
@@ -267,6 +349,7 @@ export default function CheckoutForm(props) {
       if (response.status == 400) {
         toastMeError((await response.json()).message);
       } else {
+        toastMeSuccess(`Order Placed Successfully`)
         cartCtx.clearCart();
         navigate('/');
       }
@@ -275,6 +358,7 @@ export default function CheckoutForm(props) {
   };
 
   const onSubmit = (e) => {
+    
     switch (useWallet) {
       case 0:
         handleSubmit(e);
@@ -305,19 +389,25 @@ export default function CheckoutForm(props) {
 
         <select
           className={styles.input1}
+          value={selectedAddressId}
           onChange={(e) => handleAddressSelect(e.target.value)}
         >
           <option value="" style={{ color: 'black' }}>Select an Address</option>
-          {addresses.map((address) => (
-            <option style={{ color: 'black' }} key={address._id} value={selectedAddressId}>
+          
+          {addresses.map((address1) => (
+            
+            <option style={{ color: 'black' }} key={address1._id} value={address1._id}>
               <p>
-                <strong> Country:</strong> {address.country}
+                <strong> Country:</strong> {address1.country}
               </p>
               <p>
-                <strong> --- City:</strong> {address.city}
+                <strong> --- City:</strong> {address1.city}
               </p>
               <p>
-                <strong> --- Street:</strong> {address.street}
+                <strong> --- Street:</strong> {address1.street}
+              </p>
+              <p>
+                <strong> --- District:</strong> {address1.district}
               </p>
             </option>
           ))}
@@ -333,7 +423,7 @@ export default function CheckoutForm(props) {
         // id="use-wallet"
         />
 
-        <label className={styles.label1}> City:</label>
+       {!selectedAddressId &&(<div><label className={styles.label1}> City:</label>
         <select className={styles.input1} value={selectedCity} onChange={handleCityChange} required>
           <option value="" style={{ color: 'black' }}>Select a city</option>
           {citiesInEgypt.map((cityObj, index) => (
@@ -341,9 +431,9 @@ export default function CheckoutForm(props) {
               {cityObj.city}
             </option>
           ))}
-        </select>
+        </select></div>)}
 
-        {selectedCity && (
+        {selectedCity && !selectedAddressId &&(
           <div>
             <label className={styles.label1}>District:</label>
             <select className={styles.input1} value={selectedDistrict} onChange={handleDistrictChange}>
@@ -358,7 +448,8 @@ export default function CheckoutForm(props) {
             </select>
           </div>
         )}
-        <label className={styles.label1}>Street</label>
+       {!selectedAddressId &&
+       <div> <label className={styles.label1}>Street</label>
         <br />
         <input
           type="text"
@@ -370,6 +461,7 @@ export default function CheckoutForm(props) {
           // id="use-wallet"
           required
         />
+        </div>}
         <label className={styles.label1}>Mobile Number</label>
         <br />
         <input
@@ -379,17 +471,7 @@ export default function CheckoutForm(props) {
           placeholder="Enter your mobile number"
         // id="use-wallet"
         />
-        <div style={{ padding: '10px 20px', paddingTop: '10px' }}>
-          <input
-            type="checkbox"
-            // id="use-wallet"
-            class="form-check-input mt-0"
-            checked={useSave}
-            onChange={(e) => setUseSave(e.target.checked)}
-
-          />
-          <label htmlFor="use-wallet" className={styles.choicePayment} >Save Address</label>
-        </div>
+        
       </div>
       <div
         style={{

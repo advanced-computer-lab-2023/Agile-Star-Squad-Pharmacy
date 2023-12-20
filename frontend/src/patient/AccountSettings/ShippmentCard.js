@@ -4,6 +4,7 @@ import Select from 'react-select';
 import classes from './PaymentCard.module.css';
 import axios from 'axios';
 import UserContext from '../../user-store/user-context';
+import { toastMeError, toastMeSuccess } from '../../shared/util/functions';
 
 const citiesInEgypt = [
   {
@@ -85,7 +86,7 @@ const ShippmentCard = (props) => {
     street:selectedStreet,
     // patient:userCtx.userId
   };
- 
+ if(selectedAddressId==null){
   
   const response = await fetch(`http://localhost:4000/address/${userCtx.userId}`, {
     method: 'POST',
@@ -101,9 +102,12 @@ const ShippmentCard = (props) => {
     throw new Error('Failed to send data to the server.');
 
   }
-  alert('Address Added Successfully')
+  toastMeSuccess('Address Added Successfully')
 
-  
+}
+else{
+  toastMeError("Address already added")
+}
       
   //   const { country, city, street } = formData;
   //   if (country && city && street) {

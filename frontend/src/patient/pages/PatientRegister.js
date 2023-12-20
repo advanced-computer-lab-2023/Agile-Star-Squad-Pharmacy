@@ -169,12 +169,12 @@ const PatientRegisterForm = () => {
       });
       if (response.ok && response2.ok) {
         // Handle a successful response
-        toastMeSuccess("Registeration Successful");
+        toastMeSuccess('Registeration Successful');
         setUserRole('patient');
         navigate('/pharmacy/home');
       } else {
         // Handle errors if the server response is not ok
-        toastMeError("Registeration Failed, Try again!")
+        toastMeError('Registeration Failed, Try again!');
       }
     } catch (error) {
       // Handle network errors

@@ -13,11 +13,9 @@ import line from './line.png';
 import cross from './cross.png';
 import CartContext from './cart/Cart';
 import AddMedicine from '../../pharmacist/pages/AddMedicine';
-import ConfirmationModal from '../../shared/components/ConfirmationModal/ConfirmationModal';
 import { toastMe, toastMeSuccess } from '../../shared/util/functions';
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 
 const MedicineDetails = (props) => {
   const user = useContext(UserContext);
@@ -82,9 +80,9 @@ const MedicineDetails = (props) => {
   const exitEditForm = (medicine) => {
     setShowEdit(false);
     if (medicine.name != null) {
-      setStateData(medicine)
+      setStateData(medicine);
     }
-  }
+  };
 
   /////////////////////////////
   const addItem = (e) => {
@@ -98,14 +96,13 @@ const MedicineDetails = (props) => {
       price: stateData.price,
       quantity: +stateData.cartQuantity,
     });
-    toastMeSuccess(`Added ${stateData.name} successfully`)
+    toastMeSuccess(`Added ${stateData.name} successfully`);
   };
 
   const toMedicineDetails = (medicine) => {
     //navigate('/medicine', { state: medicine });
     setStateData(medicine);
   };
-
 
   return (
     <div style={{ height: '100vh' }}>
@@ -148,7 +145,7 @@ const MedicineDetails = (props) => {
             }}
           >
             {stateData.name}
-            {user.role == "patient" &&
+            {user.role == 'patient' && (
               <div
                 style={{
                   color: stockColor,
@@ -157,9 +154,11 @@ const MedicineDetails = (props) => {
                 }}
                 className="row-4 d-flex flex-row"
               >
-                <img src={stateData.quantity !== 0 ? tick : cross} /><nbsp />
+                <img src={stateData.quantity !== 0 ? tick : cross} />
+                <nbsp />
                 {stateData.quantity !== 0 ? 'In Stock' : 'Out of Stock'}
-              </div>}
+              </div>
+            )}
           </div>
           <div
             style={{
@@ -182,17 +181,35 @@ const MedicineDetails = (props) => {
             Medicinal Use: {stateData.medicinalUse}
           </div>
 
-          {user.role == "pharmacist" && (<>
-            <div style={{ position: "absolute", top: "120px", right: "60px", background: "#3182CE", borderRadius: "10px", color: "white", padding: "5px 25px", cursor: "pointer", fontWeight: "500" }} onClick={() => setShowEdit(true)}>Edit</div>
-          </>)}
-          {user.role == "pharmacist" || user.role == "admin" && (<>
-            <div style={{ color: '#505050', fontSize: '16px' }}>
-              Sales: {stateData.sales}
-              <br />
-              Quantity: {stateData.quantity}
-            </div></>
-
-
+          {user.role == 'pharmacist' && (
+            <>
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '120px',
+                  right: '60px',
+                  background: '#3182CE',
+                  borderRadius: '10px',
+                  color: 'white',
+                  padding: '5px 25px',
+                  cursor: 'pointer',
+                  fontWeight: '500',
+                }}
+                onClick={() => setShowEdit(true)}
+              >
+                Edit
+              </div>
+            </>
+          )}
+          
+          {(user.role == 'pharmacist' || user.role == 'admin') && (
+            <>
+              <div style={{ color: '#505050', fontSize: '16px' }}>
+                Sales: {stateData.sales}
+                <br />
+                Quantity: {stateData.quantity}
+              </div>
+            </>
           )}
 
 
@@ -201,7 +218,7 @@ const MedicineDetails = (props) => {
             Other Medicines With Similar Active Ingredients:
           </div>
           <div>
-            {relatedMedicines.map((medicine) => (
+            {relatedMedicines.map((medicine) =>
               medicine.isOtc && !medicine.archived ? (
                 <img
                   key={medicine.id}
@@ -212,11 +229,10 @@ const MedicineDetails = (props) => {
                   onClick={() => toMedicineDetails(medicine)}
                 />
               ) : null
-            ))}
+            )}
           </div>
-
         </div>
-        {user.role == "patient" &&
+        {user.role == 'patient' && (
           <div className="col-2 d-flex flex-column">
             <button
               style={{
@@ -237,7 +253,8 @@ const MedicineDetails = (props) => {
               />
               Add to Cart
             </button>
-          </div>}
+          </div>
+        )}
       </div>
     </div>
   );

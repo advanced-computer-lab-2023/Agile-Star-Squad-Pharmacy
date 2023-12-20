@@ -5,6 +5,7 @@ import Modal from '../../shared/components/Modal/Modal';
 import { useNavigate } from 'react-router-dom';
 import '../../shared/components/InputField/InputField.css';
 import UserContext from '../../user-store/user-context';
+import { toastMeError, toastMeSuccess } from '../../shared/util/functions';
 
 
 const AddAddress = (props) => {
@@ -39,10 +40,10 @@ const AddAddress = (props) => {
             `http://localhost:4000/address/${patientId}/`,
             requestOptions,
           );
-          alert('Address added successfully');
+          toastMeSuccess('Address added successfully');
           navigate(-1);
         } else {
-          alert('Please fill in all required fields');
+          toastMeError('Please fill in all required fields');
         }
       };
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './ArchivedMedicines.module.css';
 import NavBar from '../shared/components/NavBar/NavBar';
 import axios from 'axios';
+import { toastMeError } from '../shared/util/functions';
 
 const ArchivedMedicines = () => {
   const [archivedMedicines, setArchivedMedicines] = useState([]);
@@ -61,7 +62,8 @@ const ArchivedMedicines = () => {
   const unarchiveHandler = async () => {
     try {
       if (selectedMedicines.length === 0) {
-        alert('Please select at least one medicine to unarchive.');
+        //alert('Please select at least one medicine to unarchive.');
+        toastMeError(`Please select at least one medicine to unarchive.`);
         return;
       }
 
