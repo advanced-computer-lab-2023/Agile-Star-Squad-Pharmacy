@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState, useContext } from "react";
 import UserContext from "../../../user-store/user-context";
 import CartContext from "../cart/Cart";
+import AddMedicine from "../../../pharmacist/pages/AddNew";
 
 const Homepage = () => {
     const userCtx = useContext(UserContext);
@@ -28,6 +29,8 @@ const Homepage = () => {
     const [medicines, setMedicines] = useState([]);
     const medicineResultsRef = useRef();
     const navigate = useNavigate();
+    const [showAdd, setShowAdd] = useState(false);
+
 
     useEffect(() => {
         async function fetchData() {
@@ -98,6 +101,11 @@ const Homepage = () => {
     useEffect(() => {
         filterMedicine();
     }, [categoryIndex, searchText, allMedicines]);
+
+    const exitAddForm = () => {
+        setShowAdd(false);
+       
+      };
 
     const filterMedicine = () => {
         setMedicines(() => {
@@ -239,6 +247,8 @@ const Homepage = () => {
 
 
     return <div>
+        
+     
         <NavBar />
         <section className={classes.welcomeSection}>
             <div className={`col-5 ${classes.sectionLeftCol}`}>
@@ -262,10 +272,16 @@ const Homepage = () => {
         </section>
 
         <section className={classes.medicineSection}>
-            <div className={classes.medicineSectionTitle}>BROWSE MEDICINE</div>
+            <div className={classes.medicineSectionTitle}>BROWSE MEDICINE
+            
+            </div>
             <div className={classes.medicineSearchContainer}>
                 <div className={classes.medicineSearchIcon}><img width={30} src={searchIconImg} /></div>
                 <input className={classes.medicineSearchInput} value={searchText} onChange={(e) => setSearchText(e.target.value)} placeholder="Search" />
+                <div>
+                {showAdd && <AddMedicine exit={exitAddForm} />}
+             <button className={`${classes.AddButton} ms-1`} onClick={() => setShowAdd(true)}> Add Medicine</button>
+             </div>
             </div>
             {getCategoryTiles()}
             <div ref={medicineResultsRef} className={classes.divider}>
