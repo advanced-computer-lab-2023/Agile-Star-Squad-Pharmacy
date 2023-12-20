@@ -244,20 +244,8 @@ const PatientAccountSettings = (props) => {
         />
         <SettingsTile
           onClick={() => setIndex(4)}
-          title={'Shippment Details'}
+          title={'Shipment Details'}
           imagePath={paymentImg}
-        />
-      </SettingsContainer>
-      <SettingsContainer title={'Account'}>
-        {/* <SettingsTile
-          onClick={() => setIndex(4)}
-          title={'Appointments'}
-          imagePath={appointmentsImg}
-        /> */}
-        <SettingsTile
-          onClick={() => setIndex(5)}
-          title={'Email Notifications'}
-          imagePath={notificationImg}
         />
       </SettingsContainer>
       <SettingsContainer title={'Other'}>
@@ -265,16 +253,6 @@ const PatientAccountSettings = (props) => {
           onClick={() => setIndex(6)}
           title={'About Us'}
           imagePath={aboutImg}
-        />
-        <SettingsTile
-          onClick={() => setIndex(7)}
-          title={'Contact Us'}
-          imagePath={contactImg}
-        />
-        <SettingsTile
-          onClick={() => setIndex(8)}
-          title={'Invite Your Friends'}
-          imagePath={inviteImg}
         />
         <SettingsTile
           onClick={() => setIndex(9)}
@@ -320,7 +298,7 @@ const Greeting = (props) => {
     }/${joinedDate.getFullYear()}`;
   return (
     <div className={classes.greetingContainer}>
-      <img src={props.imageUrl} />
+      {/* <img src={props.imageUrl} /> */}
       <div>
         <h1 className={classes.name}>{name}</h1>
         <div className={classes.subtitle}>

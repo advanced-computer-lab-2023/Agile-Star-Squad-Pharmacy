@@ -245,7 +245,7 @@ const AddMedicine = (props) => {
       <div className={styles.saveButtonContainer2}>
         <button
           onClick={() => {
-            setShowSaveModal(true);
+            handleSave();
           }}
           className={styles.saveButton}
         >

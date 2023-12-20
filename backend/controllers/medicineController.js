@@ -72,7 +72,7 @@ exports.updateMedicine = catchAsync(async (req, res, next) => {
   const filteredBody = filterObj(
     req.body,
     'name',
-    'activeIngredients',
+    'activeIngredient',
     'price',
     'sales',
     'quantity',

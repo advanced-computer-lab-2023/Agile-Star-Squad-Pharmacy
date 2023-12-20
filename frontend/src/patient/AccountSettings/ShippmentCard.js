@@ -131,7 +131,7 @@ const ShippmentCard = (props) => {
 
   return (
     <SideCard>
-      <div className={classes.sideCardTitle}>Shippment Details</div>
+      <div className={classes.sideCardTitle}>Shipment Details</div>
       {/* <div className="d-flex align-items-center mt-3 mx-5 justify-content-between"> */}
       <div className={classes.inputLabel}>Use saved address</div>
 
