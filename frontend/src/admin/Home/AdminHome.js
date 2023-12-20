@@ -330,6 +330,7 @@ useEffect(() => {
           // Handle network errors
           alert('Network error: ' + error.message);
       }
+      fetchPendingRequests();
   }
 
   const reject = async (props) => {
@@ -357,6 +358,7 @@ useEffect(() => {
           // Handle network errors
           // alert('Network error: ' + error.message);
       }
+      fetchPendingRequests();
   }
  
 
@@ -881,13 +883,13 @@ const handleSalesClick = () =>{
           onDelete={deleteUser}
         />
       )}
-      {showRequest &&(
-        <RequestDetails
-        // onStatusChange={statusChangeHandler}
-        data={selectedRequest}
-        exit={exitRequestModal}
-        />
-      )}
+        {showRequest &&(
+          <RequestDetails
+          // onStatusChange={statusChangeHandler}
+          data={selectedRequest}
+          exit={exitRequestModal}
+          />
+        )}
       {showAdminForm &&(
         <div className={styles.overlay}>
         <AdminForm exit={exitAdminModal} refresh={fetchAdmins} onSubmitSuccess={handleFormSubmitSuccess} />

@@ -76,7 +76,7 @@ const RequestDetails = (props) => {
             }
         } catch (error) {
             // Handle network errors
-            alert('Network error: ' + error.message);
+            // alert('Network error: ' + error.message);
         }
     }   
     const RequestDetails = () => {
@@ -85,9 +85,6 @@ const RequestDetails = (props) => {
         <>
       {  (
         <>
-         
-         
-           
                         <div className={styles.topBorder}></div>
                         <div className={styles.doctor}>Pharmacist Request</div> 
                      
