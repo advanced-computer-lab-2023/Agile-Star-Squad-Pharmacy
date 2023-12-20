@@ -12,7 +12,7 @@ import Select from 'react-select';
 // import { toastMe } from '../../shared/util/functions';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { toastMeSuccess } from '../../shared/util/functions';
+import { toastMeError, toastMeSuccess } from '../../shared/util/functions';
 import ConfirmationModal from '../../shared/components/ConfirmationModal/ConfirmationModal';
 
 const AddMedicine = (props) => {
