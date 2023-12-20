@@ -52,6 +52,10 @@ const orderSchema = new mongoose.Schema({
     default: 'pending',
     required: true,
   },
+  isCOD:{
+    type: Boolean,
+    default: false,
+  }
 });
 
 const Order = mongoose.model('Order', orderSchema);

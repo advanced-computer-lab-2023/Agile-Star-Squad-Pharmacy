@@ -103,12 +103,6 @@ const addOrder = async (req, res) => {
 
     }
 
-    //  {
-    //   medicineId: '657e1cb6aa3855f4b9bb89cf',
-    //   count: 1,
-    //   price: 18,
-    //   profit: 16.2
-    // }
     if (outOfStockMedicines.length > 0) {
       let i;
       let phMessage;
