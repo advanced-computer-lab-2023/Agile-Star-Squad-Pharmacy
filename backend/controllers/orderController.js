@@ -51,6 +51,7 @@ const deleteOrder = async (req, res) => {
     }
     await Order.findByIdAndDelete(id);
     patient.orders.pull(id);
+    patient.wallet=patient.wallet+order.totalCost;
     await patient.save();
     res.status(200).json({ message: 'Order deleted successfully' });
   } catch (error) {

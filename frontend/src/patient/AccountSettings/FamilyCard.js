@@ -5,6 +5,7 @@ import Select from 'react-select';
 import closeImg from '../../assets/patientAccount/close.png';
 import UserContext from '../../user-store/user-context';
 import axios from 'axios';
+import { toastMeError } from '../../shared/util/functions';
 
 const FamilyCard = (props) => {
   const [familyMembers, setFamilyMembers] = useState(props.members);
@@ -116,11 +117,11 @@ const FamilyCard = (props) => {
           props.setMembers((value) => [...value, newMember]);
           setTab(0);
         } catch (error) {
-          alert(error.response.data.data.message);
+          toastMeError(error.response.data.data.message);
           return;
         }
       } else {
-        alert('Please fill in all required fields');
+        toastMeError('Please fill in all required fields');
       }
     };
 

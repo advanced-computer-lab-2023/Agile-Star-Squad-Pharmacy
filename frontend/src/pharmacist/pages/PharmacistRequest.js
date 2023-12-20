@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import Dropzone from "react-dropzone"
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 import storage from '../../index';
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import classes from './pharmacistRequest.module.css';
@@ -159,8 +159,10 @@ const PharmacistRequestForm = () => {
     <body className={classes.background}>
       <div className='d-flex'>
         <div className={`${classes.mainBackground} col-5`}>
-          <div className={classes.logo}>
-            <img src={logo} alt="Clinic Logo" />
+        <div className={classes.logoContainer}>
+            <Link to={'/'} className="navbar-brand">
+              PHARMA
+            </Link>
           </div>
           <img src={Medicines} alt="Medicines" className={classes.medicinesImage} />
         </div>

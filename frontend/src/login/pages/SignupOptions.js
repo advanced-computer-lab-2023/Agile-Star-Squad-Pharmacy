@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {Link} from 'react-router-dom'
 import classes from "../components/signupOptions.module.css";
 import logo from '../images/logo.png';
 
@@ -31,9 +32,11 @@ const SignupOptions = () => {
     };
 
     return <div>
-        <div className={classes.logo}>
-            <img src={logo} alt="Clinic Logo" />
-        </div>
+        <div className={classes.logoContainer}>
+            <Link to={'/admin/home'} className="navbar-brand">
+              PHARMA
+            </Link>
+          </div>
         <div className={classes.bigContainer}>
             <label className={classes.LabelTextStyle}>Join as a Patient or Pharmacist</label>
 

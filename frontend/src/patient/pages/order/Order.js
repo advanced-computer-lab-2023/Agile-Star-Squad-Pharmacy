@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import UserContext from '../../../user-store/user-context';
 import NavBar from '../../../shared/components/NavBar/NavBar';
 import ConfirmationModal from '../../../shared/components/ConfirmationModal/ConfirmationModal';
+import { toastMeSuccess } from '../../../shared/util/functions';
 
 const Order = () => {
   const user = useContext(UserContext);
@@ -13,7 +14,7 @@ const Order = () => {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [orders, setOrders] = useState([]);
   const [id, setId] = useState('');
-
+  const [updateWallet, setWalletAmount] = useState(0);
   useEffect(() => {
     const fetchOrders = async () => {
       const res = await axios
@@ -39,6 +40,9 @@ const Order = () => {
     } catch (error) {
       console.error(error);
     }
+    navigate('/pharmacy/home');
+    toastMeSuccess("Your order has been cancelled successfully")
+    //setWalletAmount(v=>v+1);
   };
 
   const [medicines, setMedicines] = useState([]);
@@ -99,7 +103,7 @@ const Order = () => {
             />
           </svg>
         </a>
-        <NavBar />
+        <NavBar kelma={updateWallet}/>
       </div>
       <div className={styles.container}>
         <h1 className={styles.title}>Orders</h1>
