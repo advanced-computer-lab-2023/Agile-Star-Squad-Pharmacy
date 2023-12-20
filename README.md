@@ -287,7 +287,7 @@ exports.removePatient = catchAsync(async (req, res, next) => {
 ```
 
 ```
-DELETE Request: http://localhost:3000/patient/:id
+DELETE Request: http://localhost:3000/patients/:id
 ```
 
 **curl**
