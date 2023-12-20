@@ -269,15 +269,35 @@ curl -X DELETE http://localhost:3000/patients/:id
 
 1. **Home Page**: Upon visiting the website, you'll land on the home page. Here, you can learn more about the pharmacy and the products it offers.
 
+<img src="https://i.ibb.co/Pmb7LZw/homePage.png" alt="homePage" border="0">
+
 2. **Registration**: If you're a new user, navigate to the "Register" page to create an account. You'll need to provide some basic information like your name, email address, and password.
+
+<img src="https://i.ibb.co/dbjfNwV/regPage.png" alt="regPage" border="0">
+
+- Patient Registration
+
+<img src="https://i.ibb.co/1d0wLDs/patient-Reg.png" alt="patient-Reg" border="0">
+
+- Pharmacist Registration
+
+<img src="https://i.ibb.co/hmPxHRJ/pharmacist-Reg.png" alt="pharmacist-Reg" border="0">
 
 3. **Login**: If you already have an account, click on the "Login" button on the top right of the page. Enter your email address and password to log in.
 
+<img src="https://i.ibb.co/ykFRWQ8/login.png" alt="login" border="0">
+
 4. **Ordering Medications**: Once logged in, you can order medications by navigating to the "Order Medications" page. Select a product, choose a quantity, and click "Order Now".
+
+<img src="https://i.ibb.co/3F3sqFJ/order-Medicine.png" alt="order-Medicine" border="0">
 
 5. **Viewing Orders**: To view your current and past orders, go to the "My Orders" page. Here, you can also track the status of your orders.
 
+<img src="https://i.ibb.co/FxFnf2H/view-Orders.png" alt="view-Orders" border="0">
+
 6. **Prescription Management**: If you're a patient, you can upload and manage your digital prescriptions by going to the "My Prescriptions" page. Here, you can also view the status of your prescriptions.
+
+<img src="https://i.ibb.co/DYv3Ljq/prescriptions.png" alt="prescriptions" border="0">
 
 <a name="contribution"></a>
 
