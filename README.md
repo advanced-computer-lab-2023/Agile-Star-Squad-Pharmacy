@@ -212,28 +212,82 @@ Here are some examples of how to test the different endpoints:
 
 **Postman**
 
-- Get all patients
+- Get all patients method in backend
 
 ```
-GET: http://localhost:3000/patients
+exports.getAllPatients = catchAsync(async (req, res, next) => {
+  const patients = await Patient.find();
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      patients,
+    },
+  });
+});
 ```
 
-- Signup as a patient
-
 ```
-POST: http://localhost:3000/patients
+GET Request: http://localhost:3000/patients
 ```
 
-- Add health record to patient
+- Signup as a patient method in backend
 
 ```
-PATCH: http://localhost:3000/endpoint/:id
+exports.signup = catchAsync(async (req, res, next) => {
+  console.log(req.body);
+
+  const newPatient = await Patient.create(req.body)
+    .then((result) => {
+      console.log("New patient created:", result);
+      return result; // Forward the result for further processing
+    })
+    .catch((error) => {
+      console.error("Error creating patient:", error.message);
+      throw error; // Re-throw the error for further handling
+    });
+
+  if (newPatient == null) {
+    res.status(404).json({
+      status: "fail",
+      data: {
+        error: "error",
+      },
+    });
+  }
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      patient: newPatient,
+    },
+  });
+});
 ```
 
-- Delete patient
+```
+POST Request: http://localhost:3000/patients
+```
+
+- Delete patient method in backend
 
 ```
-DELETE: http://localhost:3000/endpoint/:id
+exports.removePatient = catchAsync(async (req, res, next) => {
+  const patient = await Patient.findByIdAndDelete(req.params.id);
+
+  if (!patient) {
+    return next(new AppError("No patient found with that ID", 404));
+  }
+
+  res.status(204).json({
+    status: "success",
+    data: null,
+  });
+});
+```
+
+```
+DELETE Request: http://localhost:3000/patient/:id
 ```
 
 **curl**
@@ -249,12 +303,6 @@ curl http://localhost:3000/patients
 ```bash
 curl -X POST -H "Content-Type: application/json" -d '{"key":"value"}' http://
 localhost:3000/patients
-```
-
-- Add health record to patient
-
-```bash
-curl -X PATCH -H "Content-Type: application/json" -d '{"key":"value"}' http://localhost:3000/patients/:id
 ```
 
 - Delete patient
