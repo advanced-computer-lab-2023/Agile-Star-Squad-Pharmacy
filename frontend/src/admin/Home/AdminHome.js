@@ -328,22 +328,20 @@ const AdminHome = (props) => {
         requestOptions
       );
 
-          if (response.ok) {
-            
-              // Handle a successful response
-              toastMeSuccess('Pharmacist accepted successfully!');
-              setStatus('Accepted');
-              // props.onStatusChange(props.id, 'Accepted');
-          } else {
-            
-              // Handle errors if the server response is not ok
-              toastMeError('Accepting request Failed!');
-          }
-      } catch (error) {
-          // Handle network errors
-          alert('Network error: ' + error.message);
+      if (response.ok) {
+        // Handle a successful response
+        toastMeSuccess('Pharmacist accepted successfully!');
+        setStatus('Accepted');
+        // props.onStatusChange(props.id, 'Accepted');
+      } else {
+        // Handle errors if the server response is not ok
+        toastMeError('Accepting request Failed!');
       }
-  }
+    } catch (error) {
+      // Handle network errors
+      alert('Network error: ' + error.message);
+    }
+  };
 
   const reject = async () => {
     try {
@@ -357,21 +355,20 @@ const AdminHome = (props) => {
         requestOptions
       );
 
-          if (response.ok) {
-              // Handle a successful response
-              toastMeSuccess('Pharmacist rejected!');
-              setStatus('Rejected');
-              // props.onStatusChange(props.id, 'Rejected');
-          } else {
-              // Handle errors if the server response is not ok
-              toastMeError('Rejecting request Failed!');
-          }
-      } catch (error) {
-          // Handle network errors
-          // alert('Network error: ' + error.message);
+      if (response.ok) {
+        // Handle a successful response
+        toastMeSuccess('Pharmacist rejected!');
+        setStatus('Rejected');
+        // props.onStatusChange(props.id, 'Rejected');
+      } else {
+        // Handle errors if the server response is not ok
+        toastMeError('Rejecting request Failed!');
       }
-  }
- 
+    } catch (error) {
+      // Handle network errors
+      // alert('Network error: ' + error.message);
+    }
+  };
 
   const editHandler = () => {
     // Navigate to the "Packages Page" when the "Edit" button is clicked
@@ -943,14 +940,14 @@ const AdminHome = (props) => {
           onDelete={deleteUser}
         />
       )}
-      {showRequest &&(
+      {showRequest && (
         <RequestDetails
-        // onStatusChange={statusChangeHandler}
-        data={selectedRequest}
-        exit={exitRequestModal}
+          // onStatusChange={statusChangeHandler}
+          data={selectedRequest}
+          exit={exitRequestModal}
         />
       )}
-      {showAdminForm &&(
+      {showAdminForm && (
         <div className={styles.overlay}>
           <AdminForm
             exit={exitAdminModal}

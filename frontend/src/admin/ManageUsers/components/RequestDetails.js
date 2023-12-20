@@ -64,86 +64,103 @@ const RequestDetails = (props) => {
         requestOptions
       );
 
-            if (response.ok) {
-                // Handle a successful response
-                toastMeSuccess('Pharmacist rejected!');
-                setStatus('Rejected');
-                // props.onStatusChange(props.data['id'], 'Rejected');
-            } else {
-                // Handle errors if the server response is not ok
-                toastMeError('Rejecting request Failed!');
-            }
-        } catch (error) {
-            // Handle network errors
-            alert('Network error: ' + error.message);
-        }
-    }   
-    const RequestDetails = () => {
-     return (
+      if (response.ok) {
+        // Handle a successful response
+        toastMeSuccess('Pharmacist rejected!');
+        setStatus('Rejected');
+        // props.onStatusChange(props.data['id'], 'Rejected');
+      } else {
+        // Handle errors if the server response is not ok
+        toastMeError('Rejecting request Failed!');
+      }
+    } catch (error) {
+      // Handle network errors
+      alert('Network error: ' + error.message);
+    }
+  };
+  const RequestDetails = () => {
+    return (
       <React.Fragment>
         <>
-      {  (
-        <>
-         
-         
-           
-                        <div className={styles.topBorder}></div>
-                        <div className={styles.doctor}>Pharmacist Request</div> 
-                     
-                        <div className={styles.personal}>
-                        <div className={styles.headersPers}>Personal Details</div>
-                            <div className={styles.fieldGroup}>
-                                <div className={styles.nameField}>
-                                    <span className={styles.smallText}>Name</span>
-                                    <div className={styles.formControl}>{props.data['name']}</div>
-                                </div>
-                                <div className={styles.field}>
-                                    <span className={styles.smallText}>Email</span>
-                                    <div className={styles.formControl}>{props.data['email']}</div>
-                                </div>
-                            </div>
-                            <div className={styles.fieldGroup}>
-                                <div className={styles.field}>
-                                    <span className={styles.smallText}>Username</span>
-                                    <div className={styles.formControl}>{props.data['username']}</div>
-                                </div>
-                                <div className={styles.dateField}>
-                                    <span className={styles.smallText}>Date of Birth</span>
-                                    <div className={styles.formControl}>{formatDate(new Date(props.data['dateOfBirth']))}</div>
-                                </div>
-                            </div>
-                            </div>
-                              {/* Professional Information */}
-                        <div className={styles.professional}>
-                        <div className={styles.headersProf}>Professional Details</div>
-                        <div className={styles.fieldGroup}>
-                            <div>
-                                <span className={styles.smallText}>Affiliation</span>
-                                <div className={styles.formControl}>{props.data['affiliation']}</div>
-                            </div>
-                            <div>
-                                <span className={styles.smallText}>Educational Background</span>
-                                <div className="formControl">{props.data['educationalBackground']}</div>
-                            </div>
-                            </div>
-                        </div>
-                        <div className={styles.headersDoc}>Documents</div>
-                        <div className={styles.images}>
+          {
+            <>
+              <div className={styles.topBorder}></div>
+              <div className={styles.doctor}>Pharmacist Request</div>
 
-                        
-                        
-            {/* ID Image */}
-            <div className={styles.spacing}>
-              <span className={styles.smallText}>ID Image</span>
-              <br />
-              {props.data['idImage'] && (
-                props.data['idImage'].includes('pdf') ? (
-                  <a href={props.data['idImage']} target="_blank" rel="noopener noreferrer">Download PDF</a>
-                ) : (
-                  <img width={130} src={props.data['idImage']} alt="ID Image" />
-                )
-              )}
-            </div>
+              <div className={styles.personal}>
+                <div className={styles.headersPers}>Personal Details</div>
+                <div className={styles.fieldGroup}>
+                  <div className={styles.nameField}>
+                    <span className={styles.smallText}>Name</span>
+                    <div className={styles.formControl}>
+                      {props.data['name']}
+                    </div>
+                  </div>
+                  <div className={styles.field}>
+                    <span className={styles.smallText}>Email</span>
+                    <div className={styles.formControl}>
+                      {props.data['email']}
+                    </div>
+                  </div>
+                </div>
+                <div className={styles.fieldGroup}>
+                  <div className={styles.field}>
+                    <span className={styles.smallText}>Username</span>
+                    <div className={styles.formControl}>
+                      {props.data['username']}
+                    </div>
+                  </div>
+                  <div className={styles.dateField}>
+                    <span className={styles.smallText}>Date of Birth</span>
+                    <div className={styles.formControl}>
+                      {formatDate(new Date(props.data['dateOfBirth']))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* Professional Information */}
+              <div className={styles.professional}>
+                <div className={styles.headersProf}>Professional Details</div>
+                <div className={styles.fieldGroup}>
+                  <div>
+                    <span className={styles.smallText}>Affiliation</span>
+                    <div className={styles.formControl}>
+                      {props.data['affiliation']}
+                    </div>
+                  </div>
+                  <div>
+                    <span className={styles.smallText}>
+                      Educational Background
+                    </span>
+                    <div className="formControl">
+                      {props.data['educationalBackground']}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className={styles.headersDoc}>Documents</div>
+              <div className={styles.images}>
+                {/* ID Image */}
+                <div className={styles.spacing}>
+                  <span className={styles.smallText}>ID Image</span>
+                  <br />
+                  {props.data['idImage'] &&
+                    (props.data['idImage'].includes('pdf') ? (
+                      <a
+                        href={props.data['idImage']}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Download PDF
+                      </a>
+                    ) : (
+                      <img
+                        width={130}
+                        src={props.data['idImage']}
+                        alt="ID Image"
+                      />
+                    ))}
+                </div>
 
                 {/* Medical License */}
                 <div className={styles.spacing}>
