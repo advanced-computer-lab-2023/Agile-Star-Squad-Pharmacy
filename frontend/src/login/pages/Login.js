@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import UserContext from '../../user-store/user-context';
 import { Link } from 'react-router-dom';
+import { toastMeError } from '../../shared/util/functions';
 
 const Login = (props) => {
   const userCtx = useContext(UserContext);
@@ -36,7 +37,7 @@ const Login = (props) => {
       userCtx.login({ role, userId });
       navigate('/');
     } catch (err) {
-      alert(err.response.data.message);
+      toastMeError(err.response.data.message);
     }
   };
 

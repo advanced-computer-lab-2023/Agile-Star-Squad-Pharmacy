@@ -162,15 +162,19 @@ const PatientRegisterForm = () => {
         headers: { 'Content-type': 'application/json; charset=UTF-8' },
         body: JSON.stringify(data),
       });
-
-      if (response.ok) {
+      const response2 = await fetch('http://localhost:3000/patients', {
+        method: 'POST',
+        headers: { 'Content-type': 'application/json; charset=UTF-8' },
+        body: JSON.stringify(data),
+      });
+      if (response.ok && response2.ok) {
         // Handle a successful response
-        toastMeSuccess("Registeration Successful");
+        toastMeSuccess('Registeration Successful');
         setUserRole('patient');
         navigate('/pharmacy/home');
       } else {
         // Handle errors if the server response is not ok
-        toastMeError("Registeration Failed, Try again!")
+        toastMeError('Registeration Failed, Try again!');
       }
     } catch (error) {
       // Handle network errors

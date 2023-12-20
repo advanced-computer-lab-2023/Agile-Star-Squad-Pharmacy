@@ -9,6 +9,7 @@ import Select from 'react-select';
 import UserContext from '../../../user-store/user-context';
 import axios from 'axios';
 import CartContext from '../cart/Cart';
+import { toastMeSuccess } from '../../../shared/util/functions';
 
 const Prescriptions = () => {
   const dummy_presc = [
@@ -252,7 +253,7 @@ const Prescriptions = () => {
       });
     });
 
-    alert('Medicine added to cart successfully');
+    toastMeSuccess('Medicine added to cart successfully');
   };
 
   return (

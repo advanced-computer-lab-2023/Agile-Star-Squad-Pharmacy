@@ -12,7 +12,7 @@ const patientSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, 'Please provide your name.'],
-    validate: [validator.isAlpha, 'Name must only contain letters'],
+    // validate: [validator.isAlpha, 'Name must only contain letters'],
   },
   email: {
     type: String,
@@ -49,7 +49,7 @@ const patientSchema = new mongoose.Schema({
     },
     relation: {
       type: String,
-      required: [true, 'Please provide a relation.'],
+      // required: [true, 'Please provide a relation.'],
     },
   },
   orders: [
@@ -68,9 +68,8 @@ const patientSchema = new mongoose.Schema({
 
   chat: {
     type: mongoose.Schema.ObjectId,
-    ref: 'Chat'
-  }
-  ,
+    ref: 'Chat',
+  },
   cart: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -80,19 +79,17 @@ const patientSchema = new mongoose.Schema({
   kimoCart: [
     {
       id: {
-        type: String
+        type: String,
       },
       quantity: {
-        type: Number
+        type: Number,
       },
-    }
+    },
   ],
   wallet: {
     type: Number,
     default: 0,
-
-  }
-
+  },
 });
 
 const Patient = mongoose.model('Patient', patientSchema);

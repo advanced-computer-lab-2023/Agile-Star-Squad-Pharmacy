@@ -15,7 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { toastMeError, toastMeSuccess } from '../../shared/util/functions';
 import ConfirmationModal from '../../shared/components/ConfirmationModal/ConfirmationModal';
 
-const AddMedicine = (props) => {
+const AddNew = (props) => {
   const [name, setName] = useState();
   const [ingredients, setIngredients] = useState('');
   const [description, setDescription] = useState('');
@@ -234,14 +234,6 @@ const AddMedicine = (props) => {
       />
       <label className={styles.label}>Image</label>
       <MyDropzone files={files} setFiles={setFiles} maxFiles={1} />
-      <div className={styles.archiveContainer}>
-        <button
-          onClick={() => setShowArchiveModal(true)}
-          className={styles.archiveButton}
-        >
-          ARCHIVE
-        </button>
-      </div>
       <div className={styles.saveButtonContainer2}>
         <button
           onClick={() => {
@@ -257,7 +249,7 @@ const AddMedicine = (props) => {
   );
 };
 
-export default AddMedicine;
+export default AddNew;
 
 const MyDropzone = (props) => {
   const files = props.files;
