@@ -82,6 +82,26 @@ The Pharmacy Website is a comprehensive web application designed for both pharma
 
 ## API Refrences
 
+### API Routes
+
+1. `/cart`: This route is used for all cart related operations.
+
+2. `/pharmacy`: This route is used for all pharmacy related operations.
+
+3. `/orders`: This route is used for all order related operations.
+
+4. `/admins`: This route is used for all admin related operations.
+
+5. `/pharmacist`: This route is used for all pharmacist related operations.
+
+6. `/patients`: This route is used for all patient related operations.
+
+7. `/medicine`: This route is used for all medicine related operations.
+
+8. `/address`: This route is used for all address related operations.
+
+9. `/auth`: This route is used for all authentication related operations.
+
 ### Address Routes
 
 1. `GET /:patientId`: This route is used to get all addresses associated with a specific patient. The `patientId` is passed as a parameter in the URL.
